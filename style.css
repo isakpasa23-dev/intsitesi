@@ -98,27 +98,27 @@ html, body {
   100% { transform: translate(-50%, -130px) scale(1); opacity: 0; }
 }
 
-/* ================= 🐈‍⬛ EKRANIN ALTINDAKİ YUMUŞAK SİYAH KEDİ ================= */
+/* ================= 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ (SIFIR ZIPLAMA) ================= */
 .screen-cat-companion {
   position: fixed;
   bottom: 6px;
   left: 0;
   top: auto;
-  width: 58px;
-  height: 44px;
+  width: 60px;
+  height: 46px;
   z-index: 1500;
   cursor: pointer;
   user-select: none;
   pointer-events: auto;
   will-change: transform;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.28));
 }
 
 .cat-flip-wrap {
   width: 100%;
   height: 100%;
   transform-origin: center center;
-  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cat-flip-wrap.facing-left {
@@ -132,28 +132,65 @@ html, body {
 .cat-body-svg {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
-.screen-cat-companion.walking .cat-body-svg {
-  animation: catSoftPawsWalk 0.26s infinite alternate ease-in-out;
+/* Gerçek Bacak Yürüme Hareketi */
+.cat-leg {
+  transform-box: fill-box;
+}
+
+.screen-cat-companion.walking .front-leg-1 {
+  animation: catLegWalkFront1 0.22s infinite alternate ease-in-out;
+  transform-origin: top center;
+}
+
+.screen-cat-companion.walking .front-leg-2 {
+  animation: catLegWalkFront2 0.22s infinite alternate ease-in-out;
+  transform-origin: top center;
+}
+
+.screen-cat-companion.walking .back-leg-1 {
+  animation: catLegWalkBack1 0.22s infinite alternate ease-in-out;
+  transform-origin: top center;
+}
+
+.screen-cat-companion.walking .back-leg-2 {
+  animation: catLegWalkBack2 0.22s infinite alternate ease-in-out;
+  transform-origin: top center;
+}
+
+@keyframes catLegWalkFront1 {
+  0% { transform: rotate(-26deg); }
+  100% { transform: rotate(26deg); }
+}
+
+@keyframes catLegWalkFront2 {
+  0% { transform: rotate(26deg); }
+  100% { transform: rotate(-26deg); }
+}
+
+@keyframes catLegWalkBack1 {
+  0% { transform: rotate(24deg); }
+  100% { transform: rotate(-24deg); }
+}
+
+@keyframes catLegWalkBack2 {
+  0% { transform: rotate(-24deg); }
+  100% { transform: rotate(24deg); }
 }
 
 .screen-cat-companion.purring .cat-body-svg {
   animation: catPurrBounce 0.4s ease;
 }
 
-@keyframes catSoftPawsWalk {
-  0% { transform: translateY(0) rotate(-2deg); }
-  100% { transform: translateY(-3.5px) rotate(2deg); }
-}
-
 @keyframes catPurrBounce {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.25) translateY(-8px); }
+  50% { transform: scale(1.2) translateY(-6px); }
 }
 
 .cat-tail {
-  transform-origin: 20px 55px;
+  transform-origin: 22px 54px;
   animation: catTailWag 2.4s infinite ease-in-out;
 }
 
@@ -164,7 +201,7 @@ html, body {
 
 .cat-speech-bubble {
   position: absolute;
-  bottom: 46px;
+  bottom: 48px;
   left: 50%;
   transform: translateX(-50%) scale(0);
   background: rgba(255, 255, 255, 0.95);
@@ -1362,7 +1399,7 @@ html, body {
 
   .screen-cat-companion {
     bottom: 3px;
-    width: 50px;
+    width: 52px;
     height: 40px;
   }
 }
