@@ -4,17 +4,24 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.9.0] - 31.08.2026 (Telegram Botu Üzerinden Canlı Stok Yönetimi) 🤖☁️📦✨
-- **Telegram Bot Komutları:**
-  - `/stok` veya `/stoklar`: Tüm ürünlerin canlı bulut stok durumunu Telegram'da listeler.
-  - `/set askolcer 1` veya `/ayar <ürün> <adet>`: İstenen ürünün stoğunu doğrudan belirtilen sayıya ayarlar.
-  - `/ekle askolcer 1` veya `/ekle <ürün> <adet>`: Mevcut stoğa ekleme yapar.
-  - `/cikar askolcer 1` veya `/cikar <ürün> <adet>`: Mevcut stoktan düşme yapar.
-  - `/sifirla`: Tüm stokları ilk günkü zengin ayarlarına sıfırlar.
-- **Çift Yönlü Entegrasyon:**
-  - Web sitesi üzerinden 5 saniyelik otomatik polling ile Telegram komutları anında algılanır.
-  - İsteğe bağlı 7/24 arka planda çalıştırmak için `bot/telegram_bot.ps1` betiği eklendi.
+### [v3.0.0] - 31.08.2026 (Yapay Zeka Destekli Tatlı Söz Motoru & Tüm Sayfalarda Sıfır Kaydırma) 🤖💌🚀✨
+- **Yapay Zeka Destekli Tatlı Söz Motoru:**
+  - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"*, *"Birtanem"*, *"Ömrüm"* gibi samimi ve derin öznelerle harmanlanan dinamik yapay zeka romantik söz ve aşk falı algoritması eklendi.
+  - "Yeni Bir Söz Çek 🔮" butonuna basıldığında her seferinde sınırsız ve eşsiz romantik cümleler üretilir.
+- **Sipariş Menüsünde Sıfır Kaydırma (1 Ekrana Tam Sığdırma):**
+  - Sipariş menüsü (`#view-shop`) kompakt kartlar ve başlık düzeni ile yeniden boyutlandırıldı.
+  - Artık hem ana menü hem de sipariş menüsü 100vh / 100dvh ekrana tam oturur; ekranda dikey kaydırmaya gerek kalmaz.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.9.1] - 31.08.2026 (ExtendsClass JSON Depolama & Anlık Senkronizasyon) 🚀☁️📦
+- 50 istek sınırı olan geçici servis kaldırılarak limitsiz ExtendsClass JSON API'sine geçildi.
+
+---
+
+### [v2.9.0] - 31.08.2026 (Telegram Botu Üzerinden Canlı Stok Yönetimi) 🤖☁️📦✨
+- `/stok`, `/set`, `/ekle`, `/cikar`, `/sifirla` komutları eklendi.
 
 ---
 
@@ -25,41 +32,6 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ### [v2.7.0] - 31.08.2026 (60 FPS GPU Optimizasyonu & 1 Ekrana Tam Sığan Giriş Menüsü) 🚀📱✨
 - Tek ekrana tam oturan giriş menüsü ve GPU FPS optimizasyonu yapıldı.
-
----
-
-### [v2.6.0] - 31.08.2026 (Cihazlar Arası Canlı Bulut Stok Senkronizasyonu) ☁️📦✨
-- Cihazlar arası eşzamanlı Bulut Canlı Stok Senkronizasyonu eklendi.
-
----
-
-### [v2.5.0] - 31.08.2026 (Tamamen Romantik Sürpriz Kodları & Özel Yıldız Mektubu) 💌🌠✨
-- `SURPRIZ` mektup metni yıldızlı aşk dileği olarak güncellendi, tüm kodlar romantik jestlere uyarlandı.
-
----
-
-### [v2.4.0] - 31.08.2026 (Mobil WebKit / Safari Bacak Animasyonu & Önbellek Temizleme) 📱🐈‍⬛✨
-- Mobil uyumluluk ve önbellek kırma eklendi.
-
----
-
-### [v2.3.0] - 31.08.2026 (4 Bacaklı Gerçek Adım Atan Siyah Kedi - Sıfır Zıplama) 🐈‍⬛🐾✨
-- Kedi anatomisi 4 bacaklı gerçek adım animasyonuna çevrildi, gövde zıplaması kaldırıldı.
-
----
-
-### [v2.2.1] - 31.08.2026 (Sonsuz Sarılma Stokları & Sayısız Gösterim) ♾️🫂💖
-- Sarılma ürünlerinin stok etiketleri doğrudan `Sınırsız ♾️` olarak sabitlendi.
-
----
-
-### [v2.2.0] - 31.08.2026 (Akıcı Kedi Yürüme/Dönme Motoru & Küsüratlı Yüksek Stoklar) 🐈‍⬛📦✨
-- Kedi dönüş/yürüme fiziği düzeltildi ve küsüratlı yüksek stoklar eklendi.
-
----
-
-### [v2.1.0] - 31.08.2026 (Fareyi İzleyen Sevimli Siyah Kedi Eşlikçisi) 🐈‍⬛🐾✨
-- Siyah kedi modülü eklendi.
 
 ---
 

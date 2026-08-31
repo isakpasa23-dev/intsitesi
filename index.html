@@ -19,10 +19,10 @@
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=2.7.0">
+  <link rel="stylesheet" href="style.css?v=3.0.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
-<body class="menu-mode">
+<body>
 
   <!-- Arka Plan Kalp Animasyon Alanı -->
   <div id="heart-bg-container" class="heart-bg-container"></div>
@@ -46,7 +46,7 @@
             <rect x="58" y="54" width="7" height="17" rx="3.5" fill="#0d0d10"/>
           </g>
 
-          <!-- Gövde (Zıplamaz, Düz Kayar) -->
+          <!-- Gövde -->
           <ellipse cx="46" cy="52" rx="26" ry="16" fill="#18181c"/>
 
           <!-- Arka Bacak 2 (Yakın) -->
@@ -131,7 +131,7 @@
             <div class="tile-icon">🛍️</div>
             <div class="tile-content">
               <h3 class="tile-title">Sipariş Menüsü</h3>
-              <p class="tile-desc">Aşkölçer, Özlem Köşesi ve tatlı seçenekler</p>
+              <p class="tile-desc">Aşkölçer, Özlem Köşesi ve tatlı paketler</p>
             </div>
             <span class="tile-arrow">➜</span>
           </div>
@@ -149,7 +149,7 @@
             <div class="tile-icon">💌</div>
             <div class="tile-content">
               <h3 class="tile-title">Günün Tatlı Sözü</h3>
-              <p class="tile-desc">Sana özel hazırlanmış aşk falını aç</p>
+              <p class="tile-desc">Yapay zeka aşk falını ve tatlı sözünü aç</p>
             </div>
             <span class="tile-arrow">➜</span>
           </div>
@@ -167,52 +167,41 @@
       </div>
     </section>
 
-    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ ================= -->
+    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ (SIFIR KAYDIRMA) ================= -->
     <section class="view-section" id="view-shop">
-      <div class="shop-container">
-        
-        <div class="center-nav-bar">
-          <button class="btn-back-pill" id="btn-back-to-menu">
-            <span>🏠 Ana Menüye Dön</span>
-          </button>
-        </div>
-
-        <div class="section-heading">
-          <span class="section-tag">Keyifli Seçimler</span>
-          <h2 class="section-title">Sipariş Menüsü 💕</h2>
-          <p class="section-sub">Dilediğin kategoriyi seç ve istediklerini sepete ekle!</p>
-        </div>
-
-        <!-- 4 Farklı Menü Kategorisi -->
-        <div class="category-tabs" id="category-tabs">
-          <button class="tab-btn active" data-category="ask">
-            <span>💖 Aşk Menüsü</span>
-          </button>
-          <button class="tab-btn" data-category="keyif">
-            <span>☕ Keyif & Kahve</span>
-          </button>
-          <button class="tab-btn" data-category="simartma">
-            <span>🎁 Şımartma Paketi</span>
-          </button>
-          <button class="tab-btn" data-category="ozlem">
-            <span>🥺 Seni Özledim</span>
-          </button>
-        </div>
-
-        <!-- Ürünler Izgarası -->
-        <div class="products-grid" id="products-grid"></div>
-
-        <div class="shop-bottom-bar">
-          <button class="btn btn-primary" id="btn-view-cart-bottom">
-            <span>Sepetimi Gör & Tamamla 🛍️</span>
-          </button>
-        </div>
+      
+      <!-- Üst Kontrol & Başlık -->
+      <div class="shop-header-row">
+        <button class="btn-back-pill" id="btn-back-to-menu">
+          <span>🏠 Menü</span>
+        </button>
+        <h2 class="shop-header-title">Sipariş Menüsü 💕</h2>
+        <span style="width: 60px;"></span>
       </div>
+
+      <!-- 4 Kategori Sekmesi -->
+      <div class="category-tabs" id="category-tabs">
+        <button class="tab-btn active" data-category="ask">💖 Aşk</button>
+        <button class="tab-btn" data-category="keyif">☕ Keyif</button>
+        <button class="tab-btn" data-category="simartma">🎁 Şımartma</button>
+        <button class="tab-btn" data-category="ozlem">🥺 Özlem</button>
+      </div>
+
+      <!-- Ürünler Izgarası -->
+      <div class="products-grid" id="products-grid"></div>
+
+      <!-- Alt Sepete Git Butonu -->
+      <div class="shop-bottom-bar">
+        <button class="btn btn-primary btn-sm" id="btn-view-cart-bottom">
+          <span>Sepetimi Gör & Tamamla 🛍️</span>
+        </button>
+      </div>
+
     </section>
 
   </main>
 
-  <!-- ================= POP-UP: SİPARİŞ BİLGİLERİ (İSİM & NOT ALMA) ================= -->
+  <!-- ================= POP-UP: SİPARİŞ BİLGİLERİ ================= -->
   <div class="modal-overlay" id="checkout-info-modal-overlay">
     <div class="modal-card checkout-info-card">
       <button class="modal-close-btn" id="close-checkout-info-btn">✕</button>
@@ -282,14 +271,15 @@
     </div>
   </div>
 
-  <!-- ================= POP-UP: GÜNÜN TATLI SÖZÜ ================= -->
+  <!-- ================= POP-UP: GÜNÜN TATLI SÖZÜ (AI DESTEKLİ) ================= -->
   <div class="modal-overlay" id="quote-modal-overlay">
     <div class="modal-card letter-card">
       <button class="modal-close-btn" id="close-quote-btn">✕</button>
       <div class="quote-cookie-icon">🥠 ✨</div>
       <h3 class="letter-title">Günün Tatlı Mesajı</h3>
+      <span class="quote-ai-tag">🤖 Kalpten Üretilen Yapay Zeka Aşk Falı</span>
       <div class="letter-content" id="quote-modal-text">
-        "Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor."
+        "Bebeğim, seninle geçen her saniye ömrümün en tatlı hediyesi. İyi ki hayatımdasın! 💖"
       </div>
       <button class="btn btn-primary btn-full" id="new-quote-btn">
         Yeni Bir Söz Çek 🔮
@@ -302,7 +292,7 @@
     <div class="modal-card letter-card">
       <button class="modal-close-btn" id="close-letter-btn">✕</button>
       <div class="letter-stamp">
-        <img src="assets/love-letter.svg" alt="Aşk Mektubu" class="stamp-icon">
+        <img src="assets/love-letter.svg" alt="Aşk Mektubu" class="stamp-icon" style="width: 50px; height: 50px; margin: 0 auto 0.4rem;">
       </div>
       <h3 class="letter-title" id="letter-title">Sana Özel Bir Mektup Açıldı! 💌</h3>
       <div class="letter-content" id="letter-content"></div>
@@ -312,7 +302,7 @@
     </div>
   </div>
 
-  <!-- ================= SEPET ÇEKMECESİ (SLIDE-OVER) ================= -->
+  <!-- ================= SEPET ÇEKMECESİ ================= -->
   <div class="cart-drawer-overlay" id="cart-overlay"></div>
   
   <aside class="cart-drawer" id="cart-drawer">
@@ -348,7 +338,7 @@
           <input 
             type="text" 
             id="coupon-input" 
-            placeholder="Örn: SURPRIZ veya SENICOKSEVIYORUM" 
+            placeholder="Örn: OPUCUK, CANIMBENIM, SURPRIZ" 
             autocomplete="off"
             spellcheck="false"
           >
@@ -403,7 +393,7 @@
 
       <div class="receipt-decor-line">----------------------------------------</div>
 
-      <!-- Tahmini Teslimat Süresi (Canlı Geri Sayımlı) -->
+      <!-- Tahmini Teslimat Süresi -->
       <div class="receipt-delivery-box">
         <div class="delivery-highlight">
           <span class="delivery-highlight-title">⏳ Tahmini Teslimat Süresi:</span>
@@ -435,6 +425,6 @@
     <p>Kalpten kalbe özel olarak tasarlandı 💖 • Sonsuz Sevgi Garantili</p>
   </footer>
 
-  <script src="script.js?v=2.7.0"></script>
+  <script src="script.js?v=3.0.0"></script>
 </body>
 </html>

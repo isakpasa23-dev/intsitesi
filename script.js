@@ -1,12 +1,12 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Gerçek Zamanlı Bulut Stok Senkronizasyonu & Telegram Entegrasyonu 🤖☁️📦✨
+   Yapay Zeka Destekli Tatlı Söz Motoru & 1 Ekrana Tam Sığan Arayüz 🤖💌✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
 
-// ☁️ Canlı Bulut Stok API Uç Noktası (ExtendsClass JSON Storage - Hızlı & Güvenilir)
+// ☁️ Canlı Bulut Stok API Uç Noktası (ExtendsClass JSON Storage)
 const CLOUD_STOCK_ENDPOINT = "https://extendsclass.com/api/json-storage/bin/bbaafac";
 
 // 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 Saat 09:00:00
@@ -18,44 +18,78 @@ let lastQuoteIndex = -1;
 let telegramLastUpdateId = 0;
 
 // ==========================================================================
-// 1. ZENGİN GÜNÜN TATLI SÖZÜ HAVUZU (26+ Özel Söz)
+// 1. 🤖 YAPAY ZEKA & ZENGİN ROMANTİK SÖZ MOTORU (Samimi Öznelerle)
 // ==========================================================================
-const romanticQuotes = [
-  "\"Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor. ✨\"",
-  "\"Seninle geçen her saniye, ömrümün en değerli ve en tatlı hediyesidir. 💕\"",
-  "\"Dünyada milyarlarca insan var ama benim kalbim sadece minik yıldızım için atıyor. 🌟\"",
-  "\"Günün en tatlı anı: Seni düşündüğüm ve istemsizce gülümsediğim an! 🥰\"",
-  "\"Sen sadece sevdiğim insan değilsin; aynı zamanda en huzurlu limanımsın. 💖\"",
-  "\"Bugün ve her gün: Seni dünden daha çok, yarından daha az seviyorum! 🌸\"",
-  "\"Gülüşün, dünyanın bütün dertlerini unutturacak kadar sihirli. ✨\"",
-  "\"Kalbimdeki en güzel köşe, sonsuza kadar sadece sana ait minik yıldızım. 💌\"",
-  "\"Her sabah uyandığımda aklıma gelen ilk ve en tatlı düşünce sensin. ☀️\"",
-  "\"Sen benim bu hayatta başıma gelen en güzel mucizesin. 🎁\"",
-  "\"Bir fincan kahve, senin sesin ve huzur... Bana dünyaları verseler değişmem. ☕\"",
-  "\"Karanlık gecelerimin en parlak kutup yıldızı sensin! 🌙\"",
-  "\"Seninle susmak bile dünyanın en güzel sohbetini yapmaktan daha tatlı. 🤍\"",
-  "\"Ellerini tuttuğum an tüm dünya duruyor gibi hissediyorum. 🤝\"",
-  "\"İyi ki hayatımdasın, iyi ki varsın ve iyi ki kalbimin sahibisin! 💖\"",
-  "\"Senin varlığın, en yorgun günlerimde bile bana güç veren tek enerji kaynağım. ⚡\"",
-  "\"Dünyanın bütün çiçeklerini toplasam, senin bir tebessümün kadar güzel kokamaz. 🌷\"",
-  "\"Gözlerin gökyüzü gibi; baktıkça içim açılıyor, sonsuz huzur buluyorum. 🌌\"",
-  "\"Seninle izlenen her film güzel, dinlenen her şarkı anlamlı. 🎶\"",
-  "\"Kalbin kalbime öyle bir dokundu ki, artık senden başkası imkansız. 💕\"",
-  "\"Sana olan sevgimi anlatmaya bu sitenin satırları bile yetmez! ♾️\"",
-  "\"Ne zaman canın sıkılırsa hatırla: Seni dünyadaki her şeyden çok seven biri var! 🥰\"",
-  "\"Günün falı diyor ki: Bugün minik yıldıza sımsıkı ve doya doya sarılınmalı! 🧸\"",
-  "\"Aşkın en saf, en masum ve en gerçek hali senin kalbinde saklı. 💖\"",
-  "\"Sen benim ömrüme doğan en güzel güneşsin minik yıldızım. ☀️\"",
-  "\"Yarınlar seninle güzel, dünler seninle unutuldu, bugünüm seninle dolu! ✨\""
+
+// A) Zengin Hazır Söz Havuzu (Bebeğim, Tatlım, Hayatımın Anlamı, Canım, Aşkım...)
+const curatedRomanticQuotes = [
+  "\"Bebeğim, seninle geçen her saniye ömrümün en tatlı hediyesi. İyi ki hayatımdasın! 💖\"",
+  "\"Hayatımın anlamı, gözlerinin içine baktığım her an dünya benim için biraz daha güzelleşiyor. ✨\"",
+  "\"Aşkım, dünyada milyarlarca insan var ama benim kalbim sadece senin için çarpıyor. 🌟\"",
+  "\"Tatlım, senin bir tebessümün dünyanın bütün yorgunluklarını unutturmaya yeter! 🥰\"",
+  "\"Canım sevgilim, sen sadece sevdiğim insan değilsin; en huzurlu limanımsın. 💕\"",
+  "\"Birtanem, bugün ve her gün: Seni dünden daha çok, yarından daha az seviyorum! 🌸\"",
+  "\"Ömrüm, gülüşün öyle sihirli ki, karanlık gecelerimin en parlak kutup yıldızı sensin. 🌙\"",
+  "\"Bebeğim, kalbimdeki en güzel köşe sonsuza kadar sadece sana ait. 💌\"",
+  "\"Aşkım, her sabah uyandığımda aklıma gelen ilk ve en tatlı düşünce sensin. ☀️\"",
+  "\"Hayatımın anlamı, sen benim bu dünyadaki en kıymetli mucizemsin. 🎁\"",
+  "\"Canım benim, bir fincan kahve, senin tatlı sesin ve huzur... Bana dünyaları verseler değişmem. ☕\"",
+  "\"Tatlım, ellerini tuttuğum an tüm dünya duruyor gibi hissediyorum. 🤝\"",
+  "\"Gözümün nuru, senin varlığın en yorgun anlarımda bile bana güç veren tek enerji kaynağım. ⚡\"",
+  "\"Bebeğim, dünyanın bütün çiçeklerini toplasam, senin bir kokun kadar güzel olamaz. 🌷\"",
+  "\"Aşkım, seninle dinlenen her şarkı anlamlı, izlenen her film güzel. 🎶\"",
+  "\"Hayatımın anlamı, ne zaman canın sıkılırsa hatırla: Seni dünyadaki her şeyden çok seven biri var! 🥰\"",
+  "\"Canım, günün aşk falı diyor ki: Bugün minik yıldıza sımsıkı ve doya doya sarılınmalı! 🧸\"",
+  "\"Tatlım, seninle susmak bile dünyanın en güzel sohbetini yapmaktan daha tatlı. 🤍\"",
+  "\"Ömrüm, aşkın en saf, en masum ve en gerçek hali senin kalbinde saklı. 💖\"",
+  "\"Bebeğim, sen benim ömrüme doğan en güzel güneşsin. ☀️\"",
+  "\"Aşkım, yarınlar seninle güzel, dünler seninle unutuldu, bugünüm seninle dolu! ✨\""
 ];
 
-function getRandomQuote() {
-  let newIndex;
-  do {
-    newIndex = Math.floor(Math.random() * romanticQuotes.length);
-  } while (newIndex === lastQuoteIndex && romanticQuotes.length > 1);
-  lastQuoteIndex = newIndex;
-  return romanticQuotes[newIndex];
+// B) Yapay Zeka Dinamik Söz Üreticisi (Sonsuz Çeşitlilikte Doğal Cümleler)
+const aiEndearments = [
+  "Bebeğim", "Hayatımın anlamı", "Aşkım", "Tatlım", "Canım", 
+  "Birtanem", "Ömrüm", "Gözümün nuru", "Kalp hırsızım", "Güzeller güzelim"
+];
+
+const aiIntros = [
+  "seninle geçen her an masal gibi geliyor,",
+  "gülüşün içimi sıcacık ısıtıyor,",
+  "seni düşündüğümde istemsizce gülümsüyorum,",
+  "senin sesini duymak günümün en güzel ödülü,",
+  "kalbimin en derin köşesinde sadece senin sevgin var,",
+  "gözlerine her baktığımda sonsuz bir huzur buluyorum,"
+];
+
+const aiFeelings = [
+  "dünyanın bütün güzellikleri senin bir tebessümünde saklı.",
+  "sen benim başıma gelen en tatlı mucizesin.",
+  "seni gökyüzündeki tüm yıldızların toplamından daha çok seviyorum.",
+  "ömrümün sonuna kadar sadece sana sarılmak istiyorum.",
+  "sen benim bu hayattaki en büyük şansımsın.",
+  "varlığın kalbime öyle iyi geliyor ki anlatamam."
+];
+
+const aiEmojis = ["💖", "🥰", "✨", "🌸", "💕", "🌠", "🧸", "🤍"];
+
+function generateAIRomanticQuote() {
+  const isCurated = Math.random() > 0.45;
+  if (isCurated) {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * curatedRomanticQuotes.length);
+    } while (newIndex === lastQuoteIndex && curatedRomanticQuotes.length > 1);
+    lastQuoteIndex = newIndex;
+    return curatedRomanticQuotes[newIndex];
+  } else {
+    // Dinamik Yapay Zeka Cümle Birleştirici
+    const endearment = aiEndearments[Math.floor(Math.random() * aiEndearments.length)];
+    const intro = aiIntros[Math.floor(Math.random() * aiIntros.length)];
+    const feeling = aiFeelings[Math.floor(Math.random() * aiFeelings.length)];
+    const emoji = aiEmojis[Math.floor(Math.random() * aiEmojis.length)];
+    
+    return `"${endearment}, ${intro} ${feeling} ${emoji}"`;
+  }
 }
 
 // Telegram Bildirim Fonksiyonu
@@ -72,7 +106,7 @@ async function sendTelegramNotification(messageText, customChatId = null) {
       })
     });
   } catch (error) {
-    console.warn("Telegram bildirimi gönderilirken hata oluştu:", error);
+    console.warn("Telegram bildirimi gönderilemedi:", error);
   }
 }
 
@@ -110,31 +144,15 @@ const INITIAL_STOCKS = {
 };
 
 const PRODUCT_ALIASES = {
-  "askolcer": "askolcer",
-  "aşkölçer": "askolcer",
-  "ask": "askolcer",
-  "aşk": "askolcer",
-  "canim-cicim": "canim-cicim",
-  "canim": "canim-cicim",
-  "canım": "canim-cicim",
-  "kahve-kacamagi": "kahve-kacamagi",
-  "kahve": "kahve-kacamagi",
-  "gece-sohbeti": "gece-sohbeti",
-  "gece": "gece-sohbeti",
-  "sohbet": "gece-sohbeti",
-  "sarilma-kuponu": "sarilma-kuponu",
-  "sarilma": "sarilma-kuponu",
-  "sarılma": "sarilma-kuponu",
-  "film-gecesi": "film-gecesi",
-  "film": "film-gecesi",
-  "goruntulu-arama": "goruntulu-arama",
-  "goruntulu": "goruntulu-arama",
-  "görüntülü": "goruntulu-arama",
-  "ozlem-sarilmasi": "ozlem-sarilmasi",
-  "ozlem": "ozlem-sarilmasi",
-  "özlem": "ozlem-sarilmasi",
-  "ozel-ses-kaydi": "ozel-ses-kaydi",
-  "ses": "ozel-ses-kaydi"
+  "askolcer": "askolcer", "aşkölçer": "askolcer", "ask": "askolcer", "aşk": "askolcer",
+  "canim-cicim": "canim-cicim", "canim": "canim-cicim", "canım": "canim-cicim",
+  "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi",
+  "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti",
+  "sarilma-kuponu": "sarilma-kuponu", "sarilma": "sarilma-kuponu", "sarılma": "sarilma-kuponu",
+  "film-gecesi": "film-gecesi", "film": "film-gecesi",
+  "goruntulu-arama": "goruntulu-arama", "goruntulu": "goruntulu-arama", "görüntülü": "goruntulu-arama",
+  "ozlem-sarilmasi": "ozlem-sarilmasi", "ozlem": "ozlem-sarilmasi", "özlem": "ozlem-sarilmasi",
+  "ozel-ses-kaydi": "ozel-ses-kaydi", "ses": "ozel-ses-kaydi"
 };
 
 function getProductStock(productId) {
@@ -145,7 +163,7 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme (Cache-Busting Parametresi ile)
+// ☁️ Buluttan Canlı Stokları Çekme
 async function fetchCloudStocks() {
   try {
     const res = await fetch(`${CLOUD_STOCK_ENDPOINT}?_t=${Date.now()}`);
@@ -161,7 +179,7 @@ async function fetchCloudStocks() {
       }
     }
   } catch (err) {
-    // Çevrimdışı sessiz devam
+    // Sessiz devam
   }
 }
 
@@ -212,7 +230,6 @@ async function pollTelegramBotCommands() {
       const text = msg.text.trim();
       const chatId = msg.chat.id;
 
-      // 1. /stok veya /stoklar Komutu (Canlı Stok Tablosu)
       if (text === "/stok" || text === "/stoklar" || text === "/start" || text === "/yardim") {
         await fetchCloudStocks();
         let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || INITIAL_STOCKS;
@@ -235,8 +252,6 @@ async function pollTelegramBotCommands() {
 
         await sendTelegramNotification(stockMsg, chatId);
       }
-
-      // 2. /set <ürün> <adet> Komutu
       else if (text.startsWith("/set ") || text.startsWith("/ayar ")) {
         const parts = text.split(" ");
         if (parts.length >= 3) {
@@ -250,13 +265,9 @@ async function pollTelegramBotCommands() {
             await pushCloudStocks(currentStocks);
 
             await sendTelegramNotification(`✅ *${productId}* stoğu başarıyla *${targetQty.toLocaleString('tr-TR')}* olarak ayarlandı ve web sitesine yansıtıldı! ✨`, chatId);
-          } else {
-            await sendTelegramNotification(`⚠️ Lütfen geçerli bir pozitif sayı giriniz! Örn: \`/set askolcer 1\``, chatId);
           }
         }
       }
-
-      // 3. /ekle <ürün> <adet> Komutu
       else if (text.startsWith("/ekle ")) {
         const parts = text.split(" ");
         if (parts.length >= 3) {
@@ -274,8 +285,6 @@ async function pollTelegramBotCommands() {
           }
         }
       }
-
-      // 4. /cikar <ürün> <adet> Komutu
       else if (text.startsWith("/cikar ") || text.startsWith("/çıkar ")) {
         const parts = text.split(" ");
         if (parts.length >= 3) {
@@ -293,15 +302,13 @@ async function pollTelegramBotCommands() {
           }
         }
       }
-
-      // 5. /sifirla Komutu
       else if (text === "/sifirla" || text === "/sıfırla") {
         await pushCloudStocks({ ...INITIAL_STOCKS });
         await sendTelegramNotification(`🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı ve web sitesi güncellendi!* (Aşkölçer: 1 Adet) 🔥`, chatId);
       }
     }
   } catch (err) {
-    // Bot dinleme hatası (sessiz devam)
+    // Sessiz devam
   }
 }
 
@@ -394,7 +401,7 @@ const PRODUCTS = [
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "Özlem Giderici 📱",
-    description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli sınırsız görüntülü konuşma hakkı.",
+    description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli görüntülü arama hakkı.",
     image: "assets/love-letter.svg"
   },
   {
@@ -550,23 +557,19 @@ function loadCartFromStorage() {
 }
 
 // ==========================================================================
-// 6. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
+// 6. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router - Sıfır Kaydırma)
 // ==========================================================================
 function switchView(viewName) {
   const menuView = document.getElementById("view-menu");
   const shopView = document.getElementById("view-shop");
 
   if (viewName === "shop") {
-    document.body.classList.remove("menu-mode");
     if (menuView) menuView.classList.remove("active");
     if (shopView) shopView.classList.add("active");
     filterCategory("ask");
-    window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
-    document.body.classList.add("menu-mode");
     if (shopView) shopView.classList.remove("active");
     if (menuView) menuView.classList.add("active");
-    window.scrollTo({ top: 0, behavior: "instant" });
   }
 }
 
@@ -603,13 +606,13 @@ function renderProducts() {
     let isOutOfStock = stock <= 0;
 
     if (product.id === "askolcer") {
-      stockDisplay = stock > 0 ? "📦 Stok: Sadece 1 Adet (Tek & Özel) 🔥" : "💖 Tükendi (Sana Özel Hazırlanır)";
+      stockDisplay = stock > 0 ? "📦 Stok: 1 Adet (Tek & Özel) 🔥" : "💖 Tükendi (Sana Özel)";
     } else if (product.id === "sarilma-kuponu" || product.id === "ozlem-sarilmasi") {
       stockDisplay = "📦 Stok: Sınırsız ♾️";
     } else if (stock > 0) {
-      stockDisplay = `📦 Stok: ${stock.toLocaleString('tr-TR')} Adet Mevcut ✨`;
+      stockDisplay = `📦 Stok: ${stock.toLocaleString('tr-TR')} Adet ✨`;
     } else {
-      stockDisplay = "💖 Tükendi (Sana Özel Hazırlanır)";
+      stockDisplay = "💖 Tükendi (Sana Özel)";
     }
 
     return `
@@ -625,7 +628,7 @@ function renderProducts() {
         
         <div class="product-footer">
           <div class="product-stock-info">
-            <span class="delivery-tag">⏳ Teslimat: ${product.deliveryText}</span>
+            <span class="delivery-tag">⏳ ${product.deliveryText}</span>
             <span class="stock-badge ${stock <= 1 && product.id === 'askolcer' ? (isOutOfStock ? 'out' : 'low') : ''}">${stockDisplay}</span>
           </div>
           
@@ -667,7 +670,7 @@ function addToCart(productId) {
   const currentQtyInCart = existingItem ? existingItem.quantity : 0;
 
   if (currentStock <= 0) {
-    alert(`🥺 Üzgünüm minik yıldızım, "${product.name}" şu an stokta tükendi!`);
+    alert(`🥺 Üzgünüm bebeğim, "${product.name}" şu an stokta tükendi!`);
     return;
   }
 
@@ -1058,12 +1061,12 @@ function initScreenCat() {
 
   const catPhrases = [
     "Miyav! 🐾💕",
-    "Seni çok seviyorum! 🥰",
-    "Mırrr... 💖",
-    "İyi ki varsın minik yıldızım! ✨",
-    "Beni sevmene bayılıyorum! 🐈‍⬛",
-    "Pati dostun her zaman yanında! 🐾",
-    "Bugün çok tatlısın! 🌸"
+    "Seni çok seviyorum bebeğim! 🥰",
+    "Mırrr... Tatlım benim! 💖",
+    "İyi ki varsın hayatımın anlamı! ✨",
+    "Beni sevmene bayılıyorum aşkım! 🐈‍⬛",
+    "Pati dostun her zaman yanında canım! 🐾",
+    "Bugün çok tatlısın birtanem! 🌸"
   ];
 
   function setTarget(x) {
@@ -1160,7 +1163,7 @@ function openDailyQuoteModal() {
   const modal = document.getElementById("quote-modal-overlay");
   const textEl = document.getElementById("quote-modal-text");
   if (textEl) {
-    textEl.textContent = getRandomQuote();
+    textEl.textContent = generateAIRomanticQuote();
   }
   if (modal) modal.classList.add("active");
   triggerHeartsShower();
@@ -1446,7 +1449,7 @@ function setupAllEvents() {
 
       sendTelegramNotification(reviewMsg);
 
-      alert(`🎉 Teşekkürler minik yıldızım!\n\nDeğerlendirmen kalbimize ulaştı. Seni her şeyden çok seviyorum! 🥰`);
+      alert(`🎉 Teşekkürler bebeğim!\n\nDeğerlendirmen kalbimize ulaştı. Seni her şeyden çok seviyorum! 🥰`);
       if (reviewNote) reviewNote.value = "";
     });
   }
@@ -1459,7 +1462,7 @@ function setupAllEvents() {
   if (newQuoteBtn) newQuoteBtn.addEventListener("click", () => {
     const textEl = document.getElementById("quote-modal-text");
     if (textEl) {
-      textEl.textContent = getRandomQuote();
+      textEl.textContent = generateAIRomanticQuote();
       triggerHeartsShower();
     }
   });
@@ -1511,7 +1514,6 @@ function setupAllEvents() {
 // 16. BAŞLAT
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
-  document.body.classList.add("menu-mode");
   loadCartFromStorage();
   renderProducts();
   setupAllEvents();
