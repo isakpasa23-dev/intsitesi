@@ -1,10 +1,13 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Müşteri İsmi, Sipariş Notu & Dinamik Teslimat Süresi Hesaplayıcı ⏱️
+   Aşkölçer 8 Haziran 2029 Geri Sayım & Anında Teslimat Motoru ⏳⚡
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
+
+// 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 (Saat 00:00:00)
+const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 0, 0, 0);
 
 // Arka Planda Sessiz Telegram Bildirimi Gönderen Fonksiyon
 async function sendTelegramNotification(messageText) {
@@ -24,6 +27,26 @@ async function sendTelegramNotification(messageText) {
   }
 }
 
+// Geri Sayım Hesaplayıcı Fonksiyonları
+function getAskolcerDetailedRemaining() {
+  const now = new Date();
+  const diff = TARGET_DATE_ASKOLCER - now;
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, text: "Kavuşma Günü Geldi! 💖" };
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+    text: `${days} Gün, ${hours} Saat, ${minutes} Dk, ${seconds} Sn`
+  };
+}
+
 // ==========================================================================
 // 1. ÜRÜNLER & TAHMİNİ TESLİMAT SÜRELERİ (3 Menü)
 // ==========================================================================
@@ -35,10 +58,10 @@ const PRODUCTS = [
     name: "Aşkölçer",
     price: 100,
     unit: "₺",
-    deliveryMinutes: 15,
-    deliveryText: "15 Dakika (Işık Hızı)",
-    badge: "Çok Satan 🔥",
-    description: "Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı.",
+    isCountdown: true, // 8 Haziran 2029 geri sayımı
+    deliveryText: "8 Haziran 2029 ⏳",
+    badge: "Özel Geri Sayım 🔥",
+    description: "Aşkınızın derecesini %100 hassasiyetle ölçen ve 8 Haziran 2029'a doğru geri sayan sihirli cihaz.",
     image: "assets/askolcer.svg"
   },
   {
@@ -47,10 +70,10 @@ const PRODUCTS = [
     name: "Canım Cicim",
     price: 150,
     unit: "₺",
-    deliveryMinutes: 30,
-    deliveryText: "30 Dakika (Özel Paket)",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
     badge: "Özel Paket 🎁",
-    description: "İçerisinde sıcacık sarılmalar ve tatlı iltifatlar barındıran sevgi paketi.",
+    description: "İçerisinde sıcacık sarılmalar ve tatlı iltifatlar barındıran anında sevgi paketi.",
     image: "assets/canim-cicim.svg"
   },
 
@@ -61,10 +84,10 @@ const PRODUCTS = [
     name: "Baş Başa Kahve Kaçamağı",
     price: 0,
     unit: "₺",
-    deliveryMinutes: 45,
-    deliveryText: "45 Dakika (Taze Demleme)",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
     badge: "Keyif Vakti ☕",
-    description: "İstediğin zaman kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
+    description: "İstediğin zaman anında kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
     image: "assets/gift-coffee.svg"
   },
   {
@@ -73,8 +96,8 @@ const PRODUCTS = [
     name: "Gece Sohbeti & Şarkı",
     price: 0,
     unit: "₺",
-    deliveryMinutes: 20,
-    deliveryText: "20 Dakika",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
     badge: "Huzur 🌙",
     description: "Uyumadan önce dinlenecek en güzel şarkılar ve sıcacık ses kaydı.",
     image: "assets/love-letter.svg"
@@ -87,8 +110,8 @@ const PRODUCTS = [
     name: "Sınırsız Sarılma Kuponu",
     price: 0,
     unit: "₺",
-    deliveryMinutes: 5,
-    deliveryText: "5 Dakika (Anında)",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
     badge: "Sonsuz 💖",
     description: "Canın ne zaman sıkılırsa anında geçerli 100 saatlik sımsıkı sarılma hakkı.",
     image: "assets/canim-cicim.svg"
@@ -99,10 +122,10 @@ const PRODUCTS = [
     name: "Film Seçme Hakkı",
     price: 0,
     unit: "₺",
-    deliveryMinutes: 60,
-    deliveryText: "60 Dakika (Mısır Hazırlığı)",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
     badge: "VIP Sinema 🍿",
-    description: "Filmi tamamen senin seçeceğin, atıştırmalıkların hazır olduğu sinema gecesi.",
+    description: "Filmi tamamen senin seçeceğin, atıştırmalıkların anında hazır olduğu sinema gecesi.",
     image: "assets/askolcer.svg"
   }
 ];
@@ -137,8 +160,8 @@ const discountCodes = {
       name: "☕ Baş Başa Kahve Sözü",
       price: 0,
       unit: "₺",
-      deliveryMinutes: 25,
-      deliveryText: "25 Dakika",
+      isCountdown: false,
+      deliveryText: "Anında ⚡",
       badge: "Hediye 🎁",
       description: "Birlikte içilecek en tatlı kahve hediyesi!",
       image: "assets/gift-coffee.svg"
@@ -244,9 +267,16 @@ function renderProducts() {
       <h3 class="product-title">${product.name}</h3>
       <p class="product-desc">${product.description}</p>
       
+      ${product.isCountdown ? `
+        <div class="countdown-box-card">
+          <span>⏳ 8 Haziran 2029 Geri Sayımı:</span>
+          <strong id="card-askolcer-timer">${getAskolcerDetailedRemaining().text}</strong>
+        </div>
+      ` : ''}
+
       <div class="product-footer">
         <div class="product-price">
-          <span class="price-tag">Fiyat • ⏳ ${product.deliveryText}</span>
+          <span class="price-tag">Teslimat: ${product.deliveryText}</span>
           <span class="price-val">${product.price === 0 ? "Ücretsiz 💕" : product.price + " " + product.unit}</span>
         </div>
         
@@ -264,6 +294,14 @@ function renderProducts() {
     });
   });
 }
+
+// Canlı Saat Sayacı (Her saniye Aşkölçer sayacını günceller)
+setInterval(() => {
+  const timerEl = document.getElementById("card-askolcer-timer");
+  if (timerEl) {
+    timerEl.textContent = getAskolcerDetailedRemaining().text;
+  }
+}, 1000);
 
 // ==========================================================================
 // 6. SEPET İŞLEMLERİ
@@ -338,7 +376,7 @@ function updateCartUI() {
           
           <div class="cart-item-info">
             <div class="cart-item-title">${item.product.name}</div>
-            <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit} • ⏳ ${item.product.deliveryMinutes || 15} dk</div>
+            <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit} • ${item.product.deliveryText}</div>
           </div>
 
           <div class="cart-item-actions">
@@ -468,7 +506,6 @@ function showCouponAlert(message, type) {
 // 8. SİPARİŞ TAMAMLAMA AKIŞI (İSİM, NOT & TESLİMAT SÜRESİ HESAPLAMA)
 // ==========================================================================
 
-// 1. Adım: Sepetteki "Siparişi Tamamla" butonuna basınca Bilgi Alma Pop-up'ını Açar
 function openCheckoutInfoModal() {
   if (cart.length === 0) {
     showCouponAlert("Sepetinizde ürün bulunmuyor!", "error");
@@ -486,7 +523,6 @@ function closeCheckoutInfoModal() {
   if (infoModal) infoModal.classList.remove("active");
 }
 
-// 2. Adım: Bilgileri onaylayınca Sipariş Fişini oluşturur ve Telegram'a bildirir
 function finalizeOrder() {
   const nameInput = document.getElementById("customer-name-input");
   const noteInput = document.getElementById("customer-note-input");
@@ -528,15 +564,24 @@ function finalizeOrder() {
     if (receiptNoteRow) receiptNoteRow.style.display = "none";
   }
 
-  // Toplam Teslimat Süresi = En Uzun Süren Ürünün Teslimat Süresi (Math.max)
-  const deliveryTimes = cart.map(item => item.product.deliveryMinutes || 15);
-  const maxDeliveryMinutes = Math.max(...deliveryTimes);
+  // Toplam Teslimat Süresi Hesaplama:
+  // Eğer sepette Aşkölçer varsa -> 8 Haziran 2029 (En uzun teslimat süresi!)
+  // Eğer yoksa -> Anında (Hemen Şimdi! ⚡💖)
+  const hasAskolcer = cart.some(item => item.product.isCountdown === true);
+  const remainingCountdown = getAskolcerDetailedRemaining();
 
-  if (receiptMaxDeliveryTime) {
-    receiptMaxDeliveryTime.textContent = `${maxDeliveryMinutes} Dakika`;
+  let maxDeliveryText = "";
+  if (hasAskolcer) {
+    maxDeliveryText = `8 Haziran 2029 (${remainingCountdown.days} Gün Kaldı) ✨`;
+  } else {
+    maxDeliveryText = `Anında Teslimat (Hemen Şimdi! ⚡💖)`;
   }
 
-  // Ürünlerin Fişe Basılması (Bireysel teslimat süreleriyle birlikte)
+  if (receiptMaxDeliveryTime) {
+    receiptMaxDeliveryTime.textContent = maxDeliveryText;
+  }
+
+  // Ürünlerin Fişe Basılması
   if (receiptItemsList) {
     receiptItemsList.innerHTML = cart.map(item => `
       <div class="receipt-item-block">
@@ -544,7 +589,7 @@ function finalizeOrder() {
           <span><strong>${item.product.name}</strong> (x${item.quantity})</span>
           <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
         </div>
-        <div class="receipt-item-delivery">⏳ Tahmini Hazırlanma: ${item.product.deliveryMinutes || 15} Dakika</div>
+        <div class="receipt-item-delivery">⏳ Teslimat: ${item.product.isCountdown ? '8 Haziran 2029 (Özel Kavuşma Günü)' : 'Anında ⚡'}</div>
       </div>
     `).join("");
   }
@@ -585,16 +630,16 @@ function finalizeOrder() {
   telegramOrderMsg += `\n📦 *Sipariş Edilen Ürünler:*\n`;
   
   cart.forEach(item => {
-    telegramOrderMsg += `• ${item.product.name} (x${item.quantity}) - Süre: ${item.product.deliveryMinutes || 15} dk\n`;
+    telegramOrderMsg += `• ${item.product.name} (x${item.quantity}) - ${item.product.isCountdown ? '⏳ 8 Haziran 2029' : '⚡ Anında'}\n`;
   });
 
   if (appliedCoupon) {
     telegramOrderMsg += `\n🏷️ *Kullanılan İndirim Kodu:* ${appliedCoupon.code}`;
   }
 
-  telegramOrderMsg += `\n\n⏳ *TOPLAM TESLİMAT SÜRESİ:* ${maxDeliveryMinutes} Dakika (En uzun ürüne göre)\n`;
+  telegramOrderMsg += `\n\n⏳ *TOPLAM TESLİMAT SÜRESİ:* ${maxDeliveryText}\n`;
   telegramOrderMsg += `💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk)\n\n`;
-  telegramOrderMsg += `💌 _"Sipariş başarıyla tamamlandı, teslimat hazırlanıyor!"_`;
+  telegramOrderMsg += `💌 _"Minik yıldızından kalpten gelen bir sipariş!"_`;
 
   sendTelegramNotification(telegramOrderMsg);
 
@@ -816,11 +861,9 @@ function setupAllEvents() {
     });
   }
 
-  // Sepetteki "Siparişi Tamamla" butonuna basınca Bilgi Alma Modalını Açar
   const checkoutBtn = document.getElementById("checkout-btn");
   if (checkoutBtn) checkoutBtn.addEventListener("click", openCheckoutInfoModal);
 
-  // Bilgi Alma Modalı Eventleri
   const closeCheckoutInfoBtn = document.getElementById("close-checkout-info-btn");
   const btnConfirmCheckoutInfo = document.getElementById("btn-confirm-checkout-info");
   const checkoutInfoModalOverlay = document.getElementById("checkout-info-modal-overlay");
@@ -833,7 +876,6 @@ function setupAllEvents() {
     });
   }
 
-  // Değerlendirme Modalı ve Sessiz Telegram Gönderimi
   const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
   const reviewModalOverlay = document.getElementById("review-modal-overlay");
   const submitReviewBtn = document.getElementById("submit-review-btn");

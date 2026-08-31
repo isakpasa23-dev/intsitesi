@@ -470,8 +470,28 @@ html, body {
   font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.45;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   flex-grow: 1;
+}
+
+/* Aşkölçer Özel Canlı Geri Sayım Kutusu */
+.countdown-box-card {
+  width: 100%;
+  background: #fff5f7;
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.6rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.76rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.countdown-box-card strong {
+  display: block;
+  font-size: 0.82rem;
+  color: #d63031;
+  margin-top: 0.15rem;
 }
 
 .product-footer {
@@ -808,7 +828,8 @@ html, body {
 
 .receipt-item-delivery {
   font-size: 0.72rem;
-  color: #888;
+  color: #e84393;
+  font-weight: 600;
 }
 
 /* Toplam Teslimat Süresi Vurgusu */
@@ -816,24 +837,29 @@ html, body {
   background: #fff5f7;
   border: 1px solid #ffd6df;
   border-radius: var(--radius-sm);
-  padding: 0.5rem 0.7rem;
+  padding: 0.55rem 0.7rem;
   margin: 0.5rem 0;
   text-align: center;
 }
 
 .delivery-highlight {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.2rem;
   font-size: 0.82rem;
   color: var(--primary);
   font-weight: 700;
 }
 
+.delivery-highlight strong {
+  font-size: 0.92rem;
+  color: #d63031;
+}
+
 .delivery-sub-note {
   font-size: 0.68rem;
   color: #888;
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
 }
 
 .receipt-totals {
