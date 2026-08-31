@@ -470,30 +470,11 @@ html, body {
   font-size: 0.85rem;
   color: var(--text-muted);
   line-height: 1.45;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.9rem;
   flex-grow: 1;
 }
 
-/* Aşkölçer Özel Canlı Geri Sayım Kutusu */
-.countdown-box-card {
-  width: 100%;
-  background: #fff5f7;
-  border: 1px dashed var(--primary);
-  border-radius: var(--radius-sm);
-  padding: 0.45rem 0.6rem;
-  margin-bottom: 0.8rem;
-  font-size: 0.76rem;
-  color: var(--primary);
-  font-weight: 700;
-}
-
-.countdown-box-card strong {
-  display: block;
-  font-size: 0.82rem;
-  color: #d63031;
-  margin-top: 0.15rem;
-}
-
+/* Ürün Alt Alanı (Stok & Teslimat Bilgisi) */
 .product-footer {
   width: 100%;
   display: flex;
@@ -504,20 +485,31 @@ html, body {
   margin-top: auto;
 }
 
-.product-price {
+.product-stock-info {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
-.price-tag {
-  font-size: 0.7rem;
+.delivery-tag {
+  font-size: 0.72rem;
   color: var(--text-muted);
-  display: block;
+  font-weight: 600;
 }
 
-.price-val {
-  font-size: 1.1rem;
+.stock-badge {
+  font-size: 0.85rem;
   font-weight: 800;
   color: var(--primary);
+}
+
+.stock-badge.low {
+  color: #e17055;
+}
+
+.stock-badge.out {
+  color: #a4b0be;
 }
 
 .btn-add-cart {
@@ -832,7 +824,7 @@ html, body {
   font-weight: 600;
 }
 
-/* Toplam Teslimat Süresi Vurgusu */
+/* Toplam Teslimat Süresi */
 .receipt-delivery-box {
   background: #fff5f7;
   border: 1px solid #ffd6df;
@@ -854,35 +846,6 @@ html, body {
 .delivery-highlight strong {
   font-size: 0.92rem;
   color: #d63031;
-}
-
-.delivery-sub-note {
-  font-size: 0.68rem;
-  color: #888;
-  margin-top: 0.2rem;
-}
-
-.receipt-totals {
-  margin: 0.5rem 0;
-}
-
-.receipt-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.82rem;
-  padding: 0.18rem 0;
-}
-
-.receipt-row.discount-text {
-  color: #00875a;
-}
-
-.receipt-row.final-total {
-  font-size: 0.92rem;
-  font-weight: bold;
-  border-top: 1px solid #222;
-  padding-top: 0.35rem;
-  margin-top: 0.35rem;
 }
 
 .receipt-note {

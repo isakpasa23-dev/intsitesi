@@ -4,11 +4,22 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.6.1] - 31.08.2026 (Telegram Mesaj Formatı Sadeleştirmesi) 📱✨
-- **Okunaklı ve Sade Telegram Bildirimi:**
-  - Telegram'a gelen bildirimden *"Toplam Teslimat Süresi"*, *"Ödenecek Tutar"* ve *"Sipariş Başarıyla Tamamlandı"* yazıları kaldırıldı.
-  - `Sipariş No`, `Tarih`, `Müşteri Adı`, `Sipariş Notu` ve `Ürünler` arasına 1 satır boşluk eklenerek çok daha temiz, ferah ve okunaklı bir format sağlandı.
+### [v1.7.0] - 31.08.2026 (Stok Takip Sistemi & Müşteri İsmi Hatırlama) 📦👤
+- **Aşkölçer Kartı Temizliği:**
+  - Aşkölçer ürününün açıklaması orijinal tatlı haline döndürüldü (*"Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı."*).
+  - Ürün kartındaki kırmızı kesikli zamanlayıcı kutusu kaldırıldı; kart sadeleşti ve sadece `⏳ Teslimat: 8 Haziran 2029 ⏳` bilgisi korundu.
+- **Dinamik Stok Takip Motoru:**
+  - Fiyat etiketi yerine her ürün için gerçek zamanlı stok durumu göstergesi eklendi (`📦 Stok: Son 1 Adet 🔥`, `📦 Stok: Son 3 Adet` vb.).
+  - Her sipariş verildiğinde alınan ürünlerin stokları `localStorage` üzerinden otomatik olarak 1 azalır.
+- **Akıllı İsim Hatırlama:**
+  - Müşteri adını bir kez girdiğinde tarayıcı bu ismi hatırlar ve sonraki siparişlerde ad otomatik dolu gelir.
+  - Sipariş notu alanı ise her siparişte sıfırdan boş olarak açılır.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.6.1] - 31.08.2026 (Telegram Mesaj Formatı Sadeleştirmesi) 📱✨
+- Telegram mesajı temizlendi ve satır boşlukları düzenlendi.
 
 ---
 
@@ -19,21 +30,6 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ### [v1.5.0] - 31.08.2026 (Aşkölçer 8 Haziran 2029 Geri Sayımı & Anında Teslimat) ⏳⚡
 - Aşkölçer 8 Haziran 2029 sayacı ve diğer ürünlerin anında teslimat kuralı.
-
----
-
-### [v1.4.0] - 31.08.2026 (Sipariş Bilgi Formu & Dinamik Teslimat) ⏱️📦
-- Sipariş bilgi pop-up formu eklendi.
-
----
-
-### [v1.3.1] - 31.08.2026 (Tipografi & Sepet Alt Alanı Kompaktlaştırma) 🎨
-- 'Y' harfi alt boşluğu ve kompakt sepet altı.
-
----
-
-### [v1.3.0] - 31.08.2026 (Sessiz Arka Plan Telegram Bot Bildirim Hattı) 🤖✨
-- Telegram Bot API (`@Site_bildirimbot`) entegre edildi.
 
 ---
 

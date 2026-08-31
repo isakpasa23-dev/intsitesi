@@ -1,12 +1,12 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Aşkölçer 8 Haziran 2029 Geri Sayım & Sadeleştirilmiş Telegram Bildirimi 📱✨
+   Stok Takip Sistemi, İsim Hatırlama & Sadeleştirilmiş Tasarım 📦✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
 
-// 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 (Saat 00:00:00)
+// 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029
 const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 0, 0, 0);
 
 // Arka Planda Sessiz Telegram Bildirimi Gönderen Fonksiyon
@@ -27,7 +27,7 @@ async function sendTelegramNotification(messageText) {
   }
 }
 
-// Geri Sayım Hesaplayıcı Fonksiyonları
+// Geri Sayım Hesaplayıcı (Fiş ve Toplam Süre İçin)
 function getAskolcerDetailedRemaining() {
   const now = new Date();
   const diff = TARGET_DATE_ASKOLCER - now;
@@ -38,18 +38,41 @@ function getAskolcerDetailedRemaining() {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  return {
-    days,
-    hours,
-    minutes,
-    seconds,
-    text: `${days} Gün, ${hours} Saat, ${minutes} Dk, ${seconds} Sn`
-  };
+  return { days, hours, minutes, seconds, text: `${days} Gün Kaldı` };
 }
 
 // ==========================================================================
-// 1. ÜRÜNLER & TAHMİNİ TESLİMAT SÜRELERİ (3 Menü)
+// 1. ÜRÜNLER, STOKLAR & TAHMİNİ TESLİMAT SÜRELERİ (3 Menü)
 // ==========================================================================
+const INITIAL_STOCKS = {
+  "askolcer": 1,
+  "canim-cicim": 3,
+  "kahve-kacamagi": 5,
+  "gece-sohbeti": 7,
+  "sarilma-kuponu": 99,
+  "film-gecesi": 2,
+  "kahve-hediye": 10
+};
+
+// LocalStorage'dan Stok Durumunu Çek / Başlat
+function getProductStock(productId) {
+  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks") || "null");
+  if (savedStocks && typeof savedStocks[productId] !== "undefined") {
+    return savedStocks[productId];
+  }
+  return INITIAL_STOCKS[productId] || 5;
+}
+
+function decrementProductStock(productId, quantity) {
+  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks") || "null");
+  if (!savedStocks) {
+    savedStocks = { ...INITIAL_STOCKS };
+  }
+  const current = savedStocks[productId] || 0;
+  savedStocks[productId] = Math.max(0, current - quantity);
+  localStorage.setItem("site_product_stocks", JSON.stringify(savedStocks));
+}
+
 const PRODUCTS = [
   // 💖 1. Kategori: Aşk Menüsü
   {
@@ -60,8 +83,8 @@ const PRODUCTS = [
     unit: "₺",
     isCountdown: true,
     deliveryText: "8 Haziran 2029 ⏳",
-    badge: "Özel Geri Sayım 🔥",
-    description: "Aşkınızın derecesini %100 hassasiyetle ölçen ve 8 Haziran 2029'a doğru geri sayan sihirli cihaz.",
+    badge: "Çok Satan 🔥",
+    description: "Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı.",
     image: "assets/askolcer.svg"
   },
   {
@@ -73,7 +96,7 @@ const PRODUCTS = [
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "Özel Paket 🎁",
-    description: "İçerisinde sıcacık sarılmalar ve tatlı iltifatlar barındıran anında sevgi paketi.",
+    description: "İçerisinde sıcacık sarılmalar ve tatlı iltifatlar barındıran sevgi paketi.",
     image: "assets/canim-cicim.svg"
   },
 
@@ -87,7 +110,7 @@ const PRODUCTS = [
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "Keyif Vakti ☕",
-    description: "İstediğin zaman anında kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
+    description: "İstediğin zaman kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
     image: "assets/gift-coffee.svg"
   },
   {
@@ -125,7 +148,7 @@ const PRODUCTS = [
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "VIP Sinema 🍿",
-    description: "Filmi tamamen senin seçeceğin, atıştırmalıkların anında hazır olduğu sinema gecesi.",
+    description: "Filmi tamamen senin seçeceğin, atıştırmalıkların hazır olduğu sinema gecesi.",
     image: "assets/askolcer.svg"
   }
 ];
@@ -230,7 +253,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 5. KATEGORİ VE ÜRÜNLERİ RENDER ETME
+// 5. KATEGORİ VE ÜRÜNLERİ RENDER ETME (STOK GÖSTERİMİ DAHİL)
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -256,37 +279,44 @@ function renderProducts() {
 
   const items = PRODUCTS.filter(p => p.category === currentCategory);
 
-  grid.innerHTML = items.map(product => `
-    <div class="product-card">
-      <span class="product-badge">${product.badge}</span>
-      
-      <div class="product-image-wrap">
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
-      </div>
-      
-      <h3 class="product-title">${product.name}</h3>
-      <p class="product-desc">${product.description}</p>
-      
-      ${product.isCountdown ? `
-        <div class="countdown-box-card">
-          <span>⏳ 8 Haziran 2029 Geri Sayımı:</span>
-          <strong id="card-askolcer-timer">${getAskolcerDetailedRemaining().text}</strong>
-        </div>
-      ` : ''}
+  grid.innerHTML = items.map(product => {
+    const stock = getProductStock(product.id);
+    let stockDisplay = "";
+    let isOutOfStock = stock <= 0;
 
-      <div class="product-footer">
-        <div class="product-price">
-          <span class="price-tag">Teslimat: ${product.deliveryText}</span>
-          <span class="price-val">${product.price === 0 ? "Ücretsiz 💕" : product.price + " " + product.unit}</span>
+    if (stock > 10) {
+      stockDisplay = "📦 Stok: Bolca Mevcut ♾️";
+    } else if (stock > 0) {
+      stockDisplay = `📦 Stok: Son ${stock} Adet 🔥`;
+    } else {
+      stockDisplay = "💖 Tükendi (Sana Özel Hazırlanır)";
+    }
+
+    return `
+      <div class="product-card">
+        <span class="product-badge">${product.badge}</span>
+        
+        <div class="product-image-wrap">
+          <img src="${product.image}" alt="${product.name}" loading="lazy">
         </div>
         
-        <button class="btn-add-cart" data-id="${product.id}">
-          <span>Sepete Ekle</span>
-          <span>🛍️</span>
-        </button>
+        <h3 class="product-title">${product.name}</h3>
+        <p class="product-desc">${product.description}</p>
+        
+        <div class="product-footer">
+          <div class="product-stock-info">
+            <span class="delivery-tag">⏳ Teslimat: ${product.deliveryText}</span>
+            <span class="stock-badge ${stock <= 1 ? (isOutOfStock ? 'out' : 'low') : ''}">${stockDisplay}</span>
+          </div>
+          
+          <button class="btn-add-cart" data-id="${product.id}">
+            <span>Sepete Ekle</span>
+            <span>🛍️</span>
+          </button>
+        </div>
       </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 
   grid.querySelectorAll(".btn-add-cart").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -294,14 +324,6 @@ function renderProducts() {
     });
   });
 }
-
-// Canlı Saat Sayacı (Her saniye Aşkölçer sayacını günceller)
-setInterval(() => {
-  const timerEl = document.getElementById("card-askolcer-timer");
-  if (timerEl) {
-    timerEl.textContent = getAskolcerDetailedRemaining().text;
-  }
-}, 1000);
 
 // ==========================================================================
 // 6. SEPET İŞLEMLERİ
@@ -376,7 +398,7 @@ function updateCartUI() {
           
           <div class="cart-item-info">
             <div class="cart-item-title">${item.product.name}</div>
-            <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit} • ${item.product.deliveryText}</div>
+            <div class="cart-item-price">${item.product.deliveryText}</div>
           </div>
 
           <div class="cart-item-actions">
@@ -503,7 +525,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA AKIŞI (İSİM, NOT & FİŞ OLUŞTURMA)
+// 8. SİPARİŞ TAMAMLAMA (İSİM HATIRLAMA, STOK DÜŞME & FİŞ)
 // ==========================================================================
 
 function openCheckoutInfoModal() {
@@ -514,6 +536,16 @@ function openCheckoutInfoModal() {
 
   closeCartDrawer();
   const infoModal = document.getElementById("checkout-info-modal-overlay");
+  const nameInput = document.getElementById("customer-name-input");
+  const noteInput = document.getElementById("customer-note-input");
+
+  // İsim Hatırlama (LocalStorage'dan kayıtlı ismi yükle)
+  const savedCustomerName = localStorage.getItem("saved_customer_name") || "Minik Yıldızım";
+  if (nameInput) nameInput.value = savedCustomerName;
+
+  // Sipariş Notu Sıfırlama (Her siparişte sıfırdan boş gelsin)
+  if (noteInput) noteInput.value = "";
+
   if (infoModal) infoModal.classList.add("active");
   triggerHeartsShower();
 }
@@ -529,6 +561,17 @@ function finalizeOrder() {
 
   const customerName = (nameInput && nameInput.value.trim()) || "Minik Yıldızım";
   const customerNote = (noteInput && noteInput.value.trim()) || "";
+
+  // İsmi sıradaki siparişler için LocalStorage'a kaydet
+  localStorage.setItem("saved_customer_name", customerName);
+
+  // Alınan ürünlerin stoklarını düşür
+  cart.forEach(item => {
+    decrementProductStock(item.product.id, item.quantity);
+  });
+
+  // Ürün kartlarındaki stokları anında güncelle
+  renderProducts();
 
   closeCheckoutInfoModal();
 
@@ -560,7 +603,7 @@ function finalizeOrder() {
     if (receiptNoteRow) receiptNoteRow.style.display = "none";
   }
 
-  // Toplam Teslimat Süresi Hesaplama:
+  // Toplam Teslimat Süresi Hesaplama
   const hasAskolcer = cart.some(item => item.product.isCountdown === true);
   const remainingCountdown = getAskolcerDetailedRemaining();
 
@@ -581,9 +624,8 @@ function finalizeOrder() {
       <div class="receipt-item-block">
         <div class="receipt-item-row">
           <span><strong>${item.product.name}</strong> (x${item.quantity})</span>
-          <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
+          <span>${item.product.deliveryText}</span>
         </div>
-        <div class="receipt-item-delivery">⏳ Teslimat: ${item.product.isCountdown ? '8 Haziran 2029 (Özel Kavuşma Günü)' : 'Anında ⚡'}</div>
       </div>
     `).join("");
   }
