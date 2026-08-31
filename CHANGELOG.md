@@ -4,23 +4,23 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v9.0.0] - 31.08.2026 (Stok Azalma & Geri Yüklenme Sorunu Kökten Çözüldü: Telegram Cloud Engine) 🚀📦🔒✨
-- **Sorunun Kök Sebebi & Çözümü:**
-  - Önceki harici JSON servisinin (ExtendsClass) tarayıcıların gönderdiği HTTP OPTIONS (CORS preflight) isteklerine 500 hata kodu döndürdüğü ve bu yüzden tarayıcıdan gelen PUT/POST yazma isteklerini engellediği tespit edildi. Tarayıcı yazamadığı için 4 saniye sonraki GET isteği eski stoğu geri yüklüyordu.
-  - Harici güvensiz JSON servisi tamamen devreden çıkarıldı.
-  - %100 CORS uyumlu, sıfır kesintili ve anlık çalışan **Telegram Cloud Storage (Dedicated Pinned Message Engine)** altyapısına geçildi.
-  - Satın alım yapıldığında stok hem yerel hafızaya hem de Telegram bulutuna anında yazılır; sayfa yenilense veya telefondan girilse de kesinlikle geri yükselmez.
+### [v10.0.0] - 31.08.2026 (Sihirli Sahne Maksimum Dev Boyuta Çıkarıldı, Başlık/Çarpı/Sekmeler Temizlendi & Detaylar En Üst Seviyeye Taşındı) 🎬🌸🌵🌹⭐🐾✨
+- **Sade & Dev Sinematik Tiyatro:**
+  - Sihirli animasyon modalındaki üst başlık, sağ üstteki çarpı (`✕`) butonu ve alttaki tekrar oynat sekmesi tamamen kaldırıldı.
+  - Sadece dev animasyon sahnesi (`720px` genişlik, `440px` yükseklik) ve altta tek parça şık **"🏠 Ana Menüye Dön 💕"** butonu bırakıldı.
+- **Ultra Zenginleştirilmiş & Akıcı Animasyonlar:**
+  - 🌹 **Büyülü Aşk Gülü:** 440px sahnede yükselen kıvrımlı dal, damarlı yapraklar, katmerli kadife gonca, rüzgarda süzülen 8 adet dökülen gül yaprağı ve altın + yakut çift kelebek.
+  - 🌵 **Sevimli Kaktüs:** Saksıda parıldayan kalp madalyonu, sallanan gülen kaktüs gövdesi, kollarında açan çiçekler ve tepesinde açılan 12 yapraklı lotus çiçeği.
+  - ⭐ **Kozmik Kutup Yıldızı:** Gece gökyüzünde parlayan gülen hilal ay, kuyruklu yıldızın çizdiği dev 5 köşeli takımyıldız ve süpernova ışık patlaması.
+  - 🐾 **Minik Kedicik & Aşk Baloncukları:** Kuyruğunu ve kulaklarını sallayan büyük parlak gözlü siyah kedicik ve üflediği, içinde `💖` taşıyan ve tavanda altın konfetilerle patlayan gökkuşağı sabun baloncukları.
+- **Telegram Bot & README Güncellemeleri:**
+  - `README.md` ve `bot/telegram_bot.ps1` güncel 11 ürün, rozetler ve komutlara göre baştan düzenlendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
-### [v8.1.0] - 31.08.2026 (Gelişmiş Yapay Zeka Romantik Cümle Üreticisi & Dengeli Edebi Havuz) 🧠💌🌙✨
-- Yapay zeka romantik söz motoru sonsuz varyasyon üretecek şekilde genişletildi.
-
----
-
-### [v8.0.0] - 31.08.2026 (Sihirli Animasyon Menüsü Dev Ekrana Büyütüldü, Tüm Yazılar Temizlendi & Animasyonlar Ultra Detaylandırıldı) 🎬🌸🌵🌹⭐🐾✨
-- Dev ekrana büyütüldü ve yazılar temizlendi.
+### [v9.0.0] - 31.08.2026 (Stok Azalma & Geri Yüklenme Sorunu Kökten Çözüldü: Telegram Cloud Engine) 🚀📦🔒✨
+- Telegram bulut depolama motoru kuruldu.
 
 ---
 
