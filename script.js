@@ -6,9 +6,6 @@
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
 
-// ☁️ Canlı Bulut Stok API Uç Noktası (ExtendsClass JSON Storage)
-const CLOUD_STOCK_ENDPOINT = "https://extendsclass.com/api/json-storage/bin/bbaafac";
-
 // 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 Saat 09:00:00
 const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 9, 0, 0);
 
@@ -197,6 +194,8 @@ const PRODUCT_ALIASES = {
   "ozel-ses-kaydi": "ozel-ses-kaydi", "ses": "ozel-ses-kaydi"
 };
 
+const TELEGRAM_STORAGE_MSG_ID = 85;
+
 function getProductStock(productId) {
   const savedStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
@@ -205,18 +204,23 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme
+// ☁️ Buluttan Canlı Stokları Çekme (Telegram Cloud Storage)
 async function fetchCloudStocks() {
   try {
-    const res = await fetch(`${CLOUD_STOCK_ENDPOINT}?_t=${Date.now()}`);
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getChat?chat_id=${TELEGRAM_CHAT_ID}`;
+    const res = await fetch(url);
     if (res.ok) {
       const data = await res.json();
-      if (data && typeof data === "object" && typeof data.askolcer !== "undefined") {
-        const prevDataStr = localStorage.getItem("site_cloud_stocks_cache");
-        const newDataStr = JSON.stringify(data);
-        if (prevDataStr !== newDataStr) {
-          localStorage.setItem("site_cloud_stocks_cache", newDataStr);
-          renderProducts();
+      const rawText = data?.result?.pinned_message?.text;
+      if (rawText && rawText.startsWith("{")) {
+        const stocks = JSON.parse(rawText);
+        if (stocks && typeof stocks.askolcer !== "undefined") {
+          const prevDataStr = localStorage.getItem("site_cloud_stocks_cache");
+          const newDataStr = JSON.stringify(stocks);
+          if (prevDataStr !== newDataStr) {
+            localStorage.setItem("site_cloud_stocks_cache", newDataStr);
+            renderProducts();
+          }
         }
       }
     }
@@ -225,16 +229,21 @@ async function fetchCloudStocks() {
   }
 }
 
-// ☁️ Buluta Güncel Stokları Kaydetme (Atomik & Anlık)
+// ☁️ Buluta Güncel Stokları Kaydetme (Telegram Cloud Storage - %100 Kalıcı & Anlık)
 async function pushCloudStocks(updatedStocks) {
   try {
     localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(updatedStocks));
     renderProducts();
 
-    await fetch(CLOUD_STOCK_ENDPOINT, {
-      method: "PUT",
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/editMessageText`;
+    await fetch(url, {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedStocks)
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        message_id: TELEGRAM_STORAGE_MSG_ID,
+        text: JSON.stringify(updatedStocks)
+      })
     });
   } catch (err) {
     console.warn("Bulut stok güncellenemedi:", err);

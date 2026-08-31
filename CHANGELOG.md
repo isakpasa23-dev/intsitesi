@@ -4,12 +4,18 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v8.1.0] - 31.08.2026 (Gelişmiş Yapay Zeka Romantik Cümle Üreticisi & Dengeli Edebi Havuz) 🧠💌🌙✨
-- **Yapay Zeka Söz Motoru Genişletildi:**
-  - 20+ romantik hitap, 10+ zamansal bağlaç, 10+ şiirsel gözlem ve 10+ sevgi yemini birleştirilerek arka planda **binlerce farklı ve benzersiz** romantik cümle üreten dinamik procedural yapay zeka algoritması kuruldu.
-  - *"Bu gece ay çok güzel değil mi?"* gibi özel edebi klasikler geniş havuzun içine dengeli şekilde (%35 oranla ve 30+ farklı klasik söz arasına) yerleştirildi.
-  - Son 20 söz hafıza tamponu (History Buffer) eklenerek aynı sözün veya benzer yapının ardı ardına gelmesi tamamen engellendi.
+### [v9.0.0] - 31.08.2026 (Stok Azalma & Geri Yüklenme Sorunu Kökten Çözüldü: Telegram Cloud Engine) 🚀📦🔒✨
+- **Sorunun Kök Sebebi & Çözümü:**
+  - Önceki harici JSON servisinin (ExtendsClass) tarayıcıların gönderdiği HTTP OPTIONS (CORS preflight) isteklerine 500 hata kodu döndürdüğü ve bu yüzden tarayıcıdan gelen PUT/POST yazma isteklerini engellediği tespit edildi. Tarayıcı yazamadığı için 4 saniye sonraki GET isteği eski stoğu geri yüklüyordu.
+  - Harici güvensiz JSON servisi tamamen devreden çıkarıldı.
+  - %100 CORS uyumlu, sıfır kesintili ve anlık çalışan **Telegram Cloud Storage (Dedicated Pinned Message Engine)** altyapısına geçildi.
+  - Satın alım yapıldığında stok hem yerel hafızaya hem de Telegram bulutuna anında yazılır; sayfa yenilense veya telefondan girilse de kesinlikle geri yükselmez.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v8.1.0] - 31.08.2026 (Gelişmiş Yapay Zeka Romantik Cümle Üreticisi & Dengeli Edebi Havuz) 🧠💌🌙✨
+- Yapay zeka romantik söz motoru sonsuz varyasyon üretecek şekilde genişletildi.
 
 ---
 

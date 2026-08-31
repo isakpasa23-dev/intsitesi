@@ -1,10 +1,11 @@
 # ==============================================================================
 # AŞK KÖŞESİ - 7/24 TELEGRAM BOTU STOK YÖNETİCİSİ (PowerShell)
-# Bu betik arka planda çalışarak Telegram komutlarını dinler ve bulut stokları yönetir.
+# Bu betik arka planda çalışarak Telegram komutlarını dinler ve Telegram bulut stoklarını yönetir.
 # ==============================================================================
 
 $BotToken = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8"
-$CloudEndpoint = "https://extendsclass.com/api/json-storage/bin/bbaafac"
+$ChatId = "6497058542"
+$StorageMessageId = 85
 $LastUpdateId = 0
 
 $ProductAliases = @{
@@ -38,8 +39,12 @@ function Send-TgMessage($chatId, $text) {
 
 function Get-CloudStocks() {
     try {
-        $res = Invoke-RestMethod -Uri "$CloudEndpoint`?_t=$(Get-Date -UFormat %s)" -Method Get
-        return $res
+        $chatInfo = Invoke-RestMethod -Uri "https://api.telegram.org/bot$BotToken/getChat?chat_id=$ChatId" -Method Get
+        $pinnedText = $chatInfo.result.pinned_message.text
+        if ($pinnedText -and $pinnedText.StartsWith("{")) {
+            return ($pinnedText | ConvertFrom-Json)
+        }
+        return $InitialStocks
     } catch {
         return $InitialStocks
     }
@@ -47,8 +52,13 @@ function Get-CloudStocks() {
 
 function Set-CloudStocks($stocks) {
     try {
-        $body = $stocks | ConvertTo-Json
-        Invoke-RestMethod -Uri $CloudEndpoint -Method Put -Body $body -ContentType "application/json" | Out-Null
+        $cleanJson = $stocks | ConvertTo-Json -Compress
+        $editBody = @{
+            chat_id = $ChatId
+            message_id = $StorageMessageId
+            text = $cleanJson
+        } | ConvertTo-Json
+        Invoke-RestMethod -Uri "https://api.telegram.org/bot$BotToken/editMessageText" -Method Post -Body $editBody -ContentType "application/json" | Out-Null
         return $true
     } catch {
         return $false
