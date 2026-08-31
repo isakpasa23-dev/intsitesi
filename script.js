@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   'Seni Özledim' Menüsü, Sonsuz Stoklar & 8 Haziran 2029 Canlı Sayacı 🥺💖✨
+   'Seni Özledim' Menüsü, Fareyi İzleyen Sevimli Siyah Kedi 🐈‍⬛🐾✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -199,7 +199,7 @@ const PRODUCTS = [
     image: "assets/askolcer.svg"
   },
 
-  // 🥺 4. Kategori: Seni Özledim Menüsü (YENİ)
+  // 🥺 4. Kategori: Seni Özledim Menüsü
   {
     id: "goruntulu-arama",
     category: "ozlem",
@@ -630,7 +630,7 @@ function openCheckoutInfoModal() {
     return;
   }
 
-  // STOK KONTROLÜ: Sepetteki ürünlerin stok durumu geçerli mi?
+  // STOK KONTROLÜ
   for (let item of cart) {
     const currentStock = getProductStock(item.product.id);
     if (currentStock <= 0) {
@@ -688,10 +688,10 @@ function finalizeOrder() {
   const customerName = (nameInput && nameInput.value.trim()) || "Minik Yıldızım";
   const customerNote = (noteInput && noteInput.value.trim()) || "";
 
-  // İsmi sıradaki siparişler için LocalStorage'a kaydet
+  // İsmi kaydet
   localStorage.setItem("saved_customer_name", customerName);
 
-  // Alınan ürünlerin stoklarını düşür
+  // Stokları düşür
   cart.forEach(item => {
     decrementProductStock(item.product.id, item.quantity);
   });
@@ -726,15 +726,12 @@ function finalizeOrder() {
     if (receiptNoteRow) receiptNoteRow.style.display = "none";
   }
 
-  // Siparişte Aşkölçer var mı kontrol et
   lastCompletedOrderHasAskolcer = cart.some(item => item.product.isCountdown === true);
 
-  // Canlı Geri Sayımı Başlat
   if (receiptTimerInterval) clearInterval(receiptTimerInterval);
   updateReceiptLiveTimer();
   receiptTimerInterval = setInterval(updateReceiptLiveTimer, 1000);
 
-  // Ürünlerin Fişe Basılması
   if (receiptItemsList) {
     receiptItemsList.innerHTML = cart.map(item => `
       <div class="receipt-item-block">
@@ -746,7 +743,7 @@ function finalizeOrder() {
     `).join("");
   }
 
-  // Telegram Bildirimi Gönder
+  // Telegram Bildirimi
   let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
   telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n\n`;
   telegramOrderMsg += `📅 *Tarih:* ${today}\n\n`;
@@ -818,7 +815,87 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
+// 11. 🐈‍⬛ EKRANIN ALTINDA GEZEN VE FAREYİ İZLEYEN SİYAH KEDİ MOTORU
+// ==========================================================================
+function initScreenCat() {
+  const cat = document.getElementById("screen-cat-companion");
+  const bubble = document.getElementById("cat-speech-bubble");
+  if (!cat) return;
+
+  let catX = window.innerWidth / 2;
+  let targetX = window.innerWidth / 2;
+  let isMoving = false;
+  let speechTimeout = null;
+
+  const catPhrases = [
+    "Miyav! 🐾💕",
+    "Seni çok seviyorum! 🥰",
+    "Mırrr... 💖",
+    "İyi ki varsın minik yıldızım! ✨",
+    "Beni sevmene bayılıyorum! 🐈‍⬛",
+    "Pati dostun her zaman yanında! 🐾",
+    "Bugün çok tatlısın! 🌸"
+  ];
+
+  // Fare hareketini dinle
+  window.addEventListener("mousemove", (e) => {
+    targetX = Math.max(30, Math.min(window.innerWidth - 30, e.clientX));
+  });
+
+  // Mobil dokunmayı dinle
+  window.addEventListener("touchmove", (e) => {
+    if (e.touches && e.touches[0]) {
+      targetX = Math.max(30, Math.min(window.innerWidth - 30, e.touches[0].clientX));
+    }
+  }, { passive: true });
+
+  // Kedinin animasyon döngüsü (Smooth Physics)
+  function animateCat() {
+    const diff = targetX - catX;
+    const speed = 0.045; // Kedinin sakin takip hızı
+
+    if (Math.abs(diff) > 4) {
+      catX += diff * speed;
+      isMoving = true;
+      cat.classList.add("walking");
+
+      if (diff > 5) {
+        cat.classList.remove("facing-left");
+      } else if (diff < -5) {
+        cat.classList.add("facing-left");
+      }
+    } else {
+      isMoving = false;
+      cat.classList.remove("walking");
+    }
+
+    cat.style.left = `${catX}px`;
+    requestAnimationFrame(animateCat);
+  }
+
+  requestAnimationFrame(animateCat);
+
+  // Kediye tıklama / sevme etkileşimi
+  cat.addEventListener("click", () => {
+    cat.classList.add("purring");
+    setTimeout(() => cat.classList.remove("purring"), 450);
+
+    const phrase = catPhrases[Math.floor(Math.random() * catPhrases.length)];
+    if (bubble) {
+      bubble.textContent = phrase;
+      bubble.classList.add("active");
+      clearTimeout(speechTimeout);
+      speechTimeout = setTimeout(() => {
+        bubble.classList.remove("active");
+      }, 2500);
+    }
+
+    triggerHeartsShower();
+  });
+}
+
+// ==========================================================================
+// 12. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
 // ==========================================================================
 function openReviewModal() {
   const modal = document.getElementById("review-modal-overlay");
@@ -900,7 +977,7 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 12. ANİMASYONLAR
+// 13. ANİMASYONLAR
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -930,7 +1007,7 @@ function triggerHeartsShower() {
   const container = document.getElementById("heart-bg-container");
   if (!container) return;
 
-  const heartSymbols = ["💖", "💕", "✨", "⭐", "🥰", "🎉"];
+  const heartSymbols = ["💖", "💕", "✨", "⭐", "🥰", "🎉", "🐾"];
   
   for (let i = 0; i < 30; i++) {
     setTimeout(() => {
@@ -950,7 +1027,7 @@ function triggerHeartsShower() {
 }
 
 document.addEventListener("click", (e) => {
-  if (e.target.closest("button") || e.target.closest("input") || e.target.closest("a") || e.target.closest("textarea")) return;
+  if (e.target.closest("button") || e.target.closest("input") || e.target.closest("a") || e.target.closest("textarea") || e.target.closest("#screen-cat-companion")) return;
 
   const heart = document.createElement("div");
   heart.className = "click-heart";
@@ -966,7 +1043,7 @@ document.addEventListener("click", (e) => {
 });
 
 // ==========================================================================
-// 13. TÜM EVENT LISTENERS BAĞLANTILARI
+// 14. TÜM EVENT LISTENERS BAĞLANTILARI
 // ==========================================================================
 function setupAllEvents() {
   const navBrand = document.getElementById("nav-brand-btn");
@@ -1183,7 +1260,7 @@ function setupAllEvents() {
 }
 
 // ==========================================================================
-// 14. BAŞLAT
+// 15. BAŞLAT
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   loadCartFromStorage();
@@ -1191,4 +1268,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAllEvents();
   startBackgroundHearts();
   updateCartUI();
+  initScreenCat(); // Sevimli siyah kediyi başlat 🐈‍⬛
 });
