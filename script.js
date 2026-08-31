@@ -521,8 +521,8 @@ const invalidCodeMessages = [
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
-let currentRating = 5;
-let selectedLoveChip = "Sonsuz";
+let currentRating = 10;
+let selectedLoveChip = "Sonsuz ♾️";
 let currentCategory = "ask";
 let lastCompletedOrderHasAskolcer = false;
 
@@ -1400,11 +1400,16 @@ function setupAllEvents() {
   }
 
   const ratingDescriptions = {
-    1: "Biraz İlgiye İhtiyacımız Var 🥺",
-    2: "Daha Çok Sarılmalı! 💕",
-    3: "Çok Tatlı & Sevgi Dolu 🥰",
-    4: "Harika Bir Aşk Hizmeti! 💖",
-    5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
+    1: "1/10 - Birazcık İlgi & Şımartılma İstiyorum 🥺",
+    2: "2/10 - Daha Fazla Sarılmalı! 💕",
+    3: "3/10 - Tatlı Bir Başlangıç 🥰",
+    4: "4/10 - Kalbim Isınmaya Başladı 💖",
+    5: "5/10 - Sevgi Dozu Çok İyi 🌸",
+    6: "6/10 - Harika Bir Aşk Deneyimi! ✨",
+    7: "7/10 - Kalbimi Çaldın Bile! 😍",
+    8: "8/10 - Büyüleyici & Çok Romantik! 🌹",
+    9: "9/10 - Kusursuz Bir Aşk Masalı! 💫",
+    10: "10/10 - Sonsuz Aşk & Mükemmel Ötesi! 🌟"
   };
 
   if (starRating) {
@@ -1451,7 +1456,7 @@ function setupAllEvents() {
       });
 
       let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ GELDİ!* 💖\n\n`;
-      reviewMsg += `⭐ *Puan:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n\n`;
+      reviewMsg += `⭐ *Puan:* ${currentRating}/10 (${ratingDescriptions[currentRating]})\n\n`;
       reviewMsg += `🥰 *Sevgi Seviyesi:* ${selectedLoveChip}\n\n`;
       reviewMsg += `📝 *Not:* "${note}"\n\n`;
       reviewMsg += `📅 *Tarih:* ${today}`;

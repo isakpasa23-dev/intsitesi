@@ -4,23 +4,20 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v11.2.0] - 01.09.2026 (Penguenler Kaldırıldı, Yerine Aşk Mektubu & Hilal Ay Salıncağındaki Tavşancık Eklendi) 💌🌙🐰✨
-- **Animasyon Rotasyonu Güncellendi:**
-  - Penguenler sahneden kaldırıldı.
-  - Yerine 2 yeni büyüleyici ve romantik sahne eklendi:
-    - 💌 **Büyülü Aşk Mektubu & Kalp Havai Fişekleri:** Çırpınan melek kanatlarıyla süzülen pembe zarf, içinden yükselen aşk mektubu ve gökyüzüne fışkıran rengarenk kalp havai fişekleri.
-    - 🌙 **Hilal Ay Salıncağında Sevimli Tavşancık:** Altın yıldızlı iplerle asılı hilal ayda sallanan kulakları kıpırdayan sevimli beyaz tavşancık ve arkasında kalan ışıltılı yıldız tozu izi.
+### [v11.3.0] - 01.09.2026 (Site Değerlendirme Modalı 10 Kalp ve Özel Sevgi Seviyelerine Güncellendi) 💖🔟✨
+- **Değerlendirme Sistemi Genişletildi:**
+  - Puanlama 5 kalp yerine **10 kalp üzerinden** değerlendirilecek şekilde uyarlandı.
+  - Sevgi dereceleri güncellendi:
+    - `♾️ Sonsuz`
+    - `✨ Yıldızlar Kadar`
+    - `🏖️ Kum Taneleri Kadar`
+  - Özel not yazma alanı korundu ve Telegram bildirim şablonu 10 kalp üzerinden gelecek şekilde eşitlendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
-### [v11.1.0] - 01.09.2026 (Büyülü Aşk Gülü Çok Renkli, Katmerli & İncili Olarak Baştan Tasarlandı) 🌹✨💎🌸
-- Gül çiçeği çok renkli ve katmerli yapıldı.
-
----
-
-### [v11.0.0] - 01.09.2026 (Sihirli Sahneye 3 Yeni Büyü Eklendi + GPU & CPU Kökten Optimize Edildi) 🎬☕🧸🐧⚡❄️
-- 3 yeni animasyon ve performans optimizasyonu.
+### [v11.2.0] - 01.09.2026 (Penguenler Kaldırıldı, Yerine Aşk Mektubu & Hilal Ay Salıncağındaki Tavşancık Eklendi) 💌🌙🐰✨
+- Animasyonlar güncellendi.
 
 ---
 

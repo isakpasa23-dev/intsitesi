@@ -802,20 +802,23 @@ html, body {
 .star-rating {
   display: flex;
   justify-content: center;
-  gap: 0.35rem;
-  font-size: 1.6rem;
-  margin-bottom: 0.15rem;
+  align-items: center;
+  gap: 0.18rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.2rem;
   cursor: pointer;
+  flex-wrap: nowrap;
 }
 
 .star {
   opacity: 0.35;
   transition: transform 0.15s, opacity 0.15s;
+  user-select: none;
 }
 
 .star.active {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .rating-badge-text {
