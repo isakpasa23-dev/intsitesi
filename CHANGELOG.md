@@ -4,12 +4,20 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.6.0] - 31.08.2026 (Cihazlar Arası Canlı Bulut Stok Senkronizasyonu) ☁️📦✨
-- **Gerçek Zamanlı Bulut Stok Altyapısı:**
-  - Stoklar artık cihazların yerel tarayıcı önbelleğine hapsolmak yerine ortak bir **Bulut Veritabanı API'si** (`restful-api.dev`) üzerinden anlık olarak senkronize edilir.
-  - PC'den sipariş verilip Aşkölçer (veya başka bir ürün) tükendiğinde, telefondan giren kişi de stokların anında bittiğini görür.
-  - Sayfa açılışında ve arka planda her 10 saniyede bir canlı bulut stok senkronizasyonu çalışır.
+### [v2.7.0] - 31.08.2026 (60 FPS GPU Optimizasyonu & 1 Ekrana Tam Sığan Giriş Menüsü) 🚀📱✨
+- **1 Ekrana Tam Sığan Giriş Menüsü (Sıfır Kaydırma):**
+  - Giriş ekranı (`#view-menu`), boşluklar ve paddingler sıkıştırılarak 100vh / 100dvh yüksekliğe tam olarak oturtuldu.
+  - Giriş ekranındayken gereksiz dikey kaydırma çubuğu ve ekranı aşağı kaydırma ihtiyacı tamamen kaldırıldı.
+- **FPS ve Performans Optimizasyonu:**
+  - GPU'yu yoran ağır `backdrop-filter: blur` filtreleri kaldırıldı, hafif saydam arayüze geçildi.
+  - Arka plandaki uçuşan kalplerin eşzamanlı sayısı sınırlandırıldı.
+  - Kedi animasyon döngüsü yüksek FPS ile `translate3d` donanım hızlandırmalı hale getirildi; sepet ve pop-uplar açıkken kedi kasması engellendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.6.0] - 31.08.2026 (Cihazlar Arası Canlı Bulut Stok Senkronizasyonu) ☁️📦✨
+- Cihazlar arası eşzamanlı Bulut Canlı Stok Senkronizasyonu eklendi.
 
 ---
 

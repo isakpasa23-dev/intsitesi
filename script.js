@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Bulut Senkronizasyonlu Stoklar, Romantik Sürpriz Kodları & Siyah Kedi 🐈‍⬛☁️✨
+   Yüksek Performans / 60 FPS Optimize, Bulut Canlı Stoklar & 4 Bacaklı Kedi 🚀🐈‍⬛✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -105,7 +105,6 @@ const INITIAL_STOCKS = {
   "kahve-hediye": 2450
 };
 
-// Yerel önbellekten stok getirme
 function getProductStock(productId) {
   const savedStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
@@ -114,11 +113,11 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme (Tüm Cihazlar Eşzamanlı Görür)
+// ☁️ Buluttan Canlı Stokları Çekme (Arka Planda Sessiz Senkronizasyon)
 async function fetchCloudStocks() {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const timeoutId = setTimeout(() => controller.abort(), 3500);
 
     const res = await fetch(CLOUD_STOCK_ENDPOINT, {
       method: "GET",
@@ -134,7 +133,7 @@ async function fetchCloudStocks() {
       }
     }
   } catch (err) {
-    console.log("Bulut stok kontrolü (çevrimdışı/önbellek kullanılıyor):", err.message);
+    // Çevrimdışı / sessiz fallback
   }
 }
 
@@ -152,7 +151,7 @@ async function pushCloudStocks(updatedStocks) {
       })
     });
   } catch (err) {
-    console.warn("Bulut stok güncellenemedi:", err);
+    console.warn("Bulut stok kaydedilemedi:", err);
   }
 }
 
@@ -164,7 +163,6 @@ function decrementProductStock(productId, quantity) {
   const current = currentStocks[productId] || 0;
   currentStocks[productId] = Math.max(0, current - quantity);
   
-  // Hem yerel önbelleğe hem de buluta yaz
   pushCloudStocks(currentStocks);
 }
 
@@ -378,22 +376,24 @@ function loadCartFromStorage() {
 }
 
 // ==========================================================================
-// 5. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
+// 5. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router - 1 Ekrana Sığdırma Kontrollü)
 // ==========================================================================
 function switchView(viewName) {
   const menuView = document.getElementById("view-menu");
   const shopView = document.getElementById("view-shop");
 
   if (viewName === "shop") {
+    document.body.classList.remove("menu-mode");
     if (menuView) menuView.classList.remove("active");
     if (shopView) shopView.classList.add("active");
     filterCategory("ask");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
+    document.body.classList.add("menu-mode");
     if (shopView) shopView.classList.remove("active");
     if (menuView) menuView.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "instant" });
   }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ==========================================================================
@@ -618,7 +618,7 @@ function triggerBadgeBump() {
   const badge = document.getElementById("cart-badge");
   if (badge) {
     badge.classList.add("bump");
-    setTimeout(() => badge.classList.remove("bump"), 400);
+    setTimeout(() => badge.classList.remove("bump"), 300);
   }
 }
 
@@ -674,7 +674,6 @@ function showCouponAlert(message, type) {
 // ==========================================================================
 // 9. SİPARİŞ TAMAMLAMA AKIŞI (BULUT STOK GÜNCELLEMELİ)
 // ==========================================================================
-
 function openCheckoutInfoModal() {
   if (cart.length === 0) {
     showCouponAlert("Sepetinizde ürün bulunmuyor!", "error");
@@ -737,7 +736,7 @@ function finalizeOrder() {
 
   localStorage.setItem("saved_customer_name", customerName);
 
-  // Bulut ve yerel stokları anında düşür
+  // Bulut ve yerel stokları düşür
   cart.forEach(item => {
     decrementProductStock(item.product.id, item.quantity);
   });
@@ -836,7 +835,7 @@ async function downloadReceiptImage() {
     if (closeBtn) closeBtn.style.display = "none";
 
     const canvas = await html2canvas(receiptCard, {
-      scale: 2.5,
+      scale: 2.2,
       backgroundColor: "#ffffff",
       useCORS: true
     });
@@ -861,7 +860,7 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU
+// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU (60 FPS OPTİMİZE)
 // ==========================================================================
 function initScreenCat() {
   const cat = document.getElementById("screen-cat-companion");
@@ -871,7 +870,7 @@ function initScreenCat() {
 
   let catX = window.innerWidth / 2;
   let targetX = window.innerWidth / 2;
-  let currentFacing = 1; // 1: sağ, -1: sol
+  let currentFacing = 1;
   let speechTimeout = null;
   let lastUserActivity = Date.now();
 
@@ -886,14 +885,14 @@ function initScreenCat() {
   ];
 
   function setTarget(x) {
-    const maxX = Math.max(100, window.innerWidth - 65);
-    targetX = Math.max(20, Math.min(maxX, x));
+    const maxX = Math.max(80, window.innerWidth - 60);
+    targetX = Math.max(15, Math.min(maxX, x));
     lastUserActivity = Date.now();
   }
 
   window.addEventListener("mousemove", (e) => {
     setTarget(e.clientX - 25);
-  });
+  }, { passive: true });
 
   window.addEventListener("touchmove", (e) => {
     if (e.touches && e.touches[0]) {
@@ -909,7 +908,7 @@ function initScreenCat() {
 
   setInterval(() => {
     if (Date.now() - lastUserActivity > 4000) {
-      const randomX = 30 + Math.random() * (window.innerWidth - 90);
+      const randomX = 25 + Math.random() * (window.innerWidth - 80);
       targetX = randomX;
     }
   }, 4500);
@@ -918,18 +917,19 @@ function initScreenCat() {
     const diff = targetX - catX;
     const distance = Math.abs(diff);
 
-    if (distance > 3) {
-      if (diff > 3 && currentFacing !== 1) {
+    if (distance > 2.5) {
+      if (diff > 2.5 && currentFacing !== 1) {
         currentFacing = 1;
         flipWrap.classList.remove("facing-left");
         flipWrap.classList.add("facing-right");
-      } else if (diff < -3 && currentFacing !== -1) {
+      } else if (diff < -2.5 && currentFacing !== -1) {
         currentFacing = -1;
         flipWrap.classList.remove("facing-right");
         flipWrap.classList.add("facing-left");
       }
 
-      const speed = Math.min(Math.max(distance * 0.035, 1.0), 2.8);
+      // Yumuşak ve sabit hız
+      const speed = Math.min(Math.max(distance * 0.04, 1.2), 3.2);
       catX += Math.sign(diff) * speed;
       cat.classList.add("walking");
     } else {
@@ -945,7 +945,7 @@ function initScreenCat() {
 
   cat.addEventListener("click", () => {
     cat.classList.add("purring");
-    setTimeout(() => cat.classList.remove("purring"), 450);
+    setTimeout(() => cat.classList.remove("purring"), 400);
 
     const phrase = catPhrases[Math.floor(Math.random() * catPhrases.length)];
     if (bubble) {
@@ -954,7 +954,7 @@ function initScreenCat() {
       clearTimeout(speechTimeout);
       speechTimeout = setTimeout(() => {
         bubble.classList.remove("active");
-      }, 2500);
+      }, 2400);
     }
 
     triggerHeartsShower();
@@ -1009,7 +1009,6 @@ function openCartDrawer() {
   const drawer = document.getElementById("cart-drawer");
   if (overlay) overlay.classList.add("active");
   if (drawer) drawer.classList.add("active");
-  document.body.style.overflow = "hidden";
 }
 
 function closeCartDrawer() {
@@ -1017,7 +1016,6 @@ function closeCartDrawer() {
   const drawer = document.getElementById("cart-drawer");
   if (overlay) overlay.classList.remove("active");
   if (drawer) drawer.classList.remove("active");
-  document.body.style.overflow = "";
 }
 
 function openReceiptModal() {
@@ -1044,7 +1042,7 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 13. ANİMASYONLAR
+// 13. HAFİF ANİMASYONLAR (GPU DOSTU)
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -1054,42 +1052,45 @@ function startBackgroundHearts() {
 
   setInterval(() => {
     if (document.hidden) return;
+    // Maksimum 6 arka plan kalbi limiti (DOM şişmesini engeller)
+    if (container.children.length > 6) {
+      container.removeChild(container.firstChild);
+    }
 
     const heart = document.createElement("span");
     heart.className = "floating-heart-bg";
     heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-    heart.style.left = `${Math.random() * 100}vw`;
-    heart.style.animationDuration = `${6 + Math.random() * 8}s`;
-    heart.style.fontSize = `${0.9 + Math.random() * 1.2}rem`;
+    heart.style.left = `${Math.random() * 96}vw`;
+    heart.style.animationDuration = `${7 + Math.random() * 6}s`;
 
     container.appendChild(heart);
 
     setTimeout(() => {
       heart.remove();
-    }, 14000);
-  }, 1200);
+    }, 13000);
+  }, 1800);
 }
 
 function triggerHeartsShower() {
   const container = document.getElementById("heart-bg-container");
   if (!container) return;
 
-  const heartSymbols = ["💖", "💕", "✨", "⭐", "🥰", "🎉", "🐾"];
+  const heartSymbols = ["💖", "💕", "✨", "⭐", "🥰", "🐾"];
   
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 18; i++) {
     setTimeout(() => {
       const heart = document.createElement("span");
       heart.className = "floating-heart-bg";
       heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-      heart.style.left = `${Math.random() * 100}vw`;
-      heart.style.animationDuration = `${3 + Math.random() * 4}s`;
-      heart.style.fontSize = `${1.2 + Math.random() * 1.5}rem`;
+      heart.style.left = `${Math.random() * 95}vw`;
+      heart.style.animationDuration = `${3 + Math.random() * 3}s`;
+      heart.style.fontSize = `${1.1 + Math.random() * 1.3}rem`;
       heart.style.zIndex = "3000";
 
       container.appendChild(heart);
 
-      setTimeout(() => heart.remove(), 7000);
-    }, i * 70);
+      setTimeout(() => heart.remove(), 6000);
+    }, i * 80);
   }
 }
 
@@ -1106,7 +1107,7 @@ document.addEventListener("click", (e) => {
   heart.style.top = `${e.clientY}px`;
   
   document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 900);
+  setTimeout(() => heart.remove(), 800);
 });
 
 // ==========================================================================
@@ -1330,6 +1331,7 @@ function setupAllEvents() {
 // 15. BAŞLAT
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
+  document.body.classList.add("menu-mode");
   loadCartFromStorage();
   renderProducts();
   setupAllEvents();
@@ -1337,7 +1339,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
   initScreenCat();
 
-  // ☁️ Sayfa açıldığında ve her 10 saniyede bir bulut canlı stokları senkronize et
+  // ☁️ Sayfa açıldığında ve her 12 saniyede bir bulut canlı stokları senkronize et
   fetchCloudStocks();
-  setInterval(fetchCloudStocks, 10000);
+  setInterval(fetchCloudStocks, 12000);
 });
