@@ -17,20 +17,20 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 | :--- | :--- | :--- |
 | **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
 | **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
-| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle patron 50` veya `/ekle cigkofte 100` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle cay 50` veya `/ekle kralice 100` |
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
 ### 🏷️ Ürün Kısayolları (Komutlarda Kullanılan İsimler):
 - `askolcer` / `ask` ➔ **Aşkölçer** (Sadece 1 Adet - Tek & Özel Üretim 🔥)
 - `canim` / `canim-cicim` ➔ **Canım Cicim**
-- `kahve` / `kahve-kacamagi` ➔ **Baş Başa Kahve Kaçamağı**
+- `cay` / `çay` / `cay-kacagi` ➔ **Baş Başa Çay Kaçağı** (İnce Belli Çay 🫖)
 - `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (Acılı & Limonlu 🌯)
 - `gece` / `sohbet` ➔ **Gece Sohbeti & Şarkı**
-- `patron` / `kralice` / `patron-sensin` ➔ **Bugün Patron Sensin Kartı** (VIP Kraliçe 👑)
+- `kralice` / `kraliçe` / `patron` ➔ **Kraliçe** (VIP Kraliçe 👑)
 - `film` / `film-gecesi` ➔ **Film Seçme Hakkı**
-- `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama**
-- `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Sınırsız ♾️)
+- `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama** (Akıllı Telefon 📱)
+- `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Gerçek Sarılma Emojisi 🤗)
 - `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (Stüdyo Mikrofonu 🎙️)
 
 ---

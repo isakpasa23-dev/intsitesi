@@ -143,10 +143,10 @@ const INITIAL_STOCKS = {
 const PRODUCT_ALIASES = {
   "askolcer": "askolcer", "aşkölçer": "askolcer", "ask": "askolcer", "aşk": "askolcer",
   "canim-cicim": "canim-cicim", "canim": "canim-cicim", "canım": "canim-cicim",
-  "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi",
+  "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi", "cay": "kahve-kacamagi", "çay": "kahve-kacamagi", "cay-kacagi": "kahve-kacamagi",
   "cigkofte-ziyafeti": "cigkofte-ziyafeti", "cigkofte": "cigkofte-ziyafeti", "çiğköfte": "cigkofte-ziyafeti",
   "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti",
-  "patron-sensin": "patron-sensin", "patron": "patron-sensin", "kralice": "patron-sensin", "kraliçe": "patron-sensin",
+  "patron-sensin": "patron-sensin", "patron": "patron-sensin", "kralice": "patron-sensin", "kraliçe": "patron-sensin", "kralicem": "patron-sensin",
   "film-gecesi": "film-gecesi", "film": "film-gecesi",
   "goruntulu-arama": "goruntulu-arama", "goruntulu": "goruntulu-arama", "görüntülü": "goruntulu-arama",
   "ozlem-sarilmasi": "ozlem-sarilmasi", "ozlem": "ozlem-sarilmasi", "özlem": "ozlem-sarilmasi",
@@ -342,14 +342,14 @@ const PRODUCTS = [
   {
     id: "kahve-kacamagi",
     category: "keyif",
-    name: "Baş Başa Kahve Kaçamağı",
+    name: "Baş Başa Çay Kaçağı",
     price: 0,
     unit: "💖",
     isCountdown: false,
     deliveryText: "Anında ⚡",
-    badge: "Keyif Vakti ☕",
-    description: "İstediğin zaman kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
-    image: "assets/gift-coffee.svg"
+    badge: "Tavşan Kanı 🫖",
+    description: "İnce belli bardakta dumanı üstünde sıcacık çay ve tatlı sohbet garantili kupon.",
+    image: "assets/tea-glass.svg"
   },
   {
     id: "cigkofte-ziyafeti",
@@ -380,13 +380,13 @@ const PRODUCTS = [
   {
     id: "patron-sensin",
     category: "simartma",
-    name: "Bugün Patron Sensin Kartı",
+    name: "Kraliçe",
     price: 0,
     unit: "💖",
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "VIP Kraliçe 👑",
-    description: "Nereye gidileceğinden ne yapılacağına kadar günün bütün kararlarını senin vereceğin patronluk hakkı!",
+    description: "Günün bütün kararlarını kraliçemin vereceği, her istediğinin anında yapılacağı sınırsız yetki kartı!",
     image: "assets/crown-patron.svg"
   },
   {

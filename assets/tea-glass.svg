@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="teaRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eb4d4b"/>
+      <stop offset="60%" stop-color="#c0392b"/>
+      <stop offset="100%" stop-color="#781e14"/>
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="25%" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="75%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="saucerRed" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="20%" stop-color="#eb4d4b"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="80%" stop-color="#eb4d4b"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="teaShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff758c" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Parlama Dairesi -->
+  <circle cx="60" cy="60" r="54" fill="#fff5f5" stroke="#ffd1dc" stroke-width="2" filter="url(#teaShadow)"/>
+
+  <!-- Çay Tabağı (Geleneksel Kırmızı/Beyaz Desenli) -->
+  <ellipse cx="60" cy="94" rx="36" ry="10" fill="#f1f2f6" stroke="#dcdde1" stroke-width="1.5"/>
+  <ellipse cx="60" cy="93" rx="32" ry="7.5" fill="url(#saucerRed)"/>
+  <ellipse cx="60" cy="92" rx="20" ry="4" fill="#ffffff"/>
+
+  <!-- Çay Kaşığı (Gümüş) -->
+  <path d="M 72 88 L 92 68 C 95 65, 98 68, 95 71 L 76 92 Z" fill="#b2bec3"/>
+  <circle cx="94" cy="68" r="3.5" fill="#dfe6e9"/>
+
+  <!-- İnce Belli Çay Bardağı (Cam & Tavşan Kanı Çay) -->
+  <!-- Çay Sıvısı (Bardak İçinde) -->
+  <path d="M 44 48 C 44 64, 52 68, 52 74 C 52 82, 45 88, 48 90 C 51 92, 69 92, 72 90 C 75 88, 68 82, 68 74 C 68 68, 76 64, 76 48 Z" fill="url(#teaRed)"/>
+  
+  <!-- Çay Üstü Açık Ton / Işıltı -->
+  <ellipse cx="60" cy="48" rx="15" ry="3" fill="#ff7675" opacity="0.9"/>
+  <ellipse cx="60" cy="48" rx="12" ry="2" fill="#ffeaa7" opacity="0.7"/>
+
+  <!-- İnce Belli Bardak Cam Konturu -->
+  <path d="M 42 34 C 42 62, 51 68, 51 74 C 51 84, 44 89, 46 92 C 48 94, 72 94, 74 92 C 76 89, 69 84, 69 74 C 69 68, 78 62, 78 34 Z" fill="url(#glassGrad)" stroke="#dfe4ea" stroke-width="1.8"/>
+
+  <!-- Cam Ağız Çemberi -->
+  <ellipse cx="60" cy="34" rx="18" ry="3.5" fill="none" stroke="#dfe4ea" stroke-width="2"/>
+  
+  <!-- Cam Parlama Çizgisi (Sol) -->
+  <path d="M 45 40 C 45 58, 53 66, 53 72" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.8"/>
+
+  <!-- Yükselen Romantik Dumanlar ♨️💖 -->
+  <path d="M 54 28 Q 50 20 56 12" stroke="#ff758c" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.75"/>
+  <path d="M 64 28 Q 70 18 62 10" stroke="#ff758c" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.75"/>
+  
+  <!-- Kalp Dumanı -->
+  <g transform="translate(58, 6) scale(0.45)">
+    <path d="M 0 0 C -6 -10, -18 0, 0 16 C 18 0, 6 -10, 0 0 Z" fill="#ff1361" opacity="0.85"/>
+  </g>
+
+  <!-- Parıltılar ✨🫖 -->
+  <text x="14" y="38" font-size="14">🫖</text>
+  <text x="86" y="36" font-size="13">✨</text>
+  <text x="82" y="96" font-size="12">💖</text>
+</svg>

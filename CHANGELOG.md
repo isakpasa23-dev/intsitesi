@@ -4,16 +4,21 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.7.0] - 31.08.2026 (Görüntülü Arama İçin Telefon & Sarılma İçin Gerçek Emoji Simgesi) 📱🤗✨
-- **Görsel Değişiklikleri:**
-  - *"Anında Görüntülü Arama"* simgesi mektuptan akıllı telefon ve canlı görüntülü konuşma SVG ikonuna (`assets/phone-videocall.svg`) dönüştürüldü.
-  - *"Kavuşma & Özlem Sarılması"* simgesi açık kollarla sımsıkı sarılan, yanakları kızarmış gerçek sarılma emojisi (`🤗`) tasarımına (`assets/hug.svg`) dönüştürüldü.
+### [v3.8.0] - 31.08.2026 (Baş Başa Çay Kaçağı & Kraliçe Güncellemesi) 🫖👑✨
+- **İsim ve Görsel Değişiklikleri:**
+  - *"Baş Başa Kahve Kaçamağı"* ➔ **"Baş Başa Çay Kaçağı"** olarak değiştirildi. Görseli dumanı tüten geleneksel ince belli Türk çayı ve çay tabağı ikonuna (`assets/tea-glass.svg`) dönüştürüldü.
+  - *"Bugün Patron Sensin Kartı"* ➔ **"Kraliçe"** olarak güncellendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
+### [v3.7.0] - 31.08.2026 (Görüntülü Arama İçin Telefon & Sarılma İçin Gerçek Emoji Simgesi) 📱🤗✨
+- *"Anında Görüntülü Arama"* simgesi akıllı telefona, *"Kavuşma & Özlem Sarılması"* simgesi gerçek sarılma emojisine (`🤗`) dönüştürüldü.
+
+---
+
 ### [v3.6.0] - 31.08.2026 (Şımartma Menüsüne 'Bugün Patron Sensin Kartı' Eklendi) 👑✨
-- *"Sınırsız Sarılma Kuponu"* yerine Şımartma kategorisine "Bugün Patron Sensin Kartı" (`patron-sensin`) ve altın kraliçe tacı simgesi eklendi.
+- Şımartma kategorisine altın taç simgesi eklendi.
 
 ---
 
