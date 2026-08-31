@@ -1495,12 +1495,6 @@ function setupAllEvents() {
 // 15.1 🎨 SİHİRLİ SEVGİ & ANİMASYON BAHÇESİ (Detaylı & Tatlı Animasyon Motoru)
 // ==========================================================================
 const MAGIC_ANIM_LIST = ["cactus", "rose", "star", "cat_bubbles"];
-const MAGIC_ANIM_TITLES = {
-  "cactus": "🌵 Sevimli Kaktüs & Çiçek Açma 🌸",
-  "rose": "🌹 Senin İçin Açan Sonsuz Aşk Gülü 💖",
-  "star": "⭐ Gökyüzündeki En Parlak Kutup Yıldızım ✨",
-  "cat_bubbles": "🐾 Minik Kedicik & Aşk Baloncukları 🫧"
-};
 
 let currentMagicAnimIndex = 0;
 let magicAnimFrameId = null;
@@ -1543,11 +1537,6 @@ function playRandomMagicAnimation() {
   currentMagicAnimIndex = nextIdx;
 
   const animKey = MAGIC_ANIM_LIST[currentMagicAnimIndex];
-  const badgeEl = document.getElementById("magic-anim-title-badge");
-  if (badgeEl) {
-    badgeEl.textContent = MAGIC_ANIM_TITLES[animKey] || "✨ Sihirli Sevgi Gösterisi 💕";
-  }
-
   playCurrentMagicAnimation(animKey);
 }
 
@@ -1558,8 +1547,8 @@ function playCurrentMagicAnimation(animKey = null) {
 
   const rect = canvas.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
-  const stageW = rect.width || 520;
-  const stageH = rect.height || 310;
+  const stageW = rect.width || 580;
+  const stageH = rect.height || 360;
 
   canvas.width = stageW * dpr;
   canvas.height = stageH * dpr;
@@ -1937,32 +1926,47 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.arc(cx, currentStemY - 6, roseR * 0.16, 1.1 * Math.PI, 2.8 * Math.PI);
       ctx.stroke();
 
+      // Düşen Aşk Gül Yaprakları (Falling Rose Petals)
+      for (let i = 0; i < 6; i++) {
+        const px = cx + Math.sin(t * 0.0012 + i * 1.8) * (width * 0.38);
+        const py = ((t * 0.06 + i * 65) % height);
+        const prot = t * 0.0025 + i * 1.2;
+        ctx.save();
+        ctx.translate(px, py);
+        ctx.rotate(prot);
+        ctx.fillStyle = "rgba(255, 19, 97, 0.75)";
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 10, 5.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
       // Altın Parıltı Tozları
       if (Math.random() > 0.3) {
-        addSparkles(cx + (Math.random() - 0.5) * 60, currentStemY - 12 + (Math.random() - 0.5) * 50, 2, ["#ff1361", "#ffd700", "#ffffff", "#ff80ab"]);
+        addSparkles(cx + (Math.random() - 0.5) * 70, currentStemY - 15 + (Math.random() - 0.5) * 60, 2, ["#ff1361", "#ffd700", "#ffffff", "#ff80ab"]);
       }
 
       ctx.restore();
 
       // Gülün Etrafında Uçuşan Minik Aşk Kelebeği
       const bAngle = t * 0.0035;
-      const bDist = 65 + Math.sin(t * 0.004) * 15;
+      const bDist = 75 + Math.sin(t * 0.004) * 18;
       const bx = cx + Math.cos(bAngle) * bDist;
-      const by = currentStemY - 20 + Math.sin(bAngle * 2) * 20;
+      const by = currentStemY - 25 + Math.sin(bAngle * 2) * 22;
       const bFlap = Math.sin(t * 0.03);
 
       ctx.save();
       ctx.translate(bx, by);
       ctx.fillStyle = "#ffd700";
       ctx.shadowColor = "#ffd700";
-      ctx.shadowBlur = 8;
+      ctx.shadowBlur = 10;
       // Kelebek Sol Kanat
       ctx.beginPath();
-      ctx.ellipse(-7 * Math.abs(bFlap), -2, 8 * Math.abs(bFlap), 6, -0.3, 0, Math.PI * 2);
+      ctx.ellipse(-8 * Math.abs(bFlap), -2, 9 * Math.abs(bFlap), 7, -0.3, 0, Math.PI * 2);
       ctx.fill();
       // Kelebek Sağ Kanat
       ctx.beginPath();
-      ctx.ellipse(7 * Math.abs(bFlap), -2, 8 * Math.abs(bFlap), 6, 0.3, 0, Math.PI * 2);
+      ctx.ellipse(8 * Math.abs(bFlap), -2, 9 * Math.abs(bFlap), 7, 0.3, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }

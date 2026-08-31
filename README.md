@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları, geniş ekran otomatik sürprizli Sihirli Animasyon Bahçesi (Kawaii Kaktüs Çiçeği, Aşk Gülü & Kelebek, Kutup Yıldızı & Hilal Ay, Kedicik & Kalp Baloncukları) ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları, dev sinematik Sihirli Animasyon Bahçesi (Kawaii Kaktüs Çiçeği, Aşk Gülü & Uçuşan Yapraklar, Kutup Yıldızı & Hilal Ay, Kedicik & Kalp Baloncukları) ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
 
 ---
 
@@ -51,10 +51,10 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 
 ---
 
-## 🎨 Geniş Ekran Büyülü Animasyon Bahçesi 🌸✨
+## 🎨 Dev Sinematik Büyülü Animasyon Bahçesi 🌸✨
 
-Ana menüdeki **"Sihirli Sevgi Şöleni"** butonuna basıldığında açılan genişletilmiş, ultra tatlı animasyon sahnesi:
+Ana menüdeki **"Sihirli Sevgi Şöleni"** butonuna basıldığında açılan tamamen saf, yazısız, genişletilmiş dev animasyon sahnesi:
 - 🌵 **Sevimli Kaktüs & Çiçek Açma:** Pembe kurdeleli saksı, gülen tatlı yüz, kızaran yanaklar ve tepesinde pıt diye açan 10 yapraklı pembe kaktüs çiçeği.
-- 🌹 **Sonsuz Aşk Gülü & Kelebek:** Topraktan kıvrılarak yükselen aşk dalı, damarlı yapraklar, katmerli kadife kırmızı gül ve etrafında süzülen altın kelebek.
-- ⭐ **Kutup Yıldızı & Hilal Ay:** Gece gökyüzünde hilal ay eşliğinde kuyruklu yıldızın çizdiği parlayan altın yıldız ve kalp yağmuru.
-- 🐾 **Kedicik & Aşk Baloncukları:** Oturan sevimli siyah kedicik ve üflediği, içinde parlayan kalpler olan rengarenk sabun baloncukları.
+- 🌹 **Sonsuz Aşk Gülü & Uçuşan Yapraklar:** Ekranda süzülen gül yaprakları eşliğinde açan kadife kırmızı gül ve etrafında uçuşan parıldayan altın kelebek.
+- ⭐ **Kutup Yıldızı & Hilal Ay:** Gece gökyüzünde hilal ay eşliğinde kuyruklu yıldızın çizdiği parıldayan altın yıldız ve kalp yağmuru.
+- 🐾 **Kedicik & Aşk Baloncukları:** Kuyruğunu sallayan kedicik ve üflediği, içinde `💖` taşıyan gökkuşağı sabun baloncukları.
