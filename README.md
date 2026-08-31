@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; kesintisiz Telegram Cloud Storage stok senkronizasyonu, Telegram botu üzerinden canlı stok yönetimi, sonsuz yapay zeka romantik söz motoru, sürpriz sevgi kupon kodları, dev sinematik Sihirli Animasyon Sahnesi (Kawaii Kaktüs & Lotus Çiçeği, Büyülü Aşk Gülü & Çift Kelebek, Kutup Yıldızı & Süpernova Patlaması, Pati Kedicik & Aşk Baloncukları) ve 4 bacaklı yürüyen sevimli ekran kedisi barındıran tam teşekküllü romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; kesintisiz Telegram Cloud Storage stok senkronizasyonu, Telegram botu üzerinden canlı stok yönetimi, sonsuz yapay zeka romantik söz motoru, sürpriz sevgi kupon kodları, süper optimize dev sinematik Sihirli Animasyon Sahnesi (7 Farklı Romantik Büyü) ve 4 bacaklı yürüyen sevimli ekran kedisi barındıran tam teşekküllü romantik web uygulaması.
 
 ---
 
@@ -39,19 +39,6 @@ Telegram botunuza (`@Askkosesibot`) mesaj atarak sitedeki tüm ürün stokların
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
-### 🏷️ Ürün Kısayolları (Komutlarda Kullanılan İsimler):
-- `askolcer` / `ask` ➔ **Aşkölçer** (Sadece 1 Adet 🔥)
-- `canim` / `canim-cicim` ➔ **Canım Cicim**
-- `cay` / `çay` / `cay-kacagi` ➔ **Baş Başa Çay Kaçağı** (🫖)
-- `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (🌯)
-- `yuruyus` / `yürüyüş` / `beraber-yuruyus` ➔ **Beraber Yürüyüş** (👫 - Sınırsız ♾️)
-- `kralice` / `kraliçe` / `patron` ➔ **Kraliçe** (👑)
-- `film` / `film-gecesi` / `sinema` ➔ **Baş Başa Film** (🍿)
-- `kulaklik` / `kulaklık` / `tek-kulaklik` ➔ **Tek Kulaklık** (🎵)
-- `arama` / `goruntulu` / `goruntulu-arama` ➔ **Anında Arama** (📱)
-- `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (🤗)
-- `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (🎙️)
-
 ---
 
 ## 🏷️ Sitede Geçerli Sürpriz & Sevgi Kodları
@@ -69,10 +56,13 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 
 ---
 
-## 🎬 Dev Sinematik Büyülü Animasyon Bahçesi 🌸✨
+## 🎬 Dev Sinematik & Süper Optimize Büyülü Sevgi Sahnesi (7 Farklı Büyü) 🌸✨
 
-Ana menüdeki **"Sihirli Sevgi Şöleni"** butonuna basıldığında açılan, başlık ve buton kalabalığından tamamen arındırılmış dev (`720px` genişlik, `440px` yükseklik) sinematik animasyon sahnesi:
-- 🌵 **Sevimli Kaktüs & Lotus Çiçeği:** Pembe kurdeleli ve kalpli saksı, gülen gözler, pembe yanaklar, minik kollarda açan çiçekler ve tepesinde pıt diye açılan 12 yapraklı lotus çiçeği.
-- 🌹 **Büyülü Aşk Gülü & Çift Kelebek:** Bahçe toprağından yükselen kıvrımlı dal, damarlı yapraklar, kat kat kadife bordo/kırmızı gül, rüzgarda süzülen 8 adet gül yaprağı ve çevresinde uçuşan altın & yakut kelebekler.
-- ⭐ **Kozmik Kutup Yıldızı & Süpernova:** Gece gökyüzünde gülen hilal ay ve nebula bulutları eşliğinde kuyruklu yıldızın çizdiği parıldayan 5 köşeli takımyıldızı ve süpernova ışık patlaması.
-- 🐾 **Kedicik & Aşk Baloncukları:** Kuyruğunu ve kulaklarını sallayan büyük gözlü siyah kedicik ve üflediği, içinde `💖` taşıyan ve tavanda altın konfetilerle patlayan gökkuşağı sabun baloncukları.
+Bilgisayarı veya telefonu yormayan, 60 FPS kilitli ve GPU dostu 7 eşsiz görsel şölen:
+1. 🌵 **Sevimli Kaktüs & Lotus Çiçeği:** Pembe kurdeleli ve kalpli saksı, gülen gözler, kollarında açan çiçekler ve tepesinde açılan 12 yapraklı lotus çiçeği.
+2. 🌹 **Büyülü Aşk Gülü & Çift Kelebek:** Bahçe toprağından yükselen dal, damarlı yapraklar, kat kat kadife gül, dökülen gül yaprakları ve etrafta uçuşan çift kelebek.
+3. ⭐ **Kozmik Kutup Yıldızı & Süpernova:** Gece gökyüzünde gülen hilal ay ve nebula bulutları eşliğinde parıldayan takımyıldızı ve süpernova patlaması.
+4. 🐾 **Kedicik & Aşk Baloncukları:** Kuyruğunu ve kulaklarını sallayan siyah kedicik ve üflediği içinde `💖` taşıyan sabun baloncukları.
+5. ☕ **Aşk Kahvesi / Çayı & Kalp Buharı:** Masada tokuşan tatlı yüzlü pembe ve turkuaz kupalar, havada kalplere dönüşen ışıltılı aşk buharı.
+6. 🧸 **Uçan Kalp Balonları & Sevimli Ayıcık:** Pastel bulutların arasından renkli kalp balonlarına tutunarak süzülen kırmızı papyonlu sevimli peluş ayıcık.
+7. 🐧 **Kutup Işıkları & Aşk Penguenleri:** Dalgalanan yeşil/pembe Aurora Borealis altında birbirine parıldayan aşk çakıl taşı hediye eden tatlı kutup penguenleri.

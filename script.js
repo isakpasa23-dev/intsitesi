@@ -1542,9 +1542,17 @@ function setupAllEvents() {
 }
 
 // ==========================================================================
-// 15.1 🎨 SİHİRLİ SEVGİ & ANİMASYON BAHÇESİ (Detaylı & Tatlı Animasyon Motoru)
+// 15.1 🎨 SİHİRLİ SEVGİ & ANİMASYON BAHÇESİ (Yüksek Performanslı & 7 Büyülü Gösteri)
 // ==========================================================================
-const MAGIC_ANIM_LIST = ["cactus", "rose", "star", "cat_bubbles"];
+const MAGIC_ANIM_LIST = [
+  "cactus",
+  "rose",
+  "star",
+  "cat_bubbles",
+  "coffee_love",
+  "teddy_balloons",
+  "aurora_penguins"
+];
 
 let currentMagicAnimIndex = 0;
 let magicAnimFrameId = null;
@@ -1596,36 +1604,42 @@ function playCurrentMagicAnimation(animKey = null) {
   if (!canvas) return;
 
   const rect = canvas.getBoundingClientRect();
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // GPU aşırı yükünü engelleyen optimize DPR
   const stageW = rect.width || 700;
   const stageH = rect.height || 440;
 
-  canvas.width = stageW * dpr;
-  canvas.height = stageH * dpr;
+  canvas.width = Math.floor(stageW * dpr);
+  canvas.height = Math.floor(stageH * dpr);
 
   const ctx = canvas.getContext("2d");
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(dpr, dpr);
 
   const width = stageW;
   const height = stageH;
 
-  if (magicAnimFrameId) cancelAnimationFrame(magicAnimFrameId);
+  if (magicAnimFrameId) {
+    cancelAnimationFrame(magicAnimFrameId);
+    magicAnimFrameId = null;
+  }
 
   const startTime = Date.now();
+  let lastFrameTime = performance.now();
   const magicParticles = [];
 
-  function addSparkles(x, y, count = 3, colors = ["#ff1361", "#ffd700", "#ffffff", "#ff758c", "#a29bfe"]) {
+  function addSparkles(x, y, count = 2, colors = ["#ff1361", "#ffd700", "#ffffff", "#ff758c", "#a29bfe"]) {
+    if (magicParticles.length >= 30) return; // Parçacık havuz sınırı
     for (let i = 0; i < count; i++) {
       magicParticles.push({
-        x: x + (Math.random() - 0.5) * 28,
-        y: y + (Math.random() - 0.5) * 28,
-        vx: (Math.random() - 0.5) * 3.5,
-        vy: (Math.random() - 0.5) * 3.5 - 1.2,
-        size: Math.random() * 4 + 1.8,
+        x: x + (Math.random() - 0.5) * 26,
+        y: y + (Math.random() - 0.5) * 26,
+        vx: (Math.random() - 0.5) * 3,
+        vy: (Math.random() - 0.5) * 3 - 1,
+        size: Math.random() * 3.5 + 1.6,
         color: colors[Math.floor(Math.random() * colors.length)],
         alpha: 1,
-        decay: Math.random() * 0.016 + 0.01,
-        isHeart: Math.random() > 0.6
+        decay: Math.random() * 0.018 + 0.012,
+        isHeart: Math.random() > 0.65
       });
     }
   }
@@ -1643,12 +1657,10 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.save();
       ctx.globalAlpha = p.alpha;
       if (p.isHeart) {
-        ctx.font = `${Math.floor(p.size * 3.8)}px sans-serif`;
+        ctx.font = `${Math.floor(p.size * 3.5)}px sans-serif`;
         ctx.fillText("💖", p.x, p.y);
       } else {
         ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
@@ -1664,11 +1676,9 @@ function playCurrentMagicAnimation(animKey = null) {
     const growDur = 2700;
     const progress = Math.min(1, t / growDur);
     const ease = 1 - Math.pow(1 - progress, 3);
-
     const cx = width / 2;
     const groundY = height - 42;
 
-    // Zemin yumuşak pembe çim gölgesi
     ctx.save();
     ctx.fillStyle = "rgba(255, 175, 195, 0.35)";
     ctx.beginPath();
@@ -1676,13 +1686,11 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.fill();
     ctx.restore();
 
-    // Sevimli Saksı (Terracotta Pot with Heart & Ribbon)
     ctx.save();
     const potW = 90;
     const potH = 76;
     const potY = groundY - potH;
 
-    // Saksı Gövdesi
     ctx.fillStyle = "#ff7675";
     ctx.beginPath();
     ctx.moveTo(cx - potW / 2 + 10, groundY);
@@ -1692,23 +1700,17 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.closePath();
     ctx.fill();
 
-    // Saksı Kenar Şeridi (Ribbon & Rim)
     ctx.fillStyle = "#e84393";
     ctx.beginPath();
     ctx.roundRect(cx - potW / 2 - 8, potY, potW + 16, 20, 8);
     ctx.fill();
 
-    // Saksı Ortasındaki Parlayan Beyaz Kalp Rozeti
-    ctx.fillStyle = "#ffffff";
-    ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
-    ctx.shadowBlur = 8;
     ctx.font = "20px sans-serif";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("💖", cx, potY + 44);
     ctx.restore();
 
-    // Kaktüs Gövdesi (Saksıdan Yükselen Canlı Yeşil Gövde)
     const cactusH = 135 * ease;
     const cactusW = 64 * ease;
     const cactusY = potY - cactusH + 8;
@@ -1719,7 +1721,6 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.rotate(sway * 0.012);
     ctx.translate(-(cx + sway), -potY);
 
-    // Ana Gövde
     ctx.fillStyle = "#2ecc71";
     ctx.strokeStyle = "#27ae60";
     ctx.lineWidth = 3;
@@ -1728,7 +1729,6 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.fill();
     ctx.stroke();
 
-    // Kaktüs Boylam Çizgileri
     ctx.strokeStyle = "#27ae60";
     ctx.lineWidth = 2.5;
     ctx.beginPath();
@@ -1738,12 +1738,10 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.lineTo(cx + 14 * ease, potY);
     ctx.stroke();
 
-    // Yan Kollar (Waving Arms)
     if (progress > 0.35) {
       const armP = Math.min(1, (progress - 0.35) / 0.35);
       const armEase = 1 - Math.pow(1 - armP, 3);
 
-      // Sol Kol
       ctx.fillStyle = "#2ecc71";
       ctx.strokeStyle = "#27ae60";
       ctx.lineWidth = 3;
@@ -1752,13 +1750,11 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.fill();
       ctx.stroke();
 
-      // Sağ Kol
       ctx.beginPath();
       ctx.roundRect(cx + cactusW / 2 - 2 * armEase, cactusY + 30, 26 * armEase, 42 * armEase, 12);
       ctx.fill();
       ctx.stroke();
 
-      // Kolların Üzerindeki Minik Çiçekler
       if (armP > 0.7) {
         ctx.font = "14px sans-serif";
         ctx.fillText("🌸", cx - cactusW / 2 - 16 * armEase, cactusY + 38);
@@ -1766,33 +1762,28 @@ function playCurrentMagicAnimation(animKey = null) {
       }
     }
 
-    // Sevimli Kawaii Yüz (Büyük Işıltılı Gözler & Pembe Yanaklar)
     if (progress > 0.45) {
       const faceAlpha = Math.min(1, (progress - 0.45) / 0.3);
       ctx.globalAlpha = faceAlpha;
 
-      // Sol ve Sağ Göz
       ctx.fillStyle = "#2d3436";
       ctx.beginPath();
       ctx.arc(cx - 12, cactusY + cactusH * 0.42, 4.5, 0, Math.PI * 2);
       ctx.arc(cx + 12, cactusY + cactusH * 0.42, 4.5, 0, Math.PI * 2);
       ctx.fill();
 
-      // Göz Işıltıları
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
       ctx.arc(cx - 13.5, cactusY + cactusH * 0.42 - 1.5, 1.8, 0, Math.PI * 2);
       ctx.arc(cx + 10.5, cactusY + cactusH * 0.42 - 1.5, 1.8, 0, Math.PI * 2);
       ctx.fill();
 
-      // Sevimli Gülümseme
       ctx.strokeStyle = "#2d3436";
       ctx.lineWidth = 2.5;
       ctx.beginPath();
       ctx.arc(cx, cactusY + cactusH * 0.48, 6.5, 0.15 * Math.PI, 0.85 * Math.PI);
       ctx.stroke();
 
-      // Kızarmış Pembe Yanaklar
       ctx.fillStyle = "rgba(255, 107, 129, 0.85)";
       ctx.beginPath();
       ctx.arc(cx - 18, cactusY + cactusH * 0.50, 6, 0, Math.PI * 2);
@@ -1801,7 +1792,6 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.globalAlpha = 1;
     }
 
-    // Tepede Açan Katmerli Çiçek (Lotus Blooming Flower)
     if (progress > 0.6) {
       const flowerP = Math.min(1, (progress - 0.6) / 0.4);
       const flowerScale = 1 - Math.pow(1 - flowerP, 3);
@@ -1811,7 +1801,6 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.translate(cx, flowerY);
       ctx.scale(flowerScale, flowerScale);
 
-      // Dış Taç Yapraklar (12 Yapraklı Canlı Pembe Çiçek)
       ctx.fillStyle = "#ff758c";
       for (let i = 0; i < 12; i++) {
         ctx.save();
@@ -1822,7 +1811,6 @@ function playCurrentMagicAnimation(animKey = null) {
         ctx.restore();
       }
 
-      // İç Taç Yapraklar
       ctx.fillStyle = "#ff4081";
       for (let i = 0; i < 10; i++) {
         ctx.save();
@@ -1833,18 +1821,14 @@ function playCurrentMagicAnimation(animKey = null) {
         ctx.restore();
       }
 
-      // Altın Çiçek Göbeği
       ctx.fillStyle = "#ffd700";
-      ctx.shadowColor = "#ffd700";
-      ctx.shadowBlur = 14;
       ctx.beginPath();
       ctx.arc(0, 0, 11, 0, Math.PI * 2);
       ctx.fill();
-
       ctx.restore();
 
-      if (Math.random() > 0.3) {
-        addSparkles(cx + (Math.random() - 0.5) * 80, flowerY + (Math.random() - 0.5) * 60, 3, ["#ff758c", "#ffd700", "#ffffff", "#ff4081"]);
+      if (Math.random() > 0.4) {
+        addSparkles(cx + (Math.random() - 0.5) * 80, flowerY + (Math.random() - 0.5) * 60, 2, ["#ff758c", "#ffd700", "#ffffff"]);
       }
     }
 
@@ -1865,7 +1849,6 @@ function playCurrentMagicAnimation(animKey = null) {
     const stemHeight = (groundY - topY) * ease;
     const currentStemY = groundY - stemHeight;
 
-    // Bahçe Çimi ve Toprağı
     ctx.save();
     ctx.fillStyle = "#a8e6cf";
     ctx.beginPath();
@@ -1873,7 +1856,6 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.fill();
     ctx.restore();
 
-    // Kıvrımlı Yeşil Aşk Dalı (Curved Stem)
     ctx.save();
     ctx.strokeStyle = "#27ae60";
     ctx.lineWidth = 7;
@@ -1885,12 +1867,10 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.quadraticCurveTo(cpX, cpY, cx, currentStemY);
     ctx.stroke();
 
-    // Yapraklar ve Damarları
     if (progress > 0.3) {
       const leafP = Math.min(1, (progress - 0.3) / 0.35);
       const leafScale = 1 - Math.pow(1 - leafP, 3);
 
-      // Sol Yaprak
       ctx.save();
       ctx.translate(cx - 22 * leafScale, groundY - stemHeight * 0.42);
       ctx.rotate(-0.55);
@@ -1905,7 +1885,6 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.stroke();
       ctx.restore();
 
-      // Sağ Yaprak
       ctx.save();
       ctx.translate(cx + 24 * leafScale, groundY - stemHeight * 0.65);
       ctx.rotate(0.55);
@@ -1922,14 +1901,12 @@ function playCurrentMagicAnimation(animKey = null) {
     }
     ctx.restore();
 
-    // Katman Katman Açan Kadife Kırmızı Gül (Multi-Layer Rose Bloom)
     if (progress > 0.58) {
       const bloomP = Math.min(1, (progress - 0.58) / 0.42);
       const bloomEase = 1 - Math.pow(1 - bloomP, 3);
       const roseR = 48 * bloomEase;
 
       ctx.save();
-      // Çanak Yapraklar
       ctx.fillStyle = "#27ae60";
       for (let s = 0; s < 5; s++) {
         ctx.save();
@@ -1941,13 +1918,11 @@ function playCurrentMagicAnimation(animKey = null) {
         ctx.restore();
       }
 
-      // Dış Katman (Kadife Kırmızı Bordo)
       ctx.fillStyle = "#ad1457";
       ctx.beginPath();
       ctx.arc(cx, currentStemY - 8, roseR, 0, Math.PI * 2);
       ctx.fill();
 
-      // 2. Katman (Canlı Kırmızı Taç Yapraklar)
       ctx.fillStyle = "#d81b60";
       for (let p = 0; p < 7; p++) {
         ctx.save();
@@ -1959,7 +1934,6 @@ function playCurrentMagicAnimation(animKey = null) {
         ctx.restore();
       }
 
-      // 3. Katman (Parlak Aşk Pembesi Taç Yapraklar)
       ctx.fillStyle = "#ff1361";
       for (let p = 0; p < 6; p++) {
         ctx.save();
@@ -1971,7 +1945,6 @@ function playCurrentMagicAnimation(animKey = null) {
         ctx.restore();
       }
 
-      // Gülün İçi (Spiral Merkez)
       ctx.strokeStyle = "#880e4f";
       ctx.lineWidth = 3.5;
       ctx.beginPath();
@@ -1982,29 +1955,27 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.arc(cx, currentStemY - 8, roseR * 0.16, 1.1 * Math.PI, 2.8 * Math.PI);
       ctx.stroke();
 
-      // Düşen Aşk Gül Yaprakları (Falling Rose Petals across the big canvas)
-      for (let i = 0; i < 8; i++) {
+      // Düşen Aşk Gül Yaprakları
+      for (let i = 0; i < 6; i++) {
         const px = cx + Math.sin(t * 0.0012 + i * 1.6) * (width * 0.42);
-        const py = ((t * 0.065 + i * 55) % height);
+        const py = ((t * 0.065 + i * 65) % height);
         const prot = t * 0.0025 + i * 1.1;
         ctx.save();
         ctx.translate(px, py);
         ctx.rotate(prot);
         ctx.fillStyle = "rgba(255, 19, 97, 0.8)";
         ctx.beginPath();
-        ctx.ellipse(0, 0, 11, 6, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 0, 10, 5.5, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
 
-      // Altın Parıltı Tozları
-      if (Math.random() > 0.25) {
-        addSparkles(cx + (Math.random() - 0.5) * 90, currentStemY - 15 + (Math.random() - 0.5) * 80, 3, ["#ff1361", "#ffd700", "#ffffff", "#ff80ab"]);
+      if (Math.random() > 0.4) {
+        addSparkles(cx + (Math.random() - 0.5) * 80, currentStemY - 15 + (Math.random() - 0.5) * 60, 2, ["#ff1361", "#ffd700", "#ffffff"]);
       }
-
       ctx.restore();
 
-      // Gülün Etrafında Uçuşan 2 Minik Aşk Kelebeği (Altın & Yakut)
+      // Çift Kelebek
       const bAngle1 = t * 0.0035;
       const bx1 = cx + Math.cos(bAngle1) * (85 + Math.sin(t * 0.004) * 20);
       const by1 = currentStemY - 30 + Math.sin(bAngle1 * 2) * 26;
@@ -2013,8 +1984,6 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.save();
       ctx.translate(bx1, by1);
       ctx.fillStyle = "#ffd700";
-      ctx.shadowColor = "#ffd700";
-      ctx.shadowBlur = 10;
       ctx.beginPath();
       ctx.ellipse(-9 * Math.abs(bFlap1), -2, 10 * Math.abs(bFlap1), 8, -0.3, 0, Math.PI * 2);
       ctx.ellipse(9 * Math.abs(bFlap1), -2, 10 * Math.abs(bFlap1), 8, 0.3, 0, Math.PI * 2);
@@ -2029,8 +1998,6 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.save();
       ctx.translate(bx2, by2);
       ctx.fillStyle = "#ff758c";
-      ctx.shadowColor = "#ff758c";
-      ctx.shadowBlur = 8;
       ctx.beginPath();
       ctx.ellipse(-7 * Math.abs(bFlap2), -2, 8 * Math.abs(bFlap2), 6, -0.3, 0, Math.PI * 2);
       ctx.ellipse(7 * Math.abs(bFlap2), -2, 8 * Math.abs(bFlap2), 6, 0.3, 0, Math.PI * 2);
@@ -2049,42 +2016,35 @@ function playCurrentMagicAnimation(animKey = null) {
     const cy = height / 2 - 12;
     const r = 105;
 
-    // Arka Plan Gece Yıldızları & Nebula Parıltısı
     ctx.save();
-    const starBgCount = 28;
+    const starBgCount = 22;
     for (let i = 0; i < starBgCount; i++) {
       const bx = (Math.sin(i * 143.45) * 0.5 + 0.5) * width;
       const by = (Math.cos(i * 789.9) * 0.5 + 0.5) * height;
       const twinkle = (Math.sin(t * 0.005 + i) + 1) / 2;
       ctx.fillStyle = `rgba(255, 255, 255, ${0.35 + twinkle * 0.65})`;
       ctx.beginPath();
-      ctx.arc(bx, by, 2.2, 0, Math.PI * 2);
+      ctx.arc(bx, by, 2, 0, Math.PI * 2);
       ctx.fill();
     }
 
-    // Sağ Üst Köşedeki Hilal Ay (Smiling Crescent Moon)
     const moonX = width - 58;
     const moonY = 52;
     ctx.fillStyle = "#fff275";
-    ctx.shadowColor = "#fff275";
-    ctx.shadowBlur = 16;
     ctx.beginPath();
     ctx.arc(moonX, moonY, 24, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = "#fff4f7";
-    ctx.shadowBlur = 0;
     ctx.beginPath();
     ctx.arc(moonX - 9, moonY - 6, 21, 0, Math.PI * 2);
     ctx.fill();
 
-    // Ayın Sevimli Gözü
     ctx.fillStyle = "#f39c12";
     ctx.beginPath();
     ctx.arc(moonX + 8, moonY - 3, 2, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
-    // 5 Köşeli Yıldız Çizim Noktaları (0 -> 2 -> 4 -> 1 -> 3 -> 0)
     const order = [0, 2, 4, 1, 3, 0];
     const starPoints = [];
     for (let i = 0; i < 5; i++) {
@@ -2099,11 +2059,9 @@ function playCurrentMagicAnimation(animKey = null) {
 
     ctx.save();
     ctx.strokeStyle = "#f39c12";
-    ctx.lineWidth = 6.5;
+    ctx.lineWidth = 6;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.shadowColor = "#f1c40f";
-    ctx.shadowBlur = 20;
 
     ctx.beginPath();
     ctx.moveTo(starPoints[order[0]].x, starPoints[order[0]].y);
@@ -2125,35 +2083,28 @@ function playCurrentMagicAnimation(animKey = null) {
     }
     ctx.stroke();
 
-    // Çizim Yapan Parlak Kuyruklu Yıldız Ucu
     if (progress < 1) {
       ctx.fillStyle = "#ffffff";
-      ctx.shadowColor = "#ff1361";
-      ctx.shadowBlur = 24;
       ctx.beginPath();
-      ctx.arc(headX, headY, 10, 0, Math.PI * 2);
+      ctx.arc(headX, headY, 9, 0, Math.PI * 2);
       ctx.fill();
-      addSparkles(headX, headY, 5, ["#f1c40f", "#ff758c", "#ffffff", "#00cec9"]);
+      addSparkles(headX, headY, 3, ["#f1c40f", "#ff758c", "#ffffff"]);
     } else {
-      // Yıldız Tamamlandı: Süpernova Işık Patlaması & Kalp Yağmuru
       const pulse = (Math.sin((t - drawDur) / 200) + 1) / 2;
-      ctx.fillStyle = `rgba(254, 202, 87, ${0.45 + pulse * 0.4})`;
+      ctx.fillStyle = `rgba(254, 202, 87, ${0.4 + pulse * 0.35})`;
       ctx.beginPath();
       ctx.moveTo(starPoints[order[0]].x, starPoints[order[0]].y);
       for (let s = 1; s <= 5; s++) ctx.lineTo(starPoints[order[s]].x, starPoints[order[s]].y);
       ctx.closePath();
       ctx.fill();
 
-      // Merkezi Parlayan Güneş / Süpernova Işığı
       ctx.fillStyle = "#ffffff";
-      ctx.shadowColor = "#ffd700";
-      ctx.shadowBlur = 35;
       ctx.beginPath();
-      ctx.arc(cx, cy, 24 + pulse * 10, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 22 + pulse * 8, 0, Math.PI * 2);
       ctx.fill();
 
-      if (Math.random() > 0.2) {
-        addSparkles(cx + (Math.random() - 0.5) * 160, cy + (Math.random() - 0.5) * 160, 4, ["#f1c40f", "#ffffff", "#ff4b72", "#a29bfe"]);
+      if (Math.random() > 0.3) {
+        addSparkles(cx + (Math.random() - 0.5) * 140, cy + (Math.random() - 0.5) * 140, 3, ["#f1c40f", "#ffffff", "#ff4b72"]);
       }
     }
     ctx.restore();
@@ -2167,70 +2118,54 @@ function playCurrentMagicAnimation(animKey = null) {
     const cx = width / 2;
     const catY = height - 52;
 
-    // Yeni Sevgi Baloncuğu Üret
-    if (Math.random() > 0.88 && bubbles.length < 12) {
+    if (Math.random() > 0.9 && bubbles.length < 8) {
       bubbles.push({
-        x: cx + (Math.random() - 0.5) * 50,
+        x: cx + (Math.random() - 0.5) * 45,
         y: catY - 26,
-        r: Math.random() * 14 + 18,
-        speedY: Math.random() * 1.6 + 1.2,
+        r: Math.random() * 12 + 18,
+        speedY: Math.random() * 1.5 + 1.1,
         wobbleSpeed: Math.random() * 0.005 + 0.003,
-        color: ["#ff758c", "#00cec9", "#a29bfe", "#fd79a8", "#ffd700", "#ff9ff3"][Math.floor(Math.random() * 6)]
+        color: ["#ff758c", "#00cec9", "#a29bfe", "#fd79a8", "#ffd700"][Math.floor(Math.random() * 5)]
       });
     }
 
-    // Sevimli Siyah Kedi Çizimi (Büyük & Detaylı)
     ctx.save();
-    // Kedi Gövdesi
     ctx.fillStyle = "#1e272e";
     ctx.beginPath();
     ctx.ellipse(cx, catY + 16, 36, 26, 0, 0, Math.PI * 2);
     ctx.fill();
 
-    // Kedi Kafası
     ctx.beginPath();
     ctx.arc(cx, catY - 10, 25, 0, Math.PI * 2);
     ctx.fill();
 
-    // Kedi Kulakları
     ctx.beginPath();
-    ctx.moveTo(cx - 20, catY - 16);
-    ctx.lineTo(cx - 30, catY - 40);
-    ctx.lineTo(cx - 8, catY - 30);
+    ctx.moveTo(cx - 20, catY - 16); ctx.lineTo(cx - 30, catY - 40); ctx.lineTo(cx - 8, catY - 30);
     ctx.closePath();
     ctx.fill();
 
     ctx.beginPath();
-    ctx.moveTo(cx + 20, catY - 16);
-    ctx.lineTo(cx + 30, catY - 40);
-    ctx.lineTo(cx + 8, catY - 30);
+    ctx.moveTo(cx + 20, catY - 16); ctx.lineTo(cx + 30, catY - 40); ctx.lineTo(cx + 8, catY - 30);
     ctx.closePath();
     ctx.fill();
 
-    // Pembe Kulak İçi
     ctx.fillStyle = "#ff758c";
     ctx.beginPath();
-    ctx.moveTo(cx - 19, catY - 18);
-    ctx.lineTo(cx - 26, catY - 34);
-    ctx.lineTo(cx - 10, catY - 27);
+    ctx.moveTo(cx - 19, catY - 18); ctx.lineTo(cx - 26, catY - 34); ctx.lineTo(cx - 10, catY - 27);
     ctx.closePath();
     ctx.fill();
 
     ctx.beginPath();
-    ctx.moveTo(cx + 19, catY - 18);
-    ctx.lineTo(cx + 26, catY - 34);
-    ctx.lineTo(cx + 10, catY - 27);
+    ctx.moveTo(cx + 19, catY - 18); ctx.lineTo(cx + 26, catY - 34); ctx.lineTo(cx + 10, catY - 27);
     ctx.closePath();
     ctx.fill();
 
-    // Sevimli Büyük Turkuaz Gözler
     ctx.fillStyle = "#00d2d3";
     ctx.beginPath();
     ctx.arc(cx - 9, catY - 11, 6.5, 0, Math.PI * 2);
     ctx.arc(cx + 9, catY - 11, 6.5, 0, Math.PI * 2);
     ctx.fill();
 
-    // Gözbebekleri & Işıltı
     ctx.fillStyle = "#1e272e";
     ctx.beginPath();
     ctx.arc(cx - 9, catY - 11, 4, 0, Math.PI * 2);
@@ -2243,7 +2178,6 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.arc(cx + 7.5, catY - 13, 2, 0, Math.PI * 2);
     ctx.fill();
 
-    // Pembe Burun & Bıyıklar
     ctx.fillStyle = "#ff9ff3";
     ctx.beginPath();
     ctx.arc(cx, catY - 3, 2.8, 0, Math.PI * 2);
@@ -2258,10 +2192,9 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.moveTo(cx + 8, catY - 1); ctx.lineTo(cx + 26, catY + 4);
     ctx.stroke();
 
-    // Hareketli Kuyruk
     const tailWiggle = Math.sin(t * 0.005) * 15;
     ctx.strokeStyle = "#1e272e";
-    ctx.lineWidth = 7.5;
+    ctx.lineWidth = 7;
     ctx.lineCap = "round";
     ctx.beginPath();
     ctx.moveTo(cx + 28, catY + 20);
@@ -2269,14 +2202,12 @@ function playCurrentMagicAnimation(animKey = null) {
     ctx.stroke();
     ctx.restore();
 
-    // Baloncukları Güncelle ve Çiz
     for (let i = bubbles.length - 1; i >= 0; i--) {
       const b = bubbles[i];
       b.y -= b.speedY;
-      const bx = b.x + Math.sin(t * b.wobbleSpeed) * 16;
+      const bx = b.x + Math.sin(t * b.wobbleSpeed) * 18;
 
       ctx.save();
-      // Sabun Baloncuğu Gövdesi
       ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
       ctx.strokeStyle = b.color;
       ctx.lineWidth = 2;
@@ -2285,43 +2216,402 @@ function playCurrentMagicAnimation(animKey = null) {
       ctx.fill();
       ctx.stroke();
 
-      // Baloncuk İçi Kalp
       ctx.font = `${Math.floor(b.r * 1.1)}px sans-serif`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("💖", bx, b.y + 1);
 
-      // Baloncuk Işıltısı
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
       ctx.arc(bx - b.r * 0.35, b.y - b.r * 0.35, b.r * 0.22, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // Tavana Ulaşınca Patlat
       if (b.y < 35) {
-        addSparkles(bx, b.y, 5, [b.color, "#ffffff", "#ffd700"]);
+        addSparkles(bx, b.y, 4, [b.color, "#ffffff", "#ffd700"]);
         bubbles.splice(i, 1);
       }
     }
   }
 
-  // --- ANA ANİMASYON DÖNGÜSÜ ---
-  function loop() {
-    const elapsed = Date.now() - startTime;
-    ctx.clearRect(0, 0, width, height);
+  // =========================================================================
+  // 5. ☕ AŞK KAHVESİ / ÇAYI & KALP BUHARI (Two Cute Clinking Mugs & Steam)
+  // =========================================================================
+  function renderCoffeeLove(t) {
+    const growDur = 2500;
+    const progress = Math.min(1, t / growDur);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const cx = width / 2;
+    const tableY = height - 50;
 
-    if (selectedAnim === "cactus") {
-      renderKawaiiCactus(elapsed);
-    } else if (selectedAnim === "rose") {
-      renderBloomingRose(elapsed);
-    } else if (selectedAnim === "star") {
-      renderConstellationStar(elapsed);
-    } else if (selectedAnim === "cat_bubbles") {
-      renderCatBubbles(elapsed);
+    // Masa / Sehpa Örtüsü
+    ctx.save();
+    ctx.fillStyle = "#ffeaa7";
+    ctx.beginPath();
+    ctx.roundRect(cx - 160 * ease, tableY + 10, 320 * ease, 30, 15);
+    ctx.fill();
+    ctx.restore();
+
+    // Tokuşma Mesafesi Animasyonu
+    const clinkOffset = (1 - ease) * 80 + Math.sin(t * 0.004) * 4;
+
+    // Pembe Kupa (Sol)
+    const mug1X = cx - 45 - clinkOffset;
+    const mug1Y = tableY - 60;
+    ctx.save();
+    ctx.fillStyle = "#ff7675";
+    ctx.beginPath();
+    ctx.roundRect(mug1X - 30, mug1Y, 60, 65, [4, 4, 18, 18]);
+    ctx.fill();
+    // Kupa Kulpu
+    ctx.strokeStyle = "#ff7675";
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.arc(mug1X - 30, mug1Y + 30, 16, 0.5 * Math.PI, 1.5 * Math.PI);
+    ctx.stroke();
+    // Sevimli Yüz
+    ctx.fillStyle = "#2d3436";
+    ctx.beginPath();
+    ctx.arc(mug1X - 10, mug1Y + 28, 3, 0, Math.PI * 2);
+    ctx.arc(mug1X + 10, mug1Y + 28, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#2d3436";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(mug1X, mug1Y + 34, 4, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.stroke();
+    // Yanaklar
+    ctx.fillStyle = "#fd79a8";
+    ctx.beginPath();
+    ctx.arc(mug1X - 14, mug1Y + 34, 3.5, 0, Math.PI * 2);
+    ctx.arc(mug1X + 14, mug1Y + 34, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Turkuaz Kupa (Sağ)
+    const mug2X = cx + 45 + clinkOffset;
+    const mug2Y = tableY - 60;
+    ctx.save();
+    ctx.fillStyle = "#00cec9";
+    ctx.beginPath();
+    ctx.roundRect(mug2X - 30, mug2Y, 60, 65, [4, 4, 18, 18]);
+    ctx.fill();
+    // Kupa Kulpu
+    ctx.strokeStyle = "#00cec9";
+    ctx.lineWidth = 8;
+    ctx.beginPath();
+    ctx.arc(mug2X + 30, mug2Y + 30, 16, 1.5 * Math.PI, 0.5 * Math.PI);
+    ctx.stroke();
+    // Sevimli Yüz
+    ctx.fillStyle = "#2d3436";
+    ctx.beginPath();
+    ctx.arc(mug2X - 10, mug2Y + 28, 3, 0, Math.PI * 2);
+    ctx.arc(mug2X + 10, mug2Y + 28, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#2d3436";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(mug2X, mug2Y + 34, 4, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.stroke();
+    // Yanaklar
+    ctx.fillStyle = "#ff7675";
+    ctx.beginPath();
+    ctx.arc(mug2X - 14, mug2Y + 34, 3.5, 0, Math.PI * 2);
+    ctx.arc(mug2X + 14, mug2Y + 34, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Yükselen Aşk Buharı & Kalpler
+    for (let i = 0; i < 5; i++) {
+      const steamP = ((t * 0.05 + i * 50) % 220);
+      const sy = mug1Y - steamP;
+      const sx = cx + Math.sin(t * 0.003 + i) * 35;
+      const alpha = Math.max(0, 1 - steamP / 220);
+
+      ctx.save();
+      ctx.globalAlpha = alpha * 0.85;
+      ctx.font = `${16 + i * 3}px sans-serif`;
+      ctx.textAlign = "center";
+      ctx.fillText(i % 2 === 0 ? "💖" : "✨", sx, sy);
+      ctx.restore();
     }
 
-    updateParticles();
+    if (Math.random() > 0.45) {
+      addSparkles(cx + (Math.random() - 0.5) * 90, tableY - 120, 2, ["#ff7675", "#00cec9", "#ffd700"]);
+    }
+  }
+
+  // =========================================================================
+  // 6. 🧸 UÇAN KALP BALONLARI & SEVİMLİ AYICIK (Teddy & Heart Balloons)
+  // =========================================================================
+  function renderTeddyBalloons(t) {
+    const cx = width / 2;
+    const floatY = height * 0.48 + Math.sin(t * 0.003) * 18;
+    const balloonCenterY = floatY - 120;
+
+    // Arka Plan Yumuşak Bulutlar
+    ctx.save();
+    ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
+    for (let c = 0; c < 4; c++) {
+      const cloudX = ((t * 0.02 + c * 180) % (width + 120)) - 60;
+      const cloudY = 50 + c * 40;
+      ctx.beginPath();
+      ctx.arc(cloudX, cloudY, 22, 0, Math.PI * 2);
+      ctx.arc(cloudX + 18, cloudY - 8, 26, 0, Math.PI * 2);
+      ctx.arc(cloudX + 38, cloudY, 20, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // 5 Renkli Kalp Balon Demeti
+    const balloonColors = ["#ff7675", "#fd79a8", "#a29bfe", "#74b9ff", "#ffeaa7"];
+    const balloonOffsets = [
+      { x: -38, y: -25, r: 24, c: balloonColors[0] },
+      { x: 38, y: -25, r: 24, c: balloonColors[1] },
+      { x: -18, y: -50, r: 26, c: balloonColors[2] },
+      { x: 18, y: -50, r: 26, c: balloonColors[3] },
+      { x: 0, y: -75, r: 28, c: balloonColors[4] }
+    ];
+
+    ctx.save();
+    // İpler
+    ctx.strokeStyle = "rgba(200, 180, 190, 0.7)";
+    ctx.lineWidth = 1.5;
+    balloonOffsets.forEach(b => {
+      ctx.beginPath();
+      ctx.moveTo(cx + b.x, balloonCenterY + b.y + 15);
+      ctx.lineTo(cx, floatY - 10);
+      ctx.stroke();
+    });
+
+    // Balonlar
+    balloonOffsets.forEach(b => {
+      ctx.save();
+      ctx.translate(cx + b.x, balloonCenterY + b.y);
+      ctx.fillStyle = b.c;
+      ctx.font = `${Math.floor(b.r * 1.8)}px sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("💖", 0, 0);
+      ctx.restore();
+    });
+    ctx.restore();
+
+    // Sevimli Ayıcık Çizimi
+    ctx.save();
+    const bearX = cx;
+    const bearY = floatY + 20;
+
+    // Ayıcık Gövdesi
+    ctx.fillStyle = "#b08d57";
+    ctx.beginPath();
+    ctx.ellipse(bearX, bearY + 16, 26, 30, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Ayıcık Kafası
+    ctx.beginPath();
+    ctx.arc(bearX, bearY - 14, 22, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Kulaklar
+    ctx.beginPath();
+    ctx.arc(bearX - 16, bearY - 30, 9, 0, Math.PI * 2);
+    ctx.arc(bearX + 16, bearY - 30, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#e0a96d";
+    ctx.beginPath();
+    ctx.arc(bearX - 16, bearY - 30, 5, 0, Math.PI * 2);
+    ctx.arc(bearX + 16, bearY - 30, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Yüz & Burun
+    ctx.beginPath();
+    ctx.ellipse(bearX, bearY - 10, 11, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#2d3436";
+    ctx.beginPath();
+    ctx.arc(bearX - 7, bearY - 18, 2.5, 0, Math.PI * 2);
+    ctx.arc(bearX + 7, bearY - 18, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.ellipse(bearX, bearY - 12, 3.5, 2.5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Kırmızı Papyon
+    ctx.fillStyle = "#e84393";
+    ctx.font = "16px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("🎀", bearX, bearY + 2);
+
+    // Kollar (İpi Tutan Kollar)
+    ctx.fillStyle = "#b08d57";
+    ctx.beginPath();
+    ctx.ellipse(bearX - 14, bearY, 7, 14, -0.6, 0, Math.PI * 2);
+    ctx.ellipse(bearX + 14, bearY, 7, 14, 0.6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    if (Math.random() > 0.4) {
+      addSparkles(cx + (Math.random() - 0.5) * 110, floatY + (Math.random() - 0.5) * 90, 2, ["#ffeaa7", "#fd79a8", "#ffffff"]);
+    }
+  }
+
+  // =========================================================================
+  // 7. 🐧 KUTUP IŞIKLARI & AŞK PENGUENLERİ (Aurora Borealis & Penguins)
+  // =========================================================================
+  function renderAuroraPenguins(t) {
+    const cx = width / 2;
+    const groundY = height - 40;
+
+    // Kutup Işıkları (Aurora Borealis Dalgaları)
+    ctx.save();
+    for (let a = 0; a < 3; a++) {
+      const grad = ctx.createLinearGradient(0, 0, width, height * 0.5);
+      if (a === 0) {
+        grad.addColorStop(0, "rgba(85, 239, 196, 0.35)");
+        grad.addColorStop(1, "rgba(129, 236, 236, 0)");
+      } else if (a === 1) {
+        grad.addColorStop(0, "rgba(162, 155, 254, 0.3)");
+        grad.addColorStop(1, "rgba(253, 121, 168, 0)");
+      } else {
+        grad.addColorStop(0, "rgba(116, 185, 255, 0.35)");
+        grad.addColorStop(1, "rgba(85, 239, 196, 0)");
+      }
+
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      for (let x = 0; x <= width; x += 30) {
+        const wave = Math.sin(t * 0.002 + x * 0.01 + a * 2) * 35 + 80 + a * 30;
+        ctx.lineTo(x, wave);
+      }
+      ctx.lineTo(width, 0);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Karlı Tepe
+    ctx.save();
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.ellipse(cx, groundY + 20, 160, 45, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // İki Sevimli Penguen Çizimi
+    function drawPenguin(px, py, facing, hasHeart) {
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.scale(facing, 1);
+
+      // Gövde
+      ctx.fillStyle = "#2d3436";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 18, 28, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Beyaz Göbek
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.ellipse(3, 3, 11, 20, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Göz
+      ctx.fillStyle = "#2d3436";
+      ctx.beginPath();
+      ctx.arc(6, -14, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(5.2, -15, 1, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gaga
+      ctx.fillStyle = "#fdcb6e";
+      ctx.beginPath();
+      ctx.moveTo(9, -12); ctx.lineTo(17, -10); ctx.lineTo(9, -8);
+      ctx.closePath();
+      ctx.fill();
+
+      // Kızarmış Yanak
+      ctx.fillStyle = "#ff7675";
+      ctx.beginPath();
+      ctx.arc(4, -9, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Minik Yüzgeçler
+      ctx.fillStyle = "#2d3436";
+      ctx.beginPath();
+      ctx.ellipse(-12, 0, 5, 14, 0.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ayaklar
+      ctx.fillStyle = "#fdcb6e";
+      ctx.beginPath();
+      ctx.ellipse(-4, 26, 6, 3.5, 0, 0, Math.PI * 2);
+      ctx.ellipse(6, 26, 6, 3.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Aşk Çakıl Taşı / Kalp Hediyesi
+      if (hasHeart) {
+        ctx.font = "18px sans-serif";
+        ctx.fillText("💎", 15, -4);
+      }
+      ctx.restore();
+    }
+
+    const p1Wiggle = Math.sin(t * 0.004) * 2;
+    const p2Wiggle = Math.cos(t * 0.004) * 2;
+
+    drawPenguin(cx - 24, groundY - 14 + p1Wiggle, 1, true);
+    drawPenguin(cx + 24, groundY - 14 + p2Wiggle, -1, false);
+
+    // Aralarında Yükselen Parlayan Kalpler
+    const heartFloat = (t * 0.04) % 120;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, 1 - heartFloat / 120);
+    ctx.font = "24px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("💖", cx, groundY - 45 - heartFloat);
+    ctx.restore();
+
+    if (Math.random() > 0.4) {
+      addSparkles(cx + (Math.random() - 0.5) * 120, groundY - 70, 2, ["#55efc4", "#a29bfe", "#ffeaa7", "#ffffff"]);
+    }
+  }
+
+  // --- ANA ANİMASYON DÖNGÜSÜ (60 FPS Limiti & Sıfır GPU Yükü) ---
+  function loop(timestamp) {
+    if (!lastFrameTime) lastFrameTime = timestamp;
+    const delta = timestamp - lastFrameTime;
+
+    // 60 FPS'e sabitleyerek aşırı CPU/GPU ısınmasını engelle
+    if (delta >= 15.8) {
+      lastFrameTime = timestamp - (delta % 15.8);
+      const elapsed = Date.now() - startTime;
+      ctx.clearRect(0, 0, width, height);
+
+      if (selectedAnim === "cactus") {
+        renderKawaiiCactus(elapsed);
+      } else if (selectedAnim === "rose") {
+        renderBloomingRose(elapsed);
+      } else if (selectedAnim === "star") {
+        renderConstellationStar(elapsed);
+      } else if (selectedAnim === "cat_bubbles") {
+        renderCatBubbles(elapsed);
+      } else if (selectedAnim === "coffee_love") {
+        renderCoffeeLove(elapsed);
+      } else if (selectedAnim === "teddy_balloons") {
+        renderTeddyBalloons(elapsed);
+      } else if (selectedAnim === "aurora_penguins") {
+        renderAuroraPenguins(elapsed);
+      }
+
+      updateParticles();
+    }
 
     magicAnimFrameId = requestAnimationFrame(loop);
   }
