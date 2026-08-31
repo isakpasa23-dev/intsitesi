@@ -425,7 +425,7 @@ const PRODUCTS = [
     deliveryText: "Anında ⚡",
     badge: "Sıcacık 🫂",
     description: "İlk buluşmada dakikalarca sürecek, kokunu içine çeke çeke sımsıkı sarılma garantisi.",
-    image: "assets/canim-cicim.svg"
+    image: "assets/hug.svg"
   },
   {
     id: "ozel-ses-kaydi",

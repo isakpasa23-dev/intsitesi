@@ -4,10 +4,15 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.3.0] - 31.08.2026 (Özel Aşk Ses Kaydı İçin Stüdyo Mikrofonu Görseli) 🎙️🎶✨
+### [v3.4.0] - 31.08.2026 (Kavuşma ve Özlem Sarılması İçin Sarılma Emojisi Görseli) 🫂💖✨
 - **Görsel Değişikliği:**
-  - *"Özel Aşk Ses Kaydı & Şarkı"* ürününün simgesi kahve fincanından özel olarak tasarlanmış müzik notalı romantik stüdyo mikrofonu SVG ikonuna (`assets/microphone.svg`) dönüştürüldü.
+  - *"Kavuşma & Özlem Sarılması"* ürününün simgesi hediye kutusundan sımsıkı sarılan sevimli karakterler ve aşk kalpleri içeren özel sarılma SVG ikonuna (`assets/hug.svg`) dönüştürüldü.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v3.3.0] - 31.08.2026 (Özel Aşk Ses Kaydı İçin Stüdyo Mikrofonu Görseli) 🎙️🎶✨
+- *"Özel Aşk Ses Kaydı & Şarkı"* ürününün simgesi kahve fincanından müzik notalı romantik stüdyo mikrofonu SVG ikonuna (`assets/microphone.svg`) dönüştürüldü.
 
 ---
 
@@ -23,16 +28,6 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ### [v3.0.0] - 31.08.2026 (Yapay Zeka Destekli Tatlı Söz Motoru & Samimi Özneler) 🤖💌🚀✨
 - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle dinamik yapay zeka romantik söz motoru eklendi.
-
----
-
-### [v2.9.1] - 31.08.2026 (ExtendsClass JSON Depolama & Anlık Senkronizasyon) 🚀☁️📦
-- Limitsiz ExtendsClass JSON API'sine geçildi.
-
----
-
-### [v2.9.0] - 31.08.2026 (Telegram Botu Üzerinden Canlı Stok Yönetimi) 🤖☁️📦✨
-- `/stok`, `/set`, `/ekle`, `/cikar`, `/sifirla` komutları eklendi.
 
 ---
 
