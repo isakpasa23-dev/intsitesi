@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; canlı 10.08.2026 Aşk Sayacı, Eğlence & Hatıra Köşesi (Bugün Ne Yapıyoruz Çarkı, Pati ile Kalp Yakalama Oyunu, Fotoğraf Eklenebilir Polaroid Albümü), kesintisiz Telegram Cloud Storage stok senkronizasyonu, Telegram botu üzerinden canlı stok yönetimi, sonsuz yapay zeka romantik söz motoru, sürpriz sevgi kupon kodları, süper optimize dev sinematik Sihirli Animasyon Sahnesi (8 Farklı Romantik Büyü) ve 4 bacaklı yürüyen sevimli ekran kedisi barındıran tam teşekküllü romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı 10.08.2026 Aşk Sayacı, Eğlence & Hatıra Köşesi (Bugün Ne Yapıyoruz Çarkı, Faremizi Takip Eden Kedicikle Kalp Toplama Oyunu, Fotoğraf Eklenebilir Polaroid Albümü), kesintisiz Telegram Cloud Storage stok senkronizasyonu, Telegram botu üzerinden canlı stok yönetimi, sonsuz yapay zeka romantik söz motoru, sürpriz sevgi kupon kodları, süper optimize dev sinematik Sihirli Animasyon Sahnesi (8 Farklı Romantik Büyü) ve 4 bacaklı yürüyen sevimli ekran kedisi barındıran tam teşekküllü romantik web uygulaması.
 
 ---
 
@@ -15,12 +15,16 @@ Minik yıldızıma özel olarak tasarlanmış; canlı 10.08.2026 Aşk Sayacı, E
 
 ---
 
-## 🎡 Aşk & Hatıra Köşesi (Yeni Özellikler)
+## 🎡 Aşk & Hatıra Köşesi
 1. **🎲 Bugün Ne Yapıyoruz? (Aşk Çarkıfeleği):**
    - Kararsız kalındığında tek tıkla dönen ve sürpriz romantik aktivite belirleyen çark (*Sımsıkı Sarılma, Kahve/Çay Molası, Romantik Film Gecesi, El Ele Yürüyüş, Özel Masaj, Çiğköfte Ziyafeti, İsmail YK Dansı, 5 Yeni Sevgi Cümlesi*).
    - Tek tıkla seçilen aktiviteyi Telegram'dan sevgiline gönderme butonu!
-2. **🎮 Pati ile Kalp Yakalama Oyunu:**
-   - Gökyüzünden süzülen parıltılı kalpleri ve elmasları yakalayarak puan topladığın, süre sayaçlı ve yüksek skor kayıtlı 60 FPS mini oyun.
+2. **🎮 Kedicikle Kalp & Yıldız Toplama Oyunu:**
+   - Fareyi veya parmağı takip eden sevimli siyah kedi ile gökyüzünden düşenleri yakalama oyunu:
+     - ⭐ **Yıldızlar:** `+2 Puan`
+     - 💖 **Kalpler:** `+1 Puan`
+     - 💔 **Kırık Kalpler:** `-1 Puan`
+     - 💣 **Bombalar:** `-2 Puan`
 3. **📸 Polaroid Hatıra Albümü & Fotoğraf Ekleme:**
    - Galeriden anında fotoğraf seçip, başlık ve aşk notu yazarak polaroid çerçevesinde albüme ekleme imkanı (Kalıcı `localStorage` hafızası).
 
