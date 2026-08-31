@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cupGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758c" />
+      <stop offset="100%" stop-color="#ff1361" />
+    </linearGradient>
+  </defs>
+  <!-- Tabak -->
+  <ellipse cx="50" cy="80" rx="35" ry="8" fill="#ffd1dc" stroke="#ff8da1" stroke-width="2"/>
+  <!-- Kupa -->
+  <path d="M25 35 L30 72 C30 78, 70 78, 70 72 L75 35 Z" fill="url(#cupGrad)" />
+  <!-- Kulp -->
+  <path d="M72 42 C85 42, 85 62, 70 64" fill="none" stroke="#ff4b72" stroke-width="5" stroke-linecap="round" />
+  <!-- Kahve Yüzeyi -->
+  <ellipse cx="50" cy="36" rx="25" ry="7" fill="#6f4e37" />
+  <!-- Köpük Kalp -->
+  <path d="M50 33 C50 33, 46 29, 43 32 C40 35, 42 38, 50 42 C58 38, 60 35, 57 32 C54 29, 50 33, 50 33 Z" fill="#fff5eb" />
+  <!-- Buhar Kalbi -->
+  <path d="M47 22 C47 22, 45 18, 43 20 C41 22, 42 24, 47 27 C52 24, 53 22, 51 20 C49 18, 47 22, 47 22 Z" fill="#ff758c" opacity="0.7">
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,-8; 0,0" dur="2.5s" repeatCount="indefinite" />
+  </path>
+</svg>
