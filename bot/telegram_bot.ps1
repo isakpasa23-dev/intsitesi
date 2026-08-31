@@ -1,0 +1,131 @@
+# ==============================================================================
+# AŞK KÖŞESİ - 7/24 TELEGRAM BOTU STOK YÖNETİCİSİ (PowerShell)
+# Bu betik arka planda çalışarak Telegram komutlarını dinler ve bulut stokları yönetir.
+# ==============================================================================
+
+$BotToken = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8"
+$CloudEndpoint = "https://api.restful-api.dev/objects/ff808181a058d43f01a059350dc504dd"
+$LastUpdateId = 0
+
+$ProductAliases = @{
+    "askolcer" = "askolcer"; "aşkölçer" = "askolcer"; "ask" = "askolcer"; "aşk" = "askolcer"
+    "canim-cicim" = "canim-cicim"; "canim" = "canim-cicim"; "canım" = "canim-cicim"
+    "kahve-kacamagi" = "kahve-kacamagi"; "kahve" = "kahve-kacamagi"
+    "gece-sohbeti" = "gece-sohbeti"; "gece" = "gece-sohbeti"; "sohbet" = "gece-sohbeti"
+    "sarilma-kuponu" = "sarilma-kuponu"; "sarilma" = "sarilma-kuponu"; "sarılma" = "sarilma-kuponu"
+    "film-gecesi" = "film-gecesi"; "film" = "film-gecesi"
+    "goruntulu-arama" = "goruntulu-arama"; "goruntulu" = "goruntulu-arama"; "görüntülü" = "goruntulu-arama"
+    "ozlem-sarilmasi" = "ozlem-sarilmasi"; "ozlem" = "ozlem-sarilmasi"; "özlem" = "ozlem-sarilmasi"
+    "ozel-ses-kaydi" = "ozel-ses-kaydi"; "ses" = "ozel-ses-kaydi"
+}
+
+$InitialStocks = @{
+    "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "gece-sohbeti" = 12580
+    "sarilma-kuponu" = 9999999; "film-gecesi" = 3745; "goruntulu-arama" = 8650
+    "ozlem-sarilmasi" = 9999999; "ozel-ses-kaydi" = 7890; "kahve-hediye" = 2450
+}
+
+function Send-TgMessage($chatId, $text) {
+    try {
+        $body = @{ chat_id = $chatId; text = $text; parse_mode = "Markdown" } | ConvertTo-Json
+        Invoke-RestMethod -Uri "https://api.telegram.org/bot$BotToken/sendMessage" -Method Post -Body $body -ContentType "application/json" | Out-Null
+    } catch {
+        Write-Host "Mesaj gönderilemedi: $_"
+    }
+}
+
+function Get-CloudStocks() {
+    try {
+        $res = Invoke-RestMethod -Uri $CloudEndpoint -Method Get
+        return $res.data
+    } catch {
+        return $InitialStocks
+    }
+}
+
+function Set-CloudStocks($stocks) {
+    try {
+        $body = @{ name = "AskKosesiStocks"; data = $stocks } | ConvertTo-Json
+        Invoke-RestMethod -Uri $CloudEndpoint -Method Put -Body $body -ContentType "application/json" | Out-Null
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+Write-Host "🤖 Aşk Köşesi Telegram Botu Başlatıldı... Komutlar bekleniyor!" -ForegroundColor Magenta
+
+while ($true) {
+    try {
+        $url = "https://api.telegram.org/bot$BotToken/getUpdates?offset=$($LastUpdateId + 1)&timeout=10"
+        $updates = Invoke-RestMethod -Uri $url -Method Get
+        
+        if ($updates.result) {
+            foreach ($u in $updates.result) {
+                $LastUpdateId = $u.update_id
+                $msg = $u.message
+                if (-not $msg -or -not $msg.text) { continue }
+                
+                $text = $msg.text.Trim()
+                $chatId = $msg.chat.id
+                Write-Host "📩 Gelen Komut: $text (Chat ID: $chatId)" -ForegroundColor Cyan
+                
+                if ($text -in @("/stok", "/stoklar", "/start", "/yardim")) {
+                    $stocks = Get-CloudStocks
+                    $m = "📦 *GÜNCEL CANLI STOK DURUMU* 📦`n`n"
+                    $m += "• 🔥 *Aşkölçer* (`askolcer`): *$($stocks.askolcer) Adet*`n"
+                    $m += "• 🎁 *Canım Cicim* (`canim`): *$($stocks.'canim-cicim') Adet*`n"
+                    $m += "• ☕ *Kahve Kaçamağı* (`kahve`): *$($stocks.'kahve-kacamagi') Adet*`n"
+                    $m += "• 🌙 *Gece Sohbeti* (`gece`): *$($stocks.'gece-sohbeti') Adet*`n"
+                    $m += "• 💖 *Sınırsız Sarılma* (`sarilma`): *Sınırsız ♾️*`n"
+                    $m += "• 🍿 *Film Gecesi* (`film`): *$($stocks.'film-gecesi') Adet*`n"
+                    $m += "• 📱 *Görüntülü Arama* (`goruntulu`): *$($stocks.'goruntulu-arama') Adet*`n"
+                    $m += "• 🫂 *Özlem Sarılması* (`ozlem`): *Sınırsız ♾️*`n"
+                    $m += "• 🎙️ *Ses Kaydı* (`ses`): *$($stocks.'ozel-ses-kaydi') Adet*`n`n"
+                    $m += "✍️ *Komutlar:*`n"
+                    $m += "• `/set askolcer 1` ➔ Stoğu 1 yap`n"
+                    $m += "• `/ekle askolcer 1` ➔ Stoğa 1 ekle`n"
+                    $m += "• `/cikar askolcer 1` ➔ Stoktan 1 düşür`n"
+                    $m += "• `/sifirla` ➔ Tüm stokları sıfırla"
+                    Send-TgMessage $chatId $m
+                }
+                elseif ($text -match "^/(set|ayar)\s+([^\s]+)\s+(\d+)$") {
+                    $key = $Matches[2].ToLower()
+                    $qty = [int]$Matches[3]
+                    $pId = if ($ProductAliases.ContainsKey($key)) { $ProductAliases[$key] } else { $key }
+                    
+                    $stocks = Get-CloudStocks
+                    $stocks.$pId = $qty
+                    Set-CloudStocks $stocks
+                    Send-TgMessage $chatId "✅ *$pId* stoğu başarıyla *$qty Adet* olarak ayarlandı! ✨"
+                }
+                elseif ($text -match "^/ekle\s+([^\s]+)\s+(\d+)$") {
+                    $key = $Matches[1].ToLower()
+                    $qty = [int]$Matches[2]
+                    $pId = if ($ProductAliases.ContainsKey($key)) { $ProductAliases[$key] } else { $key }
+                    
+                    $stocks = Get-CloudStocks
+                    $stocks.$pId = [int]($stocks.$pId) + $qty
+                    Set-CloudStocks $stocks
+                    Send-TgMessage $chatId "✅ *$pId* stoğuna +$qty eklendi! Yeni Stok: *$($stocks.$pId) Adet* 📦"
+                }
+                elseif ($text -match "^/(cikar|çıkar)\s+([^\s]+)\s+(\d+)$") {
+                    $key = $Matches[2].ToLower()
+                    $qty = [int]$Matches[3]
+                    $pId = if ($ProductAliases.ContainsKey($key)) { $ProductAliases[$key] } else { $key }
+                    
+                    $stocks = Get-CloudStocks
+                    $stocks.$pId = [Math]::Max(0, [int]($stocks.$pId) - $qty)
+                    Set-CloudStocks $stocks
+                    Send-TgMessage $chatId "🔻 *$pId* stoğundan -$qty düşüldü! Kalan Stok: *$($stocks.$pId) Adet* 📦"
+                }
+                elseif ($text -in @("/sifirla", "/sıfırla")) {
+                    Set-CloudStocks $InitialStocks
+                    Send-TgMessage $chatId "🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı!* (Aşkölçer: 1 Adet) 🔥"
+                }
+            }
+        }
+    } catch {
+        Start-Sleep -Seconds 2
+    }
+}

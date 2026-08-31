@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Gerçek Sepete Eklenen Samimi Sürpriz Hediyeler & 4 Bacaklı Kedi 🎁💋🐾✨
+   Telegram Botu ile Canlı Stok Yönetimi, Bulut Senkronizasyonu & Kedi 🤖☁️📦✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -15,6 +15,7 @@ const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 9, 0, 0);
 // Fiş Canlı Sayacı Timer ID'si
 let receiptTimerInterval = null;
 let lastQuoteIndex = -1;
+let telegramLastUpdateId = 0;
 
 // ==========================================================================
 // 1. ZENGİN GÜNÜN TATLI SÖZÜ HAVUZU (26+ Özel Söz)
@@ -58,14 +59,14 @@ function getRandomQuote() {
 }
 
 // Telegram Bildirim Fonksiyonu
-async function sendTelegramNotification(messageText) {
+async function sendTelegramNotification(messageText, customChatId = null) {
   try {
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
     await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
+        chat_id: customChatId || TELEGRAM_CHAT_ID,
         text: messageText,
         parse_mode: "Markdown"
       })
@@ -108,6 +109,35 @@ const INITIAL_STOCKS = {
   "sonsuz-sevgi-hediye": 9999999
 };
 
+// Ürün Kodları ve Takma Adları (Telegram Botu İçin)
+const PRODUCT_ALIASES = {
+  "askolcer": "askolcer",
+  "aşkölçer": "askolcer",
+  "ask": "askolcer",
+  "aşk": "askolcer",
+  "canim-cicim": "canim-cicim",
+  "canim": "canim-cicim",
+  "canım": "canim-cicim",
+  "kahve-kacamagi": "kahve-kacamagi",
+  "kahve": "kahve-kacamagi",
+  "gece-sohbeti": "gece-sohbeti",
+  "gece": "gece-sohbeti",
+  "sohbet": "gece-sohbeti",
+  "sarilma-kuponu": "sarilma-kuponu",
+  "sarilma": "sarilma-kuponu",
+  "sarılma": "sarilma-kuponu",
+  "film-gecesi": "film-gecesi",
+  "film": "film-gecesi",
+  "goruntulu-arama": "goruntulu-arama",
+  "goruntulu": "goruntulu-arama",
+  "görüntülü": "goruntulu-arama",
+  "ozlem-sarilmasi": "ozlem-sarilmasi",
+  "ozlem": "ozlem-sarilmasi",
+  "özlem": "ozlem-sarilmasi",
+  "ozel-ses-kaydi": "ozel-ses-kaydi",
+  "ses": "ozel-ses-kaydi"
+};
+
 function getProductStock(productId) {
   const savedStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
@@ -136,7 +166,7 @@ async function fetchCloudStocks() {
       }
     }
   } catch (err) {
-    // Çevrimdışı / sessiz fallback
+    // Sessiz fallback
   }
 }
 
@@ -153,6 +183,7 @@ async function pushCloudStocks(updatedStocks) {
         data: updatedStocks
       })
     });
+    renderProducts();
   } catch (err) {
     console.warn("Bulut stok kaydedilemedi:", err);
   }
@@ -167,6 +198,118 @@ function decrementProductStock(productId, quantity) {
   currentStocks[productId] = Math.max(0, current - quantity);
   
   pushCloudStocks(currentStocks);
+}
+
+// ==========================================================================
+// 3. TELEGRAM BOTU İLE CANLI STOK YÖNETİMİ 🤖📦
+// ==========================================================================
+async function pollTelegramBotCommands() {
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${telegramLastUpdateId + 1}&timeout=5`;
+    const res = await fetch(url);
+    if (!res.ok) return;
+
+    const data = await res.json();
+    if (!data.result || data.result.length === 0) return;
+
+    for (let update of data.result) {
+      telegramLastUpdateId = update.update_id;
+      const msg = update.message;
+      if (!msg || !msg.text) continue;
+
+      const text = msg.text.trim();
+      const chatId = msg.chat.id;
+
+      // 1. /stok veya /stoklar Komutu (Güncel Stok Listesi)
+      if (text === "/stok" || text === "/stoklar" || text === "/start" || text === "/yardim") {
+        let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || INITIAL_STOCKS;
+        
+        let stockMsg = `📦 *GÜNCEL CANLI STOK DURUMU* 📦\n\n`;
+        stockMsg += `• 🔥 *Aşkölçer* (\`askolcer\`): *${currentStocks['askolcer'] || 0} Adet*\n`;
+        stockMsg += `• 🎁 *Canım Cicim* (\`canim\`): *${(currentStocks['canim-cicim'] || 0).toLocaleString('tr-TR')} Adet*\n`;
+        stockMsg += `• ☕ *Kahve Kaçamağı* (\`kahve\`): *${(currentStocks['kahve-kacamagi'] || 0).toLocaleString('tr-TR')} Adet*\n`;
+        stockMsg += `• 🌙 *Gece Sohbeti* (\`gece\`): *${(currentStocks['gece-sohbeti'] || 0).toLocaleString('tr-TR')} Adet*\n`;
+        stockMsg += `• 💖 *Sınırsız Sarılma* (\`sarilma\`): *Sınırsız ♾️*\n`;
+        stockMsg += `• 🍿 *Film Gecesi* (\`film\`): *${(currentStocks['film-gecesi'] || 0).toLocaleString('tr-TR')} Adet*\n`;
+        stockMsg += `• 📱 *Görüntülü Arama* (\`goruntulu\`): *${(currentStocks['goruntulu-arama'] || 0).toLocaleString('tr-TR')} Adet*\n`;
+        stockMsg += `• 🫂 *Özlem Sarılması* (\`ozlem\`): *Sınırsız ♾️*\n`;
+        stockMsg += `• 🎙️ *Ses Kaydı* (\`ses\`): *${(currentStocks['ozel-ses-kaydi'] || 0).toLocaleString('tr-TR')} Adet*\n\n`;
+        stockMsg += `✍️ *Stok Yönetim Komutları:*\n`;
+        stockMsg += `• \`/set askolcer 1\` ➔ Stoğu 1 yap\n`;
+        stockMsg += `• \`/ekle askolcer 1\` ➔ Stoğa 1 ekle\n`;
+        stockMsg += `• \`/cikar askolcer 1\` ➔ Stoktan 1 düşür\n`;
+        stockMsg += `• \`/sifirla\` ➔ Tüm stokları başlangıç değerine döndür`;
+
+        await sendTelegramNotification(stockMsg, chatId);
+      }
+
+      // 2. /set <ürün> <adet> Komutu (Stoğu Belirtilen Sayıya Ayarlar)
+      else if (text.startsWith("/set ") || text.startsWith("/ayar ")) {
+        const parts = text.split(" ");
+        if (parts.length >= 3) {
+          const rawKey = parts[1].toLowerCase();
+          const targetQty = parseInt(parts[2], 10);
+          const productId = PRODUCT_ALIASES[rawKey] || rawKey;
+
+          if (!isNaN(targetQty) && targetQty >= 0) {
+            let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || { ...INITIAL_STOCKS };
+            currentStocks[productId] = targetQty;
+            await pushCloudStocks(currentStocks);
+
+            await sendTelegramNotification(`✅ *${productId}* stoğu başarıyla *${targetQty.toLocaleString('tr-TR')}* olarak ayarlandı! ✨`, chatId);
+          } else {
+            await sendTelegramNotification(`⚠️ Lütfen geçerli bir pozitif sayı giriniz! Örn: \`/set askolcer 1\``, chatId);
+          }
+        }
+      }
+
+      // 3. /ekle <ürün> <adet> Komutu (Mevcut Stoğa Ekler)
+      else if (text.startsWith("/ekle ")) {
+        const parts = text.split(" ");
+        if (parts.length >= 3) {
+          const rawKey = parts[1].toLowerCase();
+          const addQty = parseInt(parts[2], 10);
+          const productId = PRODUCT_ALIASES[rawKey] || rawKey;
+
+          if (!isNaN(addQty) && addQty > 0) {
+            let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || { ...INITIAL_STOCKS };
+            const oldStock = currentStocks[productId] || 0;
+            currentStocks[productId] = oldStock + addQty;
+            await pushCloudStocks(currentStocks);
+
+            await sendTelegramNotification(`✅ *${productId}* stoğuna +${addQty} eklendi! Yeni Stok: *${currentStocks[productId].toLocaleString('tr-TR')} Adet* 📦`, chatId);
+          }
+        }
+      }
+
+      // 4. /cikar <ürün> <adet> Komutu (Mevcut Stoktan Düşer)
+      else if (text.startsWith("/cikar ") || text.startsWith("/çıkar ")) {
+        const parts = text.split(" ");
+        if (parts.length >= 3) {
+          const rawKey = parts[1].toLowerCase();
+          const subQty = parseInt(parts[2], 10);
+          const productId = PRODUCT_ALIASES[rawKey] || rawKey;
+
+          if (!isNaN(subQty) && subQty > 0) {
+            let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || { ...INITIAL_STOCKS };
+            const oldStock = currentStocks[productId] || 0;
+            currentStocks[productId] = Math.max(0, oldStock - subQty);
+            await pushCloudStocks(currentStocks);
+
+            await sendTelegramNotification(`🔻 *${productId}* stoğundan -${subQty} düşüldü! Kalan Stok: *${currentStocks[productId].toLocaleString('tr-TR')} Adet* 📦`, chatId);
+          }
+        }
+      }
+
+      // 5. /sifirla Komutu (Tüm Stokları Fabrika Ayarlarına Döndürür)
+      else if (text === "/sifirla" || text === "/sıfırla") {
+        await pushCloudStocks({ ...INITIAL_STOCKS });
+        await sendTelegramNotification(`🔄 *Tüm ürün stokları başarıyla ilk günkü zengin ayarlarına sıfırlandı!* (Aşkölçer: 1 Adet) 🔥`, chatId);
+      }
+    }
+  } catch (err) {
+    // Bot dinleme hatası (sessiz devam et)
+  }
 }
 
 const PRODUCTS = [
@@ -288,7 +431,7 @@ const PRODUCTS = [
 ];
 
 // ==========================================================================
-// 3. SEPETE DOĞRUDAN EKLENEN SAMİMİ SÜRPRİZ HEDİYELER (Robotik Dilden Uzak)
+// 4. SEPETE DOĞRUDAN EKLENEN SAMİMİ SÜRPRİZ HEDİYELER
 // ==========================================================================
 const discountCodes = {
   "SURPRIZ": {
@@ -389,7 +532,7 @@ const invalidCodeMessages = [
 ];
 
 // ==========================================================================
-// 4. STATE & KALICI SEPET HAFIZASI
+// 5. STATE & KALICI SEPET HAFIZASI
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
@@ -414,7 +557,7 @@ function loadCartFromStorage() {
 }
 
 // ==========================================================================
-// 5. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router - 1 Ekrana Sığdırma Kontrollü)
+// 6. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
 // ==========================================================================
 function switchView(viewName) {
   const menuView = document.getElementById("view-menu");
@@ -435,7 +578,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME (CANLI BULUT STOKLARI)
+// 7. KATEGORİ VE ÜRÜNLERİ RENDER ETME
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -510,7 +653,7 @@ function renderProducts() {
 }
 
 // ==========================================================================
-// 7. SEPET İŞLEMLERİ (STOK KONTROLLÜ)
+// 8. SEPET İŞLEMLERİ (STOK KONTROLLÜ)
 // ==========================================================================
 function addToCart(productId) {
   let product = PRODUCTS.find(p => p.id === productId);
@@ -666,7 +809,7 @@ function triggerBadgeBump() {
 }
 
 // ==========================================================================
-// 8. SÜRPRİZ & SEVGİ KODLARI (DOĞRUDAN SEPETE EKLER)
+// 9. SÜRPRİZ & SEVGİ KODLARI
 // ==========================================================================
 function applyCouponCode() {
   const couponInput = document.getElementById("coupon-input");
@@ -685,7 +828,6 @@ function applyCouponCode() {
     appliedCoupon = { code: code, ...coupon };
     showCouponAlert(coupon.message, "success");
 
-    // Eğer kod bir hediye ürünü içeriyorsa sepete ekle
     if (coupon.action === "addGift" && coupon.giftItem) {
       const existingGift = cart.find(item => item.product.id === coupon.giftItem.id);
       if (existingGift) {
@@ -717,7 +859,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 9. SİPARİŞ TAMAMLAMA AKIŞI (BULUT STOK GÜNCELLEMELİ)
+// 10. SİPARİŞ TAMAMLAMA AKIŞI
 // ==========================================================================
 function openCheckoutInfoModal() {
   if (cart.length === 0) {
@@ -852,6 +994,8 @@ function finalizeOrder() {
     telegramOrderMsg += `\n🏷️ *Kullanılan Sürpriz Kodu:* ${appliedCoupon.code}`;
   }
 
+  telegramOrderMsg += `\n\n💡 _Stokları yönetmek için bota /stok veya /set askolcer 1 yazabilirsin._`;
+
   sendTelegramNotification(telegramOrderMsg);
 
   openReceiptModal();
@@ -859,7 +1003,7 @@ function finalizeOrder() {
 }
 
 // ==========================================================================
-// 10. FİŞİ RESİM OLARAK İNDİRME (html2canvas) 📥
+// 11. FİŞİ RESİM OLARAK İNDİRME (html2canvas) 📥
 // ==========================================================================
 async function downloadReceiptImage() {
   const receiptCard = document.getElementById("receipt-printable-card");
@@ -905,7 +1049,7 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU
+// 12. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU
 // ==========================================================================
 function initScreenCat() {
   const cat = document.getElementById("screen-cat-companion");
@@ -1006,7 +1150,7 @@ function initScreenCat() {
 }
 
 // ==========================================================================
-// 12. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
+// 13. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
 // ==========================================================================
 function openReviewModal() {
   const modal = document.getElementById("review-modal-overlay");
@@ -1086,7 +1230,7 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 13. HAFİF ANİMASYONLAR (GPU DOSTU)
+// 14. HAFİF ANİMASYONLAR (GPU DOSTU)
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -1154,7 +1298,7 @@ document.addEventListener("click", (e) => {
 });
 
 // ==========================================================================
-// 14. TÜM EVENT LISTENERS BAĞLANTILARI
+// 15. TÜM EVENT LISTENERS BAĞLANTILARI
 // ==========================================================================
 function setupAllEvents() {
   const navBrand = document.getElementById("nav-brand-btn");
@@ -1371,7 +1515,7 @@ function setupAllEvents() {
 }
 
 // ==========================================================================
-// 15. BAŞLAT
+// 16. BAŞLAT
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
   document.body.classList.add("menu-mode");
@@ -1382,6 +1526,11 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
   initScreenCat();
 
+  // ☁️ Canlı Bulut Stok Senkronizasyonu
   fetchCloudStocks();
-  setInterval(fetchCloudStocks, 12000);
+  setInterval(fetchCloudStocks, 10000);
+
+  // 🤖 Telegram Botu Komutlarını Dinle (Her 5 Saniyede Bir)
+  pollTelegramBotCommands();
+  setInterval(pollTelegramBotCommands, 5000);
 });

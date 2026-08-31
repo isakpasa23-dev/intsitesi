@@ -4,16 +4,22 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.8.0] - 31.08.2026 (Sepete Doğrudan Eklenen Samimi Sürpriz Hediyeler) 🎁💋✨
-- **Gerçek Sepet Hediyeleri:**
-  - `OPUCUK` kodu yazıldığında sepete doğrudan **"💋 Kocaman & Sesli Öpücük"** ürünü eklenir.
-  - `CANIMBENIM` kodu yazıldığında sepete doğrudan **"🫂 Ekstra Sımsıkı Sarılma Paketi"** ürünü eklenir.
-  - `SENICOKSEVIYORUM` kodu yazıldığında sepete doğrudan **"💖 Sonsuz Sevgi & İlgi Paketi"** ürünü eklenir.
-  - `KAHVE` kodu yazıldığında sepete doğrudan **"☕ Baş Başa Kahve Sözü"** ürünü eklenir.
-- **Samimi ve Sıcak Dil:**
-  - *"Sepete tanımlandı"* gibi soğuk/robotik ifadeler tamamen kaldırıldı.
-  - *"Kocaman ve sesli bir öpücük sepetine eklendi birtanem! 😘"* ve *"Sımsıkı bir sarılma paketi sepetine eklendi canım benim! 🫂"* gibi içten mesajlara dönüştürüldü.
+### [v2.9.0] - 31.08.2026 (Telegram Botu Üzerinden Canlı Stok Yönetimi) 🤖☁️📦✨
+- **Telegram Bot Komutları:**
+  - `/stok` veya `/stoklar`: Tüm ürünlerin canlı bulut stok durumunu Telegram'da listeler.
+  - `/set askolcer 1` veya `/ayar <ürün> <adet>`: İstenen ürünün stoğunu doğrudan belirtilen sayıya ayarlar.
+  - `/ekle askolcer 1` veya `/ekle <ürün> <adet>`: Mevcut stoğa ekleme yapar.
+  - `/cikar askolcer 1` veya `/cikar <ürün> <adet>`: Mevcut stoktan düşme yapar.
+  - `/sifirla`: Tüm stokları ilk günkü zengin ayarlarına sıfırlar.
+- **Çift Yönlü Entegrasyon:**
+  - Web sitesi üzerinden 5 saniyelik otomatik polling ile Telegram komutları anında algılanır.
+  - İsteğe bağlı 7/24 arka planda çalıştırmak için `bot/telegram_bot.ps1` betiği eklendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.8.0] - 31.08.2026 (Sepete Doğrudan Eklenen Samimi Sürpriz Hediyeler) 🎁💋✨
+- Sürpriz kodlar sepete gerçek hediye ürünleri ekler hale getirildi.
 
 ---
 
