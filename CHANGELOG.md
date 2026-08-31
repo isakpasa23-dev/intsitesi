@@ -4,17 +4,16 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v7.0.0] - 31.08.2026 (Sihirli Animasyon Menüsü Büyütüldü, Otomatik Sürpriz Oynatıcı & Tatlı Detaylar) 🌸🌵🌹⭐🐾✨
-- **Genişletilmiş ve Sadeleştirilmiş Sihirli Menü:**
-  - Animasyon penceresi (`max-width: 580px`) ve sahnesi (`height: 310px`) genişletilerek büyük bir tiyatro ekranına dönüştürüldü.
-  - Seçim butonları tamamen kaldırılarak sürpriz otomatik oynatma sistemine geçildi.
-  - Yalnızca **"🔄 Başka Bir Büyü / Tekrar Oynat"** ve **"🏠 Ana Menüye Dön 💕"** butonları bırakıldı.
-- **Ultra Tatlı & Detaylı Animasyonlar:**
-  - **🌵 Sevimli Kawaii Kaktüs:** Pembe kurdeleli saksı, gülen gözler, pembe yanaklar, sallanan kollar ve tepesinde pıt diye açan 10 katmerli pembe kaktüs çiçeği.
-  - **🌹 Büyülü Aşk Gülü:** Bahçe toprağından yükselen kıvrımlı dal, damarlı yapraklar, kat kat açılan kadife bordo/kırmızı gül ve etrafında uçan altın kelebek.
-  - **⭐ Kutup Yıldızı:** Gece gökyüzünde hilal ay eşliğinde parlayan kuyruklu yıldızın çizdiği altın yıldız ve etrafa saçılan yıldız ışınları.
-  - **🐾 Minik Kedicik & Aşk Baloncukları:** Kuyruğunu sallayan kedicik ve üflediği, içinde `💖` taşıyan gökkuşağı sabun baloncukları.
+### [v7.1.0] - 31.08.2026 (Yeni Romantik Edebi Söz Eklendi: "Bu Gece Ay Çok Güzel Değil Mi?") 🌙✨💖
+- **Tatlı Sözler Listesi Güncellemesi:**
+  - *"Bu gece ay çok güzel değil mi? 🌙✨ (Seni her şeyden çok seviyorum...)"* ve *"Birtanem, bu gece ay çok güzel değil mi? 🌙💖"* sözleri tatlı söz motoruna eklendi.
+  - Kod içerisindeki tüm metinler kontrol edilerek edebi ve romantik bütünlük sağlandı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v7.0.0] - 31.08.2026 (Sihirli Animasyon Menüsü Büyütüldü, Otomatik Sürpriz Oynatıcı & Tatlı Detaylar) 🌸🌵🌹⭐🐾✨
+- Animasyon sahnesi tiyatro moduna büyütüldü ve otomatik sürpriz oynatıcıya dönüştürüldü.
 
 ---
 

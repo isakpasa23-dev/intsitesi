@@ -21,6 +21,8 @@ let telegramLastUpdateId = 0;
 // 1. 🤖 YAPAY ZEKA & ZENGİN ROMANTİK SÖZ MOTORU
 // ==========================================================================
 const curatedRomanticQuotes = [
+  "\"Bu gece ay çok güzel değil mi? 🌙✨ (Seni her şeyden çok seviyorum...)\"",
+  "\"Birtanem, bu gece ay çok güzel değil mi? 🌙💖\"",
   "\"Bebeğim, seninle geçen her saniye ömrümün en tatlı hediyesi. İyi ki hayatımdasın! 💖\"",
   "\"Hayatımın anlamı, gözlerinin içine baktığım her an dünya benim için biraz daha güzelleşiyor. ✨\"",
   "\"Aşkım, dünyada milyarlarca insan var ama benim kalbim sadece senin için çarpıyor. 🌟\"",
@@ -31,13 +33,13 @@ const curatedRomanticQuotes = [
   "\"Bebeğim, kalbimdeki en güzel köşe sonsuza kadar sadece sana ait. 💌\"",
   "\"Aşkım, her sabah uyandığımda aklıma gelen ilk ve en tatlı düşünce sensin. ☀️\"",
   "\"Hayatımın anlamı, sen benim bu dünyadaki en kıymetli mucizemsin. 🎁\"",
-  "\"Canım benim, bir fincan kahve, senin tatlı sesin ve huzur... Bana dünyaları verseler değişmem. ☕\"",
+  "\"Canım benim, bir fincan çay, senin tatlı sesin ve huzur... Bana dünyaları verseler değişmem. 🫖\"",
   "\"Tatlım, ellerini tuttuğum an tüm dünya duruyor gibi hissediyorum. 🤝\"",
   "\"Gözümün nuru, senin varlığın en yorgun anlarımda bile bana güç veren tek enerji kaynağım. ⚡\"",
   "\"Bebeğim, dünyanın bütün çiçeklerini toplasam, senin bir kokun kadar güzel olamaz. 🌷\"",
   "\"Aşkım, seninle dinlenen her şarkı anlamlı, izlenen her film güzel. 🎶\"",
   "\"Hayatımın anlamı, ne zaman canın sıkılırsa hatırla: Seni dünyadaki her şeyden çok seven biri var! 🥰\"",
-  "\"Canım, günün aşk falı diyor ki: Bugün minik yıldıza sımsıkı ve doya doya sarılınmalı! 🧸\"",
+  "\"Canım, gökyüzündeki tüm yıldızlar diyor ki: Bugün minik yıldıza sımsıkı ve doya doya sarılınmalı! 🧸\"",
   "\"Tatlım, seninle susmak bile dünyanın en güzel sohbetini yapmaktan daha tatlı. 🤍\"",
   "\"Ömrüm, aşkın en saf, en masum ve en gerçek hali senin kalbinde saklı. 💖\"",
   "\"Bebeğim, sen benim ömrüme doğan en güzel güneşsin. ☀️\"",
