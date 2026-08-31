@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Yüksek Performans / 60 FPS Optimize, Bulut Canlı Stoklar & 4 Bacaklı Kedi 🚀🐈‍⬛✨
+   Gerçek Sepete Eklenen Samimi Sürpriz Hediyeler & 4 Bacaklı Kedi 🎁💋🐾✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -102,7 +102,10 @@ const INITIAL_STOCKS = {
   "goruntulu-arama": 8650,// Küsüratlı yüksek adet
   "ozlem-sarilmasi": 9999999, // Sınırsız
   "ozel-ses-kaydi": 7890, // Küsüratlı yüksek adet
-  "kahve-hediye": 2450
+  "kahve-hediye": 2450,
+  "opucuk-hediye": 9999999,
+  "sarilma-hediye": 9999999,
+  "sonsuz-sevgi-hediye": 9999999
 };
 
 function getProductStock(productId) {
@@ -113,7 +116,7 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme (Arka Planda Sessiz Senkronizasyon)
+// ☁️ Buluttan Canlı Stokları Çekme
 async function fetchCloudStocks() {
   try {
     const controller = new AbortController();
@@ -285,37 +288,73 @@ const PRODUCTS = [
 ];
 
 // ==========================================================================
-// 3. TAMAMEN ROMANTİK SÜRPRİZ & SEVGİ KODLARI
+// 3. SEPETE DOĞRUDAN EKLENEN SAMİMİ SÜRPRİZ HEDİYELER (Robotik Dilden Uzak)
 // ==========================================================================
 const discountCodes = {
   "SURPRIZ": {
     type: "letter",
-    message: "💌 Minik yıldızıma özel gizli bir mektup açıldı!",
+    message: "💌 Sana özel gizli bir aşk mektubu açıldı birtanem!",
     letterTitle: "Minik Yıldızıma Özel Mektup ✨",
     letterText: "Seni gökyüzündeki yıldızlar kadar çok seviyorum ve her yıldız kaydığında seni diliyorum. 🌠💖",
     action: "openLetter"
   },
   "SUPRIZ": {
     type: "letter",
-    message: "💌 Minik yıldızıma özel gizli bir mektup açıldı!",
+    message: "💌 Sana özel gizli bir aşk mektubu açıldı birtanem!",
     letterTitle: "Minik Yıldızıma Özel Mektup ✨",
     letterText: "Seni gökyüzündeki yıldızlar kadar çok seviyorum ve her yıldız kaydığında seni diliyorum. 🌠💖",
     action: "openLetter"
   },
-  "SENICOKSEVIYORUM": {
-    type: "perk",
-    message: "🎉 Sonsuz Aşk Onaylandı! Kalbimdeki tüm sevgi ve ilgi kontenjanı sadece seninle dolu! 🥰",
-    action: "heartsRain"
+  "OPUCUK": {
+    type: "gift",
+    giftItem: {
+      id: "opucuk-hediye",
+      category: "simartma",
+      name: "💋 Kocaman & Sesli Öpücük",
+      price: 0,
+      unit: "💖",
+      isCountdown: false,
+      deliveryText: "Anında ⚡",
+      badge: "Özel Hediye 🎁",
+      description: "İçten, sıcacık ve çok sesli bir öpücük hakkı!",
+      image: "assets/canim-cicim.svg"
+    },
+    message: "💋 Kocaman ve sesli bir öpücük sepetine eklendi birtanem! 😘",
+    action: "addGift"
   },
   "CANIMBENIM": {
-    type: "perk",
-    message: "💕 Ekstra Sımsıkı Sarılma & Tatlı Tebessüm Paketi sepete tanımlandı! 🫂✨",
-    action: "heartsRain"
+    type: "gift",
+    giftItem: {
+      id: "sarilma-hediye",
+      category: "simartma",
+      name: "🫂 Ekstra Sımsıkı Sarılma Paketi",
+      price: 0,
+      unit: "💖",
+      isCountdown: false,
+      deliveryText: "Anında ⚡",
+      badge: "Özel Hediye 🎁",
+      description: "Kokunu içine çeke çeke doya doya sımsıkı sarılma hakkı!",
+      image: "assets/canim-cicim.svg"
+    },
+    message: "💕 Sımsıkı bir sarılma paketi sepetine eklendi canım benim! 🫂",
+    action: "addGift"
   },
-  "OPUCUK": {
-    type: "perk",
-    message: "💋 Kocaman, Sesli ve Sevgi Dolu Bir Öpücük Paketi sepete tanımlandı! 😘",
-    action: "heartsRain"
+  "SENICOKSEVIYORUM": {
+    type: "gift",
+    giftItem: {
+      id: "sonsuz-sevgi-hediye",
+      category: "ask",
+      name: "💖 Sonsuz Sevgi & İlgi Paketi",
+      price: 0,
+      unit: "💖",
+      isCountdown: false,
+      deliveryText: "Ömür Boyu ✨",
+      badge: "Sana Özel 🌟",
+      description: "Her an her saniye sadece seni düşünen ve seven bir kalp!",
+      image: "assets/love-letter.svg"
+    },
+    message: "🎉 Sonsuz sevgi ve ilgi paketi sepetine eklendi minik yıldızım! 🥰",
+    action: "addGift"
   },
   "KAHVE": {
     type: "gift",
@@ -331,12 +370,12 @@ const discountCodes = {
       description: "Birlikte içilecek en tatlı kahve ve sohbet hediyesi!",
       image: "assets/gift-coffee.svg"
     },
-    message: "☕ Harika! Sepetine 'Baş Başa Kahve Sözü' hediye olarak eklendi!",
+    message: "☕ Baş başa içeceğimiz en tatlı kahve sözü sepetine eklendi sevgilim! ✨",
     action: "addGift"
   },
   "MEKTUP": {
     type: "letter",
-    message: "💌 Gizli aşk notun açıldı!",
+    message: "💌 Özel aşk mektubun açıldı birtanem!",
     letterTitle: "Günün En Güzel Haberi 💖",
     letterText: "Biliyor musun? Dünyadaki bütün hazineler toplansa, senin bir tek gülüşün kadar değerli olamaz. İyi ki varsın minik yıldızım! 🥰",
     action: "openLetter"
@@ -344,10 +383,9 @@ const discountCodes = {
 };
 
 const invalidCodeMessages = [
-  "Hmm, bu kod kalbimizde kayıtlı değil... Ama seni yine de sonsuz seviyoruz! 🥰",
-  "Geçersiz kod! İpucu: 'SURPRIZ' veya 'SENICOKSEVIYORUM' yazmayı dene 😉",
-  "Bu kod sevgimizin büyüklüğüne yetmedi! Farklı bir sürpriz kod dene 💕",
-  "Aşk sistemimiz bu kodu tanıyamadı, belki 'KAHVE' veya 'OPUCUK' denemek istersin? ✨"
+  "Hmm, bu kod kalbimizde kayıtlı değil... Ama seni yine de dünyalar kadar seviyoruz! 🥰",
+  "Bu kod sevgimizin büyüklüğüne yetmedi! Farklı bir sürpriz kod dene sevgilim 💕",
+  "Aşk sistemimiz bu kodu bulamadı, 'OPUCUK', 'CANIMBENIM' veya 'KAHVE' yazmayı dene 😉"
 ];
 
 // ==========================================================================
@@ -477,8 +515,13 @@ function renderProducts() {
 function addToCart(productId) {
   let product = PRODUCTS.find(p => p.id === productId);
   
-  if (!product && appliedCoupon && appliedCoupon.giftItem && appliedCoupon.giftItem.id === productId) {
-    product = appliedCoupon.giftItem;
+  if (!product) {
+    for (let codeKey in discountCodes) {
+      if (discountCodes[codeKey].giftItem && discountCodes[codeKey].giftItem.id === productId) {
+        product = discountCodes[codeKey].giftItem;
+        break;
+      }
+    }
   }
   
   if (!product) return;
@@ -623,7 +666,7 @@ function triggerBadgeBump() {
 }
 
 // ==========================================================================
-// 8. SÜRPRİZ & SEVGİ KODLARI
+// 8. SÜRPRİZ & SEVGİ KODLARI (DOĞRUDAN SEPETE EKLER)
 // ==========================================================================
 function applyCouponCode() {
   const couponInput = document.getElementById("coupon-input");
@@ -642,14 +685,16 @@ function applyCouponCode() {
     appliedCoupon = { code: code, ...coupon };
     showCouponAlert(coupon.message, "success");
 
-    if (coupon.action === "heartsRain") {
-      triggerHeartsShower();
-    } else if (coupon.action === "addGift" && coupon.giftItem) {
-      const hasGift = cart.some(item => item.product.id === coupon.giftItem.id);
-      if (!hasGift) {
+    // Eğer kod bir hediye ürünü içeriyorsa sepete ekle
+    if (coupon.action === "addGift" && coupon.giftItem) {
+      const existingGift = cart.find(item => item.product.id === coupon.giftItem.id);
+      if (existingGift) {
+        existingGift.quantity += 1;
+      } else {
         cart.push({ product: coupon.giftItem, quantity: 1 });
-        saveCartToStorage();
       }
+      saveCartToStorage();
+      triggerBadgeBump();
       triggerHeartsShower();
     } else if (coupon.action === "openLetter") {
       openLetterModal(coupon.letterTitle, coupon.letterText);
@@ -860,7 +905,7 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU (60 FPS OPTİMİZE)
+// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU
 // ==========================================================================
 function initScreenCat() {
   const cat = document.getElementById("screen-cat-companion");
@@ -928,7 +973,6 @@ function initScreenCat() {
         flipWrap.classList.add("facing-left");
       }
 
-      // Yumuşak ve sabit hız
       const speed = Math.min(Math.max(distance * 0.04, 1.2), 3.2);
       catX += Math.sign(diff) * speed;
       cat.classList.add("walking");
@@ -1052,7 +1096,6 @@ function startBackgroundHearts() {
 
   setInterval(() => {
     if (document.hidden) return;
-    // Maksimum 6 arka plan kalbi limiti (DOM şişmesini engeller)
     if (container.children.length > 6) {
       container.removeChild(container.firstChild);
     }
@@ -1173,7 +1216,7 @@ function setupAllEvents() {
 
   if (couponHintBtn) {
     couponHintBtn.addEventListener("click", () => {
-      alert("💡 Deneyebileceğin bazı sihirli sürpriz kodları:\n\n• SURPRIZ (Yıldızlı Gizli Aşk Mektubu 🌠)\n• SENICOKSEVIYORUM (Sonsuz Sevgi Onayı 🥰)\n• KAHVE (Baş Başa Kahve Hediyesi ☕)\n• OPUCUK (Kocaman Öpücük Paketi 💋)\n• CANIMBENIM (Sımsıkı Sarılma Paketi 🫂)");
+      alert("💡 Deneyebileceğin bazı sihirli sürpriz kodları:\n\n• OPUCUK (Kocaman Öpücük Paketi Sepete Ekler 💋)\n• CANIMBENIM (Sımsıkı Sarılma Paketi Sepete Ekler 🫂)\n• SENICOKSEVIYORUM (Sonsuz Sevgi Paketi Sepete Ekler 🥰)\n• KAHVE (Baş Başa Kahve Sözü Sepete Ekler ☕)\n• SURPRIZ (Yıldızlı Gizli Aşk Mektubu Açar 🌠)");
     });
   }
 
@@ -1339,7 +1382,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
   initScreenCat();
 
-  // ☁️ Sayfa açıldığında ve her 12 saniyede bir bulut canlı stokları senkronize et
   fetchCloudStocks();
   setInterval(fetchCloudStocks, 12000);
 });
