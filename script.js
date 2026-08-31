@@ -1901,59 +1901,91 @@ function playCurrentMagicAnimation(animKey = null) {
     }
     ctx.restore();
 
-    if (progress > 0.58) {
-      const bloomP = Math.min(1, (progress - 0.58) / 0.42);
+    // Katman Katman Açan Katmerli & Çok Renkli Büyülü Aşk Gülü (Multi-Tone Blooming Rose)
+    if (progress > 0.55) {
+      const bloomP = Math.min(1, (progress - 0.55) / 0.45);
       const bloomEase = 1 - Math.pow(1 - bloomP, 3);
-      const roseR = 48 * bloomEase;
+      const flowerY = currentStemY - 10;
 
       ctx.save();
+      ctx.translate(cx, flowerY);
+
+      // Çanak Yeşil Yapraklar (Sepals)
       ctx.fillStyle = "#27ae60";
       for (let s = 0; s < 5; s++) {
         ctx.save();
-        ctx.translate(cx, currentStemY + 6);
-        ctx.rotate((s * Math.PI * 2) / 5);
+        ctx.rotate((s * Math.PI * 2) / 5 + 0.3);
         ctx.beginPath();
-        ctx.ellipse(0, 10, 5.5, 16 * bloomEase, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 18 * bloomEase, 6.5, 18 * bloomEase, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
 
-      ctx.fillStyle = "#ad1457";
-      ctx.beginPath();
-      ctx.arc(cx, currentStemY - 8, roseR, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = "#d81b60";
-      for (let p = 0; p < 7; p++) {
+      // 1. Katman (En Dış - 12 Yapraklı Kadife Bordo & Derin Gül Yaprakları)
+      ctx.fillStyle = "#c0392b";
+      for (let p = 0; p < 12; p++) {
         ctx.save();
-        ctx.translate(cx, currentStemY - 8);
-        ctx.rotate((p * Math.PI * 2) / 7);
+        ctx.rotate((p * Math.PI * 2) / 12);
         ctx.beginPath();
-        ctx.ellipse(0, -roseR * 0.45, roseR * 0.48, roseR * 0.62, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, -38 * bloomEase, 14 * bloomEase, 24 * bloomEase, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
 
-      ctx.fillStyle = "#ff1361";
+      // 2. Katman (10 Yapraklı Canlı Mercan & Yakut Kırmızı Yapraklar)
+      ctx.fillStyle = "#ff4757";
+      for (let p = 0; p < 10; p++) {
+        ctx.save();
+        ctx.rotate((p * Math.PI * 2) / 10 + 0.35);
+        ctx.beginPath();
+        ctx.ellipse(0, -28 * bloomEase, 12 * bloomEase, 20 * bloomEase, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 3. Katman (8 Yapraklı Parlak Şeker Pembesi & Fuşya)
+      ctx.fillStyle = "#ff758c";
+      for (let p = 0; p < 8; p++) {
+        ctx.save();
+        ctx.rotate((p * Math.PI * 2) / 8 + 0.7);
+        ctx.beginPath();
+        ctx.ellipse(0, -20 * bloomEase, 10 * bloomEase, 16 * bloomEase, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 4. Katman (6 Yapraklı Pastel Pembe & Şeftali Gonca)
+      ctx.fillStyle = "#fd79a8";
       for (let p = 0; p < 6; p++) {
         ctx.save();
-        ctx.translate(cx, currentStemY - 8);
-        ctx.rotate((p * Math.PI * 2) / 6 + 0.35);
+        ctx.rotate((p * Math.PI * 2) / 6 + 1.05);
         ctx.beginPath();
-        ctx.ellipse(0, -roseR * 0.28, roseR * 0.36, roseR * 0.48, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, -12 * bloomEase, 8 * bloomEase, 12 * bloomEase, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
 
-      ctx.strokeStyle = "#880e4f";
-      ctx.lineWidth = 3.5;
+      // 5. Merkez Göbek (Altın Parıltılı Aşk Tohumu & Kalp İncisi)
+      ctx.fillStyle = "#ffd700";
       ctx.beginPath();
-      ctx.arc(cx, currentStemY - 8, roseR * 0.32, 0.2 * Math.PI, 1.8 * Math.PI);
-      ctx.stroke();
+      ctx.arc(0, 0, 11 * bloomEase, 0, Math.PI * 2);
+      ctx.fill();
 
+      ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(cx, currentStemY - 8, roseR * 0.16, 1.1 * Math.PI, 2.8 * Math.PI);
-      ctx.stroke();
+      ctx.arc(-2.5 * bloomEase, -2.5 * bloomEase, 3.5 * bloomEase, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gül Yaprakları Üzerinde Parıldayan Su Damlaları (Dewdrops)
+      if (bloomP > 0.8) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+        ctx.beginPath();
+        ctx.arc(16 * bloomEase, -22 * bloomEase, 2.5, 0, Math.PI * 2);
+        ctx.arc(-18 * bloomEase, -14 * bloomEase, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
 
       // Düşen Aşk Gül Yaprakları
       for (let i = 0; i < 6; i++) {
@@ -1963,17 +1995,16 @@ function playCurrentMagicAnimation(animKey = null) {
         ctx.save();
         ctx.translate(px, py);
         ctx.rotate(prot);
-        ctx.fillStyle = "rgba(255, 19, 97, 0.8)";
+        ctx.fillStyle = i % 2 === 0 ? "rgba(255, 71, 87, 0.85)" : "rgba(255, 117, 140, 0.85)";
         ctx.beginPath();
         ctx.ellipse(0, 0, 10, 5.5, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
 
-      if (Math.random() > 0.4) {
-        addSparkles(cx + (Math.random() - 0.5) * 80, currentStemY - 15 + (Math.random() - 0.5) * 60, 2, ["#ff1361", "#ffd700", "#ffffff"]);
+      if (Math.random() > 0.35) {
+        addSparkles(cx + (Math.random() - 0.5) * 90, flowerY + (Math.random() - 0.5) * 70, 2, ["#ffd700", "#ff4757", "#ff758c", "#ffffff"]);
       }
-      ctx.restore();
 
       // Çift Kelebek
       const bAngle1 = t * 0.0035;

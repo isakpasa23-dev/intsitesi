@@ -4,27 +4,21 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v11.0.0] - 01.09.2026 (Sihirli Sahneye 3 Yeni Büyü Eklendi + GPU & CPU Kökten Optimize Edildi) 🎬☕🧸🐧⚡❄️
-- **3 Yeni Büyülü Animasyon Eklendi (Toplam 7 Sahne):**
-  - ☕ **Aşk Kahvesi / Çayı & Kalp Buharı:** Masada tokuşan tatlı yüzlü pembe ve turkuaz kupalar, havada kalplere dönüşen ışıltılı aşk buharı.
-  - 🧸 **Uçan Kalp Balonları & Sevimli Ayıcık:** Pastel bulutların arasından renkli kalp balonlarına tutunarak süzülen kırmızı papyonlu sevimli peluş ayıcık.
-  - 🐧 **Kutup Işıkları & Aşk Penguenleri:** Dalgalanan yeşil/pembe Aurora Borealis altında birbirine parıldayan aşk çakıl taşı hediye eden tatlı kutup penguenleri.
-- **Ultra GPU & CPU Performans Optimizasyonu (Fan / Isınma Kökten Çözüldü):**
-  - Ağır Gaussian blur hesaplamaları (`ctx.shadowBlur`) kaldırıldı, hafif katmanlı alfa gradyanlarına geçildi.
-  - Render döngüsü 60 FPS'e sabitlendi (ekran kartının sınırsız Hz'de bağırması engellendi).
-  - Yüksek çözünürlüklü ekranlarda DPR sınırı getirilerek GPU bellek ve çizim yükü %85 düşürüldü.
-  - Parçacık havuzu sınırlandırılarak RAM ve CPU tüketimi minimuma indirildi.
+### [v11.1.0] - 01.09.2026 (Büyülü Aşk Gülü Çok Renkli, Katmerli & İncili Olarak Baştan Tasarlandı) 🌹✨💎🌸
+- **Gül Çiçeği Katmerli & Canlı Hale Getirildi:**
+  - Tek renk/koyu kırmızı görünüm yerine, kaktüs çiçeği gibi 5 farklı canlı katmandan oluşan spiral açılış eklendi:
+    - 1. Katman: 12 yapraklı kadife bordo dış taç.
+    - 2. Katman: 10 yapraklı canlı mercan ve yakut kırmızı.
+    - 3. Katman: 8 yapraklı parlak şeker pembesi ve fuşya.
+    - 4. Katman: 6 yapraklı pastel somon ve şeftali gonca.
+    - 5. Merkez Göbek: Parlayan altın sarısı aşk çiçeği tohumu ve incisi.
+  - Gül yaprakları üzerine ışıltılı su damlaları (dewdrops) ve dökülen rengarenk aşk yaprakları eklendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
-### [v10.2.0] - 01.09.2026 (Ekran Kedisi Replikleri Gerçekçi Kedi Davranışlarına Uyarlandı) 🐾🐈‍⬛🐟
-- Kedi replikleri tatlı kedi davranışlarına uyarlandı.
-
----
-
-### [v10.1.0] - 01.09.2026 (Telegram Botu & Site Stok Senkronizasyonu %100 Senkronize Edildi) 🤖📦🔄✨
-- Bot ve site stokları eşitlendi.
+### [v11.0.0] - 01.09.2026 (Sihirli Sahneye 3 Yeni Büyü Eklendi + GPU & CPU Kökten Optimize Edildi) 🎬☕🧸🐧⚡❄️
+- 3 yeni animasyon ve performans optimizasyonu.
 
 ---
 
