@@ -4,30 +4,31 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.1.0] - 31.08.2026 (Ana Menü & Değerlendirme Modülü) ✨
-- **Ana Menü (Hub) Mimarisi:** Site açılışı sadeleştirildi. Ziyaretçiyi karşılayan 3 ana seçenek kartı eklendi:
-  1. *Sipariş Oluştur* (Alışverişe gitme köşesi)
-  2. *Siteyi Değerlendir* (Aşk anketi & puanlama)
-  3. *Günün Tatlı Sözü* (Romantik aşk falı / mesajı)
-- **Siteyi Değerlendir Sayfası:**
-  - 5 kademeli kalp puanlama sistemi.
-  - Eğlenceli soru çipleri ("Sonsuz", "Dünyalar Kadar", vb.).
-  - Özel mesaj/not bırakma alanı ve gönderim onayı.
-- **Temizlik & Sadeleştirme:**
-  - "Işık hızında sevgi kargo" ve e-ticaret benzeri genel butonlar/rozetler kaldırıldı.
-  - Sayfalar arası akıcı geçiş ve "← Ana Menüye Dön" gezinmesi eklendi.
+### [v1.2.0] - 31.08.2026 (Kompakt Tek Ekran & Pop-up Deneyimi) ✨
+- **Başlık & Hitap Değişikliği:** Karşılama mesajı *"Hoş Geldin Minik Yıldızım! ✨"* olarak güncellendi.
+- **Tek Ekran & 2x2 Menü Düzeni:** 
+  - Aşağı kaydırma ihtiyacını ortadan kaldıran 2x2 kompakt menü karoları tasarlandı.
+  - Tüm öğeler şık bir şekilde ortalandı.
+- **Anında Pop-up Modalları:**
+  - *"Siteyi Değerlendir"* ve *"Günün Tatlı Sözü"* butonlarına tıklandığında sayfanın altına kaymak yerine doğrudan ekranın ortasında açılan şık pop-up modalları eklendi.
+- **3 Farklı Menü Kategorisi (Sipariş Bölümü):**
+  1. *💖 Aşk Menüsü* (Aşkölçer, Canım Cicim)
+  2. *☕ Keyif & Kahve* (Baş Başa Kahve Kaçamağı, Gece Sohbeti & Şarkı)
+  3. *🎁 Şımartma Paketi* (Sınırsız Sarılma Kuponu, Film Seçme Hakkı)
+- **Gezinme:** Ortalanmış ve hap şeklinde *"🏠 Ana Menüye Dön"* butonu eklendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub reposuna otomatik push edildi.
 
 ---
 
+### [v1.1.0] - 31.08.2026 (Ana Menü & Değerlendirme Modülü) ✨
+- **Ana Menü (Hub) Mimarisi:** Girişte 3 ana seçenek kartı eklendi.
+- **Siteyi Değerlendir Sayfası:** Kalp puanlama ve anket sistemi.
+- **Temizlik:** E-ticaret benzeri genel butonlar kaldırıldı.
+
+---
+
 ### [v1.0.0] - 31.08.2026 (İlk Kararlı Sürüm) 🚀
-- **Tasarım:** Pembe/kırmızı romantik tema, cam efekti (glassmorphism), süzülen kalpler ve mobil uyumlu responsive arayüz.
-- **Ürünler:** "Aşkölçer" ve "Canım Cicim" ürün kartları oluşturuldu.
-- **Sepet & İndirim Motoru:**
-  - `SENICOKSEVIYORUM` (%100 Bedava + Kalp Yağmuru)
-  - `CANIMBENIM` (50 ₺ İndirim)
-  - `OPUCUK` (%50 İndirim)
-  - `KAHVE` (Hediye Ürün Ekleme)
-  - `SURPRIZ` & `MEKTUP` (Gizli Aşk Mektubu Modalı)
-- **Sipariş Fişi:** Aşk makbuzu ve tek tıkla WhatsApp ile gönderme entegrasyonu.
-- **Yayın:** GitHub Pages ve Git versiyon kontrol sistemi bağlandı.
+- **Tasarım:** Pembe/kırmızı romantik tema, cam efekti ve mobil uyumlu responsive arayüz.
+- **Ürünler:** "Aşkölçer" ve "Canım Cicim" ürünleri.
+- **Sepet & İndirim Motoru:** Sürpriz ve indirim kodları.
+- **Yayın:** GitHub Pages ve Git entegrasyonu.

@@ -1,29 +1,76 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Vanilla JS, Modüler & Genişletilebilir Yapı
+   Tek Ekran Uyumlu, Pop-up Destekli & Modüler Yapı
    ========================================================================== */
 
 // ==========================================================================
-// 1. ÜRÜN TANIMLARI
+// 1. ÜRÜN & KATEGORİ TANIMLARI (3 Farklı Menü)
 // ==========================================================================
 const PRODUCTS = [
+  // 💖 1. Kategori: Aşk Menüsü
   {
     id: "askolcer",
+    category: "ask",
     name: "Aşkölçer",
     price: 100,
     unit: "₺",
-    badge: "Özel Tasarım 🔥",
-    description: "Aşkınızın derecesini %100 hassasiyetle ölçen, her baktığında seni hatırlatacak eğlenceli ve sihirli aşk cihazı.",
+    badge: "Çok Satan 🔥",
+    description: "Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı.",
     image: "assets/askolcer.svg"
   },
   {
     id: "canim-cicim",
+    category: "ask",
     name: "Canım Cicim",
     price: 150,
     unit: "₺",
-    badge: "Sevgi Paketi 🎁",
-    description: "İçerisinde sıcacık sarılmalar, tatlı iltifatlar ve sonsuz huzur barındıran en tatlı aşk ve mutluluk paketi.",
+    badge: "Özel Paket 🎁",
+    description: "İçerisinde sıcacık sarılmalar ve tatlı iltifatlar barındıran sevgi paketi.",
     image: "assets/canim-cicim.svg"
+  },
+
+  // ☕ 2. Kategori: Keyif & Kahve
+  {
+    id: "kahve-kacamagi",
+    category: "keyif",
+    name: "Baş Başa Kahve Kaçamağı",
+    price: 0,
+    unit: "₺",
+    badge: "Keyif Vakti ☕",
+    description: "İstediğin zaman kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
+    image: "assets/gift-coffee.svg"
+  },
+  {
+    id: "gece-sohbeti",
+    category: "keyif",
+    name: "Gece Sohbeti & Şarkı",
+    price: 0,
+    unit: "₺",
+    badge: "Huzur 🌙",
+    description: "Uyumadan önce dinlenecek en güzel şarkılar ve sıcacık ses kaydı.",
+    image: "assets/love-letter.svg"
+  },
+
+  // 🎁 3. Kategori: Şımartma Paketi
+  {
+    id: "sarilma-kuponu",
+    category: "simartma",
+    name: "Sınırsız Sarılma Kuponu",
+    price: 0,
+    unit: "₺",
+    badge: "Sonsuz 💖",
+    description: "Canın ne zaman sıkılırsa anında geçerli 100 saatlik sımsıkı sarılma hakkı.",
+    image: "assets/canim-cicim.svg"
+  },
+  {
+    id: "film-gecesi",
+    category: "simartma",
+    name: "Film Seçme Hakkı",
+    price: 0,
+    unit: "₺",
+    badge: "VIP Sinema 🍿",
+    description: "Filmi tamamen senin seçeceğin, atıştırmalıkların hazır olduğu sinema gecesi.",
+    image: "assets/askolcer.svg"
   }
 ];
 
@@ -53,11 +100,12 @@ const discountCodes = {
     type: "gift",
     giftItem: {
       id: "kahve-hediye",
+      category: "keyif",
       name: "☕ Baş Başa Kahve Sözü",
       price: 0,
       unit: "₺",
       badge: "Hediye 🎁",
-      description: "Birlikte içilecek en tatlı kahve ve sohbet hediyesi!",
+      description: "Birlikte içilecek en tatlı kahve hediyesi!",
       image: "assets/gift-coffee.svg"
     },
     message: "☕ Harika! Sepetine 'Baş Başa Kahve Sözü' hediye olarak eklendi!",
@@ -65,9 +113,9 @@ const discountCodes = {
   },
   "SURPRIZ": {
     type: "special",
-    message: "💌 Sana özel gizli bir mektup açıldı!",
-    letterTitle: "Canımın İçi İçin Özel Mektup ✨",
-    letterText: "Hayatıma girdiğin günden beri her günüm seninle çok daha renkli ve güzel. Bu site sadece yüzünde küçük bir tebessüm oluşturmak için tasarlandı ama sevgim sonsuz ve gerçek! Seni her şeyden çok seviyorum. 🥰",
+    message: "💌 Minik yıldızıma özel gizli bir mektup açıldı!",
+    letterTitle: "Minik Yıldızıma Özel Mektup ✨",
+    letterText: "Hayatıma girdiğin günden beri her günüm seninle çok daha parlak ve güzel. Bu site sadece yüzünde tatlı bir tebessüm oluşturmak için tasarlandı. Seni her şeyden çok seviyorum minik yıldızım! 🥰",
     action: "openLetter"
   },
   "MEKTUP": {
@@ -86,30 +134,29 @@ const invalidCodeMessages = [
   "Aşk sistemimiz bu kodu tanıyamadı, belki 'KAHVE' veya 'OPUCUK' denemek istersin? ✨"
 ];
 
-// Günün Romantik Sözleri Havuzu
 const romanticQuotes = [
   "\"Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor.\"",
   "\"Seninle geçen her saniye, hayatımın en güzel anısı olmaya aday.\"",
-  "\"Dünyada milyarlarca insan var ama benim kalbim sadece senin için atıyor. 💕\"",
+  "\"Dünyada milyarlarca insan var ama benim kalbim sadece minik yıldızım için atıyor. 💕\"",
   "\"Günün en tatlı anı: Seni düşündüğüm ve gülümsediğim an! ✨\"",
   "\"Sen sadece sevdiğim insan değilsin, aynı zamanda en huzurlu limanımsın. 🥰\"",
   "\"Bugün ve her gün: Seni dünden daha çok, yarından daha az seviyorum! 💖\""
 ];
 
 // ==========================================================================
-// 3. SEPET VE UYGULAMA DURUMU (State)
+// 3. STATE
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
 let currentRating = 5;
 let selectedLoveChip = "Sonsuz";
+let currentCategory = "ask";
 
 // ==========================================================================
 // 4. DOM ELEMENTLERİ
 // ==========================================================================
-const navLogoBtn = document.getElementById("nav-logo-btn");
-const navHomeBtn = document.getElementById("nav-home-btn");
 const productsGrid = document.getElementById("products-grid");
+const categoryTabs = document.getElementById("category-tabs");
 const openCartBtn = document.getElementById("open-cart-btn");
 const closeCartBtn = document.getElementById("close-cart-btn");
 const cartOverlay = document.getElementById("cart-overlay");
@@ -133,6 +180,14 @@ const summaryTotal = document.getElementById("summary-total");
 const checkoutBtn = document.getElementById("checkout-btn");
 
 // Modallar
+const reviewModalOverlay = document.getElementById("review-modal-overlay");
+const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
+const starRating = document.getElementById("star-rating");
+const ratingText = document.getElementById("rating-text");
+const loveChips = document.getElementById("love-chips");
+const reviewNote = document.getElementById("review-note");
+const submitReviewBtn = document.getElementById("submit-review-btn");
+
 const letterModalOverlay = document.getElementById("letter-modal-overlay");
 const closeLetterBtn = document.getElementById("close-letter-btn");
 const letterConfirmBtn = document.getElementById("letter-confirm-btn");
@@ -156,57 +211,49 @@ const receiptDiscount = document.getElementById("receipt-discount");
 const receiptGrandTotal = document.getElementById("receipt-grand-total");
 const whatsappShareBtn = document.getElementById("whatsapp-share-btn");
 
-// Değerlendirme Elementleri
-const starRating = document.getElementById("star-rating");
-const ratingText = document.getElementById("rating-text");
-const loveChips = document.getElementById("love-chips");
-const reviewNote = document.getElementById("review-note");
-const submitReviewBtn = document.getElementById("submit-review-btn");
-
 // ==========================================================================
-// 5. SAYFA / GÖRÜNÜM GEÇİŞİ (Router)
+// 5. SAYFA GEÇİŞİ (Router)
 // ==========================================================================
 window.switchView = function(viewName) {
   const views = {
     'menu': document.getElementById('view-menu'),
-    'shop': document.getElementById('view-shop'),
-    'review': document.getElementById('view-review')
+    'shop': document.getElementById('view-shop')
   };
 
-  // Tüm görünümleri kapat
   Object.values(views).forEach(v => {
     if (v) v.classList.remove('active');
   });
 
-  // İstenen görünümü aç
   if (views[viewName]) {
     views[viewName].classList.add('active');
   }
 
-  // Üst bardaki "Ana Menü" butonunu sadece alt sayfalarda göster
-  if (navHomeBtn) {
-    navHomeBtn.style.display = (viewName === 'menu') ? 'none' : 'inline-flex';
-  }
-
-  // Sayfanın en üstüne kaydır
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 // ==========================================================================
-// 6. BAŞLANGIÇ & ÜRÜNLERİ RENDER ETME
+// 6. KATEGORİ FİLTRELEME & ÜRÜNLERİ RENDER ETME
 // ==========================================================================
-function initApp() {
+window.filterCategory = function(catName) {
+  currentCategory = catName;
+
+  // Sekme butonlarını güncelle
+  if (categoryTabs) {
+    const tabs = categoryTabs.querySelectorAll(".tab-btn");
+    tabs.forEach(t => t.classList.remove("active"));
+    const activeBtn = Array.from(tabs).find(t => t.getAttribute("onclick").includes(`'${catName}'`));
+    if (activeBtn) activeBtn.classList.add("active");
+  }
+
   renderProducts();
-  setupEventListeners();
-  setupReviewSection();
-  startBackgroundHearts();
-  updateCartUI();
-}
+};
 
 function renderProducts() {
   if (!productsGrid) return;
   
-  productsGrid.innerHTML = PRODUCTS.map(product => `
+  const filtered = PRODUCTS.filter(p => p.category === currentCategory);
+
+  productsGrid.innerHTML = filtered.map(product => `
     <div class="product-card">
       <span class="product-badge">${product.badge}</span>
       
@@ -220,7 +267,7 @@ function renderProducts() {
       <div class="product-footer">
         <div class="product-price">
           <span class="price-tag">Fiyat</span>
-          <span class="price-val">${product.price} ${product.unit}</span>
+          <span class="price-val">${product.price === 0 ? "Ücretsiz 💕" : product.price + " " + product.unit}</span>
         </div>
         
         <button class="btn-add-cart" onclick="addToCart('${product.id}')">
@@ -301,7 +348,7 @@ function updateCartUI() {
       
       <div class="cart-item-info">
         <div class="cart-item-title">${item.product.name}</div>
-        <div class="cart-item-price">${item.product.price} ${item.product.unit}</div>
+        <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit}</div>
       </div>
 
       <div class="cart-item-actions">
@@ -356,7 +403,7 @@ function triggerBadgeBump() {
 }
 
 // ==========================================================================
-// 8. İNDİRİM & SÜRPRİZ KODU MOTORU
+// 8. İNDİRİM & SÜRPRİZ KODLARI
 // ==========================================================================
 function applyCouponCode() {
   const code = couponInput.value.trim().toUpperCase();
@@ -434,7 +481,7 @@ function processCheckout() {
   receiptItemsList.innerHTML = cart.map(item => `
     <div class="receipt-item-row">
       <span>${item.product.name} (x${item.quantity})</span>
-      <span>${(item.product.price * item.quantity).toLocaleString('tr-TR')} ₺</span>
+      <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
     </div>
   `).join("");
 
@@ -455,7 +502,7 @@ function processCheckout() {
   orderSummaryText += `🛍️ *Sipariş Detayları:*\n`;
   
   cart.forEach(item => {
-    orderSummaryText += `• ${item.product.name} x${item.quantity} - ${(item.product.price * item.quantity)} ₺\n`;
+    orderSummaryText += `• ${item.product.name} x${item.quantity}\n`;
   });
 
   if (appliedCoupon) {
@@ -463,7 +510,7 @@ function processCheckout() {
   }
 
   orderSummaryText += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)\n\n`;
-  orderSummaryText += `💌 _"Siparişim kalpten verildi, teslimatını sabırsızlıkla bekliyorum!"_`;
+  orderSummaryText += `💌 _"Minik yıldızın siparişi kalpten verildi, teslimatı sabırsızlıkla bekliyorum!"_`;
 
   const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(orderSummaryText)}`;
   whatsappShareBtn.href = waUrl;
@@ -474,90 +521,26 @@ function processCheckout() {
 }
 
 // ==========================================================================
-// 10. DEĞERLENDİRME & ANKET İŞLEMLERİ
+// 10. POP-UP MODAL AÇMA / KAPATMA İŞLEMLERİ
 // ==========================================================================
-function setupReviewSection() {
-  if (!starRating) return;
+window.openReviewModal = function() {
+  if (reviewModalOverlay) reviewModalOverlay.classList.add("active");
+  triggerHeartsShower();
+};
 
-  const ratingDescriptions = {
-    1: "Biraz İlgiye İhtiyacımız Var 🥺",
-    2: "Daha Çok Sarılmalı! 💕",
-    3: "Çok Tatlı & Sevgi Dolu 🥰",
-    4: "Harika Bir Aşk Hizmeti! 💖",
-    5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
-  };
+window.closeReviewModal = function() {
+  if (reviewModalOverlay) reviewModalOverlay.classList.remove("active");
+};
 
-  // Yıldız Puanlama
-  const stars = starRating.querySelectorAll(".star");
-  stars.forEach((star, index) => {
-    star.addEventListener("click", () => {
-      currentRating = index + 1;
-      stars.forEach((s, i) => {
-        if (i <= index) {
-          s.classList.add("active");
-        } else {
-          s.classList.remove("active");
-        }
-      });
-      ratingText.textContent = ratingDescriptions[currentRating];
-      triggerHeartsShower();
-    });
-  });
-
-  // Seçenek Çipleri
-  if (loveChips) {
-    const chips = loveChips.querySelectorAll(".chip-btn");
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        chips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-        selectedLoveChip = chip.dataset.value;
-      });
-    });
-  }
-
-  // Değerlendirmeyi Gönder
-  if (submitReviewBtn) {
-    submitReviewBtn.addEventListener("click", () => {
-      const note = reviewNote.value.trim() || "Çok güzelsin ve seni çok seviyorum!";
-      triggerHeartsShower();
-
-      // Sevimli onay mesajı
-      alert(`🎉 Harika! Değerlendirmen kalbimize ulaştı:\n\n⭐ Puanın: ${currentRating}/5\n💖 Sevgi Seviyen: ${selectedLoveChip}\n💌 Notun: "${note}"\n\nBu değerlendirme ömür boyu saklanacaktır! 🥰`);
-      
-      reviewNote.value = "";
-      switchView("menu");
-    });
-  }
-}
-
-// ==========================================================================
-// 11. GÜNÜN TATLI SÖZÜ MODALI
-// ==========================================================================
 window.openDailyQuoteModal = function() {
   getRandomQuote();
-  quoteModalOverlay.classList.add("active");
+  if (quoteModalOverlay) quoteModalOverlay.classList.add("active");
   triggerHeartsShower();
 };
 
 function getRandomQuote() {
   const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
   quoteModalText.textContent = quote;
-}
-
-// ==========================================================================
-// 12. MODAL & ÇEKMECE KONTROLLERİ
-// ==========================================================================
-function openCartDrawer() {
-  cartOverlay.classList.add("active");
-  cartDrawer.classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-
-function closeCartDrawer() {
-  cartOverlay.classList.remove("active");
-  cartDrawer.classList.remove("active");
-  document.body.style.overflow = "";
 }
 
 function openLetterModal(title, content) {
@@ -568,6 +551,18 @@ function openLetterModal(title, content) {
 
 function closeLetterModal() {
   letterModalOverlay.classList.remove("active");
+}
+
+function openCartDrawer() {
+  cartOverlay.classList.add("active");
+  cartDrawer.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCartDrawer() {
+  cartOverlay.classList.remove("active");
+  cartDrawer.classList.remove("active");
+  document.body.style.overflow = "";
 }
 
 function openReceiptModal() {
@@ -588,13 +583,66 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 13. ANİMASYONLAR (Uçuşan Kalpler & Tıklama)
+// 11. DEĞERLENDİRME ANKETİ
+// ==========================================================================
+function setupReviewSection() {
+  if (!starRating) return;
+
+  const ratingDescriptions = {
+    1: "Biraz İlgiye İhtiyacımız Var 🥺",
+    2: "Daha Çok Sarılmalı! 💕",
+    3: "Çok Tatlı & Sevgi Dolu 🥰",
+    4: "Harika Bir Aşk Hizmeti! 💖",
+    5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
+  };
+
+  const stars = starRating.querySelectorAll(".star");
+  stars.forEach((star, index) => {
+    star.addEventListener("click", () => {
+      currentRating = index + 1;
+      stars.forEach((s, i) => {
+        if (i <= index) {
+          s.classList.add("active");
+        } else {
+          s.classList.remove("active");
+        }
+      });
+      ratingText.textContent = ratingDescriptions[currentRating];
+      triggerHeartsShower();
+    });
+  });
+
+  if (loveChips) {
+    const chips = loveChips.querySelectorAll(".chip-item");
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        selectedLoveChip = chip.dataset.value;
+      });
+    });
+  }
+
+  if (submitReviewBtn) {
+    submitReviewBtn.addEventListener("click", () => {
+      const note = reviewNote.value.trim() || "Çok güzelsin ve seni çok seviyorum!";
+      triggerHeartsShower();
+      closeReviewModal();
+
+      alert(`🎉 Harika! Değerlendirmen kalbimize ulaştı minik yıldızım:\n\n⭐ Puanın: ${currentRating}/5\n💖 Sevgi Seviyen: ${selectedLoveChip}\n💌 Notun: "${note}"\n\nBu değerlendirme ömür boyu saklanacaktır! 🥰`);
+      reviewNote.value = "";
+    });
+  }
+}
+
+// ==========================================================================
+// 12. ANİMASYONLAR (Uçuşan Kalpler & Tıklama)
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
   if (!container) return;
 
-  const heartSymbols = ["💖", "💕", "💗", "💓", "🌸", "✨"];
+  const heartSymbols = ["💖", "💕", "✨", "🌸", "⭐"];
 
   setInterval(() => {
     if (document.hidden) return;
@@ -618,9 +666,9 @@ function triggerHeartsShower() {
   const container = document.getElementById("heart-bg-container");
   if (!container) return;
 
-  const heartSymbols = ["💖", "💕", "💋", "❤️", "🥰", "✨", "🎉"];
+  const heartSymbols = ["💖", "💕", "✨", "⭐", "🥰", "🎉"];
   
-  for (let i = 0; i < 35; i++) {
+  for (let i = 0; i < 30; i++) {
     setTimeout(() => {
       const heart = document.createElement("span");
       heart.className = "floating-heart-bg";
@@ -643,7 +691,7 @@ document.addEventListener("click", (e) => {
   const heart = document.createElement("div");
   heart.className = "click-heart";
   
-  const symbols = ["💖", "💕", "✨", "🌸", "💓"];
+  const symbols = ["💖", "💕", "✨", "⭐", "🌸"];
   heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
   
   heart.style.left = `${e.clientX}px`;
@@ -654,12 +702,9 @@ document.addEventListener("click", (e) => {
 });
 
 // ==========================================================================
-// 14. EVENT LISTENERS
+// 13. EVENT LISTENERS
 // ==========================================================================
 function setupEventListeners() {
-  if (navLogoBtn) navLogoBtn.addEventListener("click", (e) => { e.preventDefault(); switchView('menu'); });
-  if (navHomeBtn) navHomeBtn.addEventListener("click", () => switchView('menu'));
-
   openCartBtn.addEventListener("click", openCartDrawer);
   closeCartBtn.addEventListener("click", closeCartDrawer);
   cartOverlay.addEventListener("click", closeCartDrawer);
@@ -684,6 +729,14 @@ function setupEventListeners() {
   });
 
   checkoutBtn.addEventListener("click", processCheckout);
+
+  // Modalları Kapat
+  if (closeReviewModalBtn) closeReviewModalBtn.addEventListener("click", closeReviewModal);
+  if (reviewModalOverlay) {
+    reviewModalOverlay.addEventListener("click", (e) => {
+      if (e.target === reviewModalOverlay) closeReviewModal();
+    });
+  }
 
   closeLetterBtn.addEventListener("click", closeLetterModal);
   letterConfirmBtn.addEventListener("click", closeLetterModal);
@@ -710,9 +763,19 @@ function setupEventListeners() {
       closeCartDrawer();
       closeLetterModal();
       closeReceiptModal();
+      closeReviewModal();
       if (quoteModalOverlay) quoteModalOverlay.classList.remove("active");
     }
   });
+}
+
+// Başlat
+function initApp() {
+  renderProducts();
+  setupEventListeners();
+  setupReviewSection();
+  startBackgroundHearts();
+  updateCartUI();
 }
 
 document.addEventListener("DOMContentLoaded", initApp);
