@@ -4,21 +4,22 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v4.1.0] - 31.08.2026 (Baş Başa Film & Kırmızı-Beyaz Patlamış Mısır Simgesi) 🍿🎬✨
-- **İsim ve Görsel Değişiklikleri:**
-  - *"Film Seçme Hakkı"* ➔ **"Baş Başa Film"** olarak güncellendi.
-  - Simgesi lezzetli, pofuduk tereyağlı patlamış mısırlar ve kırmızı-beyaz sinema kovası içeren özel SVG ikonuna (`assets/popcorn.svg`) dönüştürüldü.
+### [v4.2.0] - 31.08.2026 (Tek Kulaklık Ürünü Şımartma Menüsüne Taşındı & Müzik Notası Simgesi) 🎵🎧✨
+- **Kategori ve Görsel Değişikliği:**
+  - *"Gece Sohbeti & Şarkı"* ürünü **"Tek Kulaklık"** adıyla **Şımartma Paketi** kategorisine taşındı.
+  - Açıklaması: *"Kulaklığın tekini sana verip aynı şarkıda kaybolma ve huzur garantili anlar!"* olarak uyarlandı.
+  - Simgesi parlak çift müzik notası, kulaklık ve aşk ışıltıları içeren özel SVG ikonuna (`assets/music-note.svg`) dönüştürüldü.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
-### [v4.0.0] - 31.08.2026 (Yapay Zeka / Aşk Falı İfadeleri Kaldırıldı & Tamamen Doğal Sevgi Dili) 💌✨
-- *"🤖 Kalpten Üretilen Yapay Zeka Aşk Falı"* etiketi tamamen kaldırıldı ve doğal sevgi diline dönüştürüldü.
+### [v4.1.0] - 31.08.2026 (Baş Başa Film & Kırmızı-Beyaz Patlamış Mısır Simgesi) 🍿🎬✨
+- *"Film Seçme Hakkı"* ➔ "Baş Başa Film" (Patlamış Mısır) yapıldı.
 
 ---
 
-### [v3.9.0] - 31.08.2026 (Sevgi Dolu Öpücük, Sımsıkı Sarılma & Bağımsız Kedi Takibi) 💋🤗🐾✨
-- `OPUCUK` ve `CANIMBENIM` hediye adları ve simgeleri güncellendi. Kedi takibi bağımsızlaştırıldı.
+### [v4.0.0] - 31.08.2026 (Yapay Zeka / Aşk Falı İfadeleri Kaldırıldı & Tamamen Doğal Sevgi Dili) 💌✨
+- Yapay zeka ve aşk falı ibareleri tamamen temizlendi.
 
 ---
 

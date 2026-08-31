@@ -145,7 +145,7 @@ const PRODUCT_ALIASES = {
   "canim-cicim": "canim-cicim", "canim": "canim-cicim", "canım": "canim-cicim",
   "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi", "cay": "kahve-kacamagi", "çay": "kahve-kacamagi", "cay-kacagi": "kahve-kacamagi",
   "cigkofte-ziyafeti": "cigkofte-ziyafeti", "cigkofte": "cigkofte-ziyafeti", "çiğköfte": "cigkofte-ziyafeti",
-  "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti",
+  "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti", "kulaklik": "gece-sohbeti", "kulaklık": "gece-sohbeti", "tek-kulaklik": "gece-sohbeti",
   "patron-sensin": "patron-sensin", "patron": "patron-sensin", "kralice": "patron-sensin", "kraliçe": "patron-sensin", "kralicem": "patron-sensin",
   "film-gecesi": "film-gecesi", "film": "film-gecesi",
   "goruntulu-arama": "goruntulu-arama", "goruntulu": "goruntulu-arama", "görüntülü": "goruntulu-arama",
@@ -363,18 +363,6 @@ const PRODUCTS = [
     description: "Bol limonlu, bol yeşillikli ve yanında buz gibi ayranla beraber çiğköfte yeme keyfi!",
     image: "assets/cigkofte.svg"
   },
-  {
-    id: "gece-sohbeti",
-    category: "keyif",
-    name: "Gece Sohbeti & Şarkı",
-    price: 0,
-    unit: "💖",
-    isCountdown: false,
-    deliveryText: "Anında ⚡",
-    badge: "Sonsuz Huzur 🌙",
-    description: "Uyumadan önce dinlenecek en güzel şarkılar ve sıcacık ses kaydı.",
-    image: "assets/love-letter.svg"
-  },
 
   // 🎁 3. Kategori: Şımartma Paketi
   {
@@ -400,6 +388,18 @@ const PRODUCTS = [
     badge: "VIP Sinema 🍿",
     description: "Filmi senin seçeceğin, sıcacık patlamış mısır eşliğinde baş başa sinema keyfi!",
     image: "assets/popcorn.svg"
+  },
+  {
+    id: "gece-sohbeti",
+    category: "simartma",
+    name: "Tek Kulaklık",
+    price: 0,
+    unit: "💖",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
+    badge: "Aynı Şarkı 🎵",
+    description: "Kulaklığın tekini sana verip aynı şarkıda kaybolma ve huzur garantili anlar!",
+    image: "assets/music-note.svg"
   },
 
   // 🥺 4. Kategori: Seni Özledim Menüsü

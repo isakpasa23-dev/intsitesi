@@ -17,7 +17,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 | :--- | :--- | :--- |
 | **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
 | **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
-| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle film 50` veya `/ekle kralice 100` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle kulaklik 50` veya `/ekle kralice 100` |
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
@@ -26,9 +26,9 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 - `canim` / `canim-cicim` ➔ **Canım Cicim**
 - `cay` / `çay` / `cay-kacagi` ➔ **Baş Başa Çay Kaçağı** (İnce Belli Çay 🫖)
 - `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (Acılı & Limonlu 🌯)
-- `gece` / `sohbet` ➔ **Gece Sohbeti & Şarkı**
 - `kralice` / `kraliçe` / `patron` ➔ **Kraliçe** (VIP Kraliçe 👑)
 - `film` / `film-gecesi` / `sinema` ➔ **Baş Başa Film** (Patlamış Mısır 🍿)
+- `kulaklik` / `kulaklık` / `tek-kulaklik` ➔ **Tek Kulaklık** (Müzik Notası 🎵)
 - `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama** (Akıllı Telefon 📱)
 - `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Gerçek Sarılma Emojisi 🤗)
 - `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (Stüdyo Mikrofonu 🎙️)
@@ -55,8 +55,8 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 1. **☁️ Çift Yönlü Bulut Stok Senkronizasyonu:**
    - PC'den alışveriş yapıldığında mobil cihazlar da stok düşüşünü canlı olarak görür.
    - Telegram'dan komut verildiğinde sitedeki stoklar anında güncellenir.
-2. **🤖 Yapay Zeka Destekli Tatlı Söz Motoru:**
-   - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle her tıklandığında sınırsız romantik aşk falları ve mesajları üretir.
+2. **🤖 Zengin Romantik Söz Motoru:**
+   - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle her tıklandığında sınırsız tatlı mesajlar üretir.
 3. **🐈‍⬛ 4 Bacaklı Bağımsız Siyah Kedi:**
    - Sayfadaki tüm modal ve pop-up'lardan bağımsız olarak mouse ve dokunmatik parmak hareketlerini kesintisiz takip eder.
 4. **📥 Fiş Resmi İndirme (html2canvas):**

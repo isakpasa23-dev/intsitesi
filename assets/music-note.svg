@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="noteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758c"/>
+      <stop offset="50%" stop-color="#ff1361"/>
+      <stop offset="100%" stop-color="#9b59b6"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff0f5"/>
+      <stop offset="100%" stop-color="#ffd6e8"/>
+    </linearGradient>
+    <filter id="musicShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff1361" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Romantik Daire -->
+  <circle cx="60" cy="60" r="54" fill="url(#glowGrad)" stroke="#ffd1dc" stroke-width="2" filter="url(#musicShadow)"/>
+
+  <!-- Müzik Dalgaları / Işıltı Halkaları -->
+  <circle cx="60" cy="60" r="44" fill="none" stroke="#ff758c" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+
+  <!-- Çift Müzik Notası (Double Note 🎵) -->
+  <g transform="translate(18, 16)">
+    <!-- Sol Nota Başı (Eğimli Elips) -->
+    <ellipse cx="26" cy="68" rx="13" ry="9" fill="url(#noteGrad)" transform="rotate(-25 26 68)"/>
+    <!-- Sağ Nota Başı (Eğimli Elips) -->
+    <ellipse cx="62" cy="58" rx="13" ry="9" fill="url(#noteGrad)" transform="rotate(-25 62 58)"/>
+
+    <!-- Sol Nota Sapı -->
+    <rect x="33" y="24" width="6.5" height="46" rx="3" fill="url(#noteGrad)"/>
+    <!-- Sağ Nota Sapı -->
+    <rect x="69" y="14" width="6.5" height="46" rx="3" fill="url(#noteGrad)"/>
+
+    <!-- Üst Nota Bağlantı Köprüsü -->
+    <polygon points="33,24 75,14 75,26 33,36" fill="url(#noteGrad)"/>
+    <!-- İkinci Bağlantı Şeridi -->
+    <polygon points="33,40 75,30 75,37 33,47" fill="url(#noteGrad)" opacity="0.85"/>
+
+    <!-- Nota Başlarındaki Işıltı / Kalp Vurgusu -->
+    <circle cx="24" cy="66" r="3" fill="#ffffff" opacity="0.75"/>
+    <circle cx="60" cy="56" r="3" fill="#ffffff" opacity="0.75"/>
+  </g>
+
+  <!-- Uçuşan Küçük Notalar ve Kalpler 🎶💖✨ -->
+  <!-- Sol Üst Küçük Nota -->
+  <g transform="translate(16, 26) scale(0.65)">
+    <ellipse cx="10" cy="20" rx="6" ry="4" fill="#ff758c" transform="rotate(-25 10 20)"/>
+    <rect x="13" y="4" width="3" height="17" rx="1.5" fill="#ff758c"/>
+    <path d="M 16 4 Q 24 8 20 16" stroke="#ff758c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Sağ Alt Kalp -->
+  <g transform="translate(86, 78) scale(0.6)">
+    <path d="M 0 0 C -6 -10, -18 0, 0 16 C 18 0, 6 -10, 0 0 Z" fill="#ff1361"/>
+  </g>
+
+  <text x="84" y="34" font-size="14">✨</text>
+  <text x="14" y="94" font-size="13">🎧</text>
+</svg>
