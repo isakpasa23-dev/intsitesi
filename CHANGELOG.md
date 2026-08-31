@@ -4,12 +4,21 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.4.0] - 31.08.2026 (Mobil WebKit / Safari Bacak Animasyonu & Önbellek Temizleme) 📱🐈‍⬛✨
-- **Mobil WebKit & Safari Desteği:**
-  - Mobil cihazlarda SVG bacak animasyonlarının takılmaması için `-webkit-` transform box ve keyframe kuralları eklendi.
-  - Mobilde agresif önbelleklemeyi (cache) kırmak için `Cache-Control` meta etiketleri ve sürüm parametreleri `?v=2.4.0` güncellendi.
-  - Mobilde dokunulmadığında kedinin ekranın altında yumuşak ve tatlı devriye gezintisi yapması sağlandı.
+### [v2.5.0] - 31.08.2026 (Tamamen Romantik Sürpriz Kodları & Özel Yıldız Mektubu) 💌🌠✨
+- **Özel Sürpriz Kodu (`SURPRIZ` & `SUPRIZ`):**
+  - Mektup içeriği güncellendi: *"Seni gökyüzündeki yıldızlar kadar çok seviyorum ve her yıldız kaydığında seni diliyorum. 🌠💖"*
+- **Tüm Kodlar Romantiklestirildi (TL / İndirim Kaldırıldı):**
+  - `SENICOKSEVIYORUM`: Sonsuz Sevgi & Aşk Onayı Yağmuru 🥰
+  - `CANIMBENIM`: Ekstra Sımsıkı Sarılma & Tebessüm Paketi 🫂
+  - `OPUCUK`: Kocaman, Sesli & Sevgi Dolu Öpücük Paketi 💋
+  - `KAHVE`: Baş Başa Kahve Sözü Hediyesi ☕
+  - `MEKTUP`: Özel Aşk Notu 💌
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.4.0] - 31.08.2026 (Mobil WebKit / Safari Bacak Animasyonu & Önbellek Temizleme) 📱🐈‍⬛✨
+- Mobil uyumluluk ve önbellek kırma eklendi.
 
 ---
 
