@@ -19,7 +19,7 @@
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=3.1.0">
+  <link rel="stylesheet" href="style.css?v=3.5.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -108,7 +108,7 @@
 
   <main class="main-container">
 
-    <!-- ================= 1. GÖRÜNÜM: ANA MENÜ (1 Ekrana Rahat Oturan Düzen) ================= -->
+    <!-- ================= 1. GÖRÜNÜM: ANA MENÜ ================= -->
     <section class="view-section active" id="view-menu">
       <div class="hero-box">
         <div class="hero-pill">
@@ -131,7 +131,7 @@
             <div class="tile-icon">🛍️</div>
             <div class="tile-content">
               <h3 class="tile-title">Sipariş Menüsü</h3>
-              <p class="tile-desc">Aşkölçer, Özlem Köşesi ve tatlı paketler</p>
+              <p class="tile-desc">Aşkölçer, Çiğköfte, Masaj ve Özel Paketler</p>
             </div>
             <span class="tile-arrow">➜</span>
           </div>
@@ -167,47 +167,31 @@
       </div>
     </section>
 
-    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ (DOĞAL ORANLI KARTLAR) ================= -->
+    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ (SIFIR KAYDIRMA) ================= -->
     <section class="view-section" id="view-shop">
-      <div class="shop-container">
-        
-        <div class="center-nav-bar">
-          <button class="btn-back-pill" id="btn-back-to-menu">
-            <span>🏠 Ana Menüye Dön</span>
-          </button>
-        </div>
-
-        <div class="section-heading">
-          <span class="section-tag">Keyifli Seçimler</span>
-          <h2 class="section-title">Sipariş Menüsü 💕</h2>
-          <p class="section-sub">Dilediğin kategoriyi seç ve istediklerini sepete ekle!</p>
-        </div>
-
-        <!-- 4 Farklı Menü Kategorisi -->
-        <div class="category-tabs" id="category-tabs">
-          <button class="tab-btn active" data-category="ask">
-            <span>💖 Aşk Menüsü</span>
-          </button>
-          <button class="tab-btn" data-category="keyif">
-            <span>☕ Keyif & Kahve</span>
-          </button>
-          <button class="tab-btn" data-category="simartma">
-            <span>🎁 Şımartma Paketi</span>
-          </button>
-          <button class="tab-btn" data-category="ozlem">
-            <span>🥺 Seni Özledim</span>
-          </button>
-        </div>
-
-        <!-- Ürünler Izgarası (Doğal Yükseklik) -->
-        <div class="products-grid" id="products-grid"></div>
-
-        <div class="shop-bottom-bar">
-          <button class="btn btn-primary" id="btn-view-cart-bottom">
-            <span>Sepetimi Gör & Tamamla 🛍️</span>
-          </button>
-        </div>
+      
+      <!-- Kompakt Tek Satır Başlık Çubuğu -->
+      <div class="shop-compact-nav">
+        <button class="btn-back-pill" id="btn-back-to-menu">
+          <span>🏠 Menü</span>
+        </button>
+        <span class="shop-main-title">Sipariş Menüsü 💕</span>
+        <button class="btn-back-pill" id="btn-view-cart-bottom">
+          <span>Sepet 🛍️</span>
+        </button>
       </div>
+
+      <!-- Kompakt 4 Kategori Sekmesi -->
+      <div class="category-tabs" id="category-tabs">
+        <button class="tab-btn active" data-category="ask">💖 Aşk Menüsü</button>
+        <button class="tab-btn" data-category="keyif">☕ Keyif & Lezzet</button>
+        <button class="tab-btn" data-category="simartma">💆‍♀️ Şımartma</button>
+        <button class="tab-btn" data-category="ozlem">🥺 Seni Özledim</button>
+      </div>
+
+      <!-- Ürünler Izgarası (Ekrana %100 Sığan Kompakt Kartlar) -->
+      <div class="products-grid" id="products-grid"></div>
+
     </section>
 
   </main>
@@ -303,7 +287,7 @@
     <div class="modal-card letter-card">
       <button class="modal-close-btn" id="close-letter-btn">✕</button>
       <div class="letter-stamp">
-        <img src="assets/love-letter.svg" alt="Aşk Mektubu" class="stamp-icon" style="width: 55px; height: 55px; margin: 0 auto 0.4rem;">
+        <img src="assets/love-letter.svg" alt="Aşk Mektubu" class="stamp-icon" style="width: 50px; height: 50px; margin: 0 auto 0.3rem;">
       </div>
       <h3 class="letter-title" id="letter-title">Sana Özel Bir Mektup Açıldı! 💌</h3>
       <div class="letter-content" id="letter-content"></div>
@@ -431,11 +415,6 @@
     </div>
   </div>
 
-  <!-- Alt Bilgi (Footer) -->
-  <footer class="footer">
-    <p>Kalpten kalbe özel olarak tasarlandı 💖 • Sonsuz Sevgi Garantili</p>
-  </footer>
-
-  <script src="script.js?v=3.1.0"></script>
+  <script src="script.js?v=3.5.0"></script>
 </body>
 </html>
