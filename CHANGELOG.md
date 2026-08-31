@@ -4,14 +4,17 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.0.0] - 31.08.2026 (Yapay Zeka Destekli Tatlı Söz Motoru & Tüm Sayfalarda Sıfır Kaydırma) 🤖💌🚀✨
-- **Yapay Zeka Destekli Tatlı Söz Motoru:**
-  - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"*, *"Birtanem"*, *"Ömrüm"* gibi samimi ve derin öznelerle harmanlanan dinamik yapay zeka romantik söz ve aşk falı algoritması eklendi.
-  - "Yeni Bir Söz Çek 🔮" butonuna basıldığında her seferinde sınırsız ve eşsiz romantik cümleler üretilir.
-- **Sipariş Menüsünde Sıfır Kaydırma (1 Ekrana Tam Sığdırma):**
-  - Sipariş menüsü (`#view-shop`) kompakt kartlar ve başlık düzeni ile yeniden boyutlandırıldı.
-  - Artık hem ana menü hem de sipariş menüsü 100vh / 100dvh ekrana tam oturur; ekranda dikey kaydırmaya gerek kalmaz.
+### [v3.1.0] - 31.08.2026 (Kartların Doğal Oranlarına Geri Dönüşü & Kusursuz Düzen) 💖✨
+- **Doğal ve Estetik Ürün Kartları:**
+  - Kartların ekran boyunca aşağı doğru yapay şekilde uzaması/büyümesi kaldırıldı.
+  - Kartlar orijinal, derli toplu ve şık boyutlarına geri getirildi.
+  - Ana karşılama menüsü (`#view-menu`) ekran ortasında derli toplu dururken, sipariş menüsü doğal akıcı ızgara düzeninde sergilenir.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v3.0.0] - 31.08.2026 (Yapay Zeka Destekli Tatlı Söz Motoru & Samimi Özneler) 🤖💌🚀✨
+- *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle dinamik yapay zeka romantik söz motoru eklendi.
 
 ---
 
@@ -27,16 +30,6 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ### [v2.8.0] - 31.08.2026 (Sepete Doğrudan Eklenen Samimi Sürpriz Hediyeler) 🎁💋✨
 - Sürpriz kodlar sepete gerçek hediye ürünleri ekler hale getirildi.
-
----
-
-### [v2.7.0] - 31.08.2026 (60 FPS GPU Optimizasyonu & 1 Ekrana Tam Sığan Giriş Menüsü) 🚀📱✨
-- Tek ekrana tam oturan giriş menüsü ve GPU FPS optimizasyonu yapıldı.
-
----
-
-### [v2.0.0] - 31.08.2026 (Seni Özledim Menüsü & Özel Stok Seviyeleri) 🥺💖✨
-- 'Seni Özledim' menüsü eklendi.
 
 ---
 
