@@ -1,11 +1,10 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Arka Planda Sessiz Telegram Bot Bildirim Sistemi 🤖
+   Müşteri İsmi, Sipariş Notu & Dinamik Teslimat Süresi Hesaplayıcı ⏱️
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
-const WHATSAPP_PHONE = "905510782591";
 
 // Arka Planda Sessiz Telegram Bildirimi Gönderen Fonksiyon
 async function sendTelegramNotification(messageText) {
@@ -26,7 +25,7 @@ async function sendTelegramNotification(messageText) {
 }
 
 // ==========================================================================
-// 1. ÜRÜN & KATEGORİ LİSTESİ (3 Menü)
+// 1. ÜRÜNLER & TAHMİNİ TESLİMAT SÜRELERİ (3 Menü)
 // ==========================================================================
 const PRODUCTS = [
   // 💖 1. Kategori: Aşk Menüsü
@@ -36,6 +35,8 @@ const PRODUCTS = [
     name: "Aşkölçer",
     price: 100,
     unit: "₺",
+    deliveryMinutes: 15,
+    deliveryText: "15 Dakika (Işık Hızı)",
     badge: "Çok Satan 🔥",
     description: "Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı.",
     image: "assets/askolcer.svg"
@@ -46,6 +47,8 @@ const PRODUCTS = [
     name: "Canım Cicim",
     price: 150,
     unit: "₺",
+    deliveryMinutes: 30,
+    deliveryText: "30 Dakika (Özel Paket)",
     badge: "Özel Paket 🎁",
     description: "İçerisinde sıcacık sarılmalar ve tatlı iltifatlar barındıran sevgi paketi.",
     image: "assets/canim-cicim.svg"
@@ -58,6 +61,8 @@ const PRODUCTS = [
     name: "Baş Başa Kahve Kaçamağı",
     price: 0,
     unit: "₺",
+    deliveryMinutes: 45,
+    deliveryText: "45 Dakika (Taze Demleme)",
     badge: "Keyif Vakti ☕",
     description: "İstediğin zaman kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
     image: "assets/gift-coffee.svg"
@@ -68,6 +73,8 @@ const PRODUCTS = [
     name: "Gece Sohbeti & Şarkı",
     price: 0,
     unit: "₺",
+    deliveryMinutes: 20,
+    deliveryText: "20 Dakika",
     badge: "Huzur 🌙",
     description: "Uyumadan önce dinlenecek en güzel şarkılar ve sıcacık ses kaydı.",
     image: "assets/love-letter.svg"
@@ -80,6 +87,8 @@ const PRODUCTS = [
     name: "Sınırsız Sarılma Kuponu",
     price: 0,
     unit: "₺",
+    deliveryMinutes: 5,
+    deliveryText: "5 Dakika (Anında)",
     badge: "Sonsuz 💖",
     description: "Canın ne zaman sıkılırsa anında geçerli 100 saatlik sımsıkı sarılma hakkı.",
     image: "assets/canim-cicim.svg"
@@ -90,6 +99,8 @@ const PRODUCTS = [
     name: "Film Seçme Hakkı",
     price: 0,
     unit: "₺",
+    deliveryMinutes: 60,
+    deliveryText: "60 Dakika (Mısır Hazırlığı)",
     badge: "VIP Sinema 🍿",
     description: "Filmi tamamen senin seçeceğin, atıştırmalıkların hazır olduğu sinema gecesi.",
     image: "assets/askolcer.svg"
@@ -126,6 +137,8 @@ const discountCodes = {
       name: "☕ Baş Başa Kahve Sözü",
       price: 0,
       unit: "₺",
+      deliveryMinutes: 25,
+      deliveryText: "25 Dakika",
       badge: "Hediye 🎁",
       description: "Birlikte içilecek en tatlı kahve hediyesi!",
       image: "assets/gift-coffee.svg"
@@ -166,7 +179,7 @@ const romanticQuotes = [
 ];
 
 // ==========================================================================
-// 3. UYGULAMA DURUMU (State)
+// 3. STATE
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
@@ -233,7 +246,7 @@ function renderProducts() {
       
       <div class="product-footer">
         <div class="product-price">
-          <span class="price-tag">Fiyat</span>
+          <span class="price-tag">Fiyat • ⏳ ${product.deliveryText}</span>
           <span class="price-val">${product.price === 0 ? "Ücretsiz 💕" : product.price + " " + product.unit}</span>
         </div>
         
@@ -325,7 +338,7 @@ function updateCartUI() {
           
           <div class="cart-item-info">
             <div class="cart-item-title">${item.product.name}</div>
-            <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit}</div>
+            <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit} • ⏳ ${item.product.deliveryMinutes || 15} dk</div>
           </div>
 
           <div class="cart-item-actions">
@@ -452,13 +465,36 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA & ARKA PLAN TELEGRAM BİLDİRİMİ
+// 8. SİPARİŞ TAMAMLAMA AKIŞI (İSİM, NOT & TESLİMAT SÜRESİ HESAPLAMA)
 // ==========================================================================
-function processCheckout() {
+
+// 1. Adım: Sepetteki "Siparişi Tamamla" butonuna basınca Bilgi Alma Pop-up'ını Açar
+function openCheckoutInfoModal() {
   if (cart.length === 0) {
     showCouponAlert("Sepetinizde ürün bulunmuyor!", "error");
     return;
   }
+
+  closeCartDrawer();
+  const infoModal = document.getElementById("checkout-info-modal-overlay");
+  if (infoModal) infoModal.classList.add("active");
+  triggerHeartsShower();
+}
+
+function closeCheckoutInfoModal() {
+  const infoModal = document.getElementById("checkout-info-modal-overlay");
+  if (infoModal) infoModal.classList.remove("active");
+}
+
+// 2. Adım: Bilgileri onaylayınca Sipariş Fişini oluşturur ve Telegram'a bildirir
+function finalizeOrder() {
+  const nameInput = document.getElementById("customer-name-input");
+  const noteInput = document.getElementById("customer-note-input");
+
+  const customerName = (nameInput && nameInput.value.trim()) || "Minik Yıldızım";
+  const customerNote = (noteInput && noteInput.value.trim()) || "";
+
+  closeCheckoutInfoModal();
 
   const orderId = `ASK-2026-${Math.floor(1000 + Math.random() * 9000)}`;
   const today = new Date().toLocaleDateString("tr-TR", {
@@ -471,16 +507,49 @@ function processCheckout() {
 
   const receiptOrderId = document.getElementById("receipt-order-id");
   const receiptDate = document.getElementById("receipt-date");
+  const receiptCustomerName = document.getElementById("receipt-customer-name");
+  const receiptCustomerNote = document.getElementById("receipt-customer-note");
+  const receiptNoteRow = document.getElementById("receipt-note-row");
   const receiptItemsList = document.getElementById("receipt-items-list");
+  const receiptMaxDeliveryTime = document.getElementById("receipt-max-delivery-time");
   const receiptSubtotal = document.getElementById("receipt-subtotal");
   const receiptDiscountRow = document.getElementById("receipt-discount-row");
   const receiptDiscount = document.getElementById("receipt-discount");
   const receiptGrandTotal = document.getElementById("receipt-grand-total");
-  const whatsappShareBtn = document.getElementById("whatsapp-share-btn");
 
   if (receiptOrderId) receiptOrderId.textContent = orderId;
   if (receiptDate) receiptDate.textContent = today;
+  if (receiptCustomerName) receiptCustomerName.textContent = `${customerName} 🥰`;
 
+  if (customerNote) {
+    if (receiptCustomerNote) receiptCustomerNote.textContent = `"${customerNote}"`;
+    if (receiptNoteRow) receiptNoteRow.style.display = "block";
+  } else {
+    if (receiptNoteRow) receiptNoteRow.style.display = "none";
+  }
+
+  // Toplam Teslimat Süresi = En Uzun Süren Ürünün Teslimat Süresi (Math.max)
+  const deliveryTimes = cart.map(item => item.product.deliveryMinutes || 15);
+  const maxDeliveryMinutes = Math.max(...deliveryTimes);
+
+  if (receiptMaxDeliveryTime) {
+    receiptMaxDeliveryTime.textContent = `${maxDeliveryMinutes} Dakika`;
+  }
+
+  // Ürünlerin Fişe Basılması (Bireysel teslimat süreleriyle birlikte)
+  if (receiptItemsList) {
+    receiptItemsList.innerHTML = cart.map(item => `
+      <div class="receipt-item-block">
+        <div class="receipt-item-row">
+          <span><strong>${item.product.name}</strong> (x${item.quantity})</span>
+          <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
+        </div>
+        <div class="receipt-item-delivery">⏳ Tahmini Hazırlanma: ${item.product.deliveryMinutes || 15} Dakika</div>
+      </div>
+    `).join("");
+  }
+
+  // Fiyat Hesaplama
   const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   let discountAmount = 0;
 
@@ -494,15 +563,6 @@ function processCheckout() {
 
   const grandTotal = Math.max(0, subtotal - discountAmount);
 
-  if (receiptItemsList) {
-    receiptItemsList.innerHTML = cart.map(item => `
-      <div class="receipt-item-row">
-        <span>${item.product.name} (x${item.quantity})</span>
-        <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
-      </div>
-    `).join("");
-  }
-
   if (receiptSubtotal) receiptSubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
 
   if (discountAmount > 0) {
@@ -514,40 +574,30 @@ function processCheckout() {
 
   if (receiptGrandTotal) receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
 
-  // 1. ARKA PLANDA SESSİZ TELEGRAM BİLDİRİMİ GÖNDER 🤖
+  // ================= TELEGRAM'A SESSİZ BİLDİRİM GÖNDERME 🤖 =================
   let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
   telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n`;
   telegramOrderMsg += `📅 *Tarih:* ${today}\n`;
-  telegramOrderMsg += `👤 *Müşteri:* Minik Yıldızım 🥰\n\n`;
-  telegramOrderMsg += `📦 *Sipariş Edilen Ürünler:*\n`;
+  telegramOrderMsg += `👤 *Müşteri Adı:* ${customerName}\n`;
+  if (customerNote) {
+    telegramOrderMsg += `📝 *Sipariş Notu:* "${customerNote}"\n`;
+  }
+  telegramOrderMsg += `\n📦 *Sipariş Edilen Ürünler:*\n`;
   
   cart.forEach(item => {
-    telegramOrderMsg += `• ${item.product.name} (x${item.quantity})\n`;
+    telegramOrderMsg += `• ${item.product.name} (x${item.quantity}) - Süre: ${item.product.deliveryMinutes || 15} dk\n`;
   });
 
   if (appliedCoupon) {
     telegramOrderMsg += `\n🏷️ *Kullanılan İndirim Kodu:* ${appliedCoupon.code}`;
   }
 
-  telegramOrderMsg += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)\n\n`;
-  telegramOrderMsg += `💌 _"Minik yıldızın siparişini tamamladı, teslimat bekleniyor!"_`;
+  telegramOrderMsg += `\n\n⏳ *TOPLAM TESLİMAT SÜRESİ:* ${maxDeliveryMinutes} Dakika (En uzun ürüne göre)\n`;
+  telegramOrderMsg += `💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk)\n\n`;
+  telegramOrderMsg += `💌 _"Sipariş başarıyla tamamlandı, teslimat hazırlanıyor!"_`;
 
   sendTelegramNotification(telegramOrderMsg);
 
-  // 2. İsteğe Bağlı WhatsApp Butonu
-  if (whatsappShareBtn) {
-    let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n\n📋 *Sipariş No:* ${orderId}\n📅 *Tarih:* ${today}\n\n🛍️ *Sipariş Detayları:*\n`;
-    cart.forEach(item => {
-      orderSummaryText += `• ${item.product.name} x${item.quantity}\n`;
-    });
-    if (appliedCoupon) orderSummaryText += `\n🏷️ *Kullanılan Kod:* ${appliedCoupon.code}\n`;
-    orderSummaryText += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)`;
-    
-    const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodeURIComponent(orderSummaryText)}`;
-    whatsappShareBtn.href = waUrl;
-  }
-
-  closeCartDrawer();
   openReceiptModal();
   triggerHeartsShower();
 }
@@ -766,8 +816,22 @@ function setupAllEvents() {
     });
   }
 
+  // Sepetteki "Siparişi Tamamla" butonuna basınca Bilgi Alma Modalını Açar
   const checkoutBtn = document.getElementById("checkout-btn");
-  if (checkoutBtn) checkoutBtn.addEventListener("click", processCheckout);
+  if (checkoutBtn) checkoutBtn.addEventListener("click", openCheckoutInfoModal);
+
+  // Bilgi Alma Modalı Eventleri
+  const closeCheckoutInfoBtn = document.getElementById("close-checkout-info-btn");
+  const btnConfirmCheckoutInfo = document.getElementById("btn-confirm-checkout-info");
+  const checkoutInfoModalOverlay = document.getElementById("checkout-info-modal-overlay");
+
+  if (closeCheckoutInfoBtn) closeCheckoutInfoBtn.addEventListener("click", closeCheckoutInfoModal);
+  if (btnConfirmCheckoutInfo) btnConfirmCheckoutInfo.addEventListener("click", finalizeOrder);
+  if (checkoutInfoModalOverlay) {
+    checkoutInfoModalOverlay.addEventListener("click", (e) => {
+      if (e.target === checkoutInfoModalOverlay) closeCheckoutInfoModal();
+    });
+  }
 
   // Değerlendirme Modalı ve Sessiz Telegram Gönderimi
   const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
@@ -822,7 +886,6 @@ function setupAllEvents() {
     });
   }
 
-  // Değerlendirmeyi Gönder -> Arka Planda Sessizce Telegram'a Gönderir ve Ekranda Tatlı Onay Gösterir
   if (submitReviewBtn) {
     submitReviewBtn.addEventListener("click", () => {
       const note = (reviewNote && reviewNote.value.trim()) || "Çok tatlısın ve seni çok seviyorum!";
@@ -837,7 +900,6 @@ function setupAllEvents() {
         minute: "2-digit"
       });
 
-      // Arka planda Telegram'a mesaj at
       let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ GELDİ!* 💖\n\n`;
       reviewMsg += `⭐ *Puan:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n`;
       reviewMsg += `🥰 *Sevgi Seviyesi:* ${selectedLoveChip}\n`;
@@ -847,7 +909,6 @@ function setupAllEvents() {
 
       sendTelegramNotification(reviewMsg);
 
-      // Ekranda sadece tatlı bir onay mesajı göster (Hiçbir harici uygulama açılmaz!)
       alert(`🎉 Teşekkürler minik yıldızım!\n\nDeğerlendirmen kalbimize ulaştı. Seni her şeyden çok seviyorum! 🥰`);
       if (reviewNote) reviewNote.value = "";
     });
@@ -903,6 +964,7 @@ function setupAllEvents() {
       closeReceiptModal();
       closeReviewModal();
       closeDailyQuoteModal();
+      closeCheckoutInfoModal();
     }
   });
 }
