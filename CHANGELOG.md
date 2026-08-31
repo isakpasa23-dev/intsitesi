@@ -4,14 +4,15 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.3.0] - 31.08.2026 (Sessiz Arka Plan Telegram Bot Bildirim Hattı) 🤖✨
-- **Arka Planda Sessiz Bildirimler:**
-  - WhatsApp uygulaması açma zorunluluğu tamamen kaldırıldı!
-  - Sevgiliniz sitede *"Siteyi Değerlendir"* diyerek puanını ve notunu gönderdiği anda, arka planda **1 milisaniyede sessizce sizin Telegram'ınıza telefon bildirimi düşer.**
-  - Sevgiliniz sitede *"Siparişi Tamamla"* dediği anda sipariş listesi yine **otomatik olarak Telegram'ınıza anında iletilir.**
-  - Sitede hiçbir harici uygulama açılmaz; sadece ekranda tatlı ve sevimli bir teşekkür onayı belirir.
-- **Bot Bilgileri:** `@Site_bildirimbot` entegre edildi.
+### [v1.3.1] - 31.08.2026 (Tipografi & Sepet Alt Alanı Kompaktlaştırma) 🎨
+- **Tipografi İyileştirmesi:** "Minik Yıldızım!" başlığındaki 'Y' harfinin alt kuyruk kısmı için `line-height` ve `padding-bottom` değerleri artırıldı; alttaki açıklama metniyle çakışması ve kesilmesi engellendi.
+- **Sepet Altı Kompaktlaştırma:** Sepet çekmecesindeki indirim kodu kutusu, ara toplam / genel toplam fiyat alanı ve *"Siparişi Tamamla"* butonu daha zarif ve kompakt boyutlara getirildi; ürün listesine daha fazla alan açıldı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.3.0] - 31.08.2026 (Sessiz Arka Plan Telegram Bot Bildirim Hattı) 🤖✨
+- Telegram Bot API (`@Site_bildirimbot`) entegre edildi.
 
 ---
 
