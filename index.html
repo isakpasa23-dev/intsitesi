@@ -19,7 +19,7 @@
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=11.3.0">
+  <link rel="stylesheet" href="style.css?v=12.0.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -163,7 +163,17 @@
             <span class="tile-arrow">➜</span>
           </div>
 
-          <!-- 5. ÖZEL MENÜ: EKRANDA ANİMASYON PATLATAN SİHİRLİ DÜĞME (ALT ORTADA) -->
+          <!-- 5. ÖZEL MENÜ: EĞLENCE & HATIRA KÖŞESİ (ÇARKIFELEK, KALP OYUNU, POLAROİD ALBÜM) -->
+          <div class="menu-tile menu-tile-fun" id="tile-fun">
+            <div class="tile-icon">🎡</div>
+            <div class="tile-content">
+              <h3 class="tile-title">Aşk & Hatıra Köşesi</h3>
+              <p class="tile-desc">Bugün ne yapıyoruz çarkı, kalp oyunu & polaroid albüm</p>
+            </div>
+            <span class="tile-arrow">➜</span>
+          </div>
+
+          <!-- 6. ÖZEL MENÜ: EKRANDA ANİMASYON PATLATAN SİHİRLİ DÜĞME (ALT ORTADA) -->
           <div class="menu-tile menu-tile-celebration" id="tile-celebration">
             <div class="tile-icon">🎆</div>
             <div class="tile-content">
@@ -174,6 +184,37 @@
           </div>
 
         </div>
+
+        <!-- ================= AŞK SAYACIMIZ (10.08.2026 00:00) ================= -->
+        <div class="relationship-timer-card" id="relationship-timer-card">
+          <div class="timer-badge-header">
+            <span class="timer-sparkle">💖</span>
+            <span class="timer-title">10 Ağustos 2026'dan Beri Birbirimizin Kalbindeyiz ✨</span>
+            <span class="timer-sparkle">💖</span>
+          </div>
+          <div class="timer-grid">
+            <div class="timer-box">
+              <span class="timer-digit" id="timer-days">0</span>
+              <span class="timer-tag">Gün</span>
+            </div>
+            <div class="timer-box">
+              <span class="timer-digit" id="timer-hours">00</span>
+              <span class="timer-tag">Saat</span>
+            </div>
+            <div class="timer-box">
+              <span class="timer-digit" id="timer-minutes">00</span>
+              <span class="timer-tag">Dakika</span>
+            </div>
+            <div class="timer-box">
+              <span class="timer-digit" id="timer-seconds">00</span>
+              <span class="timer-tag">Saniye</span>
+            </div>
+          </div>
+          <div class="timer-footer">
+            <span>Sonsuz Aşk & Birliktelik Sayacımız ♾️</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -204,6 +245,107 @@
 
       <!-- Ürünler Izgarası (Ekrana %100 Sığan Kompakt Kartlar) -->
       <div class="products-grid" id="products-grid"></div>
+
+    </section>
+
+    <!-- ================= 3. GÖRÜNÜM: EĞLENCE & HATIRA KÖŞESİ ================= -->
+    <section class="view-section" id="view-fun">
+      
+      <!-- Kompakt Tek Satır Başlık Çubuğu -->
+      <div class="shop-compact-nav">
+        <button class="btn-back-pill" id="btn-back-from-fun">
+          <span>🏠 Menü</span>
+        </button>
+        <span class="shop-main-title">Aşk & Hatıra Köşesi ✨</span>
+        <button class="btn-back-pill" id="btn-fun-to-shop">
+          <span>Sipariş 🛍️</span>
+        </button>
+      </div>
+
+      <!-- 3 Eğlence Sekmesi -->
+      <div class="category-tabs" id="fun-tabs">
+        <button class="tab-btn active" data-fun-tab="wheel">🎡 Bugün Ne Yapıyoruz?</button>
+        <button class="tab-btn" data-fun-tab="game">🎮 Kalp Yakalama</button>
+        <button class="tab-btn" data-fun-tab="polaroid">📸 Polaroid Albüm</button>
+      </div>
+
+      <!-- PANEL 1: ÇARKI FELEK / GÜNÜN AKTİVİTESİ -->
+      <div class="fun-tab-panel active" id="panel-wheel">
+        <div class="fun-card-container">
+          <div class="wheel-box">
+            <div class="wheel-icon-banner">🎲 💖 🎡</div>
+            <h3 class="fun-section-title">Bugün Ne Yapıyoruz?</h3>
+            <p class="fun-section-desc">Kararsız mı kaldın? Şans çarkına dokun, aşk kaderimiz bugünkü tatlı planımızı belirlesin! ✨</p>
+            
+            <div class="wheel-result-card" id="wheel-result-card">
+              <span class="wheel-result-emoji" id="wheel-result-emoji">🎁</span>
+              <h4 class="wheel-result-title" id="wheel-result-title">Çarkı Çevir & Sürprizi Gör!</h4>
+              <p class="wheel-result-desc" id="wheel-result-desc">Aşağıdaki butona dokunduğunda sana özel aşk planı seçilecek.</p>
+            </div>
+
+            <div class="wheel-actions">
+              <button class="btn btn-primary btn-full" id="btn-spin-wheel">
+                <span>🎲 Çarkı Çevir / Karar Ver 💕</span>
+              </button>
+              <button class="btn btn-secondary btn-full hidden" id="btn-share-activity-tg">
+                <span>📲 Sevgilime Telegram'dan Gönder 💌</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2: PATİ İLE KALP YAKALAMA OYUNU -->
+      <div class="fun-tab-panel" id="panel-game">
+        <div class="fun-card-container">
+          <div class="game-box">
+            <div class="game-header-bar">
+              <div class="game-stat">
+                <span class="stat-label">Skor:</span>
+                <span class="stat-val" id="game-score">0</span>
+              </div>
+              <div class="game-stat">
+                <span class="stat-label">En Yüksek:</span>
+                <span class="stat-val" id="game-high-score">0</span>
+              </div>
+              <div class="game-stat">
+                <span class="stat-label">Süre:</span>
+                <span class="stat-val" id="game-timer">30s</span>
+              </div>
+            </div>
+
+            <div class="game-canvas-wrap">
+              <canvas id="heart-game-canvas" class="heart-game-canvas"></canvas>
+              <div class="game-overlay-start" id="game-overlay-start">
+                <span class="game-start-icon">🐾 💖 🎮</span>
+                <h3 class="game-start-title">Kalp Yakalama Macerası</h3>
+                <p class="game-start-desc">Gökyüzünden süzülen kalplere ve yıldızlara dokunarak yakala! Süre dolmadan rekor kır. 🐱</p>
+                <button class="btn btn-primary" id="btn-start-heart-game">
+                  <span>🎮 Oyunu Başlat! 🚀</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 3: POLAROİD FOTOĞRAF ALBÜMÜ & YÜKLEME -->
+      <div class="fun-tab-panel" id="panel-polaroid">
+        <div class="fun-card-container">
+          <div class="polaroid-header-bar">
+            <div>
+              <h3 class="fun-section-title">📸 Bizim Polaroid Anılarımız</h3>
+              <p class="fun-section-desc">En güzel anlarımızı buraya ekleyip sonsuza dek saklayabilirsin 💕</p>
+            </div>
+            <button class="btn btn-primary btn-sm" id="btn-open-add-photo-modal">
+              <span>➕ Fotoğraf Ekle</span>
+            </button>
+          </div>
+
+          <!-- Polaroid Fotoğraflar Izgarası -->
+          <div class="polaroid-grid" id="polaroid-grid"></div>
+        </div>
+      </div>
 
     </section>
 
@@ -468,6 +610,55 @@
     </div>
   </div>
 
-  <script src="script.js?v=11.3.0"></script>
+  <!-- ================= POP-UP: POLAROİD FOTOĞRAF EKLE ================= -->
+  <div class="modal-overlay" id="add-photo-modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="close-add-photo-modal-btn">✕</button>
+      <div class="modal-header-centered">
+        <span class="modal-header-icon">📸</span>
+        <h3 class="modal-heading">Yeni Polaroid Anı Ekle</h3>
+        <p class="modal-subheading">Galerinden bir fotoğraf seç ve altına tatlı bir not yaz 🥰</p>
+      </div>
+
+      <div class="form-field">
+        <label class="field-label">📷 Fotoğraf Seç / Yükle:</label>
+        <input type="file" id="photo-file-input" accept="image/*" class="photo-file-input">
+        <div class="photo-preview-box hidden" id="photo-preview-box">
+          <img id="photo-preview-img" src="" alt="Önizleme">
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="photo-title-input" class="field-label">🏷️ Başlık / Anı İsmi:</label>
+        <input type="text" id="photo-title-input" placeholder="Örn: İlk Kahve Buluşmamız ☕">
+      </div>
+
+      <div class="form-field">
+        <label for="photo-caption-input" class="field-label">💌 Polaroid Notu & Tarih:</label>
+        <textarea id="photo-caption-input" rows="2" placeholder="Örn: Gözlerine baktığım o ilk an... 💕 (10.08.2026)"></textarea>
+      </div>
+
+      <button class="btn btn-primary btn-full" id="btn-save-photo">
+        <span>📸 Anıyı Albüme Ekle ✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= POP-UP: POLAROİD BÜYÜK BOY ÖNİZLEME ================= -->
+  <div class="modal-overlay" id="lightbox-modal-overlay">
+    <div class="modal-card polaroid-lightbox-card">
+      <button class="modal-close-btn" id="close-lightbox-btn">✕</button>
+      <div class="lightbox-img-wrap">
+        <img id="lightbox-img" src="" alt="Polaroid Fotoğraf">
+      </div>
+      <h3 class="lightbox-title" id="lightbox-title"></h3>
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+      <button class="btn btn-secondary btn-sm" id="btn-delete-polaroid-item" style="margin-top: 0.5rem; color: #ff4757; border-color: #ff4757;">
+        🗑️ Bu Anıyı Sil
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js?v=12.0.0"></script>
 </body>
 </html>

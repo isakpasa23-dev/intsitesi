@@ -1,11 +1,28 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; kesintisiz Telegram Cloud Storage stok senkronizasyonu, Telegram botu üzerinden canlı stok yönetimi, sonsuz yapay zeka romantik söz motoru, sürpriz sevgi kupon kodları, süper optimize dev sinematik Sihirli Animasyon Sahnesi (8 Farklı Romantik Büyü) ve 4 bacaklı yürüyen sevimli ekran kedisi barındıran tam teşekküllü romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı 10.08.2026 Aşk Sayacı, Eğlence & Hatıra Köşesi (Bugün Ne Yapıyoruz Çarkı, Pati ile Kalp Yakalama Oyunu, Fotoğraf Eklenebilir Polaroid Albümü), kesintisiz Telegram Cloud Storage stok senkronizasyonu, Telegram botu üzerinden canlı stok yönetimi, sonsuz yapay zeka romantik söz motoru, sürpriz sevgi kupon kodları, süper optimize dev sinematik Sihirli Animasyon Sahnesi (8 Farklı Romantik Büyü) ve 4 bacaklı yürüyen sevimli ekran kedisi barındıran tam teşekküllü romantik web uygulaması.
 
 ---
 
 ## 🌐 Canlı Site Adresi
 👉 **[https://isakpasa23-dev.github.io/intsitesi/](https://isakpasa23-dev.github.io/intsitesi/)**
+
+---
+
+## ⏳ Canlı Aşk Sayacımız
+- **Başlangıç Tarihi:** `10 Ağustos 2026 00:00`
+- **Gösterge:** Gün, Saat, Dakika ve Saniye bazında canlı akan sonsuz birliktelik kronometresi.
+
+---
+
+## 🎡 Aşk & Hatıra Köşesi (Yeni Özellikler)
+1. **🎲 Bugün Ne Yapıyoruz? (Aşk Çarkıfeleği):**
+   - Kararsız kalındığında tek tıkla dönen ve sürpriz romantik aktivite belirleyen çark (*Sımsıkı Sarılma, Kahve/Çay Molası, Romantik Film Gecesi, El Ele Yürüyüş, Özel Masaj, Çiğköfte Ziyafeti, İsmail YK Dansı, 5 Yeni Sevgi Cümlesi*).
+   - Tek tıkla seçilen aktiviteyi Telegram'dan sevgiline gönderme butonu!
+2. **🎮 Pati ile Kalp Yakalama Oyunu:**
+   - Gökyüzünden süzülen parıltılı kalpleri ve elmasları yakalayarak puan topladığın, süre sayaçlı ve yüksek skor kayıtlı 60 FPS mini oyun.
+3. **📸 Polaroid Hatıra Albümü & Fotoğraf Ekleme:**
+   - Galeriden anında fotoğraf seçip, başlık ve aşk notu yazarak polaroid çerçevesinde albüme ekleme imkanı (Kalıcı `localStorage` hafızası).
 
 ---
 
@@ -53,17 +70,3 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 | **`SENICOKSEVIYORUM`** | 🥰 Sepete **"💖 Sonsuz Sevgi & İlgi Paketi"** ürününü ekler ve kalp yağmuru başlatır. |
 | **`KAHVE`** | ☕ Sepete **"☕ Baş Başa Kahve Sözü"** ürününü ekler. |
 | **`MEKTUP`** | 💌 Özel romantik günün aşk notunu açar. |
-
----
-
-## 🎬 Dev Sinematik & Süper Optimize Büyülü Sevgi Sahnesi (8 Farklı Büyü) 🌸✨
-
-Bilgisayarı veya telefonu yormayan, 60 FPS kilitli ve GPU dostu 8 eşsiz görsel şölen:
-1. 🌵 **Sevimli Kaktüs & Lotus Çiçeği:** Pembe kurdeleli ve kalpli saksı, gülen gözler, kollarında açan çiçekler ve tepesinde açılan 12 yapraklı lotus çiçeği.
-2. 🌹 **Büyülü Aşk Gülü & Çift Kelebek:** 5 farklı katmanlı kadife gül, altın göbek, su damlaları, dökülen gül yaprakları ve çift kelebek.
-3. ⭐ **Kozmik Kutup Yıldızı & Süpernova:** Gece gökyüzünde gülen hilal ay ve nebula bulutları eşliğinde parıldayan takımyıldızı ve süpernova patlaması.
-4. 🐾 **Kedicik & Aşk Baloncukları:** Kuyruğunu ve kulaklarını sallayan siyah kedicik ve üflediği içinde `💖` taşıyan sabun baloncukları.
-5. ☕ **Aşk Kahvesi / Çayı & Kalp Buharı:** Masada tokuşan tatlı yüzlü pembe ve turkuaz kupalar, havada kalplere dönüşen ışıltılı aşk buharı.
-6. 🧸 **Uçan Kalp Balonları & Sevimli Ayıcık:** Pastel bulutların arasından renkli kalp balonlarına tutunarak süzülen kırmızı papyonlu sevimli peluş ayıcık.
-7. 💌 **Büyülü Aşk Mektubu & Kalp Havai Fişekleri:** Çırpınan melek kanatlarıyla süzülen pembe zarf, açılan altın mektup ve fışkıran rengarenk kalp havai fişekleri.
-8. 🌙 **Hilal Ay Salıncağında Sevimli Tavşancık:** Altın yıldız iplerine asılı hilal ayda sallanan tatlı beyaz tavşancık ve arkasında kalan ışıltılı yıldız tozu izi.

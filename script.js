@@ -547,17 +547,21 @@ function loadCartFromStorage() {
 function switchView(viewName) {
   const menuView = document.getElementById("view-menu");
   const shopView = document.getElementById("view-shop");
+  const funView = document.getElementById("view-fun");
+
+  if (menuView) menuView.classList.remove("active");
+  if (shopView) shopView.classList.remove("active");
+  if (funView) funView.classList.remove("active");
 
   if (viewName === "shop") {
-    if (menuView) menuView.classList.remove("active");
     if (shopView) shopView.classList.add("active");
     filterCategory("ask");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else if (viewName === "fun") {
+    if (funView) funView.classList.add("active");
   } else {
-    if (shopView) shopView.classList.remove("active");
     if (menuView) menuView.classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ==========================================================================
@@ -1301,6 +1305,15 @@ function setupAllEvents() {
 
   const tileShop = document.getElementById("tile-shop");
   if (tileShop) tileShop.addEventListener("click", () => switchView("shop"));
+
+  const tileFun = document.getElementById("tile-fun");
+  if (tileFun) tileFun.addEventListener("click", () => switchView("fun"));
+
+  const btnBackFromFun = document.getElementById("btn-back-from-fun");
+  if (btnBackFromFun) btnBackFromFun.addEventListener("click", () => switchView("menu"));
+
+  const btnFunToShop = document.getElementById("btn-fun-to-shop");
+  if (btnFunToShop) btnFunToShop.addEventListener("click", () => switchView("shop"));
 
   const tileReview = document.getElementById("tile-review");
   if (tileReview) tileReview.addEventListener("click", openReviewModal);
@@ -2769,6 +2782,441 @@ function playCurrentMagicAnimation(animKey = null) {
 }
 
 // ==========================================================================
+// 15.2 ⏳ AŞK SAYACIMIZ (10.08.2026 00:00:00)
+// ==========================================================================
+function initRelationshipTimer() {
+  const startDate = new Date(2026, 7, 10, 0, 0, 0); // 10 Ağustos 2026 00:00:00
+
+  function updateTimer() {
+    const now = new Date();
+    let diff = now.getTime() - startDate.getTime();
+    diff = Math.abs(diff);
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const dEl = document.getElementById("timer-days");
+    const hEl = document.getElementById("timer-hours");
+    const mEl = document.getElementById("timer-minutes");
+    const sEl = document.getElementById("timer-seconds");
+
+    if (dEl) dEl.textContent = days;
+    if (hEl) hEl.textContent = String(hours).padStart(2, "0");
+    if (mEl) mEl.textContent = String(minutes).padStart(2, "0");
+    if (sEl) sEl.textContent = String(seconds).padStart(2, "0");
+  }
+
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+// ==========================================================================
+// 15.3 🎡 EĞLENCE & HATIRA KÖŞESİ (Çarkıfelek, Kalp Oyunu, Polaroid Albüm)
+// ==========================================================================
+function initFunHub() {
+  // 1. Sekmeler
+  const funTabs = document.getElementById("fun-tabs");
+  if (funTabs) {
+    const tabBtns = funTabs.querySelectorAll(".tab-btn");
+    tabBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tabKey = btn.dataset.funTab;
+        tabBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        document.querySelectorAll(".fun-tab-panel").forEach(p => p.classList.remove("active"));
+        const targetPanel = document.getElementById(`panel-${tabKey}`);
+        if (targetPanel) targetPanel.classList.add("active");
+
+        if (tabKey === "polaroid" && window.renderPolaroidGallery) {
+          window.renderPolaroidGallery();
+        }
+      });
+    });
+  }
+
+  // 2. ÇARKI FELEK
+  const ACTIVITIES = [
+    { emoji: "🫂💋", title: "Sımsıkı Sarılma & Öpücük Yağmuru", desc: "Bugün bol bol sarılıp birbirimize en tatlı aşk sözlerini fısıldıyoruz! 💕" },
+    { emoji: "☕🫖", title: "Baş Başa Kahve & Çay Molası", desc: "Gözlerinin içine bakarak en sevdiğimiz sıcacık içeceği yudumluyoruz. ✨" },
+    { emoji: "🍿🎬", title: "Romantik Film & Dizi Gecesi", desc: "Işıkları kapatıp battaniyenin altında mısır eşliğinde film izliyoruz! 🎥" },
+    { emoji: "👫🌿", title: "El Ele Beraber Yürüyüş", desc: "Tertemiz havada ellerimiz hiç ayrılmadan tatlı bir yürüyüşe çıkıyoruz. 🌸" },
+    { emoji: "💆‍♀️✨", title: "Özel Masaj & Şımartma Seansı", desc: "Bugün tüm yorgunluğunu unutturacak sıcacık bir ilgi ve masaj seni bekliyor. 💆‍♂️" },
+    { emoji: "🌯🌶️", title: "Baş Başa Çiğköfte Ziyafeti", desc: "Acılı, limonlu ve bol kahkahalı enfes bir akşam ziyafeti çekiyoruz! 🌯" },
+    { emoji: "🎙️💃", title: "İsmail YK Eşliğinde Dans", desc: "En neşeli şarkıyı son ses açıp kahkahalarla çılgınca dans ediyoruz! 🎵" },
+    { emoji: "🥰💌", title: "Birbirimize 5 Yeni Sevgi Cümlesi", desc: "Göz göze gelip kalbimizden geçen en derin 5 duyguyu birbirimize söylüyoruz. 💖" }
+  ];
+
+  let selectedActivity = null;
+  const btnSpin = document.getElementById("btn-spin-wheel");
+  const resultCard = document.getElementById("wheel-result-card");
+  const resultEmoji = document.getElementById("wheel-result-emoji");
+  const resultTitle = document.getElementById("wheel-result-title");
+  const resultDesc = document.getElementById("wheel-result-desc");
+  const btnShareTg = document.getElementById("btn-share-activity-tg");
+
+  if (btnSpin) {
+    btnSpin.addEventListener("click", () => {
+      btnSpin.disabled = true;
+      if (resultCard) resultCard.classList.add("spinning");
+
+      let count = 0;
+      const spinInterval = setInterval(() => {
+        const temp = ACTIVITIES[Math.floor(Math.random() * ACTIVITIES.length)];
+        if (resultEmoji) resultEmoji.textContent = temp.emoji;
+        if (resultTitle) resultTitle.textContent = temp.title;
+        count++;
+        if (count > 12) {
+          clearInterval(spinInterval);
+          selectedActivity = ACTIVITIES[Math.floor(Math.random() * ACTIVITIES.length)];
+          if (resultEmoji) resultEmoji.textContent = selectedActivity.emoji;
+          if (resultTitle) resultTitle.textContent = selectedActivity.title;
+          if (resultDesc) resultDesc.textContent = selectedActivity.desc;
+          if (resultCard) resultCard.classList.remove("spinning");
+          btnSpin.disabled = false;
+
+          triggerHeartsShower();
+          if (btnShareTg) btnShareTg.classList.remove("hidden");
+        }
+      }, 90);
+    });
+  }
+
+  if (btnShareTg) {
+    btnShareTg.addEventListener("click", () => {
+      if (!selectedActivity) return;
+      const msg = `🎲 *BUGÜNKÜ AŞK PLANIMIZ BELLİ OLDU!* 💖\n\n${selectedActivity.emoji} *${selectedActivity.title}*\n📝 "${selectedActivity.desc}"\n\nHemen hazırlan birtanem, seni çok seviyorum! 🥰✨`;
+      sendTelegramNotification(msg);
+      alert("💌 Harika! Seçilen plan Telegram'dan sevgiline iletildi! 💕");
+    });
+  }
+
+  // 3. KALP YAKALAMA OYUNU
+  const gameCanvas = document.getElementById("heart-game-canvas");
+  const gameOverlayStart = document.getElementById("game-overlay-start");
+  const btnStartGame = document.getElementById("btn-start-heart-game");
+  const scoreEl = document.getElementById("game-score");
+  const highScoreEl = document.getElementById("game-high-score");
+  const timerEl = document.getElementById("game-timer");
+
+  let gameScore = 0;
+  let gameHighScore = parseInt(localStorage.getItem("heart_game_high_score") || "0", 10);
+  if (highScoreEl) highScoreEl.textContent = gameHighScore;
+
+  let gameActive = false;
+  let gameTimeLeft = 30;
+  let gameTimerInterval = null;
+  let gameAnimId = null;
+  let fallingHearts = [];
+
+  function startHeartGame() {
+    if (!gameCanvas) return;
+    gameScore = 0;
+    gameTimeLeft = 30;
+    gameActive = true;
+    fallingHearts = [];
+
+    if (scoreEl) scoreEl.textContent = "0";
+    if (timerEl) timerEl.textContent = "30s";
+    if (gameOverlayStart) gameOverlayStart.classList.add("hidden");
+
+    const ctx = gameCanvas.getContext("2d");
+    const rect = gameCanvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    gameCanvas.width = Math.floor(rect.width * dpr);
+    gameCanvas.height = Math.floor(rect.height * dpr);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
+
+    const gw = rect.width;
+    const gh = rect.height;
+
+    if (gameTimerInterval) clearInterval(gameTimerInterval);
+    gameTimerInterval = setInterval(() => {
+      gameTimeLeft--;
+      if (timerEl) timerEl.textContent = `${gameTimeLeft}s`;
+      if (gameTimeLeft <= 0) {
+        endHeartGame();
+      }
+    }, 1000);
+
+    function spawnHeart() {
+      if (!gameActive) return;
+      const symbols = ["💖", "💕", "⭐", "💎", "🌸", "✨"];
+      const sym = symbols[Math.floor(Math.random() * symbols.length)];
+      const points = sym === "💎" ? 25 : sym === "⭐" ? 15 : 10;
+
+      fallingHearts.push({
+        x: 25 + Math.random() * (gw - 50),
+        y: -30,
+        sym: sym,
+        points: points,
+        speed: 1.8 + Math.random() * 2.2,
+        size: 26 + Math.random() * 8
+      });
+    }
+
+    let lastSpawn = Date.now();
+
+    function gameLoop() {
+      if (!gameActive) return;
+      ctx.clearRect(0, 0, gw, gh);
+
+      if (Date.now() - lastSpawn > 420) {
+        spawnHeart();
+        lastSpawn = Date.now();
+      }
+
+      for (let i = fallingHearts.length - 1; i >= 0; i--) {
+        const h = fallingHearts[i];
+        h.y += h.speed;
+
+        ctx.font = `${Math.floor(h.size)}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(h.sym, h.x, h.y);
+
+        if (h.y > gh + 40) {
+          fallingHearts.splice(i, 1);
+        }
+      }
+
+      gameAnimId = requestAnimationFrame(gameLoop);
+    }
+
+    if (gameAnimId) cancelAnimationFrame(gameAnimId);
+    gameAnimId = requestAnimationFrame(gameLoop);
+  }
+
+  function endHeartGame() {
+    gameActive = false;
+    if (gameTimerInterval) clearInterval(gameTimerInterval);
+    if (gameAnimId) cancelAnimationFrame(gameAnimId);
+
+    if (gameScore > gameHighScore) {
+      gameHighScore = gameScore;
+      localStorage.setItem("heart_game_high_score", gameHighScore);
+      if (highScoreEl) highScoreEl.textContent = gameHighScore;
+    }
+
+    if (gameOverlayStart) {
+      gameOverlayStart.classList.remove("hidden");
+      const title = gameOverlayStart.querySelector(".game-start-title");
+      const desc = gameOverlayStart.querySelector(".game-start-desc");
+      if (title) title.textContent = "🎉 Oyun Bitti! Harikasın!";
+      if (desc) desc.textContent = `Toplam Skorun: ${gameScore} Puan! Miyav, seninle gurur duyuyorum minik yıldızım! 🐾💖`;
+    }
+  }
+
+  function handleGameTouch(clientX, clientY) {
+    if (!gameActive || !gameCanvas) return;
+    const rect = gameCanvas.getBoundingClientRect();
+    const touchX = clientX - rect.left;
+    const touchY = clientY - rect.top;
+
+    for (let i = fallingHearts.length - 1; i >= 0; i--) {
+      const h = fallingHearts[i];
+      const dist = Math.hypot(touchX - h.x, touchY - h.y);
+      if (dist < h.size * 1.3) {
+        gameScore += h.points;
+        if (scoreEl) scoreEl.textContent = gameScore;
+        fallingHearts.splice(i, 1);
+        triggerHeartsShower();
+        break;
+      }
+    }
+  }
+
+  if (gameCanvas) {
+    gameCanvas.addEventListener("mousedown", (e) => handleGameTouch(e.clientX, e.clientY));
+    gameCanvas.addEventListener("touchstart", (e) => {
+      if (e.touches && e.touches[0]) {
+        handleGameTouch(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+  }
+
+  if (btnStartGame) btnStartGame.addEventListener("click", startHeartGame);
+
+  // 4. POLAROİD ALBÜMÜ
+  initPolaroidAlbum();
+}
+
+function initPolaroidAlbum() {
+  const DEFAULT_MEMORIES = [
+    {
+      id: "mem-1",
+      title: "Gözlerinin Parıltısı ✨",
+      caption: "Sana ilk baktığım o büyüleyici an... (10.08.2026) 💕",
+      img: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffccd5'/><circle cx='200' cy='130' r='60' fill='%23ff758c'/><text x='200' y='145' font-size='60' text-anchor='middle'>💖</text><text x='200' y='230' font-size='22' font-family='sans-serif' font-weight='bold' fill='%23d63031' text-anchor='middle'>10.08.2026 ✨</text></svg>"
+    },
+    {
+      id: "mem-2",
+      title: "Sımsıkı Sarılma Anı 🫂",
+      caption: "Kollarının arasında zamanın durduğu en huzurlu yer. 💖",
+      img: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23ffeaa7'/><circle cx='200' cy='130' r='60' fill='%23fdcb6e'/><text x='200' y='145' font-size='60' text-anchor='middle'>🫂</text><text x='200' y='230' font-size='22' font-family='sans-serif' font-weight='bold' fill='%23e17055' text-anchor='middle'>Sımsıkı Aşk 💕</text></svg>"
+    },
+    {
+      id: "mem-3",
+      title: "Baş Başa İlk Kahvemiz ☕",
+      caption: "Göz göze, sıcacık kahve kokulu en tatlı sohbetimiz. ☕",
+      img: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23dff9fb'/><circle cx='200' cy='130' r='60' fill='%23c7ecee'/><text x='200' y='145' font-size='60' text-anchor='middle'>☕</text><text x='200' y='230' font-size='22' font-family='sans-serif' font-weight='bold' fill='%2322a6b3' text-anchor='middle'>Kahve & Aşk 🫖</text></svg>"
+    }
+  ];
+
+  function getMemories() {
+    const saved = localStorage.getItem("user_polaroid_memories");
+    if (saved) {
+      try { return JSON.parse(saved); } catch(e) {}
+    }
+    return DEFAULT_MEMORIES;
+  }
+
+  function saveMemories(mems) {
+    localStorage.setItem("user_polaroid_memories", JSON.stringify(mems));
+    renderPolaroidGallery();
+  }
+
+  window.renderPolaroidGallery = function() {
+    const grid = document.getElementById("polaroid-grid");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    const mems = getMemories();
+    mems.forEach(m => {
+      const item = document.createElement("div");
+      item.className = "polaroid-item";
+      item.innerHTML = `
+        <div class="polaroid-tape"></div>
+        <div class="polaroid-img-wrap">
+          <img src="${m.img}" alt="${m.title}">
+        </div>
+        <h4 class="polaroid-title">${m.title}</h4>
+        <p class="polaroid-caption">${m.caption}</p>
+      `;
+
+      item.addEventListener("click", () => openLightbox(m));
+      grid.appendChild(item);
+    });
+  };
+
+  // Lightbox
+  let currentViewingMemory = null;
+  const lightboxModal = document.getElementById("lightbox-modal-overlay");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxTitle = document.getElementById("lightbox-title");
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const closeLightboxBtn = document.getElementById("close-lightbox-btn");
+  const btnDeleteMemory = document.getElementById("btn-delete-polaroid-item");
+
+  function openLightbox(m) {
+    currentViewingMemory = m;
+    if (lightboxImg) lightboxImg.src = m.img;
+    if (lightboxTitle) lightboxTitle.textContent = m.title;
+    if (lightboxCaption) lightboxCaption.textContent = m.caption;
+    if (lightboxModal) lightboxModal.classList.add("active");
+  }
+
+  function closeLightbox() {
+    if (lightboxModal) lightboxModal.classList.remove("active");
+  }
+
+  if (closeLightboxBtn) closeLightboxBtn.addEventListener("click", closeLightbox);
+  if (lightboxModal) {
+    lightboxModal.addEventListener("click", (e) => {
+      if (e.target === lightboxModal) closeLightbox();
+    });
+  }
+
+  if (btnDeleteMemory) {
+    btnDeleteMemory.addEventListener("click", () => {
+      if (!currentViewingMemory) return;
+      if (confirm("Bu güzel anıyı albümden silmek istediğine emin misin?")) {
+        let mems = getMemories().filter(m => m.id !== currentViewingMemory.id);
+        saveMemories(mems);
+        closeLightbox();
+      }
+    });
+  }
+
+  // Fotoğraf Ekleme Modalı
+  const addModal = document.getElementById("add-photo-modal-overlay");
+  const btnOpenAdd = document.getElementById("btn-open-add-photo-modal");
+  const btnCloseAdd = document.getElementById("close-add-photo-modal-btn");
+  const btnSavePhoto = document.getElementById("btn-save-photo");
+  const fileInput = document.getElementById("photo-file-input");
+  const previewBox = document.getElementById("photo-preview-box");
+  const previewImg = document.getElementById("photo-preview-img");
+  const titleInput = document.getElementById("photo-title-input");
+  const captionInput = document.getElementById("photo-caption-input");
+
+  let uploadedBase64 = "";
+
+  if (btnOpenAdd) {
+    btnOpenAdd.addEventListener("click", () => {
+      uploadedBase64 = "";
+      if (fileInput) fileInput.value = "";
+      if (titleInput) titleInput.value = "";
+      if (captionInput) captionInput.value = "";
+      if (previewBox) previewBox.classList.add("hidden");
+      if (addModal) addModal.classList.add("active");
+    });
+  }
+
+  if (btnCloseAdd) {
+    btnCloseAdd.addEventListener("click", () => {
+      if (addModal) addModal.classList.remove("active");
+    });
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          uploadedBase64 = event.target.result;
+          if (previewImg) previewImg.src = uploadedBase64;
+          if (previewBox) previewBox.classList.remove("hidden");
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+
+  if (btnSavePhoto) {
+    btnSavePhoto.addEventListener("click", () => {
+      const title = (titleInput && titleInput.value.trim()) || "Tatlı Bir Anı 💕";
+      const caption = (captionInput && captionInput.value.trim()) || "Seni çok seviyorum! (10.08.2026)";
+
+      if (!uploadedBase64) {
+        alert("Lütfen galerinden bir fotoğraf seç sevgilim! 📷");
+        return;
+      }
+
+      const newMem = {
+        id: "mem-" + Date.now(),
+        title: title,
+        caption: caption,
+        img: uploadedBase64
+      };
+
+      const mems = getMemories();
+      mems.unshift(newMem);
+      saveMemories(mems);
+
+      if (addModal) addModal.classList.remove("active");
+      triggerHeartsShower();
+      alert("📸 Anın başarıyla Polaroid albümüne eklendi! ✨");
+    });
+  }
+
+  renderPolaroidGallery();
+}
+
+// ==========================================================================
 // 16. BAŞLAT
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
@@ -2778,6 +3226,8 @@ document.addEventListener("DOMContentLoaded", () => {
   startBackgroundHearts();
   updateCartUI();
   initScreenCat();
+  initRelationshipTimer();
+  initFunHub();
 
   fetchCloudStocks();
   setInterval(fetchCloudStocks, 4000);
