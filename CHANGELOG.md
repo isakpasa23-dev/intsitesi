@@ -4,14 +4,16 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.2.0] - 31.08.2026 (Akıcı Kedi Yürüme/Dönme Motoru & Küsüratlı Yüksek Stoklar) 🐈‍⬛📦✨
-- **Akıcı ve Doğal Kedi Hareketi:**
-  - Kedi artık asla moonwalk yapmaz; fare nereye giderse anında o yöne döner ve yumuşak adımlarla yürür.
-  - Işınlanma/zıplama hissi giderildi; `translate3d` ve kademeli pati fiziği ile pürüzsüz takip sağlandı.
-- **Küsüratlı ve Çok Sayıda Stok Gösterimi:**
-  - *"Bolca Mevcut"* yazısı kaldırıldı, yerine tam ve küsüratlı yüksek sayılar geldi (`📦 Stok: 9.847 Adet Mevcut ✨`, `📦 Stok: 54.230 Adet Mevcut ✨`, `📦 Stok: 999.999 Adet Mevcut 💖` vb.).
-  - Aşkölçer için ise `📦 Stok: Sadece 1 Adet (Tek & Özel) 🔥` korundu.
+### [v2.2.1] - 31.08.2026 (Sonsuz Sarılma Stokları & Sayısız Gösterim) ♾️🫂💖
+- **Sarılmalar İçin Sınırsız Stok:**
+  - *"Sınırsız Sarılma Kuponu"* ve *"Kavuşma & Özlem Sarılması"* ürünlerindeki tüm sayısal adetler kaldırıldı.
+  - Doğrudan `📦 Stok: Sınırsız ♾️` olarak net ve romantik şekilde gösterildi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.2.0] - 31.08.2026 (Akıcı Kedi Yürüme/Dönme Motoru & Küsüratlı Yüksek Stoklar) 🐈‍⬛📦✨
+- Kedi dönüş/yürüme fiziği düzeltildi ve küsüratlı yüksek stoklar eklendi.
 
 ---
 

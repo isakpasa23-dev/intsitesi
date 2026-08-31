@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Yumuşak Yürüyen & Dönen Siyah Kedi, Özel Küsüratlı Stoklar 🐈‍⬛🐾✨
+   Yumuşak Yürüyen & Dönen Siyah Kedi, Özel Küsüratlı & Sınırsız Stoklar 🐈‍⬛🐾✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -87,23 +87,23 @@ function getAskolcerDetailedRemaining() {
 }
 
 // ==========================================================================
-// 2. ÜRÜNLER & KÜSÜRATLI ÖZEL STOKLAR (4 Kategori)
+// 2. ÜRÜNLER & KÜSÜRATLI / SINIRSIZ STOKLAR (4 Kategori)
 // ==========================================================================
 const INITIAL_STOCKS = {
   "askolcer": 1,          // Aşkölçer sadece 1 adet
   "canim-cicim": 9847,    // Küsüratlı yüksek adet
   "kahve-kacamagi": 4320, // Küsüratlı yüksek adet
   "gece-sohbeti": 12580,  // Küsüratlı yüksek adet
-  "sarilma-kuponu": 999999, // Çok yüksek adet
+  "sarilma-kuponu": 9999999, // Sınırsız
   "film-gecesi": 3745,    // Küsüratlı yüksek adet
   "goruntulu-arama": 8650,// Küsüratlı yüksek adet
-  "ozlem-sarilmasi": 54230, // Çok yüksek adet
+  "ozlem-sarilmasi": 9999999, // Sınırsız
   "ozel-ses-kaydi": 7890, // Küsüratlı yüksek adet
   "kahve-hediye": 2450
 };
 
 function getProductStock(productId) {
-  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v4") || "null");
+  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v5") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
     return savedStocks[productId];
   }
@@ -111,13 +111,13 @@ function getProductStock(productId) {
 }
 
 function decrementProductStock(productId, quantity) {
-  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v4") || "null");
+  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v5") || "null");
   if (!savedStocks) {
     savedStocks = { ...INITIAL_STOCKS };
   }
   const current = savedStocks[productId] || 0;
   savedStocks[productId] = Math.max(0, current - quantity);
-  localStorage.setItem("site_product_stocks_v4", JSON.stringify(savedStocks));
+  localStorage.setItem("site_product_stocks_v5", JSON.stringify(savedStocks));
 }
 
 const PRODUCTS = [
@@ -345,7 +345,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME (KÜSÜRATLI STOKLAR)
+// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME (SINIRSIZ & KÜSÜRATLI STOKLAR)
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -378,6 +378,8 @@ function renderProducts() {
 
     if (product.id === "askolcer") {
       stockDisplay = stock > 0 ? "📦 Stok: Sadece 1 Adet (Tek & Özel) 🔥" : "💖 Tükendi (Sana Özel Hazırlanır)";
+    } else if (product.id === "sarilma-kuponu" || product.id === "ozlem-sarilmasi") {
+      stockDisplay = "📦 Stok: Sınırsız ♾️";
     } else if (stock > 0) {
       stockDisplay = `📦 Stok: ${stock.toLocaleString('tr-TR')} Adet Mevcut ✨`;
     } else {
@@ -828,12 +830,10 @@ function initScreenCat() {
     "Bugün çok tatlısın! 🌸"
   ];
 
-  // Fare hareketini dinle (imlece doğru yumuşak hedef)
   window.addEventListener("mousemove", (e) => {
     targetX = Math.max(25, Math.min(window.innerWidth - 65, e.clientX - 25));
   });
 
-  // Mobil dokunmayı dinle
   window.addEventListener("touchmove", (e) => {
     if (e.touches && e.touches[0]) {
       targetX = Math.max(25, Math.min(window.innerWidth - 65, e.touches[0].clientX - 25));
@@ -846,13 +846,11 @@ function initScreenCat() {
     }
   }, { passive: true });
 
-  // Kedinin Akıcı ve Yumuşak Yürüme & Dönme Döngüsü (Asla Moonwalk Yapmaz)
   function animateCat() {
     const diff = targetX - catX;
     const distance = Math.abs(diff);
 
     if (distance > 4) {
-      // Yön Kontrolü: Hedef neredeyse o yöne DÖNER
       if (diff > 4 && currentFacing !== 1) {
         currentFacing = 1;
         flipWrap.classList.remove("facing-left");
@@ -863,7 +861,6 @@ function initScreenCat() {
         flipWrap.classList.add("facing-left");
       }
 
-      // Yumuşak, kademeli pati adımları
       const step = Math.sign(diff) * Math.min(Math.max(distance * 0.045, 1.2), 3.2);
       catX += step;
       cat.classList.add("walking");
@@ -877,7 +874,6 @@ function initScreenCat() {
 
   requestAnimationFrame(animateCat);
 
-  // Kediye tıklama / sevme etkileşimi
   cat.addEventListener("click", () => {
     cat.classList.add("purring");
     setTimeout(() => cat.classList.remove("purring"), 450);
