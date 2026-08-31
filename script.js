@@ -1,13 +1,13 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Telegram Botu ile Canlı Stok Yönetimi, Bulut Senkronizasyonu & Kedi 🤖☁️📦✨
+   Gerçek Zamanlı Bulut Stok Senkronizasyonu & Telegram Entegrasyonu 🤖☁️📦✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
 
-// ☁️ Canlı Bulut Stok API Uç Noktası (Cihazlar Arası Ortak Canlı Stok)
-const CLOUD_STOCK_ENDPOINT = "https://api.restful-api.dev/objects/ff808181a058d43f01a059350dc504dd";
+// ☁️ Canlı Bulut Stok API Uç Noktası (ExtendsClass JSON Storage - Hızlı & Güvenilir)
+const CLOUD_STOCK_ENDPOINT = "https://extendsclass.com/api/json-storage/bin/bbaafac";
 
 // 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 Saat 09:00:00
 const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 9, 0, 0);
@@ -109,7 +109,6 @@ const INITIAL_STOCKS = {
   "sonsuz-sevgi-hediye": 9999999
 };
 
-// Ürün Kodları ve Takma Adları (Telegram Botu İçin)
 const PRODUCT_ALIASES = {
   "askolcer": "askolcer",
   "aşkölçer": "askolcer",
@@ -146,46 +145,39 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme
+// ☁️ Buluttan Canlı Stokları Çekme (Cache-Busting Parametresi ile)
 async function fetchCloudStocks() {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3500);
-
-    const res = await fetch(CLOUD_STOCK_ENDPOINT, {
-      method: "GET",
-      signal: controller.signal
-    });
-    clearTimeout(timeoutId);
-
+    const res = await fetch(`${CLOUD_STOCK_ENDPOINT}?_t=${Date.now()}`);
     if (res.ok) {
       const data = await res.json();
-      if (data && data.data) {
-        localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(data.data));
-        renderProducts();
+      if (data && typeof data.askolcer !== "undefined") {
+        const prevDataStr = localStorage.getItem("site_cloud_stocks_cache");
+        const newDataStr = JSON.stringify(data);
+        if (prevDataStr !== newDataStr) {
+          localStorage.setItem("site_cloud_stocks_cache", newDataStr);
+          renderProducts();
+        }
       }
     }
   } catch (err) {
-    // Sessiz fallback
+    // Çevrimdışı sessiz devam
   }
 }
 
-// ☁️ Buluta Güncel Stokları Yazma
+// ☁️ Buluta Güncel Stokları Kaydetme
 async function pushCloudStocks(updatedStocks) {
   try {
     localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(updatedStocks));
-    
+    renderProducts();
+
     await fetch(CLOUD_STOCK_ENDPOINT, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: "AskKosesiStocks",
-        data: updatedStocks
-      })
+      body: JSON.stringify(updatedStocks)
     });
-    renderProducts();
   } catch (err) {
-    console.warn("Bulut stok kaydedilemedi:", err);
+    console.warn("Bulut stok güncellenemedi:", err);
   }
 }
 
@@ -205,7 +197,7 @@ function decrementProductStock(productId, quantity) {
 // ==========================================================================
 async function pollTelegramBotCommands() {
   try {
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${telegramLastUpdateId + 1}&timeout=5`;
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${telegramLastUpdateId + 1}&timeout=4`;
     const res = await fetch(url);
     if (!res.ok) return;
 
@@ -220,8 +212,9 @@ async function pollTelegramBotCommands() {
       const text = msg.text.trim();
       const chatId = msg.chat.id;
 
-      // 1. /stok veya /stoklar Komutu (Güncel Stok Listesi)
+      // 1. /stok veya /stoklar Komutu (Canlı Stok Tablosu)
       if (text === "/stok" || text === "/stoklar" || text === "/start" || text === "/yardim") {
+        await fetchCloudStocks();
         let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || INITIAL_STOCKS;
         
         let stockMsg = `📦 *GÜNCEL CANLI STOK DURUMU* 📦\n\n`;
@@ -238,12 +231,12 @@ async function pollTelegramBotCommands() {
         stockMsg += `• \`/set askolcer 1\` ➔ Stoğu 1 yap\n`;
         stockMsg += `• \`/ekle askolcer 1\` ➔ Stoğa 1 ekle\n`;
         stockMsg += `• \`/cikar askolcer 1\` ➔ Stoktan 1 düşür\n`;
-        stockMsg += `• \`/sifirla\` ➔ Tüm stokları başlangıç değerine döndür`;
+        stockMsg += `• \`/sifirla\` ➔ Tüm stokları sıfırla`;
 
         await sendTelegramNotification(stockMsg, chatId);
       }
 
-      // 2. /set <ürün> <adet> Komutu (Stoğu Belirtilen Sayıya Ayarlar)
+      // 2. /set <ürün> <adet> Komutu
       else if (text.startsWith("/set ") || text.startsWith("/ayar ")) {
         const parts = text.split(" ");
         if (parts.length >= 3) {
@@ -256,14 +249,14 @@ async function pollTelegramBotCommands() {
             currentStocks[productId] = targetQty;
             await pushCloudStocks(currentStocks);
 
-            await sendTelegramNotification(`✅ *${productId}* stoğu başarıyla *${targetQty.toLocaleString('tr-TR')}* olarak ayarlandı! ✨`, chatId);
+            await sendTelegramNotification(`✅ *${productId}* stoğu başarıyla *${targetQty.toLocaleString('tr-TR')}* olarak ayarlandı ve web sitesine yansıtıldı! ✨`, chatId);
           } else {
             await sendTelegramNotification(`⚠️ Lütfen geçerli bir pozitif sayı giriniz! Örn: \`/set askolcer 1\``, chatId);
           }
         }
       }
 
-      // 3. /ekle <ürün> <adet> Komutu (Mevcut Stoğa Ekler)
+      // 3. /ekle <ürün> <adet> Komutu
       else if (text.startsWith("/ekle ")) {
         const parts = text.split(" ");
         if (parts.length >= 3) {
@@ -282,7 +275,7 @@ async function pollTelegramBotCommands() {
         }
       }
 
-      // 4. /cikar <ürün> <adet> Komutu (Mevcut Stoktan Düşer)
+      // 4. /cikar <ürün> <adet> Komutu
       else if (text.startsWith("/cikar ") || text.startsWith("/çıkar ")) {
         const parts = text.split(" ");
         if (parts.length >= 3) {
@@ -301,14 +294,14 @@ async function pollTelegramBotCommands() {
         }
       }
 
-      // 5. /sifirla Komutu (Tüm Stokları Fabrika Ayarlarına Döndürür)
+      // 5. /sifirla Komutu
       else if (text === "/sifirla" || text === "/sıfırla") {
         await pushCloudStocks({ ...INITIAL_STOCKS });
-        await sendTelegramNotification(`🔄 *Tüm ürün stokları başarıyla ilk günkü zengin ayarlarına sıfırlandı!* (Aşkölçer: 1 Adet) 🔥`, chatId);
+        await sendTelegramNotification(`🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı ve web sitesi güncellendi!* (Aşkölçer: 1 Adet) 🔥`, chatId);
       }
     }
   } catch (err) {
-    // Bot dinleme hatası (sessiz devam et)
+    // Bot dinleme hatası (sessiz devam)
   }
 }
 
@@ -653,7 +646,7 @@ function renderProducts() {
 }
 
 // ==========================================================================
-// 8. SEPET İŞLEMLERİ (STOK KONTROLLÜ)
+// 8. SEPET İŞLEMLERİ
 // ==========================================================================
 function addToCart(productId) {
   let product = PRODUCTS.find(p => p.id === productId);
@@ -1526,11 +1519,11 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
   initScreenCat();
 
-  // ☁️ Canlı Bulut Stok Senkronizasyonu
+  // ☁️ Canlı Bulut Stoklarını Çek
   fetchCloudStocks();
-  setInterval(fetchCloudStocks, 10000);
+  setInterval(fetchCloudStocks, 4000);
 
-  // 🤖 Telegram Botu Komutlarını Dinle (Her 5 Saniyede Bir)
+  // 🤖 Telegram Botu Komutlarını Dinle
   pollTelegramBotCommands();
-  setInterval(pollTelegramBotCommands, 5000);
+  setInterval(pollTelegramBotCommands, 4000);
 });

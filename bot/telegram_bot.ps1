@@ -4,7 +4,7 @@
 # ==============================================================================
 
 $BotToken = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8"
-$CloudEndpoint = "https://api.restful-api.dev/objects/ff808181a058d43f01a059350dc504dd"
+$CloudEndpoint = "https://extendsclass.com/api/json-storage/bin/bbaafac"
 $LastUpdateId = 0
 
 $ProductAliases = @{
@@ -36,8 +36,8 @@ function Send-TgMessage($chatId, $text) {
 
 function Get-CloudStocks() {
     try {
-        $res = Invoke-RestMethod -Uri $CloudEndpoint -Method Get
-        return $res.data
+        $res = Invoke-RestMethod -Uri "$CloudEndpoint`?_t=$(Get-Date -UFormat %s)" -Method Get
+        return $res
     } catch {
         return $InitialStocks
     }
@@ -45,7 +45,7 @@ function Get-CloudStocks() {
 
 function Set-CloudStocks($stocks) {
     try {
-        $body = @{ name = "AskKosesiStocks"; data = $stocks } | ConvertTo-Json
+        $body = $stocks | ConvertTo-Json
         Invoke-RestMethod -Uri $CloudEndpoint -Method Put -Body $body -ContentType "application/json" | Out-Null
         return $true
     } catch {
@@ -97,7 +97,7 @@ while ($true) {
                     $stocks = Get-CloudStocks
                     $stocks.$pId = $qty
                     Set-CloudStocks $stocks
-                    Send-TgMessage $chatId "✅ *$pId* stoğu başarıyla *$qty Adet* olarak ayarlandı! ✨"
+                    Send-TgMessage $chatId "✅ *$pId* stoğu başarıyla *$qty Adet* olarak ayarlandı ve web sitesine yansıtıldı! ✨"
                 }
                 elseif ($text -match "^/ekle\s+([^\s]+)\s+(\d+)$") {
                     $key = $Matches[1].ToLower()
@@ -121,7 +121,7 @@ while ($true) {
                 }
                 elseif ($text -in @("/sifirla", "/sıfırla")) {
                     Set-CloudStocks $InitialStocks
-                    Send-TgMessage $chatId "🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı!* (Aşkölçer: 1 Adet) 🔥"
+                    Send-TgMessage $chatId "🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı ve web sitesi güncellendi!* (Aşkölçer: 1 Adet) 🔥"
                 }
             }
         }
