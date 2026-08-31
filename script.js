@@ -1544,6 +1544,13 @@ function setupAllEvents() {
     });
   }
 
+  const tileCelebration = document.getElementById("tile-celebration");
+  if (tileCelebration) {
+    tileCelebration.addEventListener("click", () => {
+      launchCelebrationAnimation();
+    });
+  }
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeCartDrawer();
@@ -1552,8 +1559,188 @@ function setupAllEvents() {
       closeReviewModal();
       closeDailyQuoteModal();
       closeCheckoutInfoModal();
+      closeHintModal();
     }
   });
+}
+
+// ==========================================================================
+// 15.1 🎆 SİHİRLİ SEVGİ ŞÖLENİ & HAVAİ FİŞEK KUTLAMA MOTORU (Canvas)
+// ==========================================================================
+let celebrationAnimId = null;
+
+function launchCelebrationAnimation() {
+  const canvas = document.getElementById("celebration-canvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // Kedi sevinç tepkisi
+  const cat = document.getElementById("screen-cat-companion");
+  const bubble = document.getElementById("cat-speech-bubble");
+  if (cat && bubble) {
+    cat.classList.add("purring");
+    bubble.textContent = "🎆 Harikasın birtanem! 💕";
+    bubble.classList.add("active");
+    setTimeout(() => {
+      cat.classList.remove("purring");
+      bubble.classList.remove("active");
+    }, 4500);
+  }
+
+  // Kalp yağmuru da başlat
+  triggerHeartsShower();
+
+  // Partikül sistemi
+  const particles = [];
+  const fireworks = [];
+  const colors = ["#ff1361", "#ff758c", "#ffd700", "#00cec9", "#a29bfe", "#fd79a8", "#ffffff", "#e056fd"];
+  const heartEmojis = ["💖", "💕", "✨", "🌸", "⭐", "👑", "🥰", "🔥"];
+
+  // Yüzen Aşk Mesajları
+  const messages = [
+    "🎆 SİHİRLİ SEVGİ ŞÖLENİ! 🎆",
+    "💖 Seni Dünyalar Kadar Çok Seviyorum Bebeğim! 💖",
+    "🌟 İyi ki Hayatımdasın Birtanem! 👑",
+    "✨ Sonsuz Aşk & Mutluluk! 💕"
+  ];
+
+  let currentMsgIndex = 0;
+  let bannerOpacity = 0;
+  let bannerScale = 0.8;
+
+  function createFirework() {
+    const x = Math.random() * (canvas.width - 100) + 50;
+    const targetY = Math.random() * (canvas.height * 0.45) + 60;
+    fireworks.push({
+      x: x,
+      y: canvas.height,
+      targetY: targetY,
+      speed: 12 + Math.random() * 6,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    });
+  }
+
+  function explode(x, y, color) {
+    const count = 45;
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5);
+      const speed = Math.random() * 7 + 2;
+      const isEmoji = Math.random() > 0.65;
+      particles.push({
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        color: color,
+        alpha: 1,
+        decay: Math.random() * 0.018 + 0.012,
+        size: Math.random() * 4 + 2,
+        gravity: 0.12,
+        isEmoji: isEmoji,
+        emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)]
+      });
+    }
+  }
+
+  // Havai fişek dalgaları oluştur
+  let startTime = Date.now();
+  let lastFireworkTime = 0;
+
+  for (let i = 0; i < 4; i++) {
+    createFirework();
+  }
+
+  if (celebrationAnimId) cancelAnimationFrame(celebrationAnimId);
+
+  function renderCelebration() {
+    const elapsed = Date.now() - startTime;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Yeni havai fişekler fırlat (İlk 4 saniye boyunca)
+    if (elapsed < 3800 && Date.now() - lastFireworkTime > 350) {
+      createFirework();
+      if (Math.random() > 0.5) createFirework();
+      lastFireworkTime = Date.now();
+    }
+
+    // Mesaj döngüsü
+    if (elapsed < 4200) {
+      const msgPhase = Math.floor(elapsed / 1000) % messages.length;
+      const activeMsg = messages[msgPhase];
+
+      ctx.save();
+      ctx.font = "800 clamp(16px, 3.5vw, 24px) 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      // Glow efekti
+      ctx.shadowColor = "#ff1361";
+      ctx.shadowBlur = 16;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText(activeMsg, canvas.width / 2, canvas.height * 0.22);
+      ctx.restore();
+    }
+
+    // Fişek roketlerini güncelle
+    for (let i = fireworks.length - 1; i >= 0; i--) {
+      const f = fireworks[i];
+      f.y -= f.speed;
+
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = f.color;
+      ctx.fill();
+
+      if (f.y <= f.targetY) {
+        explode(f.x, f.y, f.color);
+        fireworks.splice(i, 1);
+      }
+    }
+
+    // Patlama partiküllerini güncelle
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.vx *= 0.98;
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.alpha);
+
+      if (p.isEmoji) {
+        ctx.font = "16px sans-serif";
+        ctx.fillText(p.emoji, p.x, p.y);
+      } else {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 6;
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // Animasyon devam kontrolü
+    if (elapsed < 5000 || particles.length > 0 || fireworks.length > 0) {
+      celebrationAnimId = requestAnimationFrame(renderCelebration);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      celebrationAnimId = null;
+    }
+  }
+
+  celebrationAnimId = requestAnimationFrame(renderCelebration);
 }
 
 // ==========================================================================

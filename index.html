@@ -11,15 +11,15 @@
   
   <title>Sana Özel Sevgi Köşesi ✨</title>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts (Türkçe Karakter Destekli Dancing Script, Caveat, Pacifico) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Dancing+Script:wght@700&family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap&subset=latin-ext" rel="stylesheet">
   
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=4.0.0">
+  <link rel="stylesheet" href="style.css?v=5.0.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -163,9 +163,22 @@
             <span class="tile-arrow">➜</span>
           </div>
 
+          <!-- 5. ÖZEL MENÜ: EKRANDA ANİMASYON PATLATAN SİHİRLİ DÜĞME (ALT ORTADA) -->
+          <div class="menu-tile menu-tile-celebration" id="tile-celebration">
+            <div class="tile-icon">🎆</div>
+            <div class="tile-content">
+              <h3 class="tile-title">Sihirli Sevgi Şöleni</h3>
+              <p class="tile-desc">Ekranda havai fişekler, uçuşan kalpler ve rengarenk gösteriyi başlat ✨</p>
+            </div>
+            <span class="tile-arrow">✨</span>
+          </div>
+
         </div>
       </div>
     </section>
+
+    <!-- Tam Ekran Havai Fişek & Kalp Kutlama Canvası -->
+    <canvas id="celebration-canvas" class="celebration-canvas"></canvas>
 
     <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ (SIFIR KAYDIRMA) ================= -->
     <section class="view-section" id="view-shop">
@@ -427,6 +440,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=4.0.0"></script>
+  <script src="script.js?v=5.0.0"></script>
 </body>
 </html>

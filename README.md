@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları, tam ekran sihirli havai fişek kutlama animasyonu ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
 
 ---
 
@@ -53,12 +53,12 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 
 ## ⚙️ Teknik Özellikler & Altyapı
 
-1. **☁️ Çift Yönlü Bulut Stok Senkronizasyonu:**
+1. **🎆 Sihirli Sevgi Şöleni (Full Screen Canvas Particle Animation):**
+   - Ana menüdeki 5. sihirli butona basıldığında tam ekran renkli havai fişekler, uçuşan kalpler ve sevgi mesajları patlar.
+2. **☁️ Çift Yönlü Bulut Stok Senkronizasyonu:**
    - PC'den alışveriş yapıldığında mobil cihazlar da stok düşüşünü canlı olarak görür.
    - Telegram'dan komut verildiğinde sitedeki stoklar anında güncellenir.
-2. **🤖 Zengin Romantik Söz Motoru:**
-   - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle her tıklandığında sınırsız tatlı mesajlar üretir.
-3. **🐈‍⬛ 4 Bacaklı Bağımsız Siyah Kedi:**
+3. **✍️ Kusursuz Türkçe Kaligrafi Font Desteği:**
+   - *"Minik Yıldızım!"* başlığındaki "Y" ve "ı" harfi kırpılmaları tamamen düzeltildi.
+4. **🐈‍⬛ 4 Bacaklı Bağımsız Siyah Kedi:**
    - Sayfadaki tüm modal ve pop-up'lardan bağımsız olarak mouse ve dokunmatik parmak hareketlerini kesintisiz takip eder.
-4. **📥 Fiş Resmi İndirme (html2canvas):**
-   - Sipariş tamamlandığında oluşan resmi makbuz PNG resmi olarak telefona/bilgisayara indirilebilir.
