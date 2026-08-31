@@ -1328,82 +1328,56 @@ html, body {
 
 /* ================= SİHİRLİ ANİMASYON BAHÇESİ MODALI ================= */
 .magic-modal-card {
-  max-width: 480px;
-  width: 92%;
-  padding: 1.1rem;
+  max-width: 580px;
+  width: 95%;
+  padding: 1.35rem 1.25rem 1.15rem;
   text-align: center;
   background: #ffffff;
+  border-radius: 24px;
 }
 
 .magic-modal-header {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.65rem;
 }
 
 .magic-modal-title {
   font-family: var(--font-main);
-  font-size: 1.15rem;
+  font-size: 1.28rem;
   font-weight: 800;
   color: var(--primary);
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
 }
 
-.magic-modal-desc {
-  font-size: 0.76rem;
-  color: var(--text-muted);
-}
-
-.magic-tabs-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  justify-content: center;
-  margin-bottom: 0.75rem;
-}
-
-.magic-tab-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.28rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: var(--radius-full);
-  background: #f8f9fa;
-  border: 1.2px solid #e9ecef;
-  color: #495057;
-  font-size: 0.74rem;
-  font-weight: 700;
-  font-family: var(--font-main);
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.magic-tab-btn:hover {
+.magic-anim-badge {
+  display: inline-block;
   background: #fff0f3;
-  border-color: #ffd1dc;
-  color: var(--primary);
+  color: #ff1361;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.28rem 0.95rem;
+  border-radius: 20px;
+  border: 1.2px solid #ffd1dc;
+  box-shadow: 0 2px 8px rgba(255, 19, 97, 0.08);
+  animation: pulseBadge 2.5s infinite ease-in-out;
 }
 
-.magic-tab-btn.active {
-  background: linear-gradient(135deg, #ff758c 0%, #ff1361 100%);
-  color: #ffffff;
-  border-color: #ff1361;
-  box-shadow: 0 2px 8px rgba(255, 19, 97, 0.25);
-}
-
-.magic-tab-emoji {
-  font-size: 0.95rem;
+@keyframes pulseBadge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 .magic-stage-container {
   position: relative;
   width: 100%;
-  height: 220px;
-  background: radial-gradient(circle at center, #ffffff 0%, #fff5f8 70%, #ffeaf1 100%);
-  border: 1.5px solid #ffd1dc;
-  border-radius: 16px;
+  height: 310px;
+  background: radial-gradient(circle at center, #ffffff 0%, #fff4f7 65%, #ffe6ee 100%);
+  border: 1.8px solid rgba(255, 117, 140, 0.4);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: inset 0 2px 8px rgba(255, 75, 114, 0.08);
+  box-shadow: 0 8px 24px rgba(255, 19, 97, 0.08), inset 0 2px 10px rgba(255, 117, 140, 0.08);
   cursor: pointer;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
 .magic-canvas {
@@ -1414,31 +1388,44 @@ html, body {
 
 .magic-stage-hint {
   position: absolute;
-  bottom: 6px;
+  bottom: 8px;
   left: 0;
   width: 100%;
   text-align: center;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 700;
   color: #ff758c;
   pointer-events: none;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .magic-footer-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.65rem;
 }
 
 .btn-magic-replay {
-  flex: 1;
-  padding: 0.45rem;
-  font-size: 0.78rem;
+  flex: 1.1;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  background: #fff0f3;
+  color: var(--primary);
+  border: 1.5px solid #ff758c;
+  border-radius: var(--radius-full);
+}
+
+.btn-magic-replay:hover {
+  background: #ffe3ea;
+  transform: translateY(-1px);
 }
 
 .btn-magic-close {
-  flex: 1.2;
-  padding: 0.45rem;
-  font-size: 0.78rem;
+  flex: 1;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  border-radius: var(--radius-full);
 }
 
 /* ================= MOBİL UYUM ================= */
@@ -1456,6 +1443,6 @@ html, body {
   .tab-btn { padding: 0.22rem 0.55rem; font-size: 0.7rem; }
   .cart-drawer { max-width: 100%; }
   .screen-cat-companion { bottom: 1px; width: 42px; height: 32px; }
-  .magic-stage-container { height: 190px; }
-  .magic-tab-btn { padding: 0.25rem 0.5rem; font-size: 0.68rem; }
+  .magic-stage-container { height: 250px; }
+  .magic-modal-card { padding: 1rem 0.85rem; }
 }
