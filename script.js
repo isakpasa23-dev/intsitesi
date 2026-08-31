@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   'Seni Özledim' Menüsü, Fareyi İzleyen Sevimli Siyah Kedi 🐈‍⬛🐾✨
+   Yumuşak Yürüyen & Dönen Siyah Kedi, Özel Küsüratlı Stoklar 🐈‍⬛🐾✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -87,23 +87,23 @@ function getAskolcerDetailedRemaining() {
 }
 
 // ==========================================================================
-// 2. ÜRÜNLER & STOK KONTROLÜ (4 Kategori)
+// 2. ÜRÜNLER & KÜSÜRATLI ÖZEL STOKLAR (4 Kategori)
 // ==========================================================================
 const INITIAL_STOCKS = {
   "askolcer": 1,          // Aşkölçer sadece 1 adet
-  "canim-cicim": 500,     // Çok sayıda
-  "kahve-kacamagi": 500,  // Çok sayıda
-  "gece-sohbeti": 9999,   // Sonsuz
-  "sarilma-kuponu": 9999, // Sonsuz
-  "film-gecesi": 500,     // Çok sayıda
-  "goruntulu-arama": 9999,// Sonsuz
-  "ozlem-sarilmasi": 9999,// Sonsuz
-  "ozel-ses-kaydi": 9999, // Sonsuz
-  "kahve-hediye": 500
+  "canim-cicim": 9847,    // Küsüratlı yüksek adet
+  "kahve-kacamagi": 4320, // Küsüratlı yüksek adet
+  "gece-sohbeti": 12580,  // Küsüratlı yüksek adet
+  "sarilma-kuponu": 999999, // Çok yüksek adet
+  "film-gecesi": 3745,    // Küsüratlı yüksek adet
+  "goruntulu-arama": 8650,// Küsüratlı yüksek adet
+  "ozlem-sarilmasi": 54230, // Çok yüksek adet
+  "ozel-ses-kaydi": 7890, // Küsüratlı yüksek adet
+  "kahve-hediye": 2450
 };
 
 function getProductStock(productId) {
-  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v3") || "null");
+  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v4") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
     return savedStocks[productId];
   }
@@ -111,13 +111,13 @@ function getProductStock(productId) {
 }
 
 function decrementProductStock(productId, quantity) {
-  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v3") || "null");
+  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v4") || "null");
   if (!savedStocks) {
     savedStocks = { ...INITIAL_STOCKS };
   }
   const current = savedStocks[productId] || 0;
   savedStocks[productId] = Math.max(0, current - quantity);
-  localStorage.setItem("site_product_stocks_v3", JSON.stringify(savedStocks));
+  localStorage.setItem("site_product_stocks_v4", JSON.stringify(savedStocks));
 }
 
 const PRODUCTS = [
@@ -345,7 +345,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME
+// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME (KÜSÜRATLI STOKLAR)
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -378,12 +378,8 @@ function renderProducts() {
 
     if (product.id === "askolcer") {
       stockDisplay = stock > 0 ? "📦 Stok: Sadece 1 Adet (Tek & Özel) 🔥" : "💖 Tükendi (Sana Özel Hazırlanır)";
-    } else if (stock >= 1000) {
-      stockDisplay = "📦 Stok: Sonsuz & Sınırsız ♾️";
-    } else if (stock > 10) {
-      stockDisplay = `📦 Stok: Bolca Mevcut (${stock} Adet)`;
     } else if (stock > 0) {
-      stockDisplay = `📦 Stok: Son ${stock} Adet 🔥`;
+      stockDisplay = `📦 Stok: ${stock.toLocaleString('tr-TR')} Adet Mevcut ✨`;
     } else {
       stockDisplay = "💖 Tükendi (Sana Özel Hazırlanır)";
     }
@@ -630,7 +626,6 @@ function openCheckoutInfoModal() {
     return;
   }
 
-  // STOK KONTROLÜ
   for (let item of cart) {
     const currentStock = getProductStock(item.product.id);
     if (currentStock <= 0) {
@@ -648,11 +643,8 @@ function openCheckoutInfoModal() {
   const nameInput = document.getElementById("customer-name-input");
   const noteInput = document.getElementById("customer-note-input");
 
-  // İsim Hatırlama (LocalStorage'dan kayıtlı ismi yükle)
   const savedCustomerName = localStorage.getItem("saved_customer_name") || "Minik Yıldızım";
   if (nameInput) nameInput.value = savedCustomerName;
-
-  // Sipariş Notu Sıfırlama (Her siparişte boş gelsin)
   if (noteInput) noteInput.value = "";
 
   if (infoModal) infoModal.classList.add("active");
@@ -688,10 +680,8 @@ function finalizeOrder() {
   const customerName = (nameInput && nameInput.value.trim()) || "Minik Yıldızım";
   const customerNote = (noteInput && noteInput.value.trim()) || "";
 
-  // İsmi kaydet
   localStorage.setItem("saved_customer_name", customerName);
 
-  // Stokları düşür
   cart.forEach(item => {
     decrementProductStock(item.product.id, item.quantity);
   });
@@ -815,16 +805,17 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. 🐈‍⬛ EKRANIN ALTINDA GEZEN VE FAREYİ İZLEYEN SİYAH KEDİ MOTORU
+// 11. 🐈‍⬛ EKRANIN ALTINDA YUMUŞAK YÜRÜYEN & DÖNEN SİYAH KEDİ MOTORU
 // ==========================================================================
 function initScreenCat() {
   const cat = document.getElementById("screen-cat-companion");
+  const flipWrap = document.getElementById("cat-flip-wrap");
   const bubble = document.getElementById("cat-speech-bubble");
-  if (!cat) return;
+  if (!cat || !flipWrap) return;
 
   let catX = window.innerWidth / 2;
   let targetX = window.innerWidth / 2;
-  let isMoving = false;
+  let currentFacing = 1; // 1: sağa bakar, -1: sola bakar
   let speechTimeout = null;
 
   const catPhrases = [
@@ -837,39 +828,50 @@ function initScreenCat() {
     "Bugün çok tatlısın! 🌸"
   ];
 
-  // Fare hareketini dinle
+  // Fare hareketini dinle (imlece doğru yumuşak hedef)
   window.addEventListener("mousemove", (e) => {
-    targetX = Math.max(30, Math.min(window.innerWidth - 30, e.clientX));
+    targetX = Math.max(25, Math.min(window.innerWidth - 65, e.clientX - 25));
   });
 
   // Mobil dokunmayı dinle
   window.addEventListener("touchmove", (e) => {
     if (e.touches && e.touches[0]) {
-      targetX = Math.max(30, Math.min(window.innerWidth - 30, e.touches[0].clientX));
+      targetX = Math.max(25, Math.min(window.innerWidth - 65, e.touches[0].clientX - 25));
     }
   }, { passive: true });
 
-  // Kedinin animasyon döngüsü (Smooth Physics)
+  window.addEventListener("touchstart", (e) => {
+    if (e.touches && e.touches[0]) {
+      targetX = Math.max(25, Math.min(window.innerWidth - 65, e.touches[0].clientX - 25));
+    }
+  }, { passive: true });
+
+  // Kedinin Akıcı ve Yumuşak Yürüme & Dönme Döngüsü (Asla Moonwalk Yapmaz)
   function animateCat() {
     const diff = targetX - catX;
-    const speed = 0.045; // Kedinin sakin takip hızı
+    const distance = Math.abs(diff);
 
-    if (Math.abs(diff) > 4) {
-      catX += diff * speed;
-      isMoving = true;
-      cat.classList.add("walking");
-
-      if (diff > 5) {
-        cat.classList.remove("facing-left");
-      } else if (diff < -5) {
-        cat.classList.add("facing-left");
+    if (distance > 4) {
+      // Yön Kontrolü: Hedef neredeyse o yöne DÖNER
+      if (diff > 4 && currentFacing !== 1) {
+        currentFacing = 1;
+        flipWrap.classList.remove("facing-left");
+        flipWrap.classList.add("facing-right");
+      } else if (diff < -4 && currentFacing !== -1) {
+        currentFacing = -1;
+        flipWrap.classList.remove("facing-right");
+        flipWrap.classList.add("facing-left");
       }
+
+      // Yumuşak, kademeli pati adımları
+      const step = Math.sign(diff) * Math.min(Math.max(distance * 0.045, 1.2), 3.2);
+      catX += step;
+      cat.classList.add("walking");
     } else {
-      isMoving = false;
       cat.classList.remove("walking");
     }
 
-    cat.style.left = `${catX}px`;
+    cat.style.transform = `translate3d(${catX}px, 0, 0)`;
     requestAnimationFrame(animateCat);
   }
 
@@ -1268,5 +1270,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setupAllEvents();
   startBackgroundHearts();
   updateCartUI();
-  initScreenCat(); // Sevimli siyah kediyi başlat 🐈‍⬛
+  initScreenCat();
 });
