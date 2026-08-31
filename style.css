@@ -110,7 +110,7 @@ html, body {
   left: 0;
   width: 46px;
   height: 35px;
-  z-index: 1500;
+  z-index: 3500;
   cursor: pointer;
   pointer-events: auto;
   will-change: transform;

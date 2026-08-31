@@ -4,26 +4,24 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.8.0] - 31.08.2026 (Baş Başa Çay Kaçağı & Kraliçe Güncellemesi) 🫖👑✨
-- **İsim ve Görsel Değişiklikleri:**
-  - *"Baş Başa Kahve Kaçamağı"* ➔ **"Baş Başa Çay Kaçağı"** olarak değiştirildi. Görseli dumanı tüten geleneksel ince belli Türk çayı ve çay tabağı ikonuna (`assets/tea-glass.svg`) dönüştürüldü.
-  - *"Bugün Patron Sensin Kartı"* ➔ **"Kraliçe"** olarak güncellendi.
+### [v3.9.0] - 31.08.2026 (Sevgi Dolu Öpücük, Sımsıkı Sarılma & Bağımsız Kedi Takibi) 💋🤗🐾✨
+- **Sürpriz Kodlar & Görsel Yenilikleri:**
+  - `OPUCUK` kodu sepete **"Sevgi Dolu Öpücük"** adıyla ve özel dudak izi SVG simgesiyle (`assets/kiss.svg`) ürün ekler.
+  - `CANIMBENIM` kodu sepete **"Sımsıkı Sarılma"** adıyla ve gerçek sarılma emojisi SVG simgesiyle (`assets/hug.svg`) ürün ekler.
+- **Kesintisiz Kedi Hareketi & Özel İpucu Modalı:**
+  - Tarayıcının JavaScript motorunu donduran standart `alert` yerine şık, romantik, ekranı dondurmayan özel ipucu modalı eklendi.
+  - Kedi (`#screen-cat-companion`) tüm pop-up ve menülerden bağımsız olarak farenin ve dokunmatik hareketlerin peşinden kesintisiz yürür.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
+### [v3.8.0] - 31.08.2026 (Baş Başa Çay Kaçağı & Kraliçe Güncellemesi) 🫖👑✨
+- *"Baş Başa Kahve Kaçamağı"* ➔ "Baş Başa Çay Kaçağı" (İnce Belli Çay) ve *"Bugün Patron Sensin Kartı"* ➔ "Kraliçe" yapıldı.
+
+---
+
 ### [v3.7.0] - 31.08.2026 (Görüntülü Arama İçin Telefon & Sarılma İçin Gerçek Emoji Simgesi) 📱🤗✨
-- *"Anında Görüntülü Arama"* simgesi akıllı telefona, *"Kavuşma & Özlem Sarılması"* simgesi gerçek sarılma emojisine (`🤗`) dönüştürüldü.
-
----
-
-### [v3.6.0] - 31.08.2026 (Şımartma Menüsüne 'Bugün Patron Sensin Kartı' Eklendi) 👑✨
-- Şımartma kategorisine altın taç simgesi eklendi.
-
----
-
-### [v3.5.0] - 31.08.2026 (Sipariş Menüsünde Kesin Sıfır Kaydırma - %100 Tek Ekran) 🚀✨
-- Sipariş menüsündeki tüm dikey taşmalar kaldırıldı, 1 ekrana tam oturtuldu.
+- Görüntülü arama ve sarılma ikonları yenilendi.
 
 ---
 

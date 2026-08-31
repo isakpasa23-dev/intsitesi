@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
    Yapay Zeka Destekli Tatlı Söz Motoru, Çiğköfte Ziyafeti & Bulut Stoklar 🌯🤖💌✨
    ========================================================================== */
@@ -464,16 +464,16 @@ const discountCodes = {
     giftItem: {
       id: "opucuk-hediye",
       category: "simartma",
-      name: "💋 Kocaman & Sesli Öpücük",
+      name: "Sevgi Dolu Öpücük",
       price: 0,
       unit: "💖",
       isCountdown: false,
       deliveryText: "Anında ⚡",
       badge: "Özel Hediye 🎁",
-      description: "İçten, sıcacık ve çok sesli bir öpücük hakkı!",
-      image: "assets/canim-cicim.svg"
+      description: "İçten, sıcacık ve sevgi dolu tatlı bir öpücük hakkı!",
+      image: "assets/kiss.svg"
     },
-    message: "💋 Kocaman ve sesli bir öpücük sepetine eklendi birtanem! 😘",
+    message: "💋 Sevgi dolu sıcacık bir öpücük sepetine eklendi birtanem! 😘",
     action: "addGift"
   },
   "CANIMBENIM": {
@@ -481,16 +481,16 @@ const discountCodes = {
     giftItem: {
       id: "sarilma-hediye",
       category: "simartma",
-      name: "🫂 Ekstra Sımsıkı Sarılma Paketi",
+      name: "Sımsıkı Sarılma",
       price: 0,
       unit: "💖",
       isCountdown: false,
       deliveryText: "Anında ⚡",
       badge: "Özel Hediye 🎁",
       description: "Kokunu içine çeke çeke doya doya sımsıkı sarılma hakkı!",
-      image: "assets/canim-cicim.svg"
+      image: "assets/hug.svg"
     },
-    message: "💕 Sımsıkı bir sarılma paketi sepetine eklendi canım benim! 🫂",
+    message: "💕 Sımsıkı bir sarılma sepetine eklendi canım benim! 🫂",
     action: "addGift"
   },
   "SENICOKSEVIYORUM": {
@@ -1213,6 +1213,17 @@ function closeCartDrawer() {
   if (drawer) drawer.classList.remove("active");
 }
 
+function openHintModal() {
+  const modal = document.getElementById("hint-modal-overlay");
+  if (modal) modal.classList.add("active");
+  triggerHeartsShower();
+}
+
+function closeHintModal() {
+  const modal = document.getElementById("hint-modal-overlay");
+  if (modal) modal.classList.remove("active");
+}
+
 function openReceiptModal() {
   const modal = document.getElementById("receipt-modal-overlay");
   if (modal) modal.classList.add("active");
@@ -1366,8 +1377,18 @@ function setupAllEvents() {
   }
 
   if (couponHintBtn) {
-    couponHintBtn.addEventListener("click", () => {
-      alert("💡 Deneyebileceğin bazı sihirli sürpriz kodları:\n\n• OPUCUK (Kocaman Öpücük Paketi Sepete Ekler 💋)\n• CANIMBENIM (Sımsıkı Sarılma Paketi Sepete Ekler 🫂)\n• SENICOKSEVIYORUM (Sonsuz Sevgi Paketi Sepete Ekler 🥰)\n• KAHVE (Baş Başa Kahve Sözü Sepete Ekler ☕)\n• SURPRIZ (Yıldızlı Gizli Aşk Mektubu Açar 🌠)");
+    couponHintBtn.addEventListener("click", openHintModal);
+  }
+
+  const closeHintModalBtn = document.getElementById("close-hint-modal-btn");
+  const btnCloseHintModal = document.getElementById("btn-close-hint-modal");
+  const hintModalOverlay = document.getElementById("hint-modal-overlay");
+
+  if (closeHintModalBtn) closeHintModalBtn.addEventListener("click", closeHintModal);
+  if (btnCloseHintModal) btnCloseHintModal.addEventListener("click", closeHintModal);
+  if (hintModalOverlay) {
+    hintModalOverlay.addEventListener("click", (e) => {
+      if (e.target === hintModalOverlay) closeHintModal();
     });
   }
 

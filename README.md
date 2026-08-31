@@ -42,8 +42,8 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 | Kod | İşlev & Eklenen Hediye |
 | :--- | :--- |
 | **`SURPRIZ`** veya **`SUPRIZ`** | 🌠 *"Seni gökyüzündeki yıldızlar kadar çok seviyorum..."* yazan yıldızlı gizli aşk mektubunu açar. |
-| **`OPUCUK`** | 💋 Sepete **"💋 Kocaman & Sesli Öpücük"** ürününü hediye olarak ekler. |
-| **`CANIMBENIM`** | 🫂 Sepete **"🫂 Ekstra Sımsıkı Sarılma Paketi"** ürününü hediye olarak ekler. |
+| **`OPUCUK`** | 💋 Sepete **"Sevgi Dolu Öpücük"** (`assets/kiss.svg`) hediye ürününü ekler. |
+| **`CANIMBENIM`** | 🫂 Sepete **"Sımsıkı Sarılma"** (`assets/hug.svg`) hediye ürününü ekler. |
 | **`SENICOKSEVIYORUM`** | 🥰 Sepete **"💖 Sonsuz Sevgi & İlgi Paketi"** ürününü ekler ve kalp yağmuru başlatır. |
 | **`KAHVE`** | ☕ Sepete **"☕ Baş Başa Kahve Sözü"** ürününü ekler. |
 | **`MEKTUP`** | 💌 Özel romantik günün aşk notunu açar. |
@@ -57,7 +57,7 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
    - Telegram'dan komut verildiğinde sitedeki stoklar anında güncellenir.
 2. **🤖 Yapay Zeka Destekli Tatlı Söz Motoru:**
    - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle her tıklandığında sınırsız romantik aşk falları ve mesajları üretir.
-3. **🐈‍⬛ 4 Bacaklı Donanım Hızlandırmalı Siyah Kedi:**
-   - Mouse ve dokunmatik parmak hareketlerini takip eder, yönünü döner ve patilerini atarak yürür. Tıklayınca sevimli sözler söyler.
+3. **🐈‍⬛ 4 Bacaklı Bağımsız Siyah Kedi:**
+   - Sayfadaki tüm modal ve pop-up'lardan bağımsız olarak mouse ve dokunmatik parmak hareketlerini kesintisiz takip eder.
 4. **📥 Fiş Resmi İndirme (html2canvas):**
    - Sipariş tamamlandığında oluşan resmi makbuz PNG resmi olarak telefona/bilgisayara indirilebilir.
