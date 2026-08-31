@@ -413,7 +413,7 @@ const PRODUCTS = [
     deliveryText: "Anında ⚡",
     badge: "Özlem Giderici 📱",
     description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli görüntülü konuşma hakkı.",
-    image: "assets/love-letter.svg"
+    image: "assets/phone-videocall.svg"
   },
   {
     id: "ozlem-sarilmasi",

@@ -1,61 +1,69 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
   <defs>
-    <linearGradient id="hugBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fff0f5"/>
-      <stop offset="100%" stop-color="#ffe4eb"/>
+    <linearGradient id="emojiYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffeaa7"/>
+      <stop offset="35%" stop-color="#fdcb6e"/>
+      <stop offset="100%" stop-color="#f39c12"/>
     </linearGradient>
-    <linearGradient id="skinGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fed330"/>
-      <stop offset="100%" stop-color="#f7b731"/>
+    <linearGradient id="handGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffeaa7"/>
+      <stop offset="100%" stop-color="#fdcb6e"/>
     </linearGradient>
-    <linearGradient id="skinGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffbe76"/>
-      <stop offset="100%" stop-color="#f0932b"/>
-    </linearGradient>
-    <filter id="hugShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff4b72" flood-opacity="0.25"/>
+    <filter id="emojiGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#f39c12" flood-opacity="0.3"/>
     </filter>
   </defs>
 
-  <!-- Arka Plan Romantik Daire -->
-  <circle cx="60" cy="60" r="54" fill="url(#hugBgGrad)" stroke="#ffd1dc" stroke-width="2" filter="url(#hugShadow)"/>
+  <!-- Arka Plan Romantik Pembe Işıltı Dairesi -->
+  <circle cx="60" cy="60" r="54" fill="#fff5f8" stroke="#ffd1dc" stroke-width="2"/>
 
-  <!-- Sol Kafa (Sarı/Mutlu Sarılan) -->
-  <circle cx="47" cy="56" r="23" fill="url(#skinGrad1)"/>
-  
-  <!-- Sağ Kafa (Sıcak/Huzurlu Sarılan) -->
-  <circle cx="73" cy="56" r="23" fill="url(#skinGrad2)"/>
+  <!-- EMOJİ KAFA (Sarı Daire) -->
+  <circle cx="60" cy="58" r="38" fill="url(#emojiYellow)" filter="url(#emojiGlow)"/>
 
-  <!-- Sol Karakter Yüz İfadeleri (Mutlu Kapanmış Gözler ^_^) -->
-  <path d="M 37 53 Q 42 47 47 53" fill="none" stroke="#2d3436" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- Sol Yanak Kızarıklığı -->
-  <ellipse cx="37" cy="60" rx="4" ry="2.5" fill="#ff4757" opacity="0.6"/>
-  <!-- Sol Gülümseme -->
-  <path d="M 42 63 Q 46 68 50 63" fill="none" stroke="#2d3436" stroke-width="2" stroke-linecap="round"/>
+  <!-- Mutlu Kapanmış Aşk Gözleri (Hilal Şeklinde ^_^) -->
+  <path d="M 42 50 C 42 42, 54 42, 54 50" fill="none" stroke="#6d4c41" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M 66 50 C 66 42, 78 42, 78 50" fill="none" stroke="#6d4c41" stroke-width="3.5" stroke-linecap="round"/>
 
-  <!-- Sağ Karakter Yüz İfadeleri (Huzurlu Kapanmış Gözler) -->
-  <path d="M 73 53 Q 78 47 83 53" fill="none" stroke="#2d3436" stroke-width="2.5" stroke-linecap="round"/>
-  <!-- Sağ Yanak Kızarıklığı -->
-  <ellipse cx="83" cy="60" rx="4" ry="2.5" fill="#ff4757" opacity="0.6"/>
-  <!-- Sağ Tatlı Gülümseme -->
-  <path d="M 70 63 Q 74 68 78 63" fill="none" stroke="#2d3436" stroke-width="2" stroke-linecap="round"/>
+  <!-- Pembe Utangaç Yanaklar (Blush) -->
+  <ellipse cx="38" cy="58" rx="7" ry="4" fill="#ff7675" opacity="0.75"/>
+  <ellipse cx="82" cy="58" rx="7" ry="4" fill="#ff7675" opacity="0.75"/>
 
-  <!-- Sarılan Kollar (Sol Kol Sağdakini Sarıyor) -->
-  <path d="M 34 68 C 34 86, 75 90, 84 72" fill="none" stroke="url(#skinGrad1)" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="84" cy="72" r="5" fill="url(#skinGrad1)"/>
+  <!-- Tatlı Gülümseyen Ağız -->
+  <path d="M 48 64 Q 60 76 72 64" fill="none" stroke="#6d4c41" stroke-width="3.5" stroke-linecap="round"/>
 
-  <!-- Sarılan Kollar (Sağ Kol Soldakini Sarıyor) -->
-  <path d="M 86 68 C 86 86, 45 90, 36 72" fill="none" stroke="url(#skinGrad2)" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="36" cy="72" r="5" fill="url(#skinGrad2)"/>
+  <!-- ÖNE DOĞRU SARILAN SEVİMLİ PATİLER / ELLER (Unmistakable Hug Hands 🤗) -->
+  <!-- Sol Sarılan El (Açık Avuç İçi & Parmaklar) -->
+  <g transform="translate(14, 62) rotate(15)">
+    <!-- Avuç & Kol -->
+    <ellipse cx="14" cy="12" rx="11" ry="8" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1.2"/>
+    <!-- 4 Parmak -->
+    <circle cx="6" cy="7" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <circle cx="11" cy="4" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <circle cx="17" cy="4" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <circle cx="22" cy="7" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <!-- Başparmak -->
+    <ellipse cx="23" cy="14" rx="4" ry="2.5" fill="url(#handGrad)" transform="rotate(-20 23 14)" stroke="#e67e22" stroke-width="0.8"/>
+  </g>
 
-  <!-- Üstte Uçuşan Aşk Kalpleri 💖✨ -->
-  <g transform="translate(60, 20)">
+  <!-- Sağ Sarılan El (Açık Avuç İçi & Parmaklar) -->
+  <g transform="translate(80, 62) rotate(-15)">
+    <!-- Avuç & Kol -->
+    <ellipse cx="12" cy="12" rx="11" ry="8" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1.2"/>
+    <!-- 4 Parmak -->
+    <circle cx="4" cy="7" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <circle cx="9" cy="4" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <circle cx="15" cy="4" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <circle cx="20" cy="7" r="4" fill="url(#handGrad)" stroke="#e67e22" stroke-width="1"/>
+    <!-- Başparmak -->
+    <ellipse cx="3" cy="14" rx="4" ry="2.5" fill="url(#handGrad)" transform="rotate(20 3 14)" stroke="#e67e22" stroke-width="0.8"/>
+  </g>
+
+  <!-- Üstte Parlayan Aşk Kalbi 💖 -->
+  <g transform="translate(60, 14)">
     <path d="M 0 0 C -6 -10, -18 0, 0 16 C 18 0, 6 -10, 0 0 Z" fill="#ff1361"/>
-    <!-- Kalp Parlaması -->
     <ellipse cx="-3" cy="-2" rx="2" ry="4" fill="#ffffff" opacity="0.6" transform="rotate(-30 -3 -2)"/>
   </g>
-  
-  <text x="20" y="32" font-size="12">💕</text>
-  <text x="88" y="34" font-size="14">✨</text>
-  <text x="82" y="98" font-size="12">🥰</text>
+
+  <text x="86" y="28" font-size="12">✨</text>
+  <text x="18" y="32" font-size="12">💕</text>
 </svg>
