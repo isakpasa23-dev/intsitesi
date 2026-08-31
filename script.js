@@ -18,11 +18,9 @@ let lastQuoteIndex = -1;
 let telegramLastUpdateId = 0;
 
 // ==========================================================================
-// 1. 🤖 YAPAY ZEKA & ZENGİN ROMANTİK SÖZ MOTORU
+// 1. 🤖 GELİŞMİŞ YAPAY ZEKA & ZENGİN ROMANTİK SÖZ MOTORU
 // ==========================================================================
 const curatedRomanticQuotes = [
-  "\"Bu gece ay çok güzel değil mi? 🌙✨ (Seni her şeyden çok seviyorum...)\"",
-  "\"Birtanem, bu gece ay çok güzel değil mi? 🌙💖\"",
   "\"Bebeğim, seninle geçen her saniye ömrümün en tatlı hediyesi. İyi ki hayatımdasın! 💖\"",
   "\"Hayatımın anlamı, gözlerinin içine baktığım her an dünya benim için biraz daha güzelleşiyor. ✨\"",
   "\"Aşkım, dünyada milyarlarca insan var ama benim kalbim sadece senin için çarpıyor. 🌟\"",
@@ -43,51 +41,93 @@ const curatedRomanticQuotes = [
   "\"Tatlım, seninle susmak bile dünyanın en güzel sohbetini yapmaktan daha tatlı. 🤍\"",
   "\"Ömrüm, aşkın en saf, en masum ve en gerçek hali senin kalbinde saklı. 💖\"",
   "\"Bebeğim, sen benim ömrüme doğan en güzel güneşsin. ☀️\"",
-  "\"Aşkım, yarınlar seninle güzel, dünler seninle unutuldu, bugünüm seninle dolu! ✨\""
+  "\"Aşkım, yarınlar seninle güzel, dünler seninle unutuldu, bugünüm seninle dolu! ✨\"",
+  "\"Bu gece ay çok güzel değil mi? 🌙✨ (Seni her şeyden çok seviyorum...)\"",
+  "\"Minik Yıldızım, gökyüzünde bir kayan yıldız görsem yine sadece seni dilerdim. 🌠\"",
+  "\"Canımın içi, dünyanın bütün güzellikleri senin o sıcacık gülüşünde toplanmış. 💕\"",
+  "\"Birtanem, sen benim bu hayatta yazdığım en kusursuz aşk şiirimsin. 📖💖\"",
+  "\"Kraliçem, kalbimin tahtı da anahtarı da sonsuza dek sadece sende saklı. 👑🥰\"",
+  "\"Gözbebeğim, senin kokunu içime çektiğim an kalbime bahar geliyor. 🌸\"",
+  "\"Aşkım, seninle geçen bir ömür bile bana yetmeyecek kadar kısa gelir. ⏳💖\"",
+  "\"Pamuk şekerim, seninle saçmalamak dünyanın en tatlı eğlencesi! 🎈🥰\"",
+  "\"Huzurum, senin kollarında olmak dünyadaki bütün fırtınaları dindirmeye yetiyor. 🫂✨\""
 ];
 
 const aiEndearments = [
-  "Bebeğim", "Hayatımın anlamı", "Aşkım", "Tatlım", "Canım", 
-  "Birtanem", "Ömrüm", "Gözümün nuru", "Kalp hırsızım", "Güzeller güzelim"
+  "Minik Yıldızım", "Bebeğim", "Canımın İçi", "Ömrümün Baharı", "Kraliçem",
+  "Hayatımın Anlamı", "Birtanem", "Gözümün Nuru", "Sevgilim", "Kalbimin Sahibi",
+  "Güzel Gözlüm", "Pamuk Şekerim", "Huzurum", "Balım", "Dünyalar Güzeli",
+  "İlk ve Son Aşkım", "Gökyüzüm", "Tatlı Cadım", "Gül Yüzlüm", "Güneşim"
 ];
 
-const aiIntros = [
-  "seninle geçen her an masal gibi geliyor,",
-  "gülüşün içimi sıcacık ısıtıyor,",
-  "seni düşündüğümde istemsizce gülümsüyorum,",
-  "senin sesini duymak günümün en güzel ödülü,",
-  "kalbimin en derin köşesinde sadece senin sevgin var,",
-  "gözlerine her baktığımda sonsuz bir huzur buluyorum,"
+const aiTimeContexts = [
+  "bu gece gökyüzüne her baktığımda,",
+  "senin sesini duyduğum her an,",
+  "gözlerimi her kapattığımda,",
+  "seninle geçen her dakikada,",
+  "gülüşünü her aklıma getirdiğimde,",
+  "gecenin en sessiz saatlerinde,",
+  "ellerini tuttuğum o ilk andan beri,",
+  "kalbimin her atışında,",
+  "sabah uyandığım ilk saniyede,",
+  "dünyanın bütün kalabalığının ortasında bile,"
 ];
 
-const aiFeelings = [
-  "dünyanın bütün güzellikleri senin bir tebessümünde saklı.",
-  "sen benim başıma gelen en tatlı mucizesin.",
-  "seni gökyüzündeki tüm yıldızların toplamından daha çok seviyorum.",
-  "ömrümün sonuna kadar sadece sana sarılmak istiyorum.",
-  "sen benim bu hayattaki en büyük şansımsın.",
-  "varlığın kalbime öyle iyi geliyor ki anlatamam."
+const aiObservations = [
+  "içimde binlerce renkli kelebek aynı anda havalanıyor,",
+  "dünyadaki bütün yorgunluklarım bir anda yok olup gidiyor,",
+  "kalbime öyle tatlı ve sıcacık bir huzur yayılıyor ki,",
+  "bütün şarkılar sadece bizim masalımızı anlatmaya başlıyor,",
+  "zaman duruyor ve evrende sadece senin varlığın kalıyor,",
+  "hayatımın en büyük ve en tatlı mucizesini yaşadığımı anlıyorum,",
+  "gökyüzündeki tüm yıldızlar senin gözlerinin yanında sönük kalıyor,",
+  "dünyanın en şanslı ve en mutlu insanı olduğumu hissediyorum,"
 ];
 
-const aiEmojis = ["💖", "🥰", "✨", "🌸", "💕", "🌠", "🧸", "🤍"];
+const aiDeclarations = [
+  "çünkü sen benim bu hayattaki en kıymetli hazinemsin.",
+  "ömrümün sonuna kadar sadece senin yanında olmak istiyorum.",
+  "seni dünyadaki her şeyden ve herkesten çok seviyorum.",
+  "varlığın benim en büyük şükür ve mutluluk sebebim.",
+  "kalbimin her zerresi sonsuza kadar sadece senin için çarpacak.",
+  "sen benim hem en huzurlu yuvam hem de en güzel masalımsın.",
+  "seninle geçen tek bir saniyeyi bile dünyalara değişmem.",
+  "sen benim ömrüme doğan ve hiç batmayan en parlak güneşsin.",
+  "bu dünyada iyi ki varsın, iyi ki hayatımdasın birtanem."
+];
+
+const aiEmojis = ["💖", "🥰", "✨", "🌸", "💕", "🌠", "🧸", "🤍", "🌷", "👑", "🌙", "🔥"];
+
+const quoteHistoryBuffer = [];
 
 function generateAIRomanticQuote() {
-  const isCurated = Math.random() > 0.45;
-  if (isCurated) {
-    let newIndex;
-    do {
-      newIndex = Math.floor(Math.random() * curatedRomanticQuotes.length);
-    } while (newIndex === lastQuoteIndex && curatedRomanticQuotes.length > 1);
-    lastQuoteIndex = newIndex;
-    return curatedRomanticQuotes[newIndex];
-  } else {
-    const endearment = aiEndearments[Math.floor(Math.random() * aiEndearments.length)];
-    const intro = aiIntros[Math.floor(Math.random() * aiIntros.length)];
-    const feeling = aiFeelings[Math.floor(Math.random() * aiFeelings.length)];
-    const emoji = aiEmojis[Math.floor(Math.random() * aiEmojis.length)];
-    
-    return `"${endearment}, ${intro} ${feeling} ${emoji}"`;
+  let selectedQuote = "";
+  let attempts = 0;
+
+  do {
+    const isCurated = Math.random() > 0.65; // %35 Hazır Klasikler, %65 Dinamik AI Üretimi
+
+    if (isCurated) {
+      const idx = Math.floor(Math.random() * curatedRomanticQuotes.length);
+      selectedQuote = curatedRomanticQuotes[idx];
+    } else {
+      const endearment = aiEndearments[Math.floor(Math.random() * aiEndearments.length)];
+      const timeCtx = aiTimeContexts[Math.floor(Math.random() * aiTimeContexts.length)];
+      const obs = aiObservations[Math.floor(Math.random() * aiObservations.length)];
+      const dec = aiDeclarations[Math.floor(Math.random() * aiDeclarations.length)];
+      const emoji = aiEmojis[Math.floor(Math.random() * aiEmojis.length)];
+
+      selectedQuote = `"${endearment}, ${timeCtx} ${obs} ${dec} ${emoji}"`;
+    }
+    attempts++;
+  } while (quoteHistoryBuffer.includes(selectedQuote) && attempts < 15);
+
+  quoteHistoryBuffer.push(selectedQuote);
+  if (quoteHistoryBuffer.length > 20) {
+    quoteHistoryBuffer.shift();
   }
+
+  return selectedQuote;
 }
 
 // Telegram Bildirim Fonksiyonu
