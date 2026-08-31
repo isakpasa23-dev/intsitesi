@@ -4,19 +4,23 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
+### [v1.2.2] - 31.08.2026 (Sipariş Menüsü Hizalama & WhatsApp Bildirim Hattı) 📱
+- **Aşağı Kayma Hatası Giderildi:** CSS'te `#view-menu` ve `#view-shop` arasındaki görüntüleme çakışması `display: none !important` kuralı ile tamamen çözüldü; Sipariş Menüsü tıklandığı an ekranın en üstünde düzgünce açılıyor.
+- **WhatsApp Bildirim Entegrasyonu (`05510782591`):**
+  - **Değerlendirme:** Sevgiliniz *"Değerlendirmeyi Gönder"* dediğinde verdiği puan, sevgi seviyesi ve notu **doğrudan sizin WhatsApp numaranıza (`05510782591`)** iletilir.
+  - **Sipariş Fişi:** Sipariş tamamlandığında *"WhatsApp'tan Gönder"* butonu da doğrudan sizin numaranıza sipariş detaylarını gönderir.
+- **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
 ### [v1.2.1] - 31.08.2026 (Tıklama Düzeltmesi & CSS Renk/Kontrast İyileştirmesi) 🛠️
-- **Hata Düzeltmesi:** `script.js` içindeki çift kod blokları ve ID çakışmaları temizlendi; menü kutuları, değerlendirme ve aşk sözü pop-up tıklamaları %100 çalışır hale getirildi.
-- **Tasarım:** Koyu arka plan/kontrast sorunu giderildi; beyaz/pembe kartlar, net yazılar ve canlı renkler garantilendi.
-- **Önbellek (Cache-Busting):** Dosya versiyonları `v=1.2.1` olarak güncellendi.
-- **Yedekleme:** Değişiklikler GitHub'a aktarıldı.
+- Tıklama ve stil çakışmaları giderildi.
 
 ---
 
 ### [v1.2.0] - 31.08.2026 (Kompakt Tek Ekran & Pop-up Deneyimi) ✨
-- **Başlık:** *"Hoş Geldin Minik Yıldızım! ✨"*
-- **Tek Ekran & 2x2 Menü:** Kompakt düzen.
-- **Pop-up Modalları:** Değerlendirme ve aşk sözü pencereleri.
-- **3 Kategori:** Aşk, Keyif & Kahve, Şımartma Paketi.
+- Başlık: *"Hoş Geldin Minik Yıldızım! ✨"*
+- 2x2 kompakt menü ve 3 farklı kategori sekmesi.
 
 ---
 

@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - CSS STİLLERİ
-   Mobil Öncelikli, Tek Ekran Uyumlu, Ortalanmış ve Zarif Tasarım
+   Mobil Uyumlu, Ortalanmış, Parlak ve Canlı Tasarım
    ========================================================================== */
 
 :root {
@@ -13,9 +13,10 @@
   --accent-gold: #fdcb6e;
   --accent-green: #00b894;
   
-  --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3ea 50%, #ffd6e0 100%);
+  --bg-color: #fff0f5;
+  --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 50%, #ffd6e2 100%);
   --card-bg: #ffffff;
-  --card-border: #ffd0dc;
+  --card-border: #ffccd7;
   
   --text-main: #2d3436;
   --text-muted: #636e72;
@@ -23,7 +24,6 @@
   
   --shadow-sm: 0 4px 12px rgba(255, 75, 114, 0.08);
   --shadow-md: 0 8px 24px rgba(255, 75, 114, 0.14);
-  --shadow-lg: 0 16px 40px rgba(255, 75, 114, 0.2);
   
   --radius-sm: 12px;
   --radius-md: 18px;
@@ -47,6 +47,7 @@
 html, body {
   min-height: 100vh;
   font-family: var(--font-main);
+  background: var(--bg-color) !important;
   background: var(--bg-gradient) !important;
   color: var(--text-main) !important;
   overflow-x: hidden;
@@ -80,12 +81,8 @@ html, body {
     transform: translateY(0) rotate(0deg) scale(0.8);
     opacity: 0;
   }
-  15% {
-    opacity: 0.8;
-  }
-  85% {
-    opacity: 0.8;
-  }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
   100% {
     transform: translateY(-110vh) rotate(360deg) scale(1.3);
     opacity: 0;
@@ -116,15 +113,13 @@ html, body {
   }
 }
 
-/* ================= ÜST MENÜ / NAVBAR ================= */
+/* ================= NAVBAR ================= */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  background: rgba(255, 255, 255, 0.92);
-  border-bottom: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1.5px solid var(--card-border);
   box-shadow: var(--shadow-sm);
 }
 
@@ -188,7 +183,6 @@ html, body {
   font-weight: 800;
   padding: 0.15rem 0.45rem;
   border-radius: var(--radius-full);
-  transition: transform 0.3s;
 }
 
 .cart-btn:hover .cart-badge {
@@ -196,7 +190,7 @@ html, body {
   color: var(--primary);
 }
 
-/* ================= SAYFA / GÖRÜNÜM ================= */
+/* ================= SAYFA / GÖRÜNÜM GEÇİŞİ (DISPLAY FIX) ================= */
 .main-container {
   position: relative;
   z-index: 1;
@@ -205,29 +199,29 @@ html, body {
   padding: 0 1rem;
 }
 
+/* Tüm sekmeler varsayılan olarak kesinlikle gizlidir */
 .view-section {
-  display: none;
+  display: none !important;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
+/* Sadece aktif olan sekme gösterilir */
 .view-section.active {
   display: block !important;
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* ================= 1. ANA MENÜ (TEK EKRAN HUB) ================= */
-#view-menu {
-  min-height: calc(100vh - 150px);
-  display: flex;
+#view-menu.active {
+  display: flex !important;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: calc(100vh - 140px);
   padding: 1.5rem 0 2.5rem;
 }
 
+/* ================= 1. ANA MENÜ (HUB) ================= */
 .hero-box {
   width: 100%;
   max-width: 700px;
@@ -333,11 +327,6 @@ html, body {
   opacity: 0.7;
 }
 
-.menu-tile:hover .tile-arrow {
-  transform: translateX(3px);
-  opacity: 1;
-}
-
 /* ================= 2. SİPARİŞ MENÜSÜ GÖRÜNÜMÜ ================= */
 #view-shop {
   padding: 1.5rem 0 4rem;
@@ -355,16 +344,16 @@ html, body {
 }
 
 .btn-back-pill {
-  background: white;
-  border: 1.5px solid var(--card-border);
-  color: var(--primary);
+  background: #ffffff !important;
+  border: 1.5px solid var(--primary) !important;
+  color: var(--primary) !important;
   font-family: var(--font-main);
   font-weight: 700;
-  font-size: 0.88rem;
-  padding: 0.5rem 1.3rem;
+  font-size: 0.92rem;
+  padding: 0.55rem 1.4rem;
   border-radius: var(--radius-full);
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(255, 75, 114, 0.15);
   transition: var(--transition);
   display: inline-flex;
   align-items: center;
@@ -372,8 +361,8 @@ html, body {
 }
 
 .btn-back-pill:hover {
-  background: var(--primary);
-  color: white;
+  background: var(--primary) !important;
+  color: white !important;
   transform: scale(1.04);
 }
 
@@ -561,7 +550,7 @@ html, body {
   justify-content: center;
 }
 
-/* ================= POP-UP MODALLAR (ORTALANMIŞ) ================= */
+/* ================= POP-UP MODALLAR ================= */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -626,7 +615,6 @@ html, body {
   color: white;
 }
 
-/* Değerlendirme Modalı İçi */
 .modal-header-centered {
   margin-bottom: 1.4rem;
 }
@@ -1249,7 +1237,7 @@ textarea:focus {
   font-size: 0.85rem;
   color: var(--text-muted);
   border-top: 1px solid var(--card-border);
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .footer-sub {

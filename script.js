@@ -1,7 +1,9 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Vanilla JS - Hatasız, Modüler ve Akıcı Kod Yapısı
+   WhatsApp Entegrasyonlu (05510782591) & Akıcı Kod Yapısı
    ========================================================================== */
+
+const WHATSAPP_PHONE = "905510782591"; // Değerlendirme ve siparişlerin gideceği numara
 
 // ==========================================================================
 // 1. ÜRÜN & KATEGORİ LİSTESİ (3 Menü)
@@ -223,7 +225,6 @@ function renderProducts() {
     </div>
   `).join("");
 
-  // Butonlara event listener bağla
   grid.querySelectorAll(".btn-add-cart").forEach(btn => {
     btn.addEventListener("click", () => {
       addToCart(btn.dataset.id);
@@ -321,7 +322,6 @@ function updateCartUI() {
         </div>
       `).join("");
 
-      // Miktar ve silme eventlerini bağla
       cartItemsList.querySelectorAll(".btn-minus").forEach(b => {
         b.addEventListener("click", () => updateQuantity(b.dataset.id, -1));
       });
@@ -385,7 +385,7 @@ function triggerBadgeBump() {
 }
 
 // ==========================================================================
-// 7. İNDİRİM & SÜRPRİZ KODU MOTORU
+// 7. İNDİRİM & SÜRPRİZ KODLARI
 // ==========================================================================
 function applyCouponCode() {
   const couponInput = document.getElementById("coupon-input");
@@ -494,7 +494,7 @@ function processCheckout() {
 
   if (receiptGrandTotal) receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
 
-  let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n`;
+  let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n\n`;
   orderSummaryText += `📋 *Sipariş No:* ${orderId}\n`;
   orderSummaryText += `📅 *Tarih:* ${today}\n\n`;
   orderSummaryText += `🛍️ *Sipariş Detayları:*\n`;
@@ -511,7 +511,7 @@ function processCheckout() {
   orderSummaryText += `💌 _"Minik yıldızın siparişi kalpten verildi, teslimatı sabırsızlıkla bekliyorum!"_`;
 
   if (whatsappShareBtn) {
-    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(orderSummaryText)}`;
+    const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodeURIComponent(orderSummaryText)}`;
     whatsappShareBtn.href = waUrl;
   }
 
@@ -671,11 +671,9 @@ document.addEventListener("click", (e) => {
 // 11. TÜM EVENT LISTENERS BAĞLANTILARI
 // ==========================================================================
 function setupAllEvents() {
-  // Navbar logo tıklandığında ana menüye dön
   const navBrand = document.getElementById("nav-brand-btn");
   if (navBrand) navBrand.addEventListener("click", () => switchView("menu"));
 
-  // Ana Menü 4'lü Kutu Butonları
   const tileShop = document.getElementById("tile-shop");
   if (tileShop) tileShop.addEventListener("click", () => switchView("shop"));
 
@@ -688,15 +686,12 @@ function setupAllEvents() {
   const tileCart = document.getElementById("tile-cart");
   if (tileCart) tileCart.addEventListener("click", openCartDrawer);
 
-  // Sipariş Sayfasındaki "Ana Menüye Dön" Butonu
   const btnBack = document.getElementById("btn-back-to-menu");
   if (btnBack) btnBack.addEventListener("click", () => switchView("menu"));
 
-  // Sipariş Sayfası Altındaki "Sepetimi Gör" Butonu
   const btnViewCart = document.getElementById("btn-view-cart-bottom");
   if (btnViewCart) btnViewCart.addEventListener("click", openCartDrawer);
 
-  // Kategori Sekmeleri Tıklamaları
   const categoryTabs = document.getElementById("category-tabs");
   if (categoryTabs) {
     categoryTabs.querySelectorAll(".tab-btn").forEach(btn => {
@@ -706,7 +701,6 @@ function setupAllEvents() {
     });
   }
 
-  // Sepet Çekmecesi Aç / Kapat
   const openCartBtn = document.getElementById("open-cart-btn");
   const closeCartBtn = document.getElementById("close-cart-btn");
   const cartOverlay = document.getElementById("cart-overlay");
@@ -720,7 +714,6 @@ function setupAllEvents() {
     switchView("shop");
   });
 
-  // İndirim Kodu
   const applyCouponBtn = document.getElementById("apply-coupon-btn");
   const couponInput = document.getElementById("coupon-input");
   const couponHintBtn = document.getElementById("coupon-hint-btn");
@@ -741,11 +734,10 @@ function setupAllEvents() {
     });
   }
 
-  // Siparişi Tamamla
   const checkoutBtn = document.getElementById("checkout-btn");
   if (checkoutBtn) checkoutBtn.addEventListener("click", processCheckout);
 
-  // Değerlendirme Modalı Eventleri
+  // Değerlendirme Modalı ve WhatsApp Bildirimi
   const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
   const reviewModalOverlay = document.getElementById("review-modal-overlay");
   const submitReviewBtn = document.getElementById("submit-review-btn");
@@ -761,15 +753,15 @@ function setupAllEvents() {
     });
   }
 
-  if (starRating) {
-    const ratingDescriptions = {
-      1: "Biraz İlgiye İhtiyacımız Var 🥺",
-      2: "Daha Çok Sarılmalı! 💕",
-      3: "Çok Tatlı & Sevgi Dolu 🥰",
-      4: "Harika Bir Aşk Hizmeti! 💖",
-      5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
-    };
+  const ratingDescriptions = {
+    1: "Biraz İlgiye İhtiyacımız Var 🥺",
+    2: "Daha Çok Sarılmalı! 💕",
+    3: "Çok Tatlı & Sevgi Dolu 🥰",
+    4: "Harika Bir Aşk Hizmeti! 💖",
+    5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
+  };
 
+  if (starRating) {
     const stars = starRating.querySelectorAll(".star");
     stars.forEach((star, index) => {
       star.addEventListener("click", () => {
@@ -798,17 +790,26 @@ function setupAllEvents() {
     });
   }
 
+  // Değerlendirmeyi Gönder Butonuna Basıldığında Doğrudan 05510782591 WhatsApp'ına Yönlendirir
   if (submitReviewBtn) {
     submitReviewBtn.addEventListener("click", () => {
       const note = (reviewNote && reviewNote.value.trim()) || "Çok tatlısın ve seni çok seviyorum!";
       triggerHeartsShower();
       closeReviewModal();
-      alert(`🎉 Harika! Değerlendirmen kalbimize ulaştı minik yıldızım:\n\n⭐ Puanın: ${currentRating}/5\n💖 Sevgi Seviyen: ${selectedLoveChip}\n💌 Notun: "${note}"\n\nBu değerlendirme ömür boyu saklanacaktır! 🥰`);
+
+      let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ!* 💖\n\n`;
+      reviewMsg += `⭐ *Puanım:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n`;
+      reviewMsg += `🥰 *Sevgi Seviyem:* ${selectedLoveChip}\n`;
+      reviewMsg += `💌 *Notum:* ${note}\n\n`;
+      reviewMsg += `✨ _"Minik yıldızından sevgilerle!"_`;
+
+      const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodeURIComponent(reviewMsg)}`;
+      window.open(waUrl, "_blank");
+
       if (reviewNote) reviewNote.value = "";
     });
   }
 
-  // Günün Tatlı Sözü Modalı Eventleri
   const closeQuoteBtn = document.getElementById("close-quote-btn");
   const newQuoteBtn = document.getElementById("new-quote-btn");
   const quoteModalOverlay = document.getElementById("quote-modal-overlay");
@@ -828,7 +829,6 @@ function setupAllEvents() {
     });
   }
 
-  // Mektup Modalı Eventleri
   const closeLetterBtn = document.getElementById("close-letter-btn");
   const letterConfirmBtn = document.getElementById("letter-confirm-btn");
   const letterModalOverlay = document.getElementById("letter-modal-overlay");
@@ -841,7 +841,6 @@ function setupAllEvents() {
     });
   }
 
-  // Sipariş Fişi Modalı Eventleri
   const closeReceiptBtn = document.getElementById("close-receipt-btn");
   const newOrderBtn = document.getElementById("new-order-btn");
   const receiptModalOverlay = document.getElementById("receipt-modal-overlay");
@@ -854,7 +853,6 @@ function setupAllEvents() {
     });
   }
 
-  // ESC tuşu ile kapatma
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeCartDrawer();
