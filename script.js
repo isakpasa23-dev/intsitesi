@@ -150,7 +150,7 @@ const PRODUCT_ALIASES = {
   "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti", "kulaklik": "gece-sohbeti", "kulaklık": "gece-sohbeti", "tek-kulaklik": "gece-sohbeti",
   "patron-sensin": "patron-sensin", "patron": "patron-sensin", "kralice": "patron-sensin", "kraliçe": "patron-sensin", "kralicem": "patron-sensin",
   "film-gecesi": "film-gecesi", "film": "film-gecesi",
-  "goruntulu-arama": "goruntulu-arama", "goruntulu": "goruntulu-arama", "görüntülü": "goruntulu-arama",
+  "goruntulu-arama": "goruntulu-arama", "goruntulu": "goruntulu-arama", "görüntülü": "goruntulu-arama", "arama": "goruntulu-arama", "aninda-arama": "goruntulu-arama", "sesli-arama": "goruntulu-arama",
   "ozlem-sarilmasi": "ozlem-sarilmasi", "ozlem": "ozlem-sarilmasi", "özlem": "ozlem-sarilmasi",
   "ozel-ses-kaydi": "ozel-ses-kaydi", "ses": "ozel-ses-kaydi"
 };
@@ -420,13 +420,13 @@ const PRODUCTS = [
   {
     id: "goruntulu-arama",
     category: "ozlem",
-    name: "Anında Görüntülü Arama",
+    name: "Anında Arama",
     price: 0,
     unit: "💖",
     isCountdown: false,
     deliveryText: "Anında ⚡",
-    badge: "Özlem Giderici 📱",
-    description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli görüntülü konuşma hakkı.",
+    badge: "Görüntülü / Sesli 📱",
+    description: "İster görüntülü ister sesli... Yüzünü görmek ya da sesini duymak istediğinde anında arama hakkı.",
     image: "assets/phone-videocall.svg"
   },
   {

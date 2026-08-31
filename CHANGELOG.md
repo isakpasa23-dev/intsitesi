@@ -4,10 +4,17 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v4.4.0] - 31.08.2026 (Özel Ses Kaydı Rozeti 'İsmail YK' Olarak Güncellendi) 🎙️✨
-- **Rozet Güncellemesi:**
-  - *"Özel Aşk Ses Kaydı & Şarkı"* ürününün sağ üst köşesindeki etiket **"İsmail YK 🎙️"** olarak güncellendi.
+### [v4.5.0] - 31.08.2026 (Anında Arama: Sesli & Görüntülü Arama Güncellemesi) 📱✨
+- **İsim, Rozet ve Açıklama Güncellemesi:**
+  - *"Anında Görüntülü Arama"* ➔ **"Anında Arama"** olarak değiştirildi.
+  - Rozeti: `Görüntülü / Sesli 📱`
+  - Açıklaması: *"İster görüntülü ister sesli... Yüzünü görmek ya da sesini duymak istediğinde anında arama hakkı."*
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v4.4.0] - 31.08.2026 (Özel Ses Kaydı Rozeti 'İsmail YK' Olarak Güncellendi) 🎙️✨
+- *"Özel Aşk Ses Kaydı & Şarkı"* ürününün sağ üst köşesindeki etiket "İsmail YK 🎙️" olarak güncellendi.
 
 ---
 

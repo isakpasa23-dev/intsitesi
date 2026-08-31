@@ -30,9 +30,9 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 - `kralice` / `kraliçe` / `patron` ➔ **Kraliçe** (VIP Kraliçe 👑)
 - `film` / `film-gecesi` / `sinema` ➔ **Baş Başa Film** (Patlamış Mısır 🍿)
 - `kulaklik` / `kulaklık` / `tek-kulaklik` ➔ **Tek Kulaklık** (Müzik Notası 🎵)
-- `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama** (Akıllı Telefon 📱)
+- `arama` / `goruntulu` / `goruntulu-arama` ➔ **Anında Arama** (Görüntülü / Sesli 📱)
 - `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Gerçek Sarılma Emojisi 🤗)
-- `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (Stüdyo Mikrofonu 🎙️)
+- `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (İsmail YK 🎙️)
 
 ---
 
