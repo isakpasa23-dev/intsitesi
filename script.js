@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   8 Haziran 2029 (09:00) Canlı Fiş Sayacı & Fiş İndirme Motoru 📥⏳
+   Stok Koruma Kilidi, Kalıcı Sepet Hafızası & Zengin Söz Havuzu 🛡️💾✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -11,8 +11,50 @@ const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 9, 0, 0);
 
 // Fiş Canlı Sayacı Timer ID'si
 let receiptTimerInterval = null;
+let lastQuoteIndex = -1;
 
-// Arka Planda Sessiz Telegram Bildirimi Gönderen Fonksiyon
+// ==========================================================================
+// 1. ZENGİN GÜNÜN TATLI SÖZÜ HAVUZU (26+ Özel Söz)
+// ==========================================================================
+const romanticQuotes = [
+  "\"Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor. ✨\"",
+  "\"Seninle geçen her saniye, ömrümün en değerli ve en tatlı hediyesidir. 💕\"",
+  "\"Dünyada milyarlarca insan var ama benim kalbim sadece minik yıldızım için atıyor. 🌟\"",
+  "\"Günün en tatlı anı: Seni düşündüğüm ve istemsizce gülümsediğim an! 🥰\"",
+  "\"Sen sadece sevdiğim insan değilsin; aynı zamanda en huzurlu limanımsın. 💖\"",
+  "\"Bugün ve her gün: Seni dünden daha çok, yarından daha az seviyorum! 🌸\"",
+  "\"Gülüşün, dünyanın bütün dertlerini unutturacak kadar sihirli. ✨\"",
+  "\"Kalbimdeki en güzel köşe, sonsuza kadar sadece sana ait minik yıldızım. 💌\"",
+  "\"Her sabah uyandığımda aklıma gelen ilk ve en tatlı düşünce sensin. ☀️\"",
+  "\"Sen benim bu hayatta başıma gelen en güzel mucizesin. 🎁\"",
+  "\"Bir fincan kahve, senin sesin ve huzur... Bana dünyaları verseler değişmem. ☕\"",
+  "\"Karanlık gecelerimin en parlak kutup yıldızı sensin! 🌙\"",
+  "\"Seninle susmak bile dünyanın en güzel sohbetini yapmaktan daha tatlı. 🤍\"",
+  "\"Ellerini tuttuğum an tüm dünya duruyor gibi hissediyorum. 🤝\"",
+  "\"İyi ki hayatımdasın, iyi ki varsın ve iyi ki kalbimin sahibisin! 💖\"",
+  "\"Senin varlığın, en yorgun günlerimde bile bana güç veren tek enerji kaynağım. ⚡\"",
+  "\"Dünyanın bütün çiçeklerini toplasam, senin bir tebessümün kadar güzel kokamaz. 🌷\"",
+  "\"Gözlerin gökyüzü gibi; baktıkça içim açılıyor, sonsuz huzur buluyorum. 🌌\"",
+  "\"Seninle izlenen her film güzel, dinlenen her şarkı anlamlı. 🎶\"",
+  "\"Kalbin kalbime öyle bir dokundu ki, artık senden başkası imkansız. 💕\"",
+  "\"Sana olan sevgimi anlatmaya bu sitenin satırları bile yetmez! ♾️\"",
+  "\"Ne zaman canın sıkılırsa hatırla: Seni dünyadaki her şeyden çok seven biri var! 🥰\"",
+  "\"Günün falı diyor ki: Bugün minik yıldıza sımsıkı ve doya doya sarılınmalı! 🧸\"",
+  "\"Aşkın en saf, en masum ve en gerçek hali senin kalbinde saklı. 💖\"",
+  "\"Sen benim ömrüme doğan en güzel güneşsin minik yıldızım. ☀️\"",
+  "\"Yarınlar seninle güzel, dünler seninle unutuldu, bugünüm seninle dolu! ✨\""
+];
+
+function getRandomQuote() {
+  let newIndex;
+  do {
+    newIndex = Math.floor(Math.random() * romanticQuotes.length);
+  } while (newIndex === lastQuoteIndex && romanticQuotes.length > 1);
+  lastQuoteIndex = newIndex;
+  return romanticQuotes[newIndex];
+}
+
+// Telegram Bildirim Fonksiyonu
 async function sendTelegramNotification(messageText) {
   try {
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
@@ -41,17 +83,11 @@ function getAskolcerDetailedRemaining() {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  return {
-    days,
-    hours,
-    minutes,
-    seconds,
-    text: `${days} Gün, ${hours} Saat, ${minutes} Dk, ${seconds} Sn`
-  };
+  return { days, hours, minutes, seconds, text: `${days} Gün Kaldı` };
 }
 
 // ==========================================================================
-// 1. ÜRÜNLER, STOKLAR & TAHMİNİ TESLİMAT SÜRELERİ (3 Menü)
+// 2. ÜRÜNLER & STOK KONTROLÜ
 // ==========================================================================
 const INITIAL_STOCKS = {
   "askolcer": 1,
@@ -162,7 +198,7 @@ const PRODUCTS = [
 ];
 
 // ==========================================================================
-// 2. İNDİRİM & SÜRPRİZ KODLARI
+// 3. İNDİRİM & SÜRPRİZ KODLARI
 // ==========================================================================
 const discountCodes = {
   "SENICOKSEVIYORUM": {
@@ -223,17 +259,8 @@ const invalidCodeMessages = [
   "Aşk sistemimiz bu kodu tanıyamadı, belki 'KAHVE' veya 'OPUCUK' denemek istersin? ✨"
 ];
 
-const romanticQuotes = [
-  "\"Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor.\"",
-  "\"Seninle geçen her saniye, hayatımın en güzel anısı olmaya aday.\"",
-  "\"Dünyada milyarlarca insan var ama benim kalbim sadece minik yıldızım için atıyor. 💕\"",
-  "\"Günün en tatlı anı: Seni düşündüğüm ve gülümsediğim an! ✨\"",
-  "\"Sen sadece sevdiğim insan değilsin, aynı zamanda en huzurlu limanımsın. 🥰\"",
-  "\"Bugün ve her gün: Seni dünden daha çok, yarından daha az seviyorum! 💖\""
-];
-
 // ==========================================================================
-// 3. STATE
+// 4. STATE & KALICI SEPET HAFIZASI
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
@@ -242,8 +269,23 @@ let selectedLoveChip = "Sonsuz";
 let currentCategory = "ask";
 let lastCompletedOrderHasAskolcer = false;
 
+function saveCartToStorage() {
+  localStorage.setItem("user_cart_cache", JSON.stringify(cart));
+}
+
+function loadCartFromStorage() {
+  const saved = localStorage.getItem("user_cart_cache");
+  if (saved) {
+    try {
+      cart = JSON.parse(saved);
+    } catch (e) {
+      cart = [];
+    }
+  }
+}
+
 // ==========================================================================
-// 4. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
+// 5. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
 // ==========================================================================
 function switchView(viewName) {
   const menuView = document.getElementById("view-menu");
@@ -262,7 +304,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 5. KATEGORİ VE ÜRÜNLERİ RENDER ETME
+// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -335,7 +377,7 @@ function renderProducts() {
 }
 
 // ==========================================================================
-// 6. SEPET İŞLEMLERİ
+// 7. SEPET İŞLEMLERİ (STOK KONTROLLÜ)
 // ==========================================================================
 function addToCart(productId) {
   let product = PRODUCTS.find(p => p.id === productId);
@@ -346,13 +388,27 @@ function addToCart(productId) {
   
   if (!product) return;
 
+  const currentStock = getProductStock(productId);
   const existingItem = cart.find(item => item.product.id === productId);
+  const currentQtyInCart = existingItem ? existingItem.quantity : 0;
+
+  if (currentStock <= 0) {
+    alert(`🥺 Üzgünüm minik yıldızım, "${product.name}" şu an stokta tükendi!`);
+    return;
+  }
+
+  if (currentQtyInCart + 1 > currentStock) {
+    alert(`⚠️ "${product.name}" ürününden stokta sadece ${currentStock} adet bulunuyor!`);
+    return;
+  }
+
   if (existingItem) {
     existingItem.quantity += 1;
   } else {
     cart.push({ product: product, quantity: 1 });
   }
 
+  saveCartToStorage();
   triggerBadgeBump();
   updateCartUI();
   openCartDrawer();
@@ -360,6 +416,7 @@ function addToCart(productId) {
 
 function removeFromCart(productId) {
   cart = cart.filter(item => item.product.id !== productId);
+  saveCartToStorage();
   updateCartUI();
 }
 
@@ -367,10 +424,19 @@ function updateQuantity(productId, delta) {
   const item = cart.find(item => item.product.id === productId);
   if (!item) return;
 
+  if (delta > 0) {
+    const currentStock = getProductStock(productId);
+    if (item.quantity + 1 > currentStock) {
+      alert(`⚠️ "${item.product.name}" ürününden stokta en fazla ${currentStock} adet alabilirsiniz!`);
+      return;
+    }
+  }
+
   item.quantity += delta;
   if (item.quantity <= 0) {
     removeFromCart(productId);
   } else {
+    saveCartToStorage();
     updateCartUI();
   }
 }
@@ -462,7 +528,7 @@ function triggerBadgeBump() {
 }
 
 // ==========================================================================
-// 7. İNDİRİM & SÜRPRİZ KODLARI
+// 8. İNDİRİM & SÜRPRİZ KODLARI
 // ==========================================================================
 function applyCouponCode() {
   const couponInput = document.getElementById("coupon-input");
@@ -487,6 +553,7 @@ function applyCouponCode() {
       const hasGift = cart.some(item => item.product.id === coupon.giftItem.id);
       if (!hasGift) {
         cart.push({ product: coupon.giftItem, quantity: 1 });
+        saveCartToStorage();
       }
       triggerHeartsShower();
     } else if (coupon.action === "openLetter") {
@@ -509,13 +576,26 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA AKIŞI
+// 9. SİPARİŞ TAMAMLAMA AKIŞI (STOK KONTROLLÜ)
 // ==========================================================================
 
 function openCheckoutInfoModal() {
   if (cart.length === 0) {
     showCouponAlert("Sepetinizde ürün bulunmuyor!", "error");
     return;
+  }
+
+  // STOK KONTROLÜ: Sepetteki ürünlerin stok durumu geçerli mi?
+  for (let item of cart) {
+    const currentStock = getProductStock(item.product.id);
+    if (currentStock <= 0) {
+      showCouponAlert(`❌ "${item.product.name}" stokta tükendi! Lütfen sepetinizden kaldırınız.`, "error");
+      return;
+    }
+    if (item.quantity > currentStock) {
+      showCouponAlert(`❌ "${item.product.name}" için yeterli stok yok (Kalan Stok: ${currentStock} adet).`, "error");
+      return;
+    }
   }
 
   closeCartDrawer();
@@ -527,7 +607,7 @@ function openCheckoutInfoModal() {
   const savedCustomerName = localStorage.getItem("saved_customer_name") || "Minik Yıldızım";
   if (nameInput) nameInput.value = savedCustomerName;
 
-  // Sipariş Notunu sıfırla (boş başlasın)
+  // Sipariş Notu Sıfırlama (Her siparişte boş gelsin)
   if (noteInput) noteInput.value = "";
 
   if (infoModal) infoModal.classList.add("active");
@@ -647,7 +727,7 @@ function finalizeOrder() {
 }
 
 // ==========================================================================
-// 8.1. FİŞİ RESİM OLARAK İNDİRME FONKSİYONU (html2canvas) 📥
+// 10. FİŞİ RESİM OLARAK İNDİRME (html2canvas) 📥
 // ==========================================================================
 async function downloadReceiptImage() {
   const receiptCard = document.getElementById("receipt-printable-card");
@@ -693,7 +773,7 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 9. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
+// 11. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
 // ==========================================================================
 function openReviewModal() {
   const modal = document.getElementById("review-modal-overlay");
@@ -710,8 +790,7 @@ function openDailyQuoteModal() {
   const modal = document.getElementById("quote-modal-overlay");
   const textEl = document.getElementById("quote-modal-text");
   if (textEl) {
-    const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
-    textEl.textContent = quote;
+    textEl.textContent = getRandomQuote();
   }
   if (modal) modal.classList.add("active");
   triggerHeartsShower();
@@ -766,6 +845,7 @@ function closeReceiptModal() {
 function resetOrder() {
   cart = [];
   appliedCoupon = null;
+  saveCartToStorage();
   const input = document.getElementById("coupon-input");
   const alertBox = document.getElementById("coupon-alert");
   if (input) input.value = "";
@@ -775,7 +855,7 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 10. ANİMASYONLAR
+// 12. ANİMASYONLAR
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -841,7 +921,7 @@ document.addEventListener("click", (e) => {
 });
 
 // ==========================================================================
-// 11. TÜM EVENT LISTENERS BAĞLANTILARI
+// 13. TÜM EVENT LISTENERS BAĞLANTILARI
 // ==========================================================================
 function setupAllEvents() {
   const navBrand = document.getElementById("nav-brand-btn");
@@ -1009,8 +1089,7 @@ function setupAllEvents() {
   if (newQuoteBtn) newQuoteBtn.addEventListener("click", () => {
     const textEl = document.getElementById("quote-modal-text");
     if (textEl) {
-      const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
-      textEl.textContent = quote;
+      textEl.textContent = getRandomQuote();
       triggerHeartsShower();
     }
   });
@@ -1059,9 +1138,10 @@ function setupAllEvents() {
 }
 
 // ==========================================================================
-// 12. BAŞLAT
+// 14. BAŞLAT
 // ==========================================================================
 document.addEventListener("DOMContentLoaded", () => {
+  loadCartFromStorage();
   renderProducts();
   setupAllEvents();
   startBackgroundHearts();

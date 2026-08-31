@@ -4,29 +4,26 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.8.0] - 31.08.2026 (Fişte Canlı Saat 09:00 Geri Sayımı & Fiş İndirme Butonu) 📥⏳
-- **Fiş Üzerinde Canlı Geri Sayım (8 Haziran 2029 Saat 09:00):**
-  - Sipariş fişinde artık statik gün yazısı yerine doğrudan **8 Haziran 2029 Saat 09:00**'a kadar saniye saniye canlı akan geri sayım sayacı çalışır (`X Gün, Y Saat, Z Dk, S Sn`).
-  - Başlık *"Toplam Tahmini Teslimat Süresi"* yerine doğrudan **"⏳ Tahmini Teslimat Süresi:"** olarak güncellendi.
-- **Fişi İndir (Resim Olarak Kaydet):**
-  - Fiş ekranında *"Yeni Sipariş Oluştur"* butonunun hemen altına **"📥 Fişi İndir (Resim Olarak Kaydet)"** butonu eklendi.
-  - `html2canvas` motoru sayesinde fiş tek tıkla yüksek çözünürlüklü `.png` formatında galeriye/cihaza indirilebilir.
+### [v1.9.0] - 31.08.2026 (Stok Koruma Kilidi, Kalıcı Sepet & Zengin Söz Havuzu) 🛡️💾💌
+- **Stok Koruma Kilidi:**
+  - Sepetteki bir ürünün stoğu tükendiğinde veya sepetteki miktar mevcut stoktan fazla olduğunda *"Siparişi Tamamla"* butonuna basılsa bile sipariş bilgi ekranına geçiş engellenir; sepet içinde net bir uyarı (*"❌ Bu ürün stokta tükendi / yeterli stok yok"*) gösterilir.
+  - Ürün eklerken ve adet artırırken de stok sınırını aşmak engellendi.
+- **Kalıcı Sepet Hafızası:**
+  - Sayfa veya sekme yenilendiğinde sepet artık asla sıfırlanmaz; `localStorage` üzerinden son haliyle korunur.
+- **Zengin Rastgele Söz Havuzu:**
+  - *"Günün Tatlı Sözü"* modülü 26+ romantik, samimi ve özel söze genişletildi.
+  - Her açılışta ve *"Yeni Bir Söz Çek"* butonuna her basılışta üst üste aynı söz gelmeyecek şekilde tam rastgele seçim algoritması bağlandı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.8.0] - 31.08.2026 (Fişte Canlı Saat 09:00 Geri Sayımı & Fiş İndirme Butonu) 📥⏳
+- Fiş canlı saat sayacı ve html2canvas tabanlı resim indirme butonu eklendi.
 
 ---
 
 ### [v1.7.0] - 31.08.2026 (Stok Takip Sistemi & Müşteri İsmi Hatırlama) 📦👤
 - Aşkölçer kartı eski haline döndürüldü, dinamik stok sistemi ve isim hatırlama özelliği eklendi.
-
----
-
-### [v1.6.1] - 31.08.2026 (Telegram Mesaj Formatı Sadeleştirmesi) 📱✨
-- Telegram mesajı temizlendi ve satır boşlukları düzenlendi.
-
----
-
-### [v1.6.0] - 31.08.2026 (Sipariş Fişi Sadeleştirme & Romantik Not Odaklı Tasarım) 💌✨
-- Fişteki ödenecek tutar kaldırıldı, doğrudan sevgi notu yerleştirildi.
 
 ---
 
