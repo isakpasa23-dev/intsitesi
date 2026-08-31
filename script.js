@@ -1,10 +1,10 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Tek Ekran Uyumlu, Pop-up Destekli & Modüler Yapı
+   Vanilla JS - Hatasız, Modüler ve Akıcı Kod Yapısı
    ========================================================================== */
 
 // ==========================================================================
-// 1. ÜRÜN & KATEGORİ TANIMLARI (3 Farklı Menü)
+// 1. ÜRÜN & KATEGORİ LİSTESİ (3 Menü)
 // ==========================================================================
 const PRODUCTS = [
   // 💖 1. Kategori: Aşk Menüsü
@@ -144,7 +144,7 @@ const romanticQuotes = [
 ];
 
 // ==========================================================================
-// 3. STATE
+// 3. UYGULAMA DURUMU (State)
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
@@ -153,107 +153,52 @@ let selectedLoveChip = "Sonsuz";
 let currentCategory = "ask";
 
 // ==========================================================================
-// 4. DOM ELEMENTLERİ
+// 4. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
 // ==========================================================================
-const productsGrid = document.getElementById("products-grid");
-const categoryTabs = document.getElementById("category-tabs");
-const openCartBtn = document.getElementById("open-cart-btn");
-const closeCartBtn = document.getElementById("close-cart-btn");
-const cartOverlay = document.getElementById("cart-overlay");
-const cartDrawer = document.getElementById("cart-drawer");
-const cartBadge = document.getElementById("cart-badge");
-const cartCountText = document.getElementById("cart-count-text");
-const cartItemsList = document.getElementById("cart-items-list");
-const emptyCartState = document.getElementById("empty-cart-state");
-const emptyShopBtn = document.getElementById("empty-shop-btn");
+function switchView(viewName) {
+  const menuView = document.getElementById("view-menu");
+  const shopView = document.getElementById("view-shop");
 
-const couponInput = document.getElementById("coupon-input");
-const applyCouponBtn = document.getElementById("apply-coupon-btn");
-const couponAlert = document.getElementById("coupon-alert");
-const couponHintBtn = document.getElementById("coupon-hint-btn");
-
-const summarySubtotal = document.getElementById("summary-subtotal");
-const summaryDiscountRow = document.getElementById("summary-discount-row");
-const summaryDiscountTitle = document.getElementById("summary-discount-title");
-const summaryDiscountAmount = document.getElementById("summary-discount-amount");
-const summaryTotal = document.getElementById("summary-total");
-const checkoutBtn = document.getElementById("checkout-btn");
-
-// Modallar
-const reviewModalOverlay = document.getElementById("review-modal-overlay");
-const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
-const starRating = document.getElementById("star-rating");
-const ratingText = document.getElementById("rating-text");
-const loveChips = document.getElementById("love-chips");
-const reviewNote = document.getElementById("review-note");
-const submitReviewBtn = document.getElementById("submit-review-btn");
-
-const letterModalOverlay = document.getElementById("letter-modal-overlay");
-const closeLetterBtn = document.getElementById("close-letter-btn");
-const letterConfirmBtn = document.getElementById("letter-confirm-btn");
-const letterTitle = document.getElementById("letter-title");
-const letterContent = document.getElementById("letter-content");
-
-const quoteModalOverlay = document.getElementById("quote-modal-overlay");
-const closeQuoteBtn = document.getElementById("close-quote-btn");
-const quoteModalText = document.getElementById("quote-modal-text");
-const newQuoteBtn = document.getElementById("new-quote-btn");
-
-const receiptModalOverlay = document.getElementById("receipt-modal-overlay");
-const closeReceiptBtn = document.getElementById("close-receipt-btn");
-const newOrderBtn = document.getElementById("new-order-btn");
-const receiptOrderId = document.getElementById("receipt-order-id");
-const receiptDate = document.getElementById("receipt-date");
-const receiptItemsList = document.getElementById("receipt-items-list");
-const receiptSubtotal = document.getElementById("receipt-subtotal");
-const receiptDiscountRow = document.getElementById("receipt-discount-row");
-const receiptDiscount = document.getElementById("receipt-discount");
-const receiptGrandTotal = document.getElementById("receipt-grand-total");
-const whatsappShareBtn = document.getElementById("whatsapp-share-btn");
-
-// ==========================================================================
-// 5. SAYFA GEÇİŞİ (Router)
-// ==========================================================================
-window.switchView = function(viewName) {
-  const views = {
-    'menu': document.getElementById('view-menu'),
-    'shop': document.getElementById('view-shop')
-  };
-
-  Object.values(views).forEach(v => {
-    if (v) v.classList.remove('active');
-  });
-
-  if (views[viewName]) {
-    views[viewName].classList.add('active');
+  if (viewName === "shop") {
+    if (menuView) menuView.classList.remove("active");
+    if (shopView) shopView.classList.add("active");
+    filterCategory("ask");
+  } else {
+    if (shopView) shopView.classList.remove("active");
+    if (menuView) menuView.classList.add("active");
   }
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
 // ==========================================================================
-// 6. KATEGORİ FİLTRELEME & ÜRÜNLERİ RENDER ETME
+// 5. KATEGORİ VE ÜRÜNLERİ RENDER ETME
 // ==========================================================================
-window.filterCategory = function(catName) {
+function filterCategory(catName) {
   currentCategory = catName;
 
-  // Sekme butonlarını güncelle
+  const categoryTabs = document.getElementById("category-tabs");
   if (categoryTabs) {
-    const tabs = categoryTabs.querySelectorAll(".tab-btn");
-    tabs.forEach(t => t.classList.remove("active"));
-    const activeBtn = Array.from(tabs).find(t => t.getAttribute("onclick").includes(`'${catName}'`));
-    if (activeBtn) activeBtn.classList.add("active");
+    const buttons = categoryTabs.querySelectorAll(".tab-btn");
+    buttons.forEach(btn => {
+      if (btn.dataset.category === catName) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
   }
 
   renderProducts();
-};
+}
 
 function renderProducts() {
-  if (!productsGrid) return;
-  
-  const filtered = PRODUCTS.filter(p => p.category === currentCategory);
+  const grid = document.getElementById("products-grid");
+  if (!grid) return;
 
-  productsGrid.innerHTML = filtered.map(product => `
+  const items = PRODUCTS.filter(p => p.category === currentCategory);
+
+  grid.innerHTML = items.map(product => `
     <div class="product-card">
       <span class="product-badge">${product.badge}</span>
       
@@ -270,19 +215,26 @@ function renderProducts() {
           <span class="price-val">${product.price === 0 ? "Ücretsiz 💕" : product.price + " " + product.unit}</span>
         </div>
         
-        <button class="btn-add-cart" onclick="addToCart('${product.id}')">
+        <button class="btn-add-cart" data-id="${product.id}">
           <span>Sepete Ekle</span>
           <span>🛍️</span>
         </button>
       </div>
     </div>
   `).join("");
+
+  // Butonlara event listener bağla
+  grid.querySelectorAll(".btn-add-cart").forEach(btn => {
+    btn.addEventListener("click", () => {
+      addToCart(btn.dataset.id);
+    });
+  });
 }
 
 // ==========================================================================
-// 7. SEPET İŞLEMLERİ
+// 6. SEPET İŞLEMLERİ
 // ==========================================================================
-window.addToCart = function(productId) {
+function addToCart(productId) {
   let product = PRODUCTS.find(p => p.id === productId);
   
   if (!product && appliedCoupon && appliedCoupon.giftItem && appliedCoupon.giftItem.id === productId) {
@@ -301,7 +253,7 @@ window.addToCart = function(productId) {
   triggerBadgeBump();
   updateCartUI();
   openCartDrawer();
-};
+}
 
 function removeFromCart(productId) {
   cart = cart.filter(item => item.product.id !== productId);
@@ -321,54 +273,83 @@ function updateQuantity(productId, delta) {
 }
 
 function updateCartUI() {
+  const cartBadge = document.getElementById("cart-badge");
+  const cartCountText = document.getElementById("cart-count-text");
+  const emptyCartState = document.getElementById("empty-cart-state");
+  const cartItemsList = document.getElementById("cart-items-list");
+  const checkoutBtn = document.getElementById("checkout-btn");
+
   const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   
-  cartBadge.textContent = totalItemCount;
-  cartCountText.textContent = `${totalItemCount} ürün`;
+  if (cartBadge) cartBadge.textContent = totalItemCount;
+  if (cartCountText) cartCountText.textContent = `${totalItemCount} ürün`;
 
   if (cart.length === 0) {
-    emptyCartState.style.display = "flex";
-    cartItemsList.style.display = "none";
-    checkoutBtn.disabled = true;
-    checkoutBtn.style.opacity = "0.5";
-    checkoutBtn.style.cursor = "not-allowed";
+    if (emptyCartState) emptyCartState.style.display = "flex";
+    if (cartItemsList) cartItemsList.style.display = "none";
+    if (checkoutBtn) {
+      checkoutBtn.disabled = true;
+      checkoutBtn.style.opacity = "0.5";
+      checkoutBtn.style.cursor = "not-allowed";
+    }
   } else {
-    emptyCartState.style.display = "none";
-    cartItemsList.style.display = "flex";
-    checkoutBtn.disabled = false;
-    checkoutBtn.style.opacity = "1";
-    checkoutBtn.style.cursor = "pointer";
-  }
+    if (emptyCartState) emptyCartState.style.display = "none";
+    if (cartItemsList) {
+      cartItemsList.style.display = "flex";
+      cartItemsList.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item-img">
+            <img src="${item.product.image}" alt="${item.product.name}">
+          </div>
+          
+          <div class="cart-item-info">
+            <div class="cart-item-title">${item.product.name}</div>
+            <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit}</div>
+          </div>
 
-  cartItemsList.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <div class="cart-item-img">
-        <img src="${item.product.image}" alt="${item.product.name}">
-      </div>
-      
-      <div class="cart-item-info">
-        <div class="cart-item-title">${item.product.name}</div>
-        <div class="cart-item-price">${item.product.price === 0 ? "Ücretsiz 💕" : item.product.price + " " + item.product.unit}</div>
-      </div>
-
-      <div class="cart-item-actions">
-        <div class="qty-control">
-          <button class="btn-qty" onclick="updateQuantity('${item.product.id}', -1)" aria-label="Azalt">-</button>
-          <span class="qty-num">${item.quantity}</span>
-          <button class="btn-qty" onclick="updateQuantity('${item.product.id}', 1)" aria-label="Artır">+</button>
+          <div class="cart-item-actions">
+            <div class="qty-control">
+              <button class="btn-qty btn-minus" data-id="${item.product.id}">-</button>
+              <span class="qty-num">${item.quantity}</span>
+              <button class="btn-qty btn-plus" data-id="${item.product.id}">+</button>
+            </div>
+            
+            <button class="btn-remove-item" data-id="${item.product.id}" title="Ürünü Kaldır">
+              🗑️
+            </button>
+          </div>
         </div>
-        
-        <button class="btn-remove-item" onclick="removeFromCart('${item.product.id}')" title="Ürünü Kaldır">
-          🗑️
-        </button>
-      </div>
-    </div>
-  `).join("");
+      `).join("");
+
+      // Miktar ve silme eventlerini bağla
+      cartItemsList.querySelectorAll(".btn-minus").forEach(b => {
+        b.addEventListener("click", () => updateQuantity(b.dataset.id, -1));
+      });
+      cartItemsList.querySelectorAll(".btn-plus").forEach(b => {
+        b.addEventListener("click", () => updateQuantity(b.dataset.id, 1));
+      });
+      cartItemsList.querySelectorAll(".btn-remove-item").forEach(b => {
+        b.addEventListener("click", () => removeFromCart(b.dataset.id));
+      });
+    }
+
+    if (checkoutBtn) {
+      checkoutBtn.disabled = false;
+      checkoutBtn.style.opacity = "1";
+      checkoutBtn.style.cursor = "pointer";
+    }
+  }
 
   calculateAndRenderTotals();
 }
 
 function calculateAndRenderTotals() {
+  const summarySubtotal = document.getElementById("summary-subtotal");
+  const summaryDiscountRow = document.getElementById("summary-discount-row");
+  const summaryDiscountTitle = document.getElementById("summary-discount-title");
+  const summaryDiscountAmount = document.getElementById("summary-discount-amount");
+  const summaryTotal = document.getElementById("summary-total");
+
   const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   let discountAmount = 0;
 
@@ -382,30 +363,34 @@ function calculateAndRenderTotals() {
 
   const grandTotal = Math.max(0, subtotal - discountAmount);
 
-  summarySubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
+  if (summarySubtotal) summarySubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
 
   if (discountAmount > 0) {
-    summaryDiscountRow.style.display = "flex";
-    summaryDiscountTitle.textContent = `İndirim (${appliedCoupon.type === 'percent' ? '%' + appliedCoupon.value : 'Özel'}):`;
-    summaryDiscountAmount.textContent = `-${discountAmount.toLocaleString('tr-TR')} ₺`;
+    if (summaryDiscountRow) summaryDiscountRow.style.display = "flex";
+    if (summaryDiscountTitle) summaryDiscountTitle.textContent = `İndirim (${appliedCoupon.type === 'percent' ? '%' + appliedCoupon.value : 'Özel'}):`;
+    if (summaryDiscountAmount) summaryDiscountAmount.textContent = `-${discountAmount.toLocaleString('tr-TR')} ₺`;
   } else {
-    summaryDiscountRow.style.display = "none";
+    if (summaryDiscountRow) summaryDiscountRow.style.display = "none";
   }
 
-  summaryTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺`;
+  if (summaryTotal) summaryTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺`;
 }
 
 function triggerBadgeBump() {
-  cartBadge.classList.add("bump");
-  setTimeout(() => {
-    cartBadge.classList.remove("bump");
-  }, 400);
+  const badge = document.getElementById("cart-badge");
+  if (badge) {
+    badge.classList.add("bump");
+    setTimeout(() => badge.classList.remove("bump"), 400);
+  }
 }
 
 // ==========================================================================
-// 8. İNDİRİM & SÜRPRİZ KODLARI
+// 7. İNDİRİM & SÜRPRİZ KODU MOTORU
 // ==========================================================================
 function applyCouponCode() {
+  const couponInput = document.getElementById("coupon-input");
+  if (!couponInput) return;
+
   const code = couponInput.value.trim().toUpperCase();
   
   if (!code) {
@@ -439,13 +424,15 @@ function applyCouponCode() {
 }
 
 function showCouponAlert(message, type) {
-  couponAlert.textContent = message;
-  couponAlert.className = `coupon-alert ${type}`;
-  couponAlert.style.display = "block";
+  const alertBox = document.getElementById("coupon-alert");
+  if (!alertBox) return;
+  alertBox.textContent = message;
+  alertBox.className = `coupon-alert ${type}`;
+  alertBox.style.display = "block";
 }
 
 // ==========================================================================
-// 9. SİPARİŞ TAMAMLAMA & FİŞ (RECEIPT)
+// 8. SİPARİŞ TAMAMLAMA & FİŞ (RECEIPT)
 // ==========================================================================
 function processCheckout() {
   if (cart.length === 0) {
@@ -462,8 +449,17 @@ function processCheckout() {
     minute: "2-digit"
   });
 
-  receiptOrderId.textContent = orderId;
-  receiptDate.textContent = today;
+  const receiptOrderId = document.getElementById("receipt-order-id");
+  const receiptDate = document.getElementById("receipt-date");
+  const receiptItemsList = document.getElementById("receipt-items-list");
+  const receiptSubtotal = document.getElementById("receipt-subtotal");
+  const receiptDiscountRow = document.getElementById("receipt-discount-row");
+  const receiptDiscount = document.getElementById("receipt-discount");
+  const receiptGrandTotal = document.getElementById("receipt-grand-total");
+  const whatsappShareBtn = document.getElementById("whatsapp-share-btn");
+
+  if (receiptOrderId) receiptOrderId.textContent = orderId;
+  if (receiptDate) receiptDate.textContent = today;
 
   const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   let discountAmount = 0;
@@ -478,23 +474,25 @@ function processCheckout() {
 
   const grandTotal = Math.max(0, subtotal - discountAmount);
 
-  receiptItemsList.innerHTML = cart.map(item => `
-    <div class="receipt-item-row">
-      <span>${item.product.name} (x${item.quantity})</span>
-      <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
-    </div>
-  `).join("");
-
-  receiptSubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
-
-  if (discountAmount > 0) {
-    receiptDiscountRow.style.display = "flex";
-    receiptDiscount.textContent = `-${discountAmount.toLocaleString('tr-TR')} ₺`;
-  } else {
-    receiptDiscountRow.style.display = "none";
+  if (receiptItemsList) {
+    receiptItemsList.innerHTML = cart.map(item => `
+      <div class="receipt-item-row">
+        <span>${item.product.name} (x${item.quantity})</span>
+        <span>${item.product.price === 0 ? "Ücretsiz" : (item.product.price * item.quantity).toLocaleString('tr-TR') + " ₺"}</span>
+      </div>
+    `).join("");
   }
 
-  receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
+  if (receiptSubtotal) receiptSubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
+
+  if (discountAmount > 0) {
+    if (receiptDiscountRow) receiptDiscountRow.style.display = "flex";
+    if (receiptDiscount) receiptDiscount.textContent = `-${discountAmount.toLocaleString('tr-TR')} ₺`;
+  } else {
+    if (receiptDiscountRow) receiptDiscountRow.style.display = "none";
+  }
+
+  if (receiptGrandTotal) receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
 
   let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n`;
   orderSummaryText += `📋 *Sipariş No:* ${orderId}\n`;
@@ -512,8 +510,10 @@ function processCheckout() {
   orderSummaryText += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)\n\n`;
   orderSummaryText += `💌 _"Minik yıldızın siparişi kalpten verildi, teslimatı sabırsızlıkla bekliyorum!"_`;
 
-  const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(orderSummaryText)}`;
-  whatsappShareBtn.href = waUrl;
+  if (whatsappShareBtn) {
+    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(orderSummaryText)}`;
+    whatsappShareBtn.href = waUrl;
+  }
 
   closeCartDrawer();
   openReceiptModal();
@@ -521,122 +521,88 @@ function processCheckout() {
 }
 
 // ==========================================================================
-// 10. POP-UP MODAL AÇMA / KAPATMA İŞLEMLERİ
+// 9. POP-UP MODAL AÇMA & KAPATMA İŞLEMLERİ
 // ==========================================================================
-window.openReviewModal = function() {
-  if (reviewModalOverlay) reviewModalOverlay.classList.add("active");
+function openReviewModal() {
+  const modal = document.getElementById("review-modal-overlay");
+  if (modal) modal.classList.add("active");
   triggerHeartsShower();
-};
+}
 
-window.closeReviewModal = function() {
-  if (reviewModalOverlay) reviewModalOverlay.classList.remove("active");
-};
+function closeReviewModal() {
+  const modal = document.getElementById("review-modal-overlay");
+  if (modal) modal.classList.remove("active");
+}
 
-window.openDailyQuoteModal = function() {
-  getRandomQuote();
-  if (quoteModalOverlay) quoteModalOverlay.classList.add("active");
+function openDailyQuoteModal() {
+  const modal = document.getElementById("quote-modal-overlay");
+  const textEl = document.getElementById("quote-modal-text");
+  if (textEl) {
+    const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
+    textEl.textContent = quote;
+  }
+  if (modal) modal.classList.add("active");
   triggerHeartsShower();
-};
+}
 
-function getRandomQuote() {
-  const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
-  quoteModalText.textContent = quote;
+function closeDailyQuoteModal() {
+  const modal = document.getElementById("quote-modal-overlay");
+  if (modal) modal.classList.remove("active");
 }
 
 function openLetterModal(title, content) {
-  letterTitle.textContent = title;
-  letterContent.textContent = content;
-  letterModalOverlay.classList.add("active");
+  const modal = document.getElementById("letter-modal-overlay");
+  const titleEl = document.getElementById("letter-title");
+  const contentEl = document.getElementById("letter-content");
+  if (titleEl) titleEl.textContent = title;
+  if (contentEl) contentEl.textContent = content;
+  if (modal) modal.classList.add("active");
 }
 
 function closeLetterModal() {
-  letterModalOverlay.classList.remove("active");
+  const modal = document.getElementById("letter-modal-overlay");
+  if (modal) modal.classList.remove("active");
 }
 
 function openCartDrawer() {
-  cartOverlay.classList.add("active");
-  cartDrawer.classList.add("active");
+  const overlay = document.getElementById("cart-overlay");
+  const drawer = document.getElementById("cart-drawer");
+  if (overlay) overlay.classList.add("active");
+  if (drawer) drawer.classList.add("active");
   document.body.style.overflow = "hidden";
 }
 
 function closeCartDrawer() {
-  cartOverlay.classList.remove("active");
-  cartDrawer.classList.remove("active");
+  const overlay = document.getElementById("cart-overlay");
+  const drawer = document.getElementById("cart-drawer");
+  if (overlay) overlay.classList.remove("active");
+  if (drawer) drawer.classList.remove("active");
   document.body.style.overflow = "";
 }
 
 function openReceiptModal() {
-  receiptModalOverlay.classList.add("active");
+  const modal = document.getElementById("receipt-modal-overlay");
+  if (modal) modal.classList.add("active");
 }
 
 function closeReceiptModal() {
-  receiptModalOverlay.classList.remove("active");
+  const modal = document.getElementById("receipt-modal-overlay");
+  if (modal) modal.classList.remove("active");
 }
 
 function resetOrder() {
   cart = [];
   appliedCoupon = null;
-  couponInput.value = "";
-  couponAlert.style.display = "none";
+  const input = document.getElementById("coupon-input");
+  const alertBox = document.getElementById("coupon-alert");
+  if (input) input.value = "";
+  if (alertBox) alertBox.style.display = "none";
   updateCartUI();
   closeReceiptModal();
 }
 
 // ==========================================================================
-// 11. DEĞERLENDİRME ANKETİ
-// ==========================================================================
-function setupReviewSection() {
-  if (!starRating) return;
-
-  const ratingDescriptions = {
-    1: "Biraz İlgiye İhtiyacımız Var 🥺",
-    2: "Daha Çok Sarılmalı! 💕",
-    3: "Çok Tatlı & Sevgi Dolu 🥰",
-    4: "Harika Bir Aşk Hizmeti! 💖",
-    5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
-  };
-
-  const stars = starRating.querySelectorAll(".star");
-  stars.forEach((star, index) => {
-    star.addEventListener("click", () => {
-      currentRating = index + 1;
-      stars.forEach((s, i) => {
-        if (i <= index) {
-          s.classList.add("active");
-        } else {
-          s.classList.remove("active");
-        }
-      });
-      ratingText.textContent = ratingDescriptions[currentRating];
-      triggerHeartsShower();
-    });
-  });
-
-  if (loveChips) {
-    const chips = loveChips.querySelectorAll(".chip-item");
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        chips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-        selectedLoveChip = chip.dataset.value;
-      });
-    });
-  }
-
-  if (submitReviewBtn) {
-    submitReviewBtn.addEventListener("click", () => {
-      const note = reviewNote.value.trim() || "Çok güzelsin ve seni çok seviyorum!";
-      triggerHeartsShower();
-      closeReviewModal();
-
-      alert(`🎉 Harika! Değerlendirmen kalbimize ulaştı minik yıldızım:\n\n⭐ Puanın: ${currentRating}/5\n💖 Sevgi Seviyen: ${selectedLoveChip}\n💌 Notun: "${note}"\n\nBu değerlendirme ömür boyu saklanacaktır! 🥰`);
-      reviewNote.value = "";
-    });
-  }
-}
-
-// ==========================================================================
-// 12. ANİMASYONLAR (Uçuşan Kalpler & Tıklama)
+// 10. ANİMASYONLAR
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -702,35 +668,92 @@ document.addEventListener("click", (e) => {
 });
 
 // ==========================================================================
-// 13. EVENT LISTENERS
+// 11. TÜM EVENT LISTENERS BAĞLANTILARI
 // ==========================================================================
-function setupEventListeners() {
-  openCartBtn.addEventListener("click", openCartDrawer);
-  closeCartBtn.addEventListener("click", closeCartDrawer);
-  cartOverlay.addEventListener("click", closeCartDrawer);
-  
-  if (emptyShopBtn) {
-    emptyShopBtn.addEventListener("click", () => {
-      closeCartDrawer();
-      switchView('shop');
+function setupAllEvents() {
+  // Navbar logo tıklandığında ana menüye dön
+  const navBrand = document.getElementById("nav-brand-btn");
+  if (navBrand) navBrand.addEventListener("click", () => switchView("menu"));
+
+  // Ana Menü 4'lü Kutu Butonları
+  const tileShop = document.getElementById("tile-shop");
+  if (tileShop) tileShop.addEventListener("click", () => switchView("shop"));
+
+  const tileReview = document.getElementById("tile-review");
+  if (tileReview) tileReview.addEventListener("click", openReviewModal);
+
+  const tileQuote = document.getElementById("tile-quote");
+  if (tileQuote) tileQuote.addEventListener("click", openDailyQuoteModal);
+
+  const tileCart = document.getElementById("tile-cart");
+  if (tileCart) tileCart.addEventListener("click", openCartDrawer);
+
+  // Sipariş Sayfasındaki "Ana Menüye Dön" Butonu
+  const btnBack = document.getElementById("btn-back-to-menu");
+  if (btnBack) btnBack.addEventListener("click", () => switchView("menu"));
+
+  // Sipariş Sayfası Altındaki "Sepetimi Gör" Butonu
+  const btnViewCart = document.getElementById("btn-view-cart-bottom");
+  if (btnViewCart) btnViewCart.addEventListener("click", openCartDrawer);
+
+  // Kategori Sekmeleri Tıklamaları
+  const categoryTabs = document.getElementById("category-tabs");
+  if (categoryTabs) {
+    categoryTabs.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterCategory(btn.dataset.category);
+      });
     });
   }
 
-  applyCouponBtn.addEventListener("click", applyCouponCode);
-  couponInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      applyCouponCode();
-    }
+  // Sepet Çekmecesi Aç / Kapat
+  const openCartBtn = document.getElementById("open-cart-btn");
+  const closeCartBtn = document.getElementById("close-cart-btn");
+  const cartOverlay = document.getElementById("cart-overlay");
+  const emptyShopBtn = document.getElementById("empty-shop-btn");
+
+  if (openCartBtn) openCartBtn.addEventListener("click", openCartDrawer);
+  if (closeCartBtn) closeCartBtn.addEventListener("click", closeCartDrawer);
+  if (cartOverlay) cartOverlay.addEventListener("click", closeCartDrawer);
+  if (emptyShopBtn) emptyShopBtn.addEventListener("click", () => {
+    closeCartDrawer();
+    switchView("shop");
   });
 
-  couponHintBtn.addEventListener("click", () => {
-    alert("💡 Deneyebileceğin bazı sihirli kodlar:\n\n• SENICOKSEVIYORUM (%100 Bedava)\n• KAHVE (Sürpriz Kahve Hediyesi)\n• SURPRIZ (Gizli Aşk Mektubu)\n• OPUCUK (%50 Öpücük İndirimi)\n• CANIMBENIM (50 ₺ Sarılma İndirimi)");
-  });
+  // İndirim Kodu
+  const applyCouponBtn = document.getElementById("apply-coupon-btn");
+  const couponInput = document.getElementById("coupon-input");
+  const couponHintBtn = document.getElementById("coupon-hint-btn");
 
-  checkoutBtn.addEventListener("click", processCheckout);
+  if (applyCouponBtn) applyCouponBtn.addEventListener("click", applyCouponCode);
+  if (couponInput) {
+    couponInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        applyCouponCode();
+      }
+    });
+  }
 
-  // Modalları Kapat
+  if (couponHintBtn) {
+    couponHintBtn.addEventListener("click", () => {
+      alert("💡 Deneyebileceğin bazı sihirli kodlar:\n\n• SENICOKSEVIYORUM (%100 Bedava)\n• KAHVE (Sürpriz Kahve Hediyesi)\n• SURPRIZ (Gizli Aşk Mektubu)\n• OPUCUK (%50 Öpücük İndirimi)\n• CANIMBENIM (50 ₺ Sarılma İndirimi)");
+    });
+  }
+
+  // Siparişi Tamamla
+  const checkoutBtn = document.getElementById("checkout-btn");
+  if (checkoutBtn) checkoutBtn.addEventListener("click", processCheckout);
+
+  // Değerlendirme Modalı Eventleri
+  const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
+  const reviewModalOverlay = document.getElementById("review-modal-overlay");
+  const submitReviewBtn = document.getElementById("submit-review-btn");
+  const starRating = document.getElementById("star-rating");
+  const ratingText = document.getElementById("rating-text");
+  const loveChips = document.getElementById("love-chips");
+  const reviewNote = document.getElementById("review-note");
+
   if (closeReviewModalBtn) closeReviewModalBtn.addEventListener("click", closeReviewModal);
   if (reviewModalOverlay) {
     reviewModalOverlay.addEventListener("click", (e) => {
@@ -738,44 +761,117 @@ function setupEventListeners() {
     });
   }
 
-  closeLetterBtn.addEventListener("click", closeLetterModal);
-  letterConfirmBtn.addEventListener("click", closeLetterModal);
-  letterModalOverlay.addEventListener("click", (e) => {
-    if (e.target === letterModalOverlay) closeLetterModal();
-  });
+  if (starRating) {
+    const ratingDescriptions = {
+      1: "Biraz İlgiye İhtiyacımız Var 🥺",
+      2: "Daha Çok Sarılmalı! 💕",
+      3: "Çok Tatlı & Sevgi Dolu 🥰",
+      4: "Harika Bir Aşk Hizmeti! 💖",
+      5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
+    };
 
-  if (closeQuoteBtn) closeQuoteBtn.addEventListener("click", () => quoteModalOverlay.classList.remove("active"));
-  if (newQuoteBtn) newQuoteBtn.addEventListener("click", getRandomQuote);
-  if (quoteModalOverlay) {
-    quoteModalOverlay.addEventListener("click", (e) => {
-      if (e.target === quoteModalOverlay) quoteModalOverlay.classList.remove("active");
+    const stars = starRating.querySelectorAll(".star");
+    stars.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        currentRating = index + 1;
+        stars.forEach((s, i) => {
+          if (i <= index) {
+            s.classList.add("active");
+          } else {
+            s.classList.remove("active");
+          }
+        });
+        if (ratingText) ratingText.textContent = ratingDescriptions[currentRating];
+        triggerHeartsShower();
+      });
     });
   }
 
-  closeReceiptBtn.addEventListener("click", closeReceiptModal);
-  newOrderBtn.addEventListener("click", resetOrder);
-  receiptModalOverlay.addEventListener("click", (e) => {
-    if (e.target === receiptModalOverlay) closeReceiptModal();
-  });
+  if (loveChips) {
+    const chips = loveChips.querySelectorAll(".chip-item");
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        selectedLoveChip = chip.dataset.value;
+      });
+    });
+  }
 
+  if (submitReviewBtn) {
+    submitReviewBtn.addEventListener("click", () => {
+      const note = (reviewNote && reviewNote.value.trim()) || "Çok tatlısın ve seni çok seviyorum!";
+      triggerHeartsShower();
+      closeReviewModal();
+      alert(`🎉 Harika! Değerlendirmen kalbimize ulaştı minik yıldızım:\n\n⭐ Puanın: ${currentRating}/5\n💖 Sevgi Seviyen: ${selectedLoveChip}\n💌 Notun: "${note}"\n\nBu değerlendirme ömür boyu saklanacaktır! 🥰`);
+      if (reviewNote) reviewNote.value = "";
+    });
+  }
+
+  // Günün Tatlı Sözü Modalı Eventleri
+  const closeQuoteBtn = document.getElementById("close-quote-btn");
+  const newQuoteBtn = document.getElementById("new-quote-btn");
+  const quoteModalOverlay = document.getElementById("quote-modal-overlay");
+
+  if (closeQuoteBtn) closeQuoteBtn.addEventListener("click", closeDailyQuoteModal);
+  if (newQuoteBtn) newQuoteBtn.addEventListener("click", () => {
+    const textEl = document.getElementById("quote-modal-text");
+    if (textEl) {
+      const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
+      textEl.textContent = quote;
+      triggerHeartsShower();
+    }
+  });
+  if (quoteModalOverlay) {
+    quoteModalOverlay.addEventListener("click", (e) => {
+      if (e.target === quoteModalOverlay) closeDailyQuoteModal();
+    });
+  }
+
+  // Mektup Modalı Eventleri
+  const closeLetterBtn = document.getElementById("close-letter-btn");
+  const letterConfirmBtn = document.getElementById("letter-confirm-btn");
+  const letterModalOverlay = document.getElementById("letter-modal-overlay");
+
+  if (closeLetterBtn) closeLetterBtn.addEventListener("click", closeLetterModal);
+  if (letterConfirmBtn) letterConfirmBtn.addEventListener("click", closeLetterModal);
+  if (letterModalOverlay) {
+    letterModalOverlay.addEventListener("click", (e) => {
+      if (e.target === letterModalOverlay) closeLetterModal();
+    });
+  }
+
+  // Sipariş Fişi Modalı Eventleri
+  const closeReceiptBtn = document.getElementById("close-receipt-btn");
+  const newOrderBtn = document.getElementById("new-order-btn");
+  const receiptModalOverlay = document.getElementById("receipt-modal-overlay");
+
+  if (closeReceiptBtn) closeReceiptBtn.addEventListener("click", closeReceiptModal);
+  if (newOrderBtn) newOrderBtn.addEventListener("click", resetOrder);
+  if (receiptModalOverlay) {
+    receiptModalOverlay.addEventListener("click", (e) => {
+      if (e.target === receiptModalOverlay) closeReceiptModal();
+    });
+  }
+
+  // ESC tuşu ile kapatma
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeCartDrawer();
       closeLetterModal();
       closeReceiptModal();
       closeReviewModal();
-      if (quoteModalOverlay) quoteModalOverlay.classList.remove("active");
+      closeDailyQuoteModal();
     }
   });
 }
 
-// Başlat
-function initApp() {
+// ==========================================================================
+// 12. BAŞLAT
+// ==========================================================================
+document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
-  setupEventListeners();
-  setupReviewSection();
+  setupAllEvents();
   startBackgroundHearts();
   updateCartUI();
-}
-
-document.addEventListener("DOMContentLoaded", initApp);
+});

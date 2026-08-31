@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=1.2.1">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -21,13 +21,12 @@
   <!-- Üst Menü / Navbar -->
   <header class="navbar">
     <div class="nav-container">
-      <div class="nav-brand" onclick="switchView('menu')">
+      <div class="nav-brand" id="nav-brand-btn">
         <span class="logo-icon">💖</span>
         <span class="logo-text">Aşk Köşesi</span>
       </div>
 
       <div class="nav-actions">
-        <!-- Sepet Butonu -->
         <button class="cart-btn" id="open-cart-btn" aria-label="Sepeti Aç">
           <span class="cart-icon">🛍️</span>
           <span class="cart-label">Sepet</span>
@@ -39,7 +38,7 @@
 
   <main class="main-container">
 
-    <!-- ================= 1. GÖRÜNÜM: ANA MENÜ (TEK EKRAN HUB) ================= -->
+    <!-- ================= 1. GÖRÜNÜM: ANA MENÜ (TEK EKRAN) ================= -->
     <section class="view-section active" id="view-menu">
       <div class="hero-box">
         <div class="hero-pill">
@@ -55,21 +54,21 @@
           Burası tamamen senin keyfine ve tebessümüne özel tasarlandı. Bugün ne yapmak istersin?
         </p>
 
-        <!-- 2x2 Kompakt Menü Izgarası (Tek Ekrana Sığacak Şekilde) -->
+        <!-- 2x2 Kompakt Menü Izgarası (Tek Ekrana Sığan 4 Ana Kutu) -->
         <div class="menu-hub-grid">
           
           <!-- Buton 1: Sipariş Menüsü -->
-          <div class="menu-tile" onclick="switchView('shop')">
+          <div class="menu-tile" id="tile-shop">
             <div class="tile-icon">🛍️</div>
             <div class="tile-content">
               <h3 class="tile-title">Sipariş Menüsü</h3>
-              <p class="tile-desc">Aşkölçer, Canım Cicim ve tatlı menüler</p>
+              <p class="tile-desc">Aşkölçer, Canım Cicim ve tatlı seçenekler</p>
             </div>
             <span class="tile-arrow">➜</span>
           </div>
 
-          <!-- Buton 2: Siteyi Değerlendir (Açılır Pop-up) -->
-          <div class="menu-tile" onclick="openReviewModal()">
+          <!-- Buton 2: Siteyi Değerlendir (Doğrudan Pop-up Açar) -->
+          <div class="menu-tile" id="tile-review">
             <div class="tile-icon">⭐</div>
             <div class="tile-content">
               <h3 class="tile-title">Siteyi Değerlendir</h3>
@@ -78,8 +77,8 @@
             <span class="tile-arrow">➜</span>
           </div>
 
-          <!-- Buton 3: Günün Tatlı Sözü (Açılır Pop-up) -->
-          <div class="menu-tile" onclick="openDailyQuoteModal()">
+          <!-- Buton 3: Günün Tatlı Sözü (Doğrudan Pop-up Açar) -->
+          <div class="menu-tile" id="tile-quote">
             <div class="tile-icon">💌</div>
             <div class="tile-content">
               <h3 class="tile-title">Günün Tatlı Sözü</h3>
@@ -88,8 +87,8 @@
             <span class="tile-arrow">➜</span>
           </div>
 
-          <!-- Buton 4: Sürpriz & İndirim Kodu -->
-          <div class="menu-tile" onclick="openCartDrawer()">
+          <!-- Buton 4: Sürpriz Kodlar & Sepet -->
+          <div class="menu-tile" id="tile-cart">
             <div class="tile-icon">🎁</div>
             <div class="tile-content">
               <h3 class="tile-title">Sürpriz & Sepet</h3>
@@ -102,13 +101,13 @@
       </div>
     </section>
 
-    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ ================= -->
+    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ MENÜSÜ (3 KATEGORİ) ================= -->
     <section class="view-section" id="view-shop">
       <div class="shop-container">
         
         <!-- Ortalanmış Ana Menüye Dön Butonu -->
         <div class="center-nav-bar">
-          <button class="btn-back-pill" onclick="switchView('menu')">
+          <button class="btn-back-pill" id="btn-back-to-menu">
             <span>🏠 Ana Menüye Dön</span>
           </button>
         </div>
@@ -119,27 +118,27 @@
           <p class="section-sub">Dilediğin kategoriyi seç ve istediklerini sepete ekle!</p>
         </div>
 
-        <!-- Menü Kategori Sekmeleri (3 Farklı Menü) -->
+        <!-- 3 Farklı Menü Kategorisi Butonları -->
         <div class="category-tabs" id="category-tabs">
-          <button class="tab-btn active" onclick="filterCategory('ask')">
+          <button class="tab-btn active" data-category="ask">
             <span>💖 Aşk Menüsü</span>
           </button>
-          <button class="tab-btn" onclick="filterCategory('keyif')">
+          <button class="tab-btn" data-category="keyif">
             <span>☕ Keyif & Kahve</span>
           </button>
-          <button class="tab-btn" onclick="filterCategory('simartma')">
+          <button class="tab-btn" data-category="simartma">
             <span>🎁 Şımartma Paketi</span>
           </button>
         </div>
 
         <!-- Ürünler Izgarası -->
         <div class="products-grid" id="products-grid">
-          <!-- JS ile dinamik doldurulur -->
+          <!-- JS ile doldurulur -->
         </div>
 
-        <!-- Alt Ortalanmış Sepete Git Butonu -->
+        <!-- Alt Ortalanmış Buton -->
         <div class="shop-bottom-bar">
-          <button class="btn btn-primary" onclick="openCartDrawer()">
+          <button class="btn btn-primary" id="btn-view-cart-bottom">
             <span>Sepetimi Gör & Tamamla 🛍️</span>
           </button>
         </div>
@@ -148,7 +147,7 @@
 
   </main>
 
-  <!-- ================= POP-UP MODAL: SİTEYİ DEĞERLENDİR ================= -->
+  <!-- ================= POP-UP 1: SİTEYİ DEĞERLENDİR ================= -->
   <div class="modal-overlay" id="review-modal-overlay">
     <div class="modal-card review-modal-card">
       <button class="modal-close-btn" id="close-review-modal-btn">✕</button>
@@ -194,7 +193,7 @@
     </div>
   </div>
 
-  <!-- ================= POP-UP MODAL: GÜNÜN TATLI SÖZÜ ================= -->
+  <!-- ================= POP-UP 2: GÜNÜN TATLI SÖZÜ ================= -->
   <div class="modal-overlay" id="quote-modal-overlay">
     <div class="modal-card letter-card">
       <button class="modal-close-btn" id="close-quote-btn">✕</button>
@@ -209,7 +208,7 @@
     </div>
   </div>
 
-  <!-- ================= POP-UP MODAL: GİZLİ AŞK MEKTUBU ================= -->
+  <!-- ================= POP-UP 3: GİZLİ AŞK MEKTUBU ================= -->
   <div class="modal-overlay" id="letter-modal-overlay">
     <div class="modal-card letter-card">
       <button class="modal-close-btn" id="close-letter-btn">✕</button>
@@ -292,7 +291,7 @@
     </div>
   </aside>
 
-  <!-- ================= SİPARİŞ FİŞİ / MAKBUZ MODALI ================= -->
+  <!-- ================= POP-UP 4: SİPARİŞ FİŞİ / MAKBUZ ================= -->
   <div class="modal-overlay" id="receipt-modal-overlay">
     <div class="modal-card receipt-card">
       <button class="modal-close-btn" id="close-receipt-btn">✕</button>
@@ -351,6 +350,6 @@
     <p class="footer-sub">Tamamen senin tebessümüne özeldir © 2026</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=1.2.1"></script>
 </body>
 </html>

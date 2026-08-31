@@ -4,31 +4,26 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
+### [v1.2.1] - 31.08.2026 (Tıklama Düzeltmesi & CSS Renk/Kontrast İyileştirmesi) 🛠️
+- **Hata Düzeltmesi:** `script.js` içindeki çift kod blokları ve ID çakışmaları temizlendi; menü kutuları, değerlendirme ve aşk sözü pop-up tıklamaları %100 çalışır hale getirildi.
+- **Tasarım:** Koyu arka plan/kontrast sorunu giderildi; beyaz/pembe kartlar, net yazılar ve canlı renkler garantilendi.
+- **Önbellek (Cache-Busting):** Dosya versiyonları `v=1.2.1` olarak güncellendi.
+- **Yedekleme:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
 ### [v1.2.0] - 31.08.2026 (Kompakt Tek Ekran & Pop-up Deneyimi) ✨
-- **Başlık & Hitap Değişikliği:** Karşılama mesajı *"Hoş Geldin Minik Yıldızım! ✨"* olarak güncellendi.
-- **Tek Ekran & 2x2 Menü Düzeni:** 
-  - Aşağı kaydırma ihtiyacını ortadan kaldıran 2x2 kompakt menü karoları tasarlandı.
-  - Tüm öğeler şık bir şekilde ortalandı.
-- **Anında Pop-up Modalları:**
-  - *"Siteyi Değerlendir"* ve *"Günün Tatlı Sözü"* butonlarına tıklandığında sayfanın altına kaymak yerine doğrudan ekranın ortasında açılan şık pop-up modalları eklendi.
-- **3 Farklı Menü Kategorisi (Sipariş Bölümü):**
-  1. *💖 Aşk Menüsü* (Aşkölçer, Canım Cicim)
-  2. *☕ Keyif & Kahve* (Baş Başa Kahve Kaçamağı, Gece Sohbeti & Şarkı)
-  3. *🎁 Şımartma Paketi* (Sınırsız Sarılma Kuponu, Film Seçme Hakkı)
-- **Gezinme:** Ortalanmış ve hap şeklinde *"🏠 Ana Menüye Dön"* butonu eklendi.
-- **Yedekleme & Dağıtım:** Değişiklikler GitHub reposuna otomatik push edildi.
+- **Başlık:** *"Hoş Geldin Minik Yıldızım! ✨"*
+- **Tek Ekran & 2x2 Menü:** Kompakt düzen.
+- **Pop-up Modalları:** Değerlendirme ve aşk sözü pencereleri.
+- **3 Kategori:** Aşk, Keyif & Kahve, Şımartma Paketi.
 
 ---
 
 ### [v1.1.0] - 31.08.2026 (Ana Menü & Değerlendirme Modülü) ✨
-- **Ana Menü (Hub) Mimarisi:** Girişte 3 ana seçenek kartı eklendi.
-- **Siteyi Değerlendir Sayfası:** Kalp puanlama ve anket sistemi.
-- **Temizlik:** E-ticaret benzeri genel butonlar kaldırıldı.
+- Ana Menü hub yapısı ve anket eklendi.
 
 ---
 
 ### [v1.0.0] - 31.08.2026 (İlk Kararlı Sürüm) 🚀
-- **Tasarım:** Pembe/kırmızı romantik tema, cam efekti ve mobil uyumlu responsive arayüz.
-- **Ürünler:** "Aşkölçer" ve "Canım Cicim" ürünleri.
-- **Sepet & İndirim Motoru:** Sürpriz ve indirim kodları.
-- **Yayın:** GitHub Pages ve Git entegrasyonu.
+- İlk sürüm oluşturuldu.

@@ -4,7 +4,6 @@
    ========================================================================== */
 
 :root {
-  /* Renk Paleti */
   --primary: #ff4b72;
   --primary-hover: #e02953;
   --primary-light: #fff0f3;
@@ -14,9 +13,9 @@
   --accent-gold: #fdcb6e;
   --accent-green: #00b894;
   
-  --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #ffe9ee 50%, #ffdbe4 100%);
-  --card-bg: rgba(255, 255, 255, 0.92);
-  --card-border: rgba(255, 204, 218, 0.7);
+  --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffe3ea 50%, #ffd6e0 100%);
+  --card-bg: #ffffff;
+  --card-border: #ffd0dc;
   
   --text-main: #2d3436;
   --text-muted: #636e72;
@@ -34,7 +33,7 @@
   --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-romantic: 'Pacifico', cursive;
   
-  --transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition: all 0.25s ease;
 }
 
 /* ================= SIFIRLAMA & GENEL ================= */
@@ -48,8 +47,8 @@
 html, body {
   min-height: 100vh;
   font-family: var(--font-main);
-  background: var(--bg-gradient);
-  color: var(--text-main);
+  background: var(--bg-gradient) !important;
+  color: var(--text-main) !important;
   overflow-x: hidden;
   line-height: 1.5;
   text-align: center;
@@ -70,7 +69,7 @@ html, body {
 .floating-heart-bg {
   position: absolute;
   bottom: -40px;
-  color: rgba(255, 117, 140, 0.35);
+  color: rgba(255, 117, 140, 0.4);
   font-size: 1.2rem;
   user-select: none;
   animation: floatUpward linear forwards;
@@ -99,7 +98,7 @@ html, body {
   pointer-events: none;
   z-index: 9999;
   font-size: 1.6rem;
-  animation: clickHeartPop 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  animation: clickHeartPop 0.9s ease forwards;
 }
 
 @keyframes clickHeartPop {
@@ -124,7 +123,7 @@ html, body {
   z-index: 100;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--card-border);
   box-shadow: var(--shadow-sm);
 }
@@ -214,7 +213,7 @@ html, body {
 }
 
 .view-section.active {
-  display: block;
+  display: block !important;
   opacity: 1;
   transform: translateY(0);
 }
@@ -281,26 +280,25 @@ html, body {
 }
 
 .menu-tile {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  border: 1.5px solid var(--card-border);
+  background: #ffffff !important;
+  border: 1.5px solid var(--card-border) !important;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  padding: 1.2rem 1rem;
+  box-shadow: 0 4px 14px rgba(255, 75, 114, 0.1);
+  padding: 1.2rem 1.1rem;
   display: flex;
   align-items: center;
   gap: 0.8rem;
   text-align: left;
   cursor: pointer;
   transition: var(--transition);
-  position: relative;
+  user-select: none;
 }
 
 .menu-tile:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary);
-  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(255, 75, 114, 0.2);
+  border-color: var(--primary) !important;
+  background: #fffbfd !important;
 }
 
 .tile-icon {
@@ -333,7 +331,6 @@ html, body {
   color: var(--primary);
   font-weight: 800;
   opacity: 0.7;
-  transition: transform 0.2s;
 }
 
 .menu-tile:hover .tile-arrow {
@@ -431,9 +428,9 @@ html, body {
 }
 
 .tab-btn.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
+  background: var(--primary) !important;
+  color: white !important;
+  border-color: var(--primary) !important;
   box-shadow: 0 4px 14px var(--primary-glow);
 }
 
@@ -446,10 +443,9 @@ html, body {
 }
 
 .product-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
+  background: #ffffff !important;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--card-border);
+  border: 1.5px solid var(--card-border) !important;
   box-shadow: var(--shadow-sm);
   padding: 1.5rem 1.2rem;
   display: flex;
@@ -462,7 +458,7 @@ html, body {
 .product-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);
-  border-color: var(--primary);
+  border-color: var(--primary) !important;
 }
 
 .product-badge {
@@ -585,12 +581,12 @@ html, body {
 }
 
 .modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .modal-card {
-  background: white;
+  background: #ffffff !important;
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 440px;
@@ -740,7 +736,7 @@ textarea:focus {
 
 /* Günün Tatlı Sözü & Mektup */
 .letter-card {
-  background: linear-gradient(180deg, #fff9fa 0%, #ffffff 100%);
+  background: #ffffff !important;
   border: 2px solid #ffd6df;
 }
 
@@ -771,7 +767,7 @@ textarea:focus {
   font-size: 1rem;
   color: #4a4a4a;
   line-height: 1.7;
-  background: #fff;
+  background: #fff8fa;
   padding: 1.1rem;
   border-radius: var(--radius-md);
   border: 1px dashed #ffb6c1;
@@ -782,8 +778,8 @@ textarea:focus {
 /* ================= SİPARİŞ FİŞİ MODALI ================= */
 .receipt-card {
   font-family: 'Courier New', Courier, monospace;
-  background: #fff;
-  color: #111;
+  background: #fff !important;
+  color: #111 !important;
   border-top: 6px solid var(--primary);
   padding: 1.6rem;
   text-align: left;
@@ -911,8 +907,8 @@ textarea:focus {
 }
 
 .cart-drawer-overlay.active {
-  opacity: 1;
-  visibility: visible;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .cart-drawer {
@@ -922,7 +918,7 @@ textarea:focus {
   width: 100%;
   max-width: 420px;
   height: 100%;
-  background: #ffffff;
+  background: #ffffff !important;
   z-index: 1001;
   display: flex;
   flex-direction: column;
@@ -932,7 +928,7 @@ textarea:focus {
 }
 
 .cart-drawer.active {
-  right: 0;
+  right: 0 !important;
 }
 
 .cart-header {
@@ -946,6 +942,7 @@ textarea:focus {
 .cart-header-title h3 {
   font-size: 1.2rem;
   font-weight: 800;
+  color: var(--text-main);
 }
 
 .cart-count-text {
