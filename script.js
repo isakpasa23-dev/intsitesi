@@ -1,9 +1,29 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   WhatsApp Entegrasyonlu (05510782591) & Akıcı Kod Yapısı
+   Arka Planda Sessiz Telegram Bot Bildirim Sistemi 🤖
    ========================================================================== */
 
-const WHATSAPP_PHONE = "905510782591"; // Değerlendirme ve siparişlerin gideceği numara
+const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
+const TELEGRAM_CHAT_ID = "6497058542";
+const WHATSAPP_PHONE = "905510782591";
+
+// Arka Planda Sessiz Telegram Bildirimi Gönderen Fonksiyon
+async function sendTelegramNotification(messageText) {
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: messageText,
+        parse_mode: "Markdown"
+      })
+    });
+  } catch (error) {
+    console.warn("Telegram bildirimi gönderilirken hata oluştu:", error);
+  }
+}
 
 // ==========================================================================
 // 1. ÜRÜN & KATEGORİ LİSTESİ (3 Menü)
@@ -432,7 +452,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA & FİŞ (RECEIPT)
+// 8. SİPARİŞ TAMAMLAMA & ARKA PLAN TELEGRAM BİLDİRİMİ
 // ==========================================================================
 function processCheckout() {
   if (cart.length === 0) {
@@ -494,23 +514,35 @@ function processCheckout() {
 
   if (receiptGrandTotal) receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
 
-  let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n\n`;
-  orderSummaryText += `📋 *Sipariş No:* ${orderId}\n`;
-  orderSummaryText += `📅 *Tarih:* ${today}\n\n`;
-  orderSummaryText += `🛍️ *Sipariş Detayları:*\n`;
+  // 1. ARKA PLANDA SESSİZ TELEGRAM BİLDİRİMİ GÖNDER 🤖
+  let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
+  telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n`;
+  telegramOrderMsg += `📅 *Tarih:* ${today}\n`;
+  telegramOrderMsg += `👤 *Müşteri:* Minik Yıldızım 🥰\n\n`;
+  telegramOrderMsg += `📦 *Sipariş Edilen Ürünler:*\n`;
   
   cart.forEach(item => {
-    orderSummaryText += `• ${item.product.name} x${item.quantity}\n`;
+    telegramOrderMsg += `• ${item.product.name} (x${item.quantity})\n`;
   });
 
   if (appliedCoupon) {
-    orderSummaryText += `\n🏷️ *Kullanılan Kod:* ${appliedCoupon.code}`;
+    telegramOrderMsg += `\n🏷️ *Kullanılan İndirim Kodu:* ${appliedCoupon.code}`;
   }
 
-  orderSummaryText += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)\n\n`;
-  orderSummaryText += `💌 _"Minik yıldızın siparişi kalpten verildi, teslimatı sabırsızlıkla bekliyorum!"_`;
+  telegramOrderMsg += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)\n\n`;
+  telegramOrderMsg += `💌 _"Minik yıldızın siparişini tamamladı, teslimat bekleniyor!"_`;
 
+  sendTelegramNotification(telegramOrderMsg);
+
+  // 2. İsteğe Bağlı WhatsApp Butonu
   if (whatsappShareBtn) {
+    let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n\n📋 *Sipariş No:* ${orderId}\n📅 *Tarih:* ${today}\n\n🛍️ *Sipariş Detayları:*\n`;
+    cart.forEach(item => {
+      orderSummaryText += `• ${item.product.name} x${item.quantity}\n`;
+    });
+    if (appliedCoupon) orderSummaryText += `\n🏷️ *Kullanılan Kod:* ${appliedCoupon.code}\n`;
+    orderSummaryText += `\n💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk ve Sarılma)`;
+    
     const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodeURIComponent(orderSummaryText)}`;
     whatsappShareBtn.href = waUrl;
   }
@@ -737,7 +769,7 @@ function setupAllEvents() {
   const checkoutBtn = document.getElementById("checkout-btn");
   if (checkoutBtn) checkoutBtn.addEventListener("click", processCheckout);
 
-  // Değerlendirme Modalı ve WhatsApp Bildirimi
+  // Değerlendirme Modalı ve Sessiz Telegram Gönderimi
   const closeReviewModalBtn = document.getElementById("close-review-modal-btn");
   const reviewModalOverlay = document.getElementById("review-modal-overlay");
   const submitReviewBtn = document.getElementById("submit-review-btn");
@@ -790,22 +822,33 @@ function setupAllEvents() {
     });
   }
 
-  // Değerlendirmeyi Gönder Butonuna Basıldığında Doğrudan 05510782591 WhatsApp'ına Yönlendirir
+  // Değerlendirmeyi Gönder -> Arka Planda Sessizce Telegram'a Gönderir ve Ekranda Tatlı Onay Gösterir
   if (submitReviewBtn) {
     submitReviewBtn.addEventListener("click", () => {
       const note = (reviewNote && reviewNote.value.trim()) || "Çok tatlısın ve seni çok seviyorum!";
       triggerHeartsShower();
       closeReviewModal();
 
-      let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ!* 💖\n\n`;
-      reviewMsg += `⭐ *Puanım:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n`;
-      reviewMsg += `🥰 *Sevgi Seviyem:* ${selectedLoveChip}\n`;
-      reviewMsg += `💌 *Notum:* ${note}\n\n`;
-      reviewMsg += `✨ _"Minik yıldızından sevgilerle!"_`;
+      const today = new Date().toLocaleDateString("tr-TR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
 
-      const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encodeURIComponent(reviewMsg)}`;
-      window.open(waUrl, "_blank");
+      // Arka planda Telegram'a mesaj at
+      let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ GELDİ!* 💖\n\n`;
+      reviewMsg += `⭐ *Puan:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n`;
+      reviewMsg += `🥰 *Sevgi Seviyesi:* ${selectedLoveChip}\n`;
+      reviewMsg += `💌 *Yazdığı Not:* "${note}"\n`;
+      reviewMsg += `📅 *Tarih:* ${today}\n\n`;
+      reviewMsg += `✨ _"Minik yıldızından kalpten gelen bir değerlendirme!"_`;
 
+      sendTelegramNotification(reviewMsg);
+
+      // Ekranda sadece tatlı bir onay mesajı göster (Hiçbir harici uygulama açılmaz!)
+      alert(`🎉 Teşekkürler minik yıldızım!\n\nDeğerlendirmen kalbimize ulaştı. Seni her şeyden çok seviyorum! 🥰`);
       if (reviewNote) reviewNote.value = "";
     });
   }
