@@ -1,13 +1,16 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Stok Takip Sistemi, İsim Hatırlama & Sadeleştirilmiş Tasarım 📦✨
+   8 Haziran 2029 (09:00) Canlı Fiş Sayacı & Fiş İndirme Motoru 📥⏳
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
 
-// 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029
-const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 0, 0, 0);
+// 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 Saat 09:00:00
+const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 9, 0, 0);
+
+// Fiş Canlı Sayacı Timer ID'si
+let receiptTimerInterval = null;
 
 // Arka Planda Sessiz Telegram Bildirimi Gönderen Fonksiyon
 async function sendTelegramNotification(messageText) {
@@ -27,18 +30,24 @@ async function sendTelegramNotification(messageText) {
   }
 }
 
-// Geri Sayım Hesaplayıcı (Fiş ve Toplam Süre İçin)
+// 8 Haziran 2029 Saat 09:00 Geri Sayım Hesaplayıcı
 function getAskolcerDetailedRemaining() {
   const now = new Date();
   const diff = TARGET_DATE_ASKOLCER - now;
-  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, text: "Kavuşma Günü Geldi! 💖" };
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, text: "Kavuşma Saati Geldi! 💖" };
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-  return { days, hours, minutes, seconds, text: `${days} Gün Kaldı` };
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+    text: `${days} Gün, ${hours} Saat, ${minutes} Dk, ${seconds} Sn`
+  };
 }
 
 // ==========================================================================
@@ -54,7 +63,6 @@ const INITIAL_STOCKS = {
   "kahve-hediye": 10
 };
 
-// LocalStorage'dan Stok Durumunu Çek / Başlat
 function getProductStock(productId) {
   const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
@@ -232,6 +240,7 @@ let appliedCoupon = null;
 let currentRating = 5;
 let selectedLoveChip = "Sonsuz";
 let currentCategory = "ask";
+let lastCompletedOrderHasAskolcer = false;
 
 // ==========================================================================
 // 4. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
@@ -253,7 +262,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 5. KATEGORİ VE ÜRÜNLERİ RENDER ETME (STOK GÖSTERİMİ DAHİL)
+// 5. KATEGORİ VE ÜRÜNLERİ RENDER ETME
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -438,35 +447,10 @@ function updateCartUI() {
 
 function calculateAndRenderTotals() {
   const summarySubtotal = document.getElementById("summary-subtotal");
-  const summaryDiscountRow = document.getElementById("summary-discount-row");
-  const summaryDiscountTitle = document.getElementById("summary-discount-title");
-  const summaryDiscountAmount = document.getElementById("summary-discount-amount");
   const summaryTotal = document.getElementById("summary-total");
 
-  const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-  let discountAmount = 0;
-
-  if (appliedCoupon && subtotal > 0) {
-    if (appliedCoupon.type === "percent") {
-      discountAmount = (subtotal * appliedCoupon.value) / 100;
-    } else if (appliedCoupon.type === "fixed") {
-      discountAmount = Math.min(appliedCoupon.value, subtotal);
-    }
-  }
-
-  const grandTotal = Math.max(0, subtotal - discountAmount);
-
-  if (summarySubtotal) summarySubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
-
-  if (discountAmount > 0) {
-    if (summaryDiscountRow) summaryDiscountRow.style.display = "flex";
-    if (summaryDiscountTitle) summaryDiscountTitle.textContent = `İndirim (${appliedCoupon.type === 'percent' ? '%' + appliedCoupon.value : 'Özel'}):`;
-    if (summaryDiscountAmount) summaryDiscountAmount.textContent = `-${discountAmount.toLocaleString('tr-TR')} ₺`;
-  } else {
-    if (summaryDiscountRow) summaryDiscountRow.style.display = "none";
-  }
-
-  if (summaryTotal) summaryTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺`;
+  if (summarySubtotal) summarySubtotal.textContent = "Aşk Dolu 💕";
+  if (summaryTotal) summaryTotal.textContent = "Sonsuz Sevgi 💖";
 }
 
 function triggerBadgeBump() {
@@ -525,7 +509,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA (İSİM HATIRLAMA, STOK DÜŞME & FİŞ)
+// 8. SİPARİŞ TAMAMLAMA AKIŞI
 // ==========================================================================
 
 function openCheckoutInfoModal() {
@@ -543,7 +527,7 @@ function openCheckoutInfoModal() {
   const savedCustomerName = localStorage.getItem("saved_customer_name") || "Minik Yıldızım";
   if (nameInput) nameInput.value = savedCustomerName;
 
-  // Sipariş Notu Sıfırlama (Her siparişte sıfırdan boş gelsin)
+  // Sipariş Notunu sıfırla (boş başlasın)
   if (noteInput) noteInput.value = "";
 
   if (infoModal) infoModal.classList.add("active");
@@ -553,6 +537,23 @@ function openCheckoutInfoModal() {
 function closeCheckoutInfoModal() {
   const infoModal = document.getElementById("checkout-info-modal-overlay");
   if (infoModal) infoModal.classList.remove("active");
+}
+
+function updateReceiptLiveTimer() {
+  const receiptDeliveryEl = document.getElementById("receipt-max-delivery-time");
+  if (!receiptDeliveryEl) return;
+
+  if (lastCompletedOrderHasAskolcer) {
+    const countdown = getAskolcerDetailedRemaining();
+    receiptDeliveryEl.innerHTML = `
+      8 Haziran 2029 - Saat 09:00 ⏳<br>
+      <span style="font-size:0.92rem; font-weight:800; color:#d63031; display:inline-block; margin-top:4px;">
+        ${countdown.days} Gün, ${countdown.hours} Saat, ${countdown.minutes} Dk, ${countdown.seconds} Sn
+      </span>
+    `;
+  } else {
+    receiptDeliveryEl.textContent = `Anında Teslimat ⚡ (Hemen Şimdi!)`;
+  }
 }
 
 function finalizeOrder() {
@@ -570,9 +571,7 @@ function finalizeOrder() {
     decrementProductStock(item.product.id, item.quantity);
   });
 
-  // Ürün kartlarındaki stokları anında güncelle
   renderProducts();
-
   closeCheckoutInfoModal();
 
   const orderId = `ASK-2026-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -590,7 +589,6 @@ function finalizeOrder() {
   const receiptCustomerNote = document.getElementById("receipt-customer-note");
   const receiptNoteRow = document.getElementById("receipt-note-row");
   const receiptItemsList = document.getElementById("receipt-items-list");
-  const receiptMaxDeliveryTime = document.getElementById("receipt-max-delivery-time");
 
   if (receiptOrderId) receiptOrderId.textContent = orderId;
   if (receiptDate) receiptDate.textContent = today;
@@ -603,20 +601,13 @@ function finalizeOrder() {
     if (receiptNoteRow) receiptNoteRow.style.display = "none";
   }
 
-  // Toplam Teslimat Süresi Hesaplama
-  const hasAskolcer = cart.some(item => item.product.isCountdown === true);
-  const remainingCountdown = getAskolcerDetailedRemaining();
+  // Siparişte Aşkölçer var mı kontrol et
+  lastCompletedOrderHasAskolcer = cart.some(item => item.product.isCountdown === true);
 
-  let maxDeliveryText = "";
-  if (hasAskolcer) {
-    maxDeliveryText = `8 Haziran 2029 (${remainingCountdown.days} Gün Kaldı) ✨`;
-  } else {
-    maxDeliveryText = `Anında Teslimat (Hemen Şimdi! ⚡💖)`;
-  }
-
-  if (receiptMaxDeliveryTime) {
-    receiptMaxDeliveryTime.textContent = maxDeliveryText;
-  }
+  // Canlı Geri Sayımı Başlat
+  if (receiptTimerInterval) clearInterval(receiptTimerInterval);
+  updateReceiptLiveTimer();
+  receiptTimerInterval = setInterval(updateReceiptLiveTimer, 1000);
 
   // Ürünlerin Fişe Basılması
   if (receiptItemsList) {
@@ -630,7 +621,7 @@ function finalizeOrder() {
     `).join("");
   }
 
-  // ================= SADELEŞTİRİLMİŞ TELEGRAM BİLDİRİMİ 🤖 =================
+  // Telegram Bildirimi Gönder
   let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
   telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n\n`;
   telegramOrderMsg += `📅 *Tarih:* ${today}\n\n`;
@@ -653,6 +644,52 @@ function finalizeOrder() {
 
   openReceiptModal();
   triggerHeartsShower();
+}
+
+// ==========================================================================
+// 8.1. FİŞİ RESİM OLARAK İNDİRME FONKSİYONU (html2canvas) 📥
+// ==========================================================================
+async function downloadReceiptImage() {
+  const receiptCard = document.getElementById("receipt-printable-card");
+  const downloadBtn = document.getElementById("btn-download-receipt");
+  const actionsBox = document.getElementById("receipt-actions-box");
+  const closeBtn = document.querySelector(".receipt-card .modal-close-btn");
+
+  if (!receiptCard) return;
+
+  if (typeof window.html2canvas === "undefined") {
+    alert("Resim oluşturucu kütüphanesi yükleniyor, lütfen birkaç saniye sonra tekrar deneyin!");
+    return;
+  }
+
+  try {
+    if (downloadBtn) downloadBtn.textContent = "⏳ Fiş Kaydediliyor...";
+    if (actionsBox) actionsBox.style.display = "none";
+    if (closeBtn) closeBtn.style.display = "none";
+
+    const canvas = await html2canvas(receiptCard, {
+      scale: 2.5,
+      backgroundColor: "#ffffff",
+      useCORS: true
+    });
+
+    if (actionsBox) actionsBox.style.display = "flex";
+    if (closeBtn) closeBtn.style.display = "flex";
+    if (downloadBtn) downloadBtn.textContent = "📥 Fişi İndir (Resim Olarak Kaydet)";
+
+    const image = canvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    const orderId = document.getElementById("receipt-order-id")?.textContent || "siparis";
+    link.href = image;
+    link.download = `Ask_Kosesi_Fisi_${orderId}.png`;
+    link.click();
+    triggerHeartsShower();
+  } catch (err) {
+    console.error("Fiş indirme hatası:", err);
+    if (actionsBox) actionsBox.style.display = "flex";
+    if (closeBtn) closeBtn.style.display = "flex";
+    if (downloadBtn) downloadBtn.textContent = "📥 Fişi İndir (Resim Olarak Kaydet)";
+  }
 }
 
 // ==========================================================================
@@ -721,6 +758,7 @@ function openReceiptModal() {
 }
 
 function closeReceiptModal() {
+  if (receiptTimerInterval) clearInterval(receiptTimerInterval);
   const modal = document.getElementById("receipt-modal-overlay");
   if (modal) modal.classList.remove("active");
 }
@@ -996,10 +1034,12 @@ function setupAllEvents() {
 
   const closeReceiptBtn = document.getElementById("close-receipt-btn");
   const newOrderBtn = document.getElementById("new-order-btn");
+  const btnDownloadReceipt = document.getElementById("btn-download-receipt");
   const receiptModalOverlay = document.getElementById("receipt-modal-overlay");
 
   if (closeReceiptBtn) closeReceiptBtn.addEventListener("click", closeReceiptModal);
   if (newOrderBtn) newOrderBtn.addEventListener("click", resetOrder);
+  if (btnDownloadReceipt) btnDownloadReceipt.addEventListener("click", downloadReceiptImage);
   if (receiptModalOverlay) {
     receiptModalOverlay.addEventListener("click", (e) => {
       if (e.target === receiptModalOverlay) closeReceiptModal();

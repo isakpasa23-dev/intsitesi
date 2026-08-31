@@ -10,7 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=1.6.0">
+  <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <link rel="stylesheet" href="style.css?v=1.8.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -287,17 +290,13 @@
 
       <div class="price-summary">
         <div class="summary-row">
-          <span>Ara Toplam:</span>
-          <span id="summary-subtotal">0 ₺</span>
-        </div>
-        <div class="summary-row discount-row" id="summary-discount-row" style="display: none;">
-          <span id="summary-discount-title">İndirim:</span>
-          <span id="summary-discount-amount">-0 ₺</span>
+          <span>Sepet Durumu:</span>
+          <span id="summary-subtotal">Aşk Dolu 💕</span>
         </div>
         <div class="summary-divider"></div>
         <div class="summary-row total-row">
-          <span>Genel Toplam:</span>
-          <span class="total-price" id="summary-total">0 ₺</span>
+          <span>Ödenecek:</span>
+          <span class="total-price" id="summary-total">Sonsuz Sevgi 💖</span>
         </div>
       </div>
 
@@ -309,7 +308,7 @@
 
   <!-- ================= POP-UP: SİPARİŞ FİŞİ / RESMİ MAKBUZ ================= -->
   <div class="modal-overlay" id="receipt-modal-overlay">
-    <div class="modal-card receipt-card">
+    <div class="modal-card receipt-card" id="receipt-printable-card">
       <button class="modal-close-btn" id="close-receipt-btn">✕</button>
       
       <div class="receipt-header">
@@ -329,29 +328,33 @@
 
       <div class="receipt-decor-line">----------------------------------------</div>
       
-      <!-- Ürünler ve Bireysel Teslimat Süreleri -->
+      <!-- Ürünler Listesi -->
       <div class="receipt-items-list" id="receipt-items-list"></div>
 
       <div class="receipt-decor-line">----------------------------------------</div>
 
-      <!-- Toplam Teslimat Süresi -->
+      <!-- Tahmini Teslimat Süresi (Canlı Geri Sayımlı) -->
       <div class="receipt-delivery-box">
         <div class="delivery-highlight">
-          <span>⏳ Toplam Tahmini Teslimat Süresi:</span>
-          <strong id="receipt-max-delivery-time">Anında Teslimat ⚡</strong>
+          <span class="delivery-highlight-title">⏳ Tahmini Teslimat Süresi:</span>
+          <strong id="receipt-max-delivery-time">8 Haziran 2029 - Saat 09:00</strong>
         </div>
       </div>
 
       <div class="receipt-decor-line">----------------------------------------</div>
 
-      <!-- Sevgi Notu (Ödenecek Tutar Yerine) -->
+      <!-- Sevgi Notu -->
       <div class="receipt-note">
         <p>💌 <em>"Bu siparişin karşılığı sadece içten bir gülümseme ve sıcacık bir sarılmadır."</em></p>
       </div>
 
-      <div class="receipt-actions">
+      <!-- Aksiyon Butonları -->
+      <div class="receipt-actions" id="receipt-actions-box">
         <button class="btn btn-primary btn-full" id="new-order-btn">
           ✨ Yeni Sipariş Oluştur / Kapat
+        </button>
+        <button class="btn btn-secondary btn-full" id="btn-download-receipt">
+          📥 Fişi İndir (Resim Olarak Kaydet)
         </button>
       </div>
     </div>
@@ -363,6 +366,6 @@
     <p class="footer-sub">Tamamen senin tebessümüne özeldir © 2026</p>
   </footer>
 
-  <script src="script.js?v=1.6.0"></script>
+  <script src="script.js?v=1.8.0"></script>
 </body>
 </html>

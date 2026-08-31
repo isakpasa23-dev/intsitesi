@@ -4,17 +4,19 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.7.0] - 31.08.2026 (Stok Takip Sistemi & Müşteri İsmi Hatırlama) 📦👤
-- **Aşkölçer Kartı Temizliği:**
-  - Aşkölçer ürününün açıklaması orijinal tatlı haline döndürüldü (*"Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı."*).
-  - Ürün kartındaki kırmızı kesikli zamanlayıcı kutusu kaldırıldı; kart sadeleşti ve sadece `⏳ Teslimat: 8 Haziran 2029 ⏳` bilgisi korundu.
-- **Dinamik Stok Takip Motoru:**
-  - Fiyat etiketi yerine her ürün için gerçek zamanlı stok durumu göstergesi eklendi (`📦 Stok: Son 1 Adet 🔥`, `📦 Stok: Son 3 Adet` vb.).
-  - Her sipariş verildiğinde alınan ürünlerin stokları `localStorage` üzerinden otomatik olarak 1 azalır.
-- **Akıllı İsim Hatırlama:**
-  - Müşteri adını bir kez girdiğinde tarayıcı bu ismi hatırlar ve sonraki siparişlerde ad otomatik dolu gelir.
-  - Sipariş notu alanı ise her siparişte sıfırdan boş olarak açılır.
+### [v1.8.0] - 31.08.2026 (Fişte Canlı Saat 09:00 Geri Sayımı & Fiş İndirme Butonu) 📥⏳
+- **Fiş Üzerinde Canlı Geri Sayım (8 Haziran 2029 Saat 09:00):**
+  - Sipariş fişinde artık statik gün yazısı yerine doğrudan **8 Haziran 2029 Saat 09:00**'a kadar saniye saniye canlı akan geri sayım sayacı çalışır (`X Gün, Y Saat, Z Dk, S Sn`).
+  - Başlık *"Toplam Tahmini Teslimat Süresi"* yerine doğrudan **"⏳ Tahmini Teslimat Süresi:"** olarak güncellendi.
+- **Fişi İndir (Resim Olarak Kaydet):**
+  - Fiş ekranında *"Yeni Sipariş Oluştur"* butonunun hemen altına **"📥 Fişi İndir (Resim Olarak Kaydet)"** butonu eklendi.
+  - `html2canvas` motoru sayesinde fiş tek tıkla yüksek çözünürlüklü `.png` formatında galeriye/cihaza indirilebilir.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.7.0] - 31.08.2026 (Stok Takip Sistemi & Müşteri İsmi Hatırlama) 📦👤
+- Aşkölçer kartı eski haline döndürüldü, dinamik stok sistemi ve isim hatırlama özelliği eklendi.
 
 ---
 
@@ -25,11 +27,6 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ### [v1.6.0] - 31.08.2026 (Sipariş Fişi Sadeleştirme & Romantik Not Odaklı Tasarım) 💌✨
 - Fişteki ödenecek tutar kaldırıldı, doğrudan sevgi notu yerleştirildi.
-
----
-
-### [v1.5.0] - 31.08.2026 (Aşkölçer 8 Haziran 2029 Geri Sayımı & Anında Teslimat) ⏳⚡
-- Aşkölçer 8 Haziran 2029 sayacı ve diğer ürünlerin anında teslimat kuralı.
 
 ---
 
