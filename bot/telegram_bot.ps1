@@ -14,18 +14,19 @@ $ProductAliases = @{
     "kahve-kacamagi" = "kahve-kacamagi"; "kahve" = "kahve-kacamagi"; "cay" = "kahve-kacamagi"; "çay" = "kahve-kacamagi"; "cay-kacagi" = "kahve-kacamagi"
     "cigkofte-ziyafeti" = "cigkofte-ziyafeti"; "cigkofte" = "cigkofte-ziyafeti"; "çiğköfte" = "cigkofte-ziyafeti"
     "beraber-yuruyus" = "beraber-yuruyus"; "yuruyus" = "beraber-yuruyus"; "yürüyüş" = "beraber-yuruyus"; "yuru" = "beraber-yuruyus"
-    "gece-sohbeti" = "gece-sohbeti"; "gece" = "gece-sohbeti"; "sohbet" = "gece-sohbeti"; "kulaklik" = "gece-sohbeti"; "kulaklık" = "gece-sohbeti"; "tek-kulaklik" = "gece-sohbeti"
     "patron-sensin" = "patron-sensin"; "patron" = "patron-sensin"; "kralice" = "patron-sensin"; "kraliçe" = "patron-sensin"; "kralicem" = "patron-sensin"
     "film-gecesi" = "film-gecesi"; "film" = "film-gecesi"; "sinema" = "film-gecesi"
+    "gece-sohbeti" = "gece-sohbeti"; "gece" = "gece-sohbeti"; "sohbet" = "gece-sohbeti"; "kulaklik" = "gece-sohbeti"; "kulaklık" = "gece-sohbeti"; "tek-kulaklik" = "gece-sohbeti"
     "goruntulu-arama" = "goruntulu-arama"; "goruntulu" = "goruntulu-arama"; "görüntülü" = "goruntulu-arama"; "arama" = "goruntulu-arama"; "aninda-arama" = "goruntulu-arama"
     "ozlem-sarilmasi" = "ozlem-sarilmasi"; "ozlem" = "ozlem-sarilmasi"; "özlem" = "ozlem-sarilmasi"
-    "ozel-ses-kaydi" = "ozel-ses-kaydi"; "ses" = "ozel-ses-kaydi"
+    "ozel-ses-kaydi" = "ozel-ses-kaydi"; "ses" = "ozel-ses-kaydi"; "ismail" = "ozel-ses-kaydi"; "sarki" = "ozel-ses-kaydi"
 }
 
 $InitialStocks = @{
     "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "cigkofte-ziyafeti" = 6350; "beraber-yuruyus" = 9999999
-    "gece-sohbeti" = 12580; "patron-sensin" = 1450; "film-gecesi" = 3745; "goruntulu-arama" = 8650
-    "ozlem-sarilmasi" = 9999999; "ozel-ses-kaydi" = 7890; "kahve-hediye" = 2450
+    "patron-sensin" = 1450; "film-gecesi" = 3745; "gece-sohbeti" = 12580; "goruntulu-arama" = 8650
+    "ozlem-sarilmasi" = 9999999; "ozel-ses-kaydi" = 7890; "kahve-hediye" = 2450; "opucuk-hediye" = 9999999
+    "sarilma-hediye" = 9999999; "sonsuz-sevgi-hediye" = 9999999
 }
 
 function Send-TgMessage($chatId, $text) {
@@ -65,7 +66,11 @@ function Set-CloudStocks($stocks) {
     }
 }
 
-Write-Host "🤖 Aşk Köşesi Telegram Botu Başlatıldı... Komutlar bekleniyor!" -ForegroundColor Magenta
+Clear-Host
+Write-Host "======================================================" -ForegroundColor Magenta
+Write-Host "  💖 ASKKOSESI TELEGRAM BULUT BOTU BASLATILDI (v10.1.0) " -ForegroundColor Yellow
+Write-Host "  Canli Stok Senkronizasyonu: AKTIF (Telegram Pinned Msg 85)" -ForegroundColor Green
+Write-Host "======================================================" -ForegroundColor Magenta
 
 # İlk açılışta eski geçmiş mesajları atla
 try {
@@ -87,10 +92,10 @@ while ($true) {
                 if (-not $msg -or -not $msg.text) { continue }
                 
                 $text = $msg.text.Trim()
-                $chatId = $msg.chat.id
-                Write-Host "📩 Gelen Komut: $text (Chat ID: $chatId)" -ForegroundColor Cyan
+                $senderChatId = $msg.chat.id
+                Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Gelen Komut: $text" -ForegroundColor Cyan
                 
-                if ($text -in @("/stok", "/stoklar", "/start", "/yardim")) {
+                if ($text -in @("/stok", "/stoklar", "/start", "/yardim", "/menu")) {
                     $stocks = Get-CloudStocks
                     $m = "📦 *GÜNCEL CANLI STOK DURUMU* 📦`n`n"
                     $m += "• 🔥 *Aşkölçer* (`askolcer`): *$($stocks.askolcer) Adet*`n"
@@ -103,12 +108,14 @@ while ($true) {
                     $m += "• 🎵 *Tek Kulaklık* (`kulaklik`): *$($stocks.'gece-sohbeti') Adet*`n"
                     $m += "• 📱 *Anında Arama* (`arama`): *$($stocks.'goruntulu-arama') Adet*`n"
                     $m += "• 🫂 *Özlem Sarılması* (`ozlem`): *Sınırsız ♾️*`n"
-                    $m += "• 🎙️ *Ses Kaydı* (`ses`): *$($stocks.'ozel-ses-kaydi') Adet*`n`n"
-                    $m += "✍ *Komutlar:*`n"
-                    $m += "• `/set askolcer 1` ➔ Stoğu 1 yap`n"
-                    $m += "• `/ekle arama 50` ➔ Arama stoğuna ekle`n"
-                    $m += "• `/sifirla` ➔ Tüm stokları sıfırla"
-                    Send-TgMessage $chatId $m
+                    $m += "• 🎙️ *Özel Ses Kaydı & Şarkı* (`ses`): *$($stocks.'ozel-ses-kaydi') Adet*`n`n"
+                    $m += "✍ *Kullanabileceğin Komutlar:*`n"
+                    $m += "• `/set askolcer 1` ➔ Aşkölçer stoğunu 1 yap`n"
+                    $m += "• `/set cigkofte 100` ➔ Çiğköfte stoğunu 100 yap`n"
+                    $m += "• `/ekle arama 50` ➔ Arama stoğuna 50 ekle`n"
+                    $m += "• `/cikar kralice 10` ➔ Kraliçe stoğundan 10 düşür`n"
+                    $m += "• `/sifirla` ➔ Tüm stokları varsayılana döndür"
+                    Send-TgMessage $senderChatId $m
                 }
                 elseif ($text -match "^/(set|ayar)\s+([^\s]+)\s+(\d+)$") {
                     $key = $Matches[2].ToLower()
@@ -118,7 +125,7 @@ while ($true) {
                     $stocks = Get-CloudStocks
                     $stocks.$pId = $qty
                     Set-CloudStocks $stocks
-                    Send-TgMessage $chatId "✅ *$pId* stoğu başarıyla *$qty Adet* olarak ayarlandı ve web sitesine yansıtıldı! ✨"
+                    Send-TgMessage $senderChatId "✅ *$pId* stoğu başarıyla *$qty Adet* olarak güncellendi ve web sitesine yansıtıldı! ✨"
                 }
                 elseif ($text -match "^/ekle\s+([^\s]+)\s+(\d+)$") {
                     $key = $Matches[1].ToLower()
@@ -126,9 +133,10 @@ while ($true) {
                     $pId = if ($ProductAliases.ContainsKey($key)) { $ProductAliases[$key] } else { $key }
                     
                     $stocks = Get-CloudStocks
-                    $stocks.$pId = [int]($stocks.$pId) + $qty
+                    $curVal = if ($stocks.$pId) { [int]$stocks.$pId } else { 0 }
+                    $stocks.$pId = $curVal + $qty
                     Set-CloudStocks $stocks
-                    Send-TgMessage $chatId "✅ *$pId* stoğuna +$qty eklendi! Yeni Stok: *$($stocks.$pId) Adet* 📦"
+                    Send-TgMessage $senderChatId "✅ *$pId* stoğuna +$qty eklendi! Yeni Canlı Stok: *$($stocks.$pId) Adet* 📦"
                 }
                 elseif ($text -match "^/(cikar|çıkar)\s+([^\s]+)\s+(\d+)$") {
                     $key = $Matches[2].ToLower()
@@ -136,13 +144,14 @@ while ($true) {
                     $pId = if ($ProductAliases.ContainsKey($key)) { $ProductAliases[$key] } else { $key }
                     
                     $stocks = Get-CloudStocks
-                    $stocks.$pId = [Math]::Max(0, [int]($stocks.$pId) - $qty)
+                    $curVal = if ($stocks.$pId) { [int]$stocks.$pId } else { 0 }
+                    $stocks.$pId = [Math]::Max(0, $curVal - $qty)
                     Set-CloudStocks $stocks
-                    Send-TgMessage $chatId "🔻 *$pId* stoğundan -$qty düşüldü! Kalan Stok: *$($stocks.$pId) Adet* 📦"
+                    Send-TgMessage $senderChatId "🔻 *$pId* stoğundan -$qty düşüldü! Kalan Canlı Stok: *$($stocks.$pId) Adet* 📦"
                 }
                 elseif ($text -in @("/sifirla", "/sıfırla")) {
                     Set-CloudStocks $InitialStocks
-                    Send-TgMessage $chatId "🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı ve web sitesi güncellendi!* (Aşkölçer: 1 Adet) 🔥"
+                    Send-TgMessage $senderChatId "🔄 *Tüm ürün stokları ilk günkü zengin sayılarına sıfırlandı ve web sitesi güncellendi!* (Aşkölçer: 1 Adet) 🔥"
                 }
             }
         }

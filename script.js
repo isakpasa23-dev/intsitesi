@@ -220,6 +220,7 @@ async function fetchCloudStocks() {
           if (prevDataStr !== newDataStr) {
             localStorage.setItem("site_cloud_stocks_cache", newDataStr);
             renderProducts();
+            updateCartUI();
           }
         }
       }
