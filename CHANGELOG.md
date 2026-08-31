@@ -4,12 +4,17 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.3.0] - 31.08.2026 (4 Bacaklı Gerçek Adım Atan Siyah Kedi - Sıfır Zıplama) 🐈‍⬛🐾✨
-- **Gerçek Bacaklı Yürüyüş Animasyonu:**
-  - Kedinin SVG anatomisi 4 ayrı hareketli bacak (ön sol/sağ, arka sol/sağ) şeklinde yeniden modellendi.
-  - Gövdedeki tüm zıplama/sekme kodları kaldırıldı. Gövde yere paralel ve pürüzsüz kayarken 4 bacağı çapraz açılarla yürüyüş adımları atar.
-  - Kedinin durduğunda bacakları sabit durur, yürüdüğünde pati adımları ritmik olarak hareket eder.
+### [v2.4.0] - 31.08.2026 (Mobil WebKit / Safari Bacak Animasyonu & Önbellek Temizleme) 📱🐈‍⬛✨
+- **Mobil WebKit & Safari Desteği:**
+  - Mobil cihazlarda SVG bacak animasyonlarının takılmaması için `-webkit-` transform box ve keyframe kuralları eklendi.
+  - Mobilde agresif önbelleklemeyi (cache) kırmak için `Cache-Control` meta etiketleri ve sürüm parametreleri `?v=2.4.0` güncellendi.
+  - Mobilde dokunulmadığında kedinin ekranın altında yumuşak ve tatlı devriye gezintisi yapması sağlandı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.3.0] - 31.08.2026 (4 Bacaklı Gerçek Adım Atan Siyah Kedi - Sıfır Zıplama) 🐈‍⬛🐾✨
+- Kedi anatomisi 4 bacaklı gerçek adım animasyonuna çevrildi, gövde zıplaması kaldırıldı.
 
 ---
 
@@ -25,6 +30,11 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ### [v2.1.0] - 31.08.2026 (Fareyi İzleyen Sevimli Siyah Kedi Eşlikçisi) 🐈‍⬛🐾✨
 - Siyah kedi modülü eklendi.
+
+---
+
+### [v2.0.0] - 31.08.2026 (Seni Özledim Menüsü & Özel Stok Seviyeleri) 🥺💖✨
+- 'Seni Özledim' menüsü eklendi.
 
 ---
 

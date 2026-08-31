@@ -98,7 +98,7 @@ html, body {
   100% { transform: translate(-50%, -130px) scale(1); opacity: 0; }
 }
 
-/* ================= 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ (SIFIR ZIPLAMA) ================= */
+/* ================= 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ (MOBİL VE SAFARI UYUMLU) ================= */
 .screen-cat-companion {
   position: fixed;
   bottom: 6px;
@@ -112,21 +112,26 @@ html, body {
   pointer-events: auto;
   will-change: transform;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.28));
+  -webkit-filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.28));
 }
 
 .cat-flip-wrap {
   width: 100%;
   height: 100%;
   transform-origin: center center;
+  -webkit-transform-origin: center center;
   transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  -webkit-transition: -webkit-transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .cat-flip-wrap.facing-left {
   transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
 }
 
 .cat-flip-wrap.facing-right {
   transform: scaleX(1);
+  -webkit-transform: scaleX(1);
 }
 
 .cat-body-svg {
@@ -135,68 +140,98 @@ html, body {
   display: block;
 }
 
-/* Gerçek Bacak Yürüme Hareketi */
+/* Mobil WebKit & Safari Destekli 4 Bacak Yürüyüşü */
 .cat-leg {
   transform-box: fill-box;
+  -webkit-transform-box: fill-box;
+  transform-origin: top center;
+  -webkit-transform-origin: top center;
 }
 
 .screen-cat-companion.walking .front-leg-1 {
   animation: catLegWalkFront1 0.22s infinite alternate ease-in-out;
-  transform-origin: top center;
+  -webkit-animation: catLegWalkFront1 0.22s infinite alternate ease-in-out;
 }
 
 .screen-cat-companion.walking .front-leg-2 {
   animation: catLegWalkFront2 0.22s infinite alternate ease-in-out;
-  transform-origin: top center;
+  -webkit-animation: catLegWalkFront2 0.22s infinite alternate ease-in-out;
 }
 
 .screen-cat-companion.walking .back-leg-1 {
   animation: catLegWalkBack1 0.22s infinite alternate ease-in-out;
-  transform-origin: top center;
+  -webkit-animation: catLegWalkBack1 0.22s infinite alternate ease-in-out;
 }
 
 .screen-cat-companion.walking .back-leg-2 {
   animation: catLegWalkBack2 0.22s infinite alternate ease-in-out;
-  transform-origin: top center;
+  -webkit-animation: catLegWalkBack2 0.22s infinite alternate ease-in-out;
 }
 
 @keyframes catLegWalkFront1 {
   0% { transform: rotate(-26deg); }
   100% { transform: rotate(26deg); }
 }
+@-webkit-keyframes catLegWalkFront1 {
+  0% { -webkit-transform: rotate(-26deg); }
+  100% { -webkit-transform: rotate(26deg); }
+}
 
 @keyframes catLegWalkFront2 {
   0% { transform: rotate(26deg); }
   100% { transform: rotate(-26deg); }
+}
+@-webkit-keyframes catLegWalkFront2 {
+  0% { -webkit-transform: rotate(26deg); }
+  100% { -webkit-transform: rotate(-26deg); }
 }
 
 @keyframes catLegWalkBack1 {
   0% { transform: rotate(24deg); }
   100% { transform: rotate(-24deg); }
 }
+@-webkit-keyframes catLegWalkBack1 {
+  0% { -webkit-transform: rotate(24deg); }
+  100% { -webkit-transform: rotate(-24deg); }
+}
 
 @keyframes catLegWalkBack2 {
   0% { transform: rotate(-24deg); }
   100% { transform: rotate(24deg); }
 }
+@-webkit-keyframes catLegWalkBack2 {
+  0% { -webkit-transform: rotate(-24deg); }
+  100% { -webkit-transform: rotate(24deg); }
+}
 
 .screen-cat-companion.purring .cat-body-svg {
   animation: catPurrBounce 0.4s ease;
+  -webkit-animation: catPurrBounce 0.4s ease;
 }
 
 @keyframes catPurrBounce {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.2) translateY(-6px); }
 }
+@-webkit-keyframes catPurrBounce {
+  0%, 100% { -webkit-transform: scale(1); }
+  50% { -webkit-transform: scale(1.2) translateY(-6px); }
+}
 
 .cat-tail {
   transform-origin: 22px 54px;
+  -webkit-transform-origin: 22px 54px;
   animation: catTailWag 2.4s infinite ease-in-out;
+  -webkit-animation: catTailWag 2.4s infinite ease-in-out;
 }
 
 @keyframes catTailWag {
   0%, 100% { transform: rotate(0deg); }
   50% { transform: rotate(18deg); }
+}
+@-webkit-keyframes catTailWag {
+  0%, 100% { -webkit-transform: rotate(0deg); }
+  50% { -webkit-transform: rotate(18deg); }
 }
 
 .cat-speech-bubble {
@@ -204,6 +239,7 @@ html, body {
   bottom: 48px;
   left: 50%;
   transform: translateX(-50%) scale(0);
+  -webkit-transform: translateX(-50%) scale(0);
   background: rgba(255, 255, 255, 0.95);
   color: #ff1361;
   font-family: var(--font-main);
@@ -217,10 +253,12 @@ html, body {
   pointer-events: none;
   opacity: 0;
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cat-speech-bubble.active {
   transform: translateX(-50%) scale(1);
+  -webkit-transform: translateX(-50%) scale(1);
   opacity: 1;
 }
 

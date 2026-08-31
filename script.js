@@ -1,7 +1,7 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   4 Bacaklı Doğal Yürüyen Siyah Kedi, Zıplamasız Yumuşak Takip 🐈‍⬛🐾✨
-   ========================================================================== */
+   Mobil ve WebKit Uyumlu, Yumuşak Adımlı 4 Bacaklı Kedi 🐈‍⬛🐾✨
+   ========================================================================= */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
@@ -807,7 +807,7 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU (SIFIR ZIPLAMA, GERÇEK ADIM)
+// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU (MOBİL VE SAFARI UYUMLU)
 // ==========================================================================
 function initScreenCat() {
   const cat = document.getElementById("screen-cat-companion");
@@ -819,6 +819,7 @@ function initScreenCat() {
   let targetX = window.innerWidth / 2;
   let currentFacing = 1; // 1: sağ, -1: sol
   let speechTimeout = null;
+  let lastUserActivity = Date.now();
 
   const catPhrases = [
     "Miyav! 🐾💕",
@@ -830,28 +831,44 @@ function initScreenCat() {
     "Bugün çok tatlısın! 🌸"
   ];
 
+  function setTarget(x) {
+    const maxX = Math.max(100, window.innerWidth - 65);
+    targetX = Math.max(20, Math.min(maxX, x));
+    lastUserActivity = Date.now();
+  }
+
+  // Fare hareketi
   window.addEventListener("mousemove", (e) => {
-    targetX = Math.max(20, Math.min(window.innerWidth - 65, e.clientX - 25));
+    setTarget(e.clientX - 25);
   });
 
+  // Mobil dokunma
   window.addEventListener("touchmove", (e) => {
     if (e.touches && e.touches[0]) {
-      targetX = Math.max(20, Math.min(window.innerWidth - 65, e.touches[0].clientX - 25));
+      setTarget(e.touches[0].clientX - 25);
     }
   }, { passive: true });
 
   window.addEventListener("touchstart", (e) => {
     if (e.touches && e.touches[0]) {
-      targetX = Math.max(20, Math.min(window.innerWidth - 65, e.touches[0].clientX - 25));
+      setTarget(e.touches[0].clientX - 25);
     }
   }, { passive: true });
+
+  // Mobilde kimse dokunmadığında kedinin minik ve sevimli devriye gezintisi
+  setInterval(() => {
+    if (Date.now() - lastUserActivity > 4000) {
+      const randomX = 30 + Math.random() * (window.innerWidth - 90);
+      targetX = randomX;
+    }
+  }, 4500);
 
   function animateCat() {
     const diff = targetX - catX;
     const distance = Math.abs(diff);
 
-    // Kedi hedefe doğru yumuşak ve sabit şekilde ilerler
     if (distance > 3) {
+      // Yön değiştirme
       if (diff > 3 && currentFacing !== 1) {
         currentFacing = 1;
         flipWrap.classList.remove("facing-left");
@@ -862,8 +879,8 @@ function initScreenCat() {
         flipWrap.classList.add("facing-left");
       }
 
-      // Sabit ve pürüzsüz adım kayması (gövdede zıplama olmadan)
-      const speed = Math.min(Math.max(distance * 0.04, 1.2), 3.0);
+      // Yumuşak ve sabit hız (ışınlanma ve zıplama olmadan)
+      const speed = Math.min(Math.max(distance * 0.035, 1.0), 2.8);
       catX += Math.sign(diff) * speed;
       cat.classList.add("walking");
     } else {
@@ -871,6 +888,7 @@ function initScreenCat() {
     }
 
     cat.style.transform = `translate3d(${catX}px, 0, 0)`;
+    cat.style.webkitTransform = `translate3d(${catX}px, 0, 0)`;
     requestAnimationFrame(animateCat);
   }
 
