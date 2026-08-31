@@ -4,16 +4,18 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v11.1.0] - 01.09.2026 (Büyülü Aşk Gülü Çok Renkli, Katmerli & İncili Olarak Baştan Tasarlandı) 🌹✨💎🌸
-- **Gül Çiçeği Katmerli & Canlı Hale Getirildi:**
-  - Tek renk/koyu kırmızı görünüm yerine, kaktüs çiçeği gibi 5 farklı canlı katmandan oluşan spiral açılış eklendi:
-    - 1. Katman: 12 yapraklı kadife bordo dış taç.
-    - 2. Katman: 10 yapraklı canlı mercan ve yakut kırmızı.
-    - 3. Katman: 8 yapraklı parlak şeker pembesi ve fuşya.
-    - 4. Katman: 6 yapraklı pastel somon ve şeftali gonca.
-    - 5. Merkez Göbek: Parlayan altın sarısı aşk çiçeği tohumu ve incisi.
-  - Gül yaprakları üzerine ışıltılı su damlaları (dewdrops) ve dökülen rengarenk aşk yaprakları eklendi.
+### [v11.2.0] - 01.09.2026 (Penguenler Kaldırıldı, Yerine Aşk Mektubu & Hilal Ay Salıncağındaki Tavşancık Eklendi) 💌🌙🐰✨
+- **Animasyon Rotasyonu Güncellendi:**
+  - Penguenler sahneden kaldırıldı.
+  - Yerine 2 yeni büyüleyici ve romantik sahne eklendi:
+    - 💌 **Büyülü Aşk Mektubu & Kalp Havai Fişekleri:** Çırpınan melek kanatlarıyla süzülen pembe zarf, içinden yükselen aşk mektubu ve gökyüzüne fışkıran rengarenk kalp havai fişekleri.
+    - 🌙 **Hilal Ay Salıncağında Sevimli Tavşancık:** Altın yıldızlı iplerle asılı hilal ayda sallanan kulakları kıpırdayan sevimli beyaz tavşancık ve arkasında kalan ışıltılı yıldız tozu izi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v11.1.0] - 01.09.2026 (Büyülü Aşk Gülü Çok Renkli, Katmerli & İncili Olarak Baştan Tasarlandı) 🌹✨💎🌸
+- Gül çiçeği çok renkli ve katmerli yapıldı.
 
 ---
 

@@ -1551,7 +1551,8 @@ const MAGIC_ANIM_LIST = [
   "cat_bubbles",
   "coffee_love",
   "teddy_balloons",
-  "aurora_penguins"
+  "love_letter",
+  "bunny_moon_swing"
 ];
 
 let currentMagicAnimIndex = 0;
@@ -2490,127 +2491,237 @@ function playCurrentMagicAnimation(animKey = null) {
   }
 
   // =========================================================================
-  // 7. 🐧 KUTUP IŞIKLARI & AŞK PENGUENLERİ (Aurora Borealis & Penguins)
+  // 7. 💌 BÜYÜLÜ AŞK MEKTUBU & KALP HAVAİ FİŞEKLERİ (Love Letter & Heart Fireworks)
   // =========================================================================
-  function renderAuroraPenguins(t) {
+  function renderLoveLetter(t) {
     const cx = width / 2;
-    const groundY = height - 40;
+    const floatY = height * 0.52 + Math.sin(t * 0.003) * 14;
+    const envW = 110;
+    const envH = 75;
 
-    // Kutup Işıkları (Aurora Borealis Dalgaları)
+    // Arka Plan Işıltıları
     ctx.save();
-    for (let a = 0; a < 3; a++) {
-      const grad = ctx.createLinearGradient(0, 0, width, height * 0.5);
-      if (a === 0) {
-        grad.addColorStop(0, "rgba(85, 239, 196, 0.35)");
-        grad.addColorStop(1, "rgba(129, 236, 236, 0)");
-      } else if (a === 1) {
-        grad.addColorStop(0, "rgba(162, 155, 254, 0.3)");
-        grad.addColorStop(1, "rgba(253, 121, 168, 0)");
-      } else {
-        grad.addColorStop(0, "rgba(116, 185, 255, 0.35)");
-        grad.addColorStop(1, "rgba(85, 239, 196, 0)");
-      }
-
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      for (let x = 0; x <= width; x += 30) {
-        const wave = Math.sin(t * 0.002 + x * 0.01 + a * 2) * 35 + 80 + a * 30;
-        ctx.lineTo(x, wave);
-      }
-      ctx.lineTo(width, 0);
-      ctx.closePath();
-      ctx.fill();
+    for (let i = 0; i < 16; i++) {
+      const sx = (Math.sin(i * 123.4) * 0.5 + 0.5) * width;
+      const sy = (Math.cos(i * 456.7) * 0.5 + 0.5) * height;
+      const twinkle = (Math.sin(t * 0.004 + i) + 1) / 2;
+      ctx.fillStyle = `rgba(255, 117, 140, ${0.25 + twinkle * 0.65})`;
+      ctx.font = "14px sans-serif";
+      ctx.fillText("✨", sx, sy);
     }
     ctx.restore();
 
-    // Karlı Tepe
+    // Çırpınan Melek Kanatları (Angel Wings)
+    const wingFlap = Math.sin(t * 0.02) * 0.25;
     ctx.save();
-    ctx.fillStyle = "#ffffff";
+    ctx.translate(cx - envW / 2, floatY);
+    ctx.rotate(-wingFlap);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
     ctx.beginPath();
-    ctx.ellipse(cx, groundY + 20, 160, 45, 0, 0, Math.PI * 2);
+    ctx.ellipse(-24, -10, 26, 14, -0.4, 0, Math.PI * 2);
+    ctx.ellipse(-18, 4, 20, 10, -0.2, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
 
-    // İki Sevimli Penguen Çizimi
-    function drawPenguin(px, py, facing, hasHeart) {
+    ctx.save();
+    ctx.translate(cx + envW / 2, floatY);
+    ctx.rotate(wingFlap);
+    ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+    ctx.beginPath();
+    ctx.ellipse(24, -10, 26, 14, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(18, 4, 20, 10, 0.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Zarfın İçinden Çıkan Parlayan Aşk Mektubu
+    const letterRise = Math.min(45, (t * 0.03) % 90);
+    ctx.save();
+    ctx.fillStyle = "#fffdf9";
+    ctx.strokeStyle = "#fdcb6e";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(cx - 42, floatY - envH / 2 - letterRise, 84, 55, 6);
+    ctx.fill();
+    ctx.stroke();
+
+    // Mektup Üzerindeki Aşk Çizgileri & Kalp Mührü
+    ctx.strokeStyle = "#ff758c";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - 30, floatY - envH / 2 - letterRise + 16); ctx.lineTo(cx + 30, floatY - envH / 2 - letterRise + 16);
+    ctx.moveTo(cx - 30, floatY - envH / 2 - letterRise + 26); ctx.lineTo(cx + 20, floatY - envH / 2 - letterRise + 26);
+    ctx.moveTo(cx - 30, floatY - envH / 2 - letterRise + 36); ctx.lineTo(cx + 10, floatY - envH / 2 - letterRise + 36);
+    ctx.stroke();
+
+    ctx.font = "18px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("💖", cx + 22, floatY - envH / 2 - letterRise + 38);
+    ctx.restore();
+
+    // Pembe Aşk Zarfı Gövdesi
+    ctx.save();
+    ctx.fillStyle = "#ff7675";
+    ctx.strokeStyle = "#e84393";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(cx - envW / 2, floatY - envH / 2, envW, envH, 10);
+    ctx.fill();
+    ctx.stroke();
+
+    // Zarf Katlama Çizgileri (Envelope Folds)
+    ctx.strokeStyle = "#fab1a0";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - envW / 2, floatY + envH / 2);
+    ctx.lineTo(cx, floatY);
+    ctx.lineTo(cx + envW / 2, floatY + envH / 2);
+    ctx.stroke();
+
+    // Kalp Mührü
+    ctx.font = "24px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("💌", cx, floatY + 6);
+    ctx.restore();
+
+    // Mektuptan Havai Fişek Gibi Fışkıran Kalpler
+    for (let k = 0; k < 6; k++) {
+      const fAngle = (t * 0.002 + k * 1.05);
+      const fDist = ((t * 0.06 + k * 35) % 130) + 20;
+      const hx = cx + Math.cos(fAngle) * fDist;
+      const hy = floatY - envH / 2 - letterRise - Math.abs(Math.sin(fAngle)) * fDist;
+      const hAlpha = Math.max(0, 1 - fDist / 150);
+
       ctx.save();
-      ctx.translate(px, py);
-      ctx.scale(facing, 1);
-
-      // Gövde
-      ctx.fillStyle = "#2d3436";
-      ctx.beginPath();
-      ctx.ellipse(0, 0, 18, 28, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Beyaz Göbek
-      ctx.fillStyle = "#ffffff";
-      ctx.beginPath();
-      ctx.ellipse(3, 3, 11, 20, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Göz
-      ctx.fillStyle = "#2d3436";
-      ctx.beginPath();
-      ctx.arc(6, -14, 2.5, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = "#ffffff";
-      ctx.beginPath();
-      ctx.arc(5.2, -15, 1, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Gaga
-      ctx.fillStyle = "#fdcb6e";
-      ctx.beginPath();
-      ctx.moveTo(9, -12); ctx.lineTo(17, -10); ctx.lineTo(9, -8);
-      ctx.closePath();
-      ctx.fill();
-
-      // Kızarmış Yanak
-      ctx.fillStyle = "#ff7675";
-      ctx.beginPath();
-      ctx.arc(4, -9, 3, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Minik Yüzgeçler
-      ctx.fillStyle = "#2d3436";
-      ctx.beginPath();
-      ctx.ellipse(-12, 0, 5, 14, 0.3, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Ayaklar
-      ctx.fillStyle = "#fdcb6e";
-      ctx.beginPath();
-      ctx.ellipse(-4, 26, 6, 3.5, 0, 0, Math.PI * 2);
-      ctx.ellipse(6, 26, 6, 3.5, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Aşk Çakıl Taşı / Kalp Hediyesi
-      if (hasHeart) {
-        ctx.font = "18px sans-serif";
-        ctx.fillText("💎", 15, -4);
-      }
+      ctx.globalAlpha = hAlpha;
+      ctx.font = `${14 + (k % 3) * 4}px sans-serif`;
+      ctx.textAlign = "center";
+      ctx.fillText(["💖", "💕", "✨", "🌸", "💗"][k % 5], hx, hy);
       ctx.restore();
     }
 
-    const p1Wiggle = Math.sin(t * 0.004) * 2;
-    const p2Wiggle = Math.cos(t * 0.004) * 2;
+    if (Math.random() > 0.4) {
+      addSparkles(cx + (Math.random() - 0.5) * 100, floatY - 60, 2, ["#ff7675", "#ffd700", "#ff9ff3"]);
+    }
+  }
 
-    drawPenguin(cx - 24, groundY - 14 + p1Wiggle, 1, true);
-    drawPenguin(cx + 24, groundY - 14 + p2Wiggle, -1, false);
+  // =========================================================================
+  // 8. 🌙 HİLAL AY SALINCAĞINDA SEVİMLİ TAVŞANCIK (Bunny on Moon Swing)
+  // =========================================================================
+  function renderBunnyMoonSwing(t) {
+    const pivotX = width / 2;
+    const pivotY = -20;
+    const ropeLen = height * 0.58;
+    const swingAngle = Math.sin(t * 0.0022) * 0.16;
 
-    // Aralarında Yükselen Parlayan Kalpler
-    const heartFloat = (t * 0.04) % 120;
+    const seatX = pivotX + Math.sin(swingAngle) * ropeLen;
+    const seatY = pivotY + Math.cos(swingAngle) * ropeLen;
+
+    // Arka Plan Gece Gökyüzü & Parıldayan Yıldızlar
     ctx.save();
-    ctx.globalAlpha = Math.max(0, 1 - heartFloat / 120);
-    ctx.font = "24px sans-serif";
-    ctx.textAlign = "center";
-    ctx.fillText("💖", cx, groundY - 45 - heartFloat);
+    for (let i = 0; i < 22; i++) {
+      const sx = (Math.sin(i * 88.3) * 0.5 + 0.5) * width;
+      const sy = (Math.cos(i * 321.4) * 0.5 + 0.5) * height;
+      const twinkle = (Math.sin(t * 0.005 + i) + 1) / 2;
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + twinkle * 0.7})`;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.restore();
 
-    if (Math.random() > 0.4) {
-      addSparkles(cx + (Math.random() - 0.5) * 120, groundY - 70, 2, ["#55efc4", "#a29bfe", "#ffeaa7", "#ffffff"]);
+    // Altın Yıldızlı Salıncak İpleri
+    ctx.save();
+    ctx.strokeStyle = "#ffd700";
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(pivotX - 30, pivotY);
+    ctx.lineTo(seatX - 25, seatY);
+    ctx.moveTo(pivotX + 30, pivotY);
+    ctx.lineTo(seatX + 25, seatY);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(seatX, seatY);
+    ctx.rotate(swingAngle * 0.85);
+
+    // Parlayan Hilal Ay Salıncağı (Glowing Crescent Moon)
+    ctx.fillStyle = "#ffd700";
+    ctx.beginPath();
+    ctx.arc(0, 0, 48, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#1e272e"; // Sahne arka planı ile hilal oyuğu
+    ctx.beginPath();
+    ctx.arc(-14, -10, 42, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Sevimli Beyaz Tavşancık (Cute Fluffy Bunny)
+    const bunnyX = 6;
+    const bunnyY = -8;
+
+    // Gövde
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.ellipse(bunnyX, bunnyY + 12, 16, 20, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Kafa
+    ctx.beginPath();
+    ctx.arc(bunnyX, bunnyY - 10, 15, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Uzun Tavşan Kulakları
+    const earWiggle = Math.sin(t * 0.005) * 0.08;
+    ctx.save();
+    ctx.translate(bunnyX - 7, bunnyY - 22);
+    ctx.rotate(-0.2 + earWiggle);
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.ellipse(0, -12, 5.5, 14, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#ff7675";
+    ctx.beginPath();
+    ctx.ellipse(0, -12, 3, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(bunnyX + 7, bunnyY - 22);
+    ctx.rotate(0.2 - earWiggle);
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.ellipse(0, -12, 5.5, 14, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#ff7675";
+    ctx.beginPath();
+    ctx.ellipse(0, -12, 3, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Sevimli Tavşan Yüzü
+    ctx.fillStyle = "#2d3436";
+    ctx.beginPath();
+    ctx.arc(bunnyX - 5, bunnyY - 11, 2.2, 0, Math.PI * 2);
+    ctx.arc(bunnyX + 5, bunnyY - 11, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#ff7675";
+    ctx.beginPath();
+    ctx.arc(bunnyX, bunnyY - 6, 2, 0, Math.PI * 2);
+    ctx.arc(bunnyX - 8, bunnyY - 7, 3, 0, Math.PI * 2);
+    ctx.arc(bunnyX + 8, bunnyY - 7, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Tavşanın Tuttuğu Parlayan Yıldız / Kalp Değneği
+    ctx.font = "20px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("🌟", bunnyX + 16, bunnyY + 4);
+    ctx.restore();
+
+    // Salıncak Hareket Ettikçe Arkasında Kalan Altın Yıldız Tozu İzi
+    if (Math.random() > 0.35) {
+      addSparkles(seatX + (Math.random() - 0.5) * 60, seatY + 20, 2, ["#ffd700", "#ff7675", "#ffffff"]);
     }
   }
 
@@ -2637,8 +2748,10 @@ function playCurrentMagicAnimation(animKey = null) {
         renderCoffeeLove(elapsed);
       } else if (selectedAnim === "teddy_balloons") {
         renderTeddyBalloons(elapsed);
-      } else if (selectedAnim === "aurora_penguins") {
-        renderAuroraPenguins(elapsed);
+      } else if (selectedAnim === "love_letter") {
+        renderLoveLetter(elapsed);
+      } else if (selectedAnim === "bunny_moon_swing") {
+        renderBunnyMoonSwing(elapsed);
       }
 
       updateParticles();
