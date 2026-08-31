@@ -17,7 +17,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 | :--- | :--- | :--- |
 | **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
 | **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
-| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle cigkofte 100` veya `/ekle canim 500` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle patron 50` veya `/ekle cigkofte 100` |
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
@@ -27,11 +27,11 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 - `kahve` / `kahve-kacamagi` ➔ **Baş Başa Kahve Kaçamağı**
 - `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (Acılı & Limonlu 🌯)
 - `gece` / `sohbet` ➔ **Gece Sohbeti & Şarkı**
-- `sarilma` / `sarilma-kuponu` ➔ **Sınırsız Sarılma Kuponu** (Sınırsız ♾️)
+- `patron` / `kralice` / `patron-sensin` ➔ **Bugün Patron Sensin Kartı** (VIP Kraliçe 👑)
 - `film` / `film-gecesi` ➔ **Film Seçme Hakkı**
 - `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama**
 - `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Sınırsız ♾️)
-- `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı**
+- `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (Stüdyo Mikrofonu 🎙️)
 
 ---
 

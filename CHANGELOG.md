@@ -4,27 +4,27 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.5.0] - 31.08.2026 (Sipariş Menüsünde Kesin Sıfır Kaydırma - %100 Tek Ekran) 🚀✨
-- **Dikey Boşlukların Sadeleştirilmesi:**
-  - Çok katmanlı büyük başlık alanı tek satırlık zarif navigasyon çubuğuna (`[🏠 Menü] - Sipariş Menüsü - [Sepet 🛍️]`) dönüştürüldü.
-  - Kartların iç dolguları ve buton boyutları ekran yüksekliği (özellikle 1366x768 ve mobil ekranlar) ile tam uyumlu hale getirildi.
-  - Artık ürünlerin altındaki "Sepete Ekle" butonları ve stok yazıları hiçbir zaman ekran dışına taşmaz, asla aşağı kaydırma gerektirmez.
+### [v3.6.0] - 31.08.2026 (Şımartma Menüsüne 'Bugün Patron Sensin Kartı' Eklendi) 👑✨
+- **Yeni Ürün Değişikliği:**
+  - *"Sınırsız Sarılma Kuponu"* yerine Şımartma kategorisine **"Bugün Patron Sensin Kartı"** (`patron-sensin`) eklendi.
+  - Özel parıltılı altın kraliçe tacı ve yakut mücevherli SVG ikonu (`assets/crown-patron.svg`) tasarlandı.
+  - Telegram botuna `/set patron 50` ve `/ekle patron 100` yönetim takma adları tanımlandı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
+### [v3.5.0] - 31.08.2026 (Sipariş Menüsünde Kesin Sıfır Kaydırma - %100 Tek Ekran) 🚀✨
+- Sipariş menüsündeki tüm dikey taşmalar kaldırıldı, 1 ekrana tam oturtuldu.
+
+---
+
 ### [v3.4.0] - 31.08.2026 (Kavuşma ve Özlem Sarılması İçin Sarılma Emojisi Görseli) 🫂💖✨
-- *"Kavuşma & Özlem Sarılması"* ürününün simgesi sımsıkı sarılan karakterler içeren özel sarılma SVG ikonuna (`assets/hug.svg`) dönüştürüldü.
+- *"Kavuşma & Özlem Sarılması"* ürününün simgesi özel sarılma SVG ikonuna (`assets/hug.svg`) dönüştürüldü.
 
 ---
 
 ### [v3.3.0] - 31.08.2026 (Özel Aşk Ses Kaydı İçin Stüdyo Mikrofonu Görseli) 🎙️🎶✨
-- *"Özel Aşk Ses Kaydı & Şarkı"* ürününün simgesi müzik notalı romantik stüdyo mikrofonu SVG ikonuna (`assets/microphone.svg`) dönüştürüldü.
-
----
-
-### [v3.2.0] - 31.08.2026 (Keyif Menüsüne Baş Başa Çiğköfte Ziyafeti Eklendi) 🌯🍋✨
-- Keyif & Lezzet kategorisine "Baş Başa Çiğköfte Ziyafeti" (`cigkofte-ziyafeti`) ürünü ve özel lavaş dürüm SVG grafiği eklendi.
+- *"Özel Aşk Ses Kaydı & Şarkı"* ürününün simgesi stüdyo mikrofonu SVG ikonuna (`assets/microphone.svg`) dönüştürüldü.
 
 ---
 

@@ -129,7 +129,7 @@ const INITIAL_STOCKS = {
   "kahve-kacamagi": 4320, // Küsüratlı yüksek adet
   "cigkofte-ziyafeti": 6350, // Çiğköfte ziyafeti
   "gece-sohbeti": 12580,  // Küsüratlı yüksek adet
-  "sarilma-kuponu": 9999999, // Sınırsız
+  "patron-sensin": 1450,  // Bugün patron sensin kartı
   "film-gecesi": 3745,    // Küsüratlı yüksek adet
   "goruntulu-arama": 8650,// Küsüratlı yüksek adet
   "ozlem-sarilmasi": 9999999, // Sınırsız
@@ -146,7 +146,7 @@ const PRODUCT_ALIASES = {
   "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi",
   "cigkofte-ziyafeti": "cigkofte-ziyafeti", "cigkofte": "cigkofte-ziyafeti", "çiğköfte": "cigkofte-ziyafeti",
   "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti",
-  "sarilma-kuponu": "sarilma-kuponu", "sarilma": "sarilma-kuponu", "sarılma": "sarilma-kuponu",
+  "patron-sensin": "patron-sensin", "patron": "patron-sensin", "kralice": "patron-sensin", "kraliçe": "patron-sensin",
   "film-gecesi": "film-gecesi", "film": "film-gecesi",
   "goruntulu-arama": "goruntulu-arama", "goruntulu": "goruntulu-arama", "görüntülü": "goruntulu-arama",
   "ozlem-sarilmasi": "ozlem-sarilmasi", "ozlem": "ozlem-sarilmasi", "özlem": "ozlem-sarilmasi",
@@ -378,16 +378,16 @@ const PRODUCTS = [
 
   // 🎁 3. Kategori: Şımartma Paketi
   {
-    id: "sarilma-kuponu",
+    id: "patron-sensin",
     category: "simartma",
-    name: "Sınırsız Sarılma Kuponu",
+    name: "Bugün Patron Sensin Kartı",
     price: 0,
     unit: "💖",
     isCountdown: false,
     deliveryText: "Anında ⚡",
-    badge: "Sonsuz 💖",
-    description: "Canın ne zaman sıkılırsa anında geçerli 100 saatlik sımsıkı sarılma hakkı.",
-    image: "assets/canim-cicim.svg"
+    badge: "VIP Kraliçe 👑",
+    description: "Nereye gidileceğinden ne yapılacağına kadar günün bütün kararlarını senin vereceğin patronluk hakkı!",
+    image: "assets/crown-patron.svg"
   },
   {
     id: "film-gecesi",

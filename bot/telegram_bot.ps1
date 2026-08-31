@@ -13,7 +13,7 @@ $ProductAliases = @{
     "kahve-kacamagi" = "kahve-kacamagi"; "kahve" = "kahve-kacamagi"
     "cigkofte-ziyafeti" = "cigkofte-ziyafeti"; "cigkofte" = "cigkofte-ziyafeti"; "çiğköfte" = "cigkofte-ziyafeti"
     "gece-sohbeti" = "gece-sohbeti"; "gece" = "gece-sohbeti"; "sohbet" = "gece-sohbeti"
-    "sarilma-kuponu" = "sarilma-kuponu"; "sarilma" = "sarilma-kuponu"; "sarılma" = "sarilma-kuponu"
+    "patron-sensin" = "patron-sensin"; "patron" = "patron-sensin"; "kralice" = "patron-sensin"; "kraliçe" = "patron-sensin"
     "film-gecesi" = "film-gecesi"; "film" = "film-gecesi"
     "goruntulu-arama" = "goruntulu-arama"; "goruntulu" = "goruntulu-arama"; "görüntülü" = "goruntulu-arama"
     "ozlem-sarilmasi" = "ozlem-sarilmasi"; "ozlem" = "ozlem-sarilmasi"; "özlem" = "ozlem-sarilmasi"
@@ -22,7 +22,7 @@ $ProductAliases = @{
 
 $InitialStocks = @{
     "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "cigkofte-ziyafeti" = 6350; "gece-sohbeti" = 12580
-    "sarilma-kuponu" = 9999999; "film-gecesi" = 3745; "goruntulu-arama" = 8650
+    "patron-sensin" = 1450; "film-gecesi" = 3745; "goruntulu-arama" = 8650
     "ozlem-sarilmasi" = 9999999; "ozel-ses-kaydi" = 7890; "kahve-hediye" = 2450
 }
 
@@ -79,14 +79,14 @@ while ($true) {
                     $m += "• ☕ *Kahve Kaçamağı* (`kahve`): *$($stocks.'kahve-kacamagi') Adet*`n"
                     $m += "• 🌯 *Çiğköfte Ziyafeti* (`cigkofte`): *$($stocks.'cigkofte-ziyafeti') Adet*`n"
                     $m += "• 🌙 *Gece Sohbeti* (`gece`): *$($stocks.'gece-sohbeti') Adet*`n"
-                    $m += "• 💖 *Sınırsız Sarılma* (`sarilma`): *Sınırsız ♾️*`n"
+                    $m += "• 👑 *Bugün Patron Sensin* (`patron`): *$($stocks.'patron-sensin') Adet*`n"
                     $m += "• 🍿 *Film Gecesi* (`film`): *$($stocks.'film-gecesi') Adet*`n"
                     $m += "• 📱 *Görüntülü Arama* (`goruntulu`): *$($stocks.'goruntulu-arama') Adet*`n"
                     $m += "• 🫂 *Özlem Sarılması* (`ozlem`): *Sınırsız ♾️*`n"
                     $m += "• 🎙️ *Ses Kaydı* (`ses`): *$($stocks.'ozel-ses-kaydi') Adet*`n`n"
                     $m += "✍ *Komutlar:*`n"
                     $m += "• `/set askolcer 1` ➔ Stoğu 1 yap`n"
-                    $m += "• `/ekle cigkofte 100` ➔ Stoğa ekle`n"
+                    $m += "• `/ekle patron 50` ➔ Stoğa ekle`n"
                     $m += "• `/cikar askolcer 1` ➔ Stoktan düşür`n"
                     $m += "• `/sifirla` ➔ Tüm stokları sıfırla"
                     Send-TgMessage $chatId $m
