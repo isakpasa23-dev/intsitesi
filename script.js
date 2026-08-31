@@ -2813,10 +2813,10 @@ function initRelationshipTimer() {
 // 15.3 🎡 EĞLENCE & HATIRA KÖŞESİ (Çarkıfelek, Kalp Oyunu, Polaroid Albüm)
 // ==========================================================================
 function initFunHub() {
-  // 1. Sekmeler
+  // 1. Sekmeler (yeni fun-tab-tile sınıfıyla)
   const funTabs = document.getElementById("fun-tabs");
   if (funTabs) {
-    const tabBtns = funTabs.querySelectorAll(".tab-btn");
+    const tabBtns = funTabs.querySelectorAll(".fun-tab-tile");
     tabBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         const tabKey = btn.dataset.funTab;
@@ -2830,9 +2830,183 @@ function initFunHub() {
         if (tabKey === "polaroid" && window.renderPolaroidGallery) {
           window.renderPolaroidGallery();
         }
+        if (tabKey === "crystal") {
+          initCrystalBall();
+        }
       });
     });
   }
+
+  // 2. KRİSTAL AŞK KÜRESİ
+  const PROPHECIES = [
+    "Yıldızlar bu gece beklenmedik bir öpücük saldırısına uğrayacağını fısıldıyor... ✨",
+    "Galaksi, sevgilinin sımsıkı sarılacağını ve bırakmayacağını söylüyor. 🫂💫",
+    "Evrenin sırları açıklanıyor: Bugün biri seni çok düşünüyor, tahmin et kim? 🥰",
+    "Büyülü kristal görüyor: Yakında çok sürpriz bir 'seni seviyorum' gelecek! 💌",
+    "Kozmik güçler hizalandı; bugün bir kahve molası aşkı derinleştirecek. ☕🌟",
+    "Ay sana mesaj bıraktı: Bu gece battaniye altı film seans zamanı! 🍿🌙",
+    "Kader yazıldı: Bir sarılma borcu var, bugün mutlaka ödenecek! 🫂💖",
+    "Neptün fısıldıyor: Birlikte çiğköfte yenilmeden bu hafta kapanmayacak! 🌯✨",
+    "Kristal kehanet açık: O kişi şu an seni düşünüyor ve içi ısınıyor! 🔥💕",
+    "Yıldız haritası diyor ki: İki kalp aynı anda çarpıyor, senin ve onun! 💖💗",
+    "Büyücü küresi gösteriyor: Yakında birlikte kahkaha atacağınız bir an geliyor! 😂💫",
+    "Evrenin cevabı: Evet, o seni çok, çok, çok seviyor. Daha fazlasıyla. 🥰🌠",
+    "Sihirli sis kalktı: Bu hafta en az 5 tane ekstra sarılma alacaksın! 🫂⭐",
+    "Vega yıldızı müjdeliyor: Yakında 'seninle her şey güzel' anı yaşayacaksın. 🌹✨",
+    "Kristal net konuşuyor: İki ruh arasındaki bağ her geçen gün daha güçleniyor. 💑🔮"
+  ];
+
+  let crystalAnimId = null;
+  let crystalInitialized = false;
+
+  function initCrystalBall() {
+    const canvas = document.getElementById("crystal-canvas");
+    if (!canvas || crystalInitialized) return;
+    crystalInitialized = true;
+
+    const ctx = canvas.getContext("2d");
+    const size = 200;
+    canvas.width = size;
+    canvas.height = size;
+
+    const cx = size / 2;
+    const cy = size / 2;
+    const r = size / 2;
+
+    // Mist particles
+    const mists = Array.from({ length: 28 }, () => ({
+      x: cx + (Math.random() - 0.5) * r * 1.2,
+      y: cy + (Math.random() - 0.5) * r * 1.2,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      radius: 18 + Math.random() * 28,
+      opacity: 0.08 + Math.random() * 0.14,
+      hue: 260 + Math.random() * 60,
+      phase: Math.random() * Math.PI * 2
+    }));
+
+    // Stars inside
+    const stars = Array.from({ length: 18 }, () => ({
+      x: cx + (Math.random() - 0.5) * r * 1.5,
+      y: cy + (Math.random() - 0.5) * r * 1.5,
+      size: 1 + Math.random() * 2.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.015 + Math.random() * 0.04
+    }));
+
+    let time = 0;
+
+    function drawBall() {
+      ctx.clearRect(0, 0, size, size);
+
+      // Deep space bg inside sphere (clipped circle)
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 1, 0, Math.PI * 2);
+      ctx.clip();
+
+      // BG gradient — deep indigo/purple
+      const bg = ctx.createRadialGradient(cx * 0.7, cy * 0.7, 5, cx, cy, r);
+      bg.addColorStop(0, "#2a005e");
+      bg.addColorStop(0.45, "#12003a");
+      bg.addColorStop(1, "#050010");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, size, size);
+
+      // Mist blobs
+      for (const m of mists) {
+        m.x += m.vx;
+        m.y += m.vy;
+        m.phase += 0.012;
+        const pulsedR = m.radius * (1 + 0.12 * Math.sin(m.phase));
+        const grad = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, pulsedR);
+        const alpha = m.opacity * (0.8 + 0.2 * Math.sin(m.phase));
+        grad.addColorStop(0, `hsla(${m.hue}, 90%, 70%, ${alpha})`);
+        grad.addColorStop(1, `hsla(${m.hue}, 90%, 50%, 0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, pulsedR, 0, Math.PI * 2);
+        ctx.fill();
+
+        // bounce inside sphere
+        const dist = Math.hypot(m.x - cx, m.y - cy);
+        if (dist + pulsedR > r - 4) {
+          const nx = (m.x - cx) / dist;
+          const ny = (m.y - cy) / dist;
+          m.vx -= 2 * (m.vx * nx + m.vy * ny) * nx * 0.6;
+          m.vy -= 2 * (m.vx * nx + m.vy * ny) * ny * 0.6;
+        }
+      }
+
+      // Stars twinkle
+      for (const s of stars) {
+        s.phase += s.speed;
+        const alpha = 0.4 + 0.6 * Math.abs(Math.sin(s.phase));
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = `hsl(${280 + Math.sin(s.phase) * 60}, 80%, 90%)`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Shimmer highlight
+      const shimmer = ctx.createRadialGradient(cx * 0.6, cy * 0.45, 2, cx * 0.7, cy * 0.55, r * 0.55);
+      shimmer.addColorStop(0, "rgba(255,255,255,0.18)");
+      shimmer.addColorStop(0.5, "rgba(255,255,255,0.04)");
+      shimmer.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = shimmer;
+      ctx.fillRect(0, 0, size, size);
+
+      ctx.restore();
+
+      // Outer glow ring
+      const ringGlow = ctx.createRadialGradient(cx, cy, r - 6, cx, cy, r + 10);
+      ringGlow.addColorStop(0, `rgba(162, 90, 255, ${0.3 + 0.1 * Math.sin(time)})`);
+      ringGlow.addColorStop(1, "rgba(107, 53, 255, 0)");
+      ctx.fillStyle = ringGlow;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 10, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Glass rim
+      ctx.strokeStyle = "rgba(200, 160, 255, 0.35)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r - 1.5, 0, Math.PI * 2);
+      ctx.stroke();
+
+      time += 0.02;
+      crystalAnimId = requestAnimationFrame(drawBall);
+    }
+
+    if (crystalAnimId) cancelAnimationFrame(crystalAnimId);
+    crystalAnimId = requestAnimationFrame(drawBall);
+  }
+
+  // Crystal ball click — show prophecy
+  const crystalStage = document.getElementById("crystal-stage");
+  const btnCrystal = document.getElementById("btn-crystal-reveal");
+  const prophecyText = document.getElementById("crystal-prophecy-text");
+
+  function showProphecy() {
+    const p = PROPHECIES[Math.floor(Math.random() * PROPHECIES.length)];
+    if (prophecyText) {
+      prophecyText.style.animation = "none";
+      void prophecyText.offsetWidth;
+      prophecyText.textContent = p;
+      prophecyText.style.animation = "crystalFadeIn 0.6s ease";
+    }
+    triggerHeartsShower();
+    // ripple the stage
+    if (crystalStage) {
+      crystalStage.style.transform = "scale(1.07)";
+      setTimeout(() => { crystalStage.style.transform = ""; }, 350);
+    }
+  }
+
+  if (crystalStage) crystalStage.addEventListener("click", showProphecy);
+  if (btnCrystal) btnCrystal.addEventListener("click", showProphecy);
 
   // 2. ÇARKI FELEK
   const ACTIVITIES = [

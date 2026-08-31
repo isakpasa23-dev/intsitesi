@@ -19,7 +19,7 @@
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=12.1.0">
+  <link rel="stylesheet" href="style.css?v=12.2.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -242,7 +242,7 @@
     <!-- ================= 3. GÖRÜNÜM: EĞLENCE & HATIRA KÖŞESİ ================= -->
     <section class="view-section" id="view-fun">
       
-      <!-- Kompakt Tek Satır Başlık Çubuğu -->
+      <!-- Başlık Çubuğu -->
       <div class="shop-compact-nav">
         <button class="btn-back-pill" id="btn-back-from-fun">
           <span>🏠 Menü</span>
@@ -253,92 +253,132 @@
         </button>
       </div>
 
-      <!-- 3 Eğlence Sekmesi -->
-      <div class="category-tabs" id="fun-tabs">
-        <button class="tab-btn active" data-fun-tab="wheel">🎡 Bugün Ne Yapıyoruz?</button>
-        <button class="tab-btn" data-fun-tab="game">🎮 Kalp Yakalama</button>
-        <button class="tab-btn" data-fun-tab="polaroid">📸 Polaroid Albüm</button>
+      <!-- 4 Sekme → 2x2 İkon Izgara -->
+      <div class="fun-tab-grid" id="fun-tabs">
+        <button class="fun-tab-tile active" data-fun-tab="wheel">
+          <span class="fun-tab-icon">🎲</span>
+          <span class="fun-tab-label">Ne Yapalım?</span>
+        </button>
+        <button class="fun-tab-tile" data-fun-tab="crystal">
+          <span class="fun-tab-icon">🔮</span>
+          <span class="fun-tab-label">Aşk Falı</span>
+        </button>
+        <button class="fun-tab-tile" data-fun-tab="game">
+          <span class="fun-tab-icon">🎮</span>
+          <span class="fun-tab-label">Kalp Oyunu</span>
+        </button>
+        <button class="fun-tab-tile" data-fun-tab="polaroid">
+          <span class="fun-tab-icon">📸</span>
+          <span class="fun-tab-label">Anı Albümü</span>
+        </button>
       </div>
 
-      <!-- PANEL 1: ÇARKI FELEK / GÜNÜN AKTİVİTESİ -->
-      <div class="fun-tab-panel active" id="panel-wheel">
-        <div class="fun-card-container">
-          <div class="wheel-box">
-            <div class="wheel-icon-banner">🎲 💖 🎡</div>
-            <h3 class="fun-section-title">Bugün Ne Yapıyoruz?</h3>
-            <p class="fun-section-desc">Kararsız mı kaldın? Şans çarkına dokun, aşk kaderimiz bugünkü tatlı planımızı belirlesin! ✨</p>
-            
-            <div class="wheel-result-card" id="wheel-result-card">
-              <span class="wheel-result-emoji" id="wheel-result-emoji">🎁</span>
-              <h4 class="wheel-result-title" id="wheel-result-title">Çarkı Çevir & Sürprizi Gör!</h4>
-              <p class="wheel-result-desc" id="wheel-result-desc">Aşağıdaki butona dokunduğunda sana özel aşk planı seçilecek.</p>
-            </div>
+      <!-- Paneller -->
+      <div class="fun-panels-wrap">
 
-            <div class="wheel-actions">
-              <button class="btn btn-primary btn-full" id="btn-spin-wheel">
-                <span>🎲 Çarkı Çevir / Karar Ver 💕</span>
-              </button>
-              <button class="btn btn-secondary btn-full hidden" id="btn-share-activity-tg">
-                <span>📲 Sevgilime Telegram'dan Gönder 💌</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- PANEL 1: ÇARKI FELEK -->
+        <div class="fun-tab-panel active" id="panel-wheel">
+          <div class="fun-card-container">
+            <div class="wheel-box">
+              <div class="wheel-icon-banner">🎲 💖 🎡</div>
+              <h3 class="fun-section-title">Bugün Ne Yapıyoruz?</h3>
+              <p class="fun-section-desc">Kararsız mı kaldın? Butona dokun, aşk planın belirlensin! ✨</p>
+              
+              <div class="wheel-result-card" id="wheel-result-card">
+                <span class="wheel-result-emoji" id="wheel-result-emoji">🎁</span>
+                <h4 class="wheel-result-title" id="wheel-result-title">Çarkı Çevir & Sürprizi Gör!</h4>
+                <p class="wheel-result-desc" id="wheel-result-desc">Aşağıdaki butona dokunduğunda sana özel aşk planı seçilecek.</p>
+              </div>
 
-      <!-- PANEL 2: PATİ İLE KALP YAKALAMA OYUNU -->
-      <div class="fun-tab-panel" id="panel-game">
-        <div class="fun-card-container">
-          <div class="game-box">
-            <div class="game-header-bar">
-              <div class="game-stat">
-                <span class="stat-label">Skor:</span>
-                <span class="stat-val" id="game-score">0</span>
-              </div>
-              <div class="game-stat">
-                <span class="stat-label">En Yüksek:</span>
-                <span class="stat-val" id="game-high-score">0</span>
-              </div>
-              <div class="game-stat">
-                <span class="stat-label">Süre:</span>
-                <span class="stat-val" id="game-timer">30s</span>
-              </div>
-            </div>
-
-            <div class="game-canvas-wrap">
-              <canvas id="heart-game-canvas" class="heart-game-canvas"></canvas>
-              <div class="game-overlay-start" id="game-overlay-start">
-                <span class="game-start-icon">🐾 💖 🎮</span>
-                <h3 class="game-start-title">Kalp Yakalama Macerası</h3>
-                <p class="game-start-desc">Gökyüzünden süzülen kalplere ve yıldızlara dokunarak yakala! Süre dolmadan rekor kır. 🐱</p>
-                <button class="btn btn-primary" id="btn-start-heart-game">
-                  <span>🎮 Oyunu Başlat! 🚀</span>
+              <div class="wheel-actions">
+                <button class="btn btn-primary btn-full" id="btn-spin-wheel">
+                  <span>🎲 Çarkı Çevir / Karar Ver 💕</span>
+                </button>
+                <button class="btn btn-secondary btn-full hidden" id="btn-share-activity-tg">
+                  <span>📲 Sevgilime Telegram'dan Gönder 💌</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- PANEL 3: POLAROİD FOTOĞRAF ALBÜMÜ & YÜKLEME -->
-      <div class="fun-tab-panel" id="panel-polaroid">
-        <div class="fun-card-container">
-          <div class="polaroid-header-bar">
-            <div>
-              <h3 class="fun-section-title">📸 Bizim Polaroid Anılarımız</h3>
-              <p class="fun-section-desc">En güzel anlarımızı buraya ekleyip sonsuza dek saklayabilirsin 💕</p>
+        <!-- PANEL 2: KRİSTAL AŞK KÜRESİ & GÜNLÜK AŞK FALI -->
+        <div class="fun-tab-panel" id="panel-crystal">
+          <div class="fun-card-container">
+            <div class="crystal-box">
+              <h3 class="fun-section-title">🔮 Kristal Aşk Küresi</h3>
+              <p class="fun-section-desc">Küreye dokun, yıldızlar sana tatlı bir kehanet fısıldayacak ✨</p>
+              
+              <div class="crystal-stage" id="crystal-stage">
+                <canvas id="crystal-canvas" class="crystal-canvas"></canvas>
+              </div>
+
+              <div class="crystal-prophecy-card" id="crystal-prophecy-card">
+                <p class="crystal-prophecy-text" id="crystal-prophecy-text">Küreye dokun, kaderine bak... 🌟</p>
+              </div>
+
+              <button class="btn btn-primary btn-full" id="btn-crystal-reveal">
+                <span>🔮 Kehaneti Göster / Yenile ✨</span>
+              </button>
             </div>
-            <button class="btn btn-primary btn-sm" id="btn-open-add-photo-modal">
-              <span>➕ Fotoğraf Ekle</span>
-            </button>
           </div>
-
-          <!-- Polaroid Fotoğraflar Izgarası -->
-          <div class="polaroid-grid" id="polaroid-grid"></div>
         </div>
-      </div>
+
+        <!-- PANEL 3: KALP YAKALAMA OYUNU -->
+        <div class="fun-tab-panel" id="panel-game">
+          <div class="fun-card-container">
+            <div class="game-box">
+              <div class="game-header-bar">
+                <div class="game-stat">
+                  <span class="stat-label">Skor:</span>
+                  <span class="stat-val" id="game-score">0</span>
+                </div>
+                <div class="game-stat">
+                  <span class="stat-label">En Yüksek:</span>
+                  <span class="stat-val" id="game-high-score">0</span>
+                </div>
+                <div class="game-stat">
+                  <span class="stat-label">Süre:</span>
+                  <span class="stat-val" id="game-timer">30s</span>
+                </div>
+              </div>
+
+              <div class="game-canvas-wrap">
+                <canvas id="heart-game-canvas" class="heart-game-canvas"></canvas>
+                <div class="game-overlay-start" id="game-overlay-start">
+                  <span class="game-start-icon">🐾 💖 🎮</span>
+                  <h3 class="game-start-title">Kalp Yakalama Macerası</h3>
+                  <p class="game-start-desc">Gökyüzünden süzülen kalplere dokunarak yakala! 🐱</p>
+                  <button class="btn btn-primary" id="btn-start-heart-game">
+                    <span>🎮 Oyunu Başlat! 🚀</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PANEL 4: POLAROİD FOTOĞRAF ALBÜMÜ -->
+        <div class="fun-tab-panel" id="panel-polaroid">
+          <div class="fun-card-container">
+            <div class="polaroid-header-bar">
+              <div>
+                <h3 class="fun-section-title">📸 Bizim Polaroid Anılarımız</h3>
+                <p class="fun-section-desc">En güzel anlarımızı buraya ekle 💕</p>
+              </div>
+              <button class="btn btn-primary btn-sm" id="btn-open-add-photo-modal">
+                <span>➕ Ekle</span>
+              </button>
+            </div>
+
+            <div class="polaroid-grid" id="polaroid-grid"></div>
+          </div>
+        </div>
+
+      </div><!-- /fun-panels-wrap -->
 
     </section>
+
 
   </main>
 
@@ -650,6 +690,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=12.1.0"></script>
+  <script src="script.js?v=12.2.0"></script>
 </body>
 </html>

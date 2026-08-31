@@ -1488,6 +1488,71 @@ html, body {
 /* ==========================================================================
    EĞLENCE & HATIRA KÖŞESİ (VIEW FUN)
    ========================================================================== */
+
+/* view-fun özel layout — scroll eden içerik */
+#view-fun.active {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  gap: 0.5rem;
+}
+
+/* 2x2 ikon sekme ızgarası */
+.fun-tab-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.fun-tab-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.18rem;
+  padding: 0.55rem 0.3rem;
+  background: white;
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-body);
+}
+
+.fun-tab-tile:hover,
+.fun-tab-tile.active {
+  background: linear-gradient(135deg, #fff0f5, #ffe4ec);
+  border-color: var(--primary);
+  box-shadow: 0 3px 10px rgba(255, 75, 114, 0.18);
+  transform: translateY(-1px);
+}
+
+.fun-tab-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.fun-tab-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.1;
+}
+
+.fun-tab-tile.active .fun-tab-label {
+  color: var(--primary);
+}
+
+/* Panels wrapper */
+.fun-panels-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 .fun-tab-panel {
   display: none;
   animation: fadeIn 0.3s ease;
@@ -1501,22 +1566,87 @@ html, body {
   background: white;
   border-radius: var(--radius-lg);
   border: 1.5px solid var(--card-border);
-  padding: 1rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+  padding: 0.85rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
 }
 
 .fun-section-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   color: var(--primary-dark);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
 
 .fun-section-desc {
-  font-size: 0.78rem;
+  font-size: 0.73rem;
   color: var(--text-muted);
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.65rem;
+  line-height: 1.3;
 }
+
+/* =============== KRİSTAL AŞK KÜRESİ =============== */
+.crystal-box {
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.crystal-stage {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 0.75rem;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 0 30px rgba(162, 90, 255, 0.35),
+    0 0 60px rgba(107, 53, 255, 0.15),
+    inset 0 2px 12px rgba(255,255,255,0.15);
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.crystal-stage:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 45px rgba(162, 90, 255, 0.55),
+    0 0 80px rgba(107, 53, 255, 0.25);
+}
+
+.crystal-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+}
+
+.crystal-prophecy-card {
+  background: linear-gradient(135deg, #1a0533, #2d0060, #1a0533);
+  border: 1.5px solid rgba(162, 90, 255, 0.5);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(107, 53, 255, 0.2), inset 0 1px 8px rgba(162, 90, 255, 0.12);
+}
+
+.crystal-prophecy-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e8d5ff;
+  line-height: 1.45;
+  font-style: italic;
+  animation: crystalFadeIn 0.6s ease;
+}
+
+@keyframes crystalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
 
 /* 1. ÇARKI FELEK */
 .wheel-box {
