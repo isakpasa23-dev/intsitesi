@@ -503,7 +503,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA AKIŞI (İSİM, NOT & TESLİMAT SÜRESİ HESAPLAMA)
+// 8. SİPARİŞ TAMAMLAMA AKIŞI (İSİM, NOT & FİŞ OLUŞTURMA)
 // ==========================================================================
 
 function openCheckoutInfoModal() {
@@ -548,10 +548,6 @@ function finalizeOrder() {
   const receiptNoteRow = document.getElementById("receipt-note-row");
   const receiptItemsList = document.getElementById("receipt-items-list");
   const receiptMaxDeliveryTime = document.getElementById("receipt-max-delivery-time");
-  const receiptSubtotal = document.getElementById("receipt-subtotal");
-  const receiptDiscountRow = document.getElementById("receipt-discount-row");
-  const receiptDiscount = document.getElementById("receipt-discount");
-  const receiptGrandTotal = document.getElementById("receipt-grand-total");
 
   if (receiptOrderId) receiptOrderId.textContent = orderId;
   if (receiptDate) receiptDate.textContent = today;
@@ -565,8 +561,6 @@ function finalizeOrder() {
   }
 
   // Toplam Teslimat Süresi Hesaplama:
-  // Eğer sepette Aşkölçer varsa -> 8 Haziran 2029 (En uzun teslimat süresi!)
-  // Eğer yoksa -> Anında (Hemen Şimdi! ⚡💖)
   const hasAskolcer = cart.some(item => item.product.isCountdown === true);
   const remainingCountdown = getAskolcerDetailedRemaining();
 
@@ -594,31 +588,6 @@ function finalizeOrder() {
     `).join("");
   }
 
-  // Fiyat Hesaplama
-  const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
-  let discountAmount = 0;
-
-  if (appliedCoupon && subtotal > 0) {
-    if (appliedCoupon.type === "percent") {
-      discountAmount = (subtotal * appliedCoupon.value) / 100;
-    } else if (appliedCoupon.type === "fixed") {
-      discountAmount = Math.min(appliedCoupon.value, subtotal);
-    }
-  }
-
-  const grandTotal = Math.max(0, subtotal - discountAmount);
-
-  if (receiptSubtotal) receiptSubtotal.textContent = `${subtotal.toLocaleString('tr-TR')} ₺`;
-
-  if (discountAmount > 0) {
-    if (receiptDiscountRow) receiptDiscountRow.style.display = "flex";
-    if (receiptDiscount) receiptDiscount.textContent = `-${discountAmount.toLocaleString('tr-TR')} ₺`;
-  } else {
-    if (receiptDiscountRow) receiptDiscountRow.style.display = "none";
-  }
-
-  if (receiptGrandTotal) receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
-
   // ================= TELEGRAM'A SESSİZ BİLDİRİM GÖNDERME 🤖 =================
   let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
   telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n`;
@@ -638,8 +607,8 @@ function finalizeOrder() {
   }
 
   telegramOrderMsg += `\n\n⏳ *TOPLAM TESLİMAT SÜRESİ:* ${maxDeliveryText}\n`;
-  telegramOrderMsg += `💰 *Ödenecek Tutar:* 0 ₺ (Ömür Boyu Aşk)\n\n`;
-  telegramOrderMsg += `💌 _"Minik yıldızından kalpten gelen bir sipariş!"_`;
+  telegramOrderMsg += `💌 *Karşılığı:* İçten bir gülümseme ve sıcacık bir sarılma! 💕\n\n`;
+  telegramOrderMsg += `✨ _"Minik yıldızından kalpten gelen bir sipariş!"_`;
 
   sendTelegramNotification(telegramOrderMsg);
 

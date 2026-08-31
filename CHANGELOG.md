@@ -4,17 +4,18 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.5.0] - 31.08.2026 (Aşkölçer 8 Haziran 2029 Geri Sayımı & Anında Teslimat) ⏳⚡
-- **Aşkölçer Özel Geri Sayım Motoru (8 Haziran 2029):**
-  - Aşkölçer ürününe **8 Haziran 2029** tarihine kadar çalışan canlı, saniyelik bir geri sayım sayacı eklendi (`X Gün, Y Saat, Z Dakika, S Saniye`).
-  - Ürün kartında, sepette ve fişte teslimat tarihi olarak *"8 Haziran 2029 ⏳"* olarak görünür.
-- **Diğer Tüm Ürünler İçin Anında Teslimat:**
-  - Canım Cicim, Baş Başa Kahve, Gece Sohbeti, Sarılma Kuponu ve Film Seçme kuponlarının teslimat süreleri **"Anında ⚡"** olarak güncellendi.
-- **Toplam Teslimat Süresi Kuralı:**
-  - Eğer sepette **Aşkölçer** varsa: Toplam teslimat süresi **8 Haziran 2029 (Kavuşma Günü)** olarak hesaplanır.
-  - Eğer sepette sadece diğer ürünler varsa: Toplam teslimat süresi **Anında (Hemen Şimdi! ⚡💖)** olarak görünür.
-- **Telegram Entegrasyonu:** Sipariş verildiğinde bu özel geri sayım bilgisi ve teslimat tarihi Telegram'a iletilir.
+### [v1.6.0] - 31.08.2026 (Sipariş Fişi Sadeleştirme & Romantik Not Odaklı Tasarım) 💌✨
+- **Fiş Sadeleştirmesi:**
+  - *"Ödenecek Tutar / Ara Toplam"* alanı kaldırıldı; sipariş fişi tamamen manevi ve tatlı bir sevgi belgesine dönüştürüldü.
+  - Teslimat kutusunun altındaki `*(En uzun süren ürüne göre hesaplanmıştır)*` teknik açıklaması kaldırıldı.
+- **Romantik Vurgu:**
+  - Fişin merkezinde doğrudan: `💌 "Bu siparişin karşılığı sadece içten bir gülümseme ve sıcacık bir sarılmadır."` sevgi kutusu yer alıyor.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.5.0] - 31.08.2026 (Aşkölçer 8 Haziran 2029 Geri Sayımı & Anında Teslimat) ⏳⚡
+- Aşkölçer 8 Haziran 2029 sayacı ve diğer ürünlerin anında teslimat kuralı.
 
 ---
 
