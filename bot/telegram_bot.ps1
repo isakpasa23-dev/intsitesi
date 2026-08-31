@@ -11,6 +11,7 @@ $ProductAliases = @{
     "askolcer" = "askolcer"; "aşkölçer" = "askolcer"; "ask" = "askolcer"; "aşk" = "askolcer"
     "canim-cicim" = "canim-cicim"; "canim" = "canim-cicim"; "canım" = "canim-cicim"
     "kahve-kacamagi" = "kahve-kacamagi"; "kahve" = "kahve-kacamagi"
+    "cigkofte-ziyafeti" = "cigkofte-ziyafeti"; "cigkofte" = "cigkofte-ziyafeti"; "çiğköfte" = "cigkofte-ziyafeti"
     "gece-sohbeti" = "gece-sohbeti"; "gece" = "gece-sohbeti"; "sohbet" = "gece-sohbeti"
     "sarilma-kuponu" = "sarilma-kuponu"; "sarilma" = "sarilma-kuponu"; "sarılma" = "sarilma-kuponu"
     "film-gecesi" = "film-gecesi"; "film" = "film-gecesi"
@@ -20,7 +21,7 @@ $ProductAliases = @{
 }
 
 $InitialStocks = @{
-    "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "gece-sohbeti" = 12580
+    "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "cigkofte-ziyafeti" = 6350; "gece-sohbeti" = 12580
     "sarilma-kuponu" = 9999999; "film-gecesi" = 3745; "goruntulu-arama" = 8650
     "ozlem-sarilmasi" = 9999999; "ozel-ses-kaydi" = 7890; "kahve-hediye" = 2450
 }
@@ -76,16 +77,17 @@ while ($true) {
                     $m += "• 🔥 *Aşkölçer* (`askolcer`): *$($stocks.askolcer) Adet*`n"
                     $m += "• 🎁 *Canım Cicim* (`canim`): *$($stocks.'canim-cicim') Adet*`n"
                     $m += "• ☕ *Kahve Kaçamağı* (`kahve`): *$($stocks.'kahve-kacamagi') Adet*`n"
+                    $m += "• 🌯 *Çiğköfte Ziyafeti* (`cigkofte`): *$($stocks.'cigkofte-ziyafeti') Adet*`n"
                     $m += "• 🌙 *Gece Sohbeti* (`gece`): *$($stocks.'gece-sohbeti') Adet*`n"
                     $m += "• 💖 *Sınırsız Sarılma* (`sarilma`): *Sınırsız ♾️*`n"
                     $m += "• 🍿 *Film Gecesi* (`film`): *$($stocks.'film-gecesi') Adet*`n"
                     $m += "• 📱 *Görüntülü Arama* (`goruntulu`): *$($stocks.'goruntulu-arama') Adet*`n"
                     $m += "• 🫂 *Özlem Sarılması* (`ozlem`): *Sınırsız ♾️*`n"
                     $m += "• 🎙️ *Ses Kaydı* (`ses`): *$($stocks.'ozel-ses-kaydi') Adet*`n`n"
-                    $m += "✍️ *Komutlar:*`n"
+                    $m += "✍ *Komutlar:*`n"
                     $m += "• `/set askolcer 1` ➔ Stoğu 1 yap`n"
-                    $m += "• `/ekle askolcer 1` ➔ Stoğa 1 ekle`n"
-                    $m += "• `/cikar askolcer 1` ➔ Stoktan 1 düşür`n"
+                    $m += "• `/ekle cigkofte 100` ➔ Stoğa ekle`n"
+                    $m += "• `/cikar askolcer 1` ➔ Stoktan düşür`n"
                     $m += "• `/sifirla` ➔ Tüm stokları sıfırla"
                     Send-TgMessage $chatId $m
                 }

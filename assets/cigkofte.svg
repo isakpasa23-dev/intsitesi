@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="durumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1d6"/>
+      <stop offset="100%" stop-color="#f5d6a4"/>
+    </linearGradient>
+    <linearGradient id="kofteGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#992211"/>
+      <stop offset="100%" stop-color="#6b1408"/>
+    </linearGradient>
+    <linearGradient id="lemonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff200"/>
+      <stop offset="100%" stop-color="#fbc531"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff758c" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Parlama Çemberi -->
+  <circle cx="60" cy="60" r="54" fill="#fff5f5" stroke="#ffd1dc" stroke-width="2" filter="url(#shadow)"/>
+
+  <!-- Çiğköfte Dürüm (Lavaş) -->
+  <g transform="rotate(-25 60 60)">
+    <!-- Alt Lavaş Kıvrımı -->
+    <path d="M 45 30 C 35 45, 35 75, 45 90 C 55 98, 75 98, 85 90 C 95 75, 95 45, 85 30 Z" fill="url(#durumGrad)" stroke="#e5b875" stroke-width="2.5"/>
+    
+    <!-- İçindeki Yeşillikler (Marul) -->
+    <path d="M 46 36 C 42 26, 56 22, 60 30 C 64 22, 78 26, 74 36 Z" fill="#4cd137"/>
+    <path d="M 52 32 C 55 24, 65 24, 68 32 Z" fill="#44bd32"/>
+    
+    <!-- Çiğköfte Harcı (Kırmızı/Baharatlı) -->
+    <ellipse cx="60" cy="38" rx="14" ry="7" fill="url(#kofteGrad)"/>
+    <circle cx="56" cy="36" r="1.5" fill="#e84118"/>
+    <circle cx="64" cy="37" r="1.5" fill="#e84118"/>
+
+    <!-- Lavaş Sarma Çizgisi -->
+    <path d="M 48 55 Q 65 65 82 55" stroke="#d4a360" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M 50 72 Q 65 80 80 72" stroke="#d4a360" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+    <!-- Dürüm Kağıdı Sarmalı -->
+    <path d="M 42 65 Q 65 76 88 65 L 85 90 C 75 98, 55 98, 45 90 Z" fill="#ff4757" opacity="0.9"/>
+    <path d="M 45 74 Q 65 84 85 74" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
+  </g>
+
+  <!-- Dilim Limon 🍋 -->
+  <g transform="translate(20, 70)">
+    <circle cx="16" cy="16" r="14" fill="url(#lemonGrad)" stroke="#e1b12c" stroke-width="1.5"/>
+    <circle cx="16" cy="16" r="11" fill="#fffbe0"/>
+    <path d="M 16 5 L 16 27 M 5 16 L 27 16 M 8 8 L 24 24 M 8 24 L 24 8" stroke="#fbc531" stroke-width="1.2"/>
+    <circle cx="16" cy="16" r="3" fill="#fffbe0"/>
+  </g>
+
+  <!-- Küçük Kalpler ✨ -->
+  <text x="86" y="32" font-size="14">💖</text>
+  <text x="18" y="42" font-size="11">🌶️</text>
+  <text x="84" y="98" font-size="12">✨</text>
+</svg>

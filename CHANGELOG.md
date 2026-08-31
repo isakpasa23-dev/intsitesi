@@ -4,12 +4,17 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.1.0] - 31.08.2026 (Kartların Doğal Oranlarına Geri Dönüşü & Kusursuz Düzen) 💖✨
-- **Doğal ve Estetik Ürün Kartları:**
-  - Kartların ekran boyunca aşağı doğru yapay şekilde uzaması/büyümesi kaldırıldı.
-  - Kartlar orijinal, derli toplu ve şık boyutlarına geri getirildi.
-  - Ana karşılama menüsü (`#view-menu`) ekran ortasında derli toplu dururken, sipariş menüsü doğal akıcı ızgara düzeninde sergilenir.
+### [v3.2.0] - 31.08.2026 (Keyif Menüsüne Baş Başa Çiğköfte Ziyafeti Eklendi) 🌯🍋✨
+- **Yeni Ürün:**
+  - Keyif & Lezzet kategorisine **"Baş Başa Çiğköfte Ziyafeti"** (`cigkofte-ziyafeti`) ürünü eklendi.
+  - Özel acılı & bol limonlu lavaş dürüm SVG görseli tasarlandı.
+  - Telegram botuna `/set cigkofte 100` ve `/ekle cigkofte 50` gibi hızlı yönetim takma adları tanımlandı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v3.1.0] - 31.08.2026 (Kartların Doğal Oranlarına Geri Dönüşü & Kusursuz Düzen) 💖✨
+- Kartların doğal boyutlarına dönmesi sağlandı.
 
 ---
 
@@ -19,17 +24,12 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 ---
 
 ### [v2.9.1] - 31.08.2026 (ExtendsClass JSON Depolama & Anlık Senkronizasyon) 🚀☁️📦
-- 50 istek sınırı olan geçici servis kaldırılarak limitsiz ExtendsClass JSON API'sine geçildi.
+- Limitsiz ExtendsClass JSON API'sine geçildi.
 
 ---
 
 ### [v2.9.0] - 31.08.2026 (Telegram Botu Üzerinden Canlı Stok Yönetimi) 🤖☁️📦✨
 - `/stok`, `/set`, `/ekle`, `/cikar`, `/sifirla` komutları eklendi.
-
----
-
-### [v2.8.0] - 31.08.2026 (Sepete Doğrudan Eklenen Samimi Sürpriz Hediyeler) 🎁💋✨
-- Sürpriz kodlar sepete gerçek hediye ürünleri ekler hale getirildi.
 
 ---
 

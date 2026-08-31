@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Yapay Zeka Destekli Tatlı Söz Motoru & 1 Ekrana Tam Sığan Arayüz 🤖💌✨
+   Yapay Zeka Destekli Tatlı Söz Motoru, Çiğköfte Ziyafeti & Bulut Stoklar 🌯🤖💌✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -18,10 +18,8 @@ let lastQuoteIndex = -1;
 let telegramLastUpdateId = 0;
 
 // ==========================================================================
-// 1. 🤖 YAPAY ZEKA & ZENGİN ROMANTİK SÖZ MOTORU (Samimi Öznelerle)
+// 1. 🤖 YAPAY ZEKA & ZENGİN ROMANTİK SÖZ MOTORU
 // ==========================================================================
-
-// A) Zengin Hazır Söz Havuzu (Bebeğim, Tatlım, Hayatımın Anlamı, Canım, Aşkım...)
 const curatedRomanticQuotes = [
   "\"Bebeğim, seninle geçen her saniye ömrümün en tatlı hediyesi. İyi ki hayatımdasın! 💖\"",
   "\"Hayatımın anlamı, gözlerinin içine baktığım her an dünya benim için biraz daha güzelleşiyor. ✨\"",
@@ -46,7 +44,6 @@ const curatedRomanticQuotes = [
   "\"Aşkım, yarınlar seninle güzel, dünler seninle unutuldu, bugünüm seninle dolu! ✨\""
 ];
 
-// B) Yapay Zeka Dinamik Söz Üreticisi (Sonsuz Çeşitlilikte Doğal Cümleler)
 const aiEndearments = [
   "Bebeğim", "Hayatımın anlamı", "Aşkım", "Tatlım", "Canım", 
   "Birtanem", "Ömrüm", "Gözümün nuru", "Kalp hırsızım", "Güzeller güzelim"
@@ -82,7 +79,6 @@ function generateAIRomanticQuote() {
     lastQuoteIndex = newIndex;
     return curatedRomanticQuotes[newIndex];
   } else {
-    // Dinamik Yapay Zeka Cümle Birleştirici
     const endearment = aiEndearments[Math.floor(Math.random() * aiEndearments.length)];
     const intro = aiIntros[Math.floor(Math.random() * aiIntros.length)];
     const feeling = aiFeelings[Math.floor(Math.random() * aiFeelings.length)];
@@ -131,6 +127,7 @@ const INITIAL_STOCKS = {
   "askolcer": 1,          // Aşkölçer sadece 1 adet
   "canim-cicim": 9847,    // Küsüratlı yüksek adet
   "kahve-kacamagi": 4320, // Küsüratlı yüksek adet
+  "cigkofte-ziyafeti": 6350, // Çiğköfte ziyafeti
   "gece-sohbeti": 12580,  // Küsüratlı yüksek adet
   "sarilma-kuponu": 9999999, // Sınırsız
   "film-gecesi": 3745,    // Küsüratlı yüksek adet
@@ -147,6 +144,7 @@ const PRODUCT_ALIASES = {
   "askolcer": "askolcer", "aşkölçer": "askolcer", "ask": "askolcer", "aşk": "askolcer",
   "canim-cicim": "canim-cicim", "canim": "canim-cicim", "canım": "canim-cicim",
   "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi",
+  "cigkofte-ziyafeti": "cigkofte-ziyafeti", "cigkofte": "cigkofte-ziyafeti", "çiğköfte": "cigkofte-ziyafeti",
   "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti",
   "sarilma-kuponu": "sarilma-kuponu", "sarilma": "sarilma-kuponu", "sarılma": "sarilma-kuponu",
   "film-gecesi": "film-gecesi", "film": "film-gecesi",
@@ -238,6 +236,7 @@ async function pollTelegramBotCommands() {
         stockMsg += `• 🔥 *Aşkölçer* (\`askolcer\`): *${currentStocks['askolcer'] || 0} Adet*\n`;
         stockMsg += `• 🎁 *Canım Cicim* (\`canim\`): *${(currentStocks['canim-cicim'] || 0).toLocaleString('tr-TR')} Adet*\n`;
         stockMsg += `• ☕ *Kahve Kaçamağı* (\`kahve\`): *${(currentStocks['kahve-kacamagi'] || 0).toLocaleString('tr-TR')} Adet*\n`;
+        stockMsg += `• 🌯 *Çiğköfte Ziyafeti* (\`cigkofte\`): *${(currentStocks['cigkofte-ziyafeti'] || 6350).toLocaleString('tr-TR')} Adet*\n`;
         stockMsg += `• 🌙 *Gece Sohbeti* (\`gece\`): *${(currentStocks['gece-sohbeti'] || 0).toLocaleString('tr-TR')} Adet*\n`;
         stockMsg += `• 💖 *Sınırsız Sarılma* (\`sarilma\`): *Sınırsız ♾️*\n`;
         stockMsg += `• 🍿 *Film Gecesi* (\`film\`): *${(currentStocks['film-gecesi'] || 0).toLocaleString('tr-TR')} Adet*\n`;
@@ -246,8 +245,8 @@ async function pollTelegramBotCommands() {
         stockMsg += `• 🎙️ *Ses Kaydı* (\`ses\`): *${(currentStocks['ozel-ses-kaydi'] || 0).toLocaleString('tr-TR')} Adet*\n\n`;
         stockMsg += `✍️ *Stok Yönetim Komutları:*\n`;
         stockMsg += `• \`/set askolcer 1\` ➔ Stoğu 1 yap\n`;
-        stockMsg += `• \`/ekle askolcer 1\` ➔ Stoğa 1 ekle\n`;
-        stockMsg += `• \`/cikar askolcer 1\` ➔ Stoktan 1 düşür\n`;
+        stockMsg += `• \`/ekle cigkofte 100\` ➔ Stoğa ekle\n`;
+        stockMsg += `• \`/cikar askolcer 1\` ➔ Stoktan düşür\n`;
         stockMsg += `• \`/sifirla\` ➔ Tüm stokları sıfırla`;
 
         await sendTelegramNotification(stockMsg, chatId);
@@ -339,7 +338,7 @@ const PRODUCTS = [
     image: "assets/canim-cicim.svg"
   },
 
-  // ☕ 2. Kategori: Keyif & Kahve
+  // ☕ 2. Kategori: Keyif & Lezzet
   {
     id: "kahve-kacamagi",
     category: "keyif",
@@ -351,6 +350,18 @@ const PRODUCTS = [
     badge: "Keyif Vakti ☕",
     description: "İstediğin zaman kullanabileceğin, en tatlı kahve ve sohbet garantili kupon.",
     image: "assets/gift-coffee.svg"
+  },
+  {
+    id: "cigkofte-ziyafeti",
+    category: "keyif",
+    name: "Baş Başa Çiğköfte Ziyafeti",
+    price: 0,
+    unit: "💖",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
+    badge: "Acılı & Limonlu 🌯",
+    description: "Bol limonlu, bol yeşillikli ve yanında buz gibi ayranla beraber çiğköfte yeme keyfi!",
+    image: "assets/cigkofte.svg"
   },
   {
     id: "gece-sohbeti",
@@ -401,7 +412,7 @@ const PRODUCTS = [
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "Özlem Giderici 📱",
-    description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli görüntülü arama hakkı.",
+    description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli görüntülü konuşma hakkı.",
     image: "assets/love-letter.svg"
   },
   {
@@ -557,7 +568,7 @@ function loadCartFromStorage() {
 }
 
 // ==========================================================================
-// 6. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router - Sıfır Kaydırma)
+// 6. SAYFA VE GÖRÜNÜM GEÇİŞİ (Router)
 // ==========================================================================
 function switchView(viewName) {
   const menuView = document.getElementById("view-menu");
@@ -567,9 +578,11 @@ function switchView(viewName) {
     if (menuView) menuView.classList.remove("active");
     if (shopView) shopView.classList.add("active");
     filterCategory("ask");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   } else {
     if (shopView) shopView.classList.remove("active");
     if (menuView) menuView.classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
 
@@ -628,7 +641,7 @@ function renderProducts() {
         
         <div class="product-footer">
           <div class="product-stock-info">
-            <span class="delivery-tag">⏳ ${product.deliveryText}</span>
+            <span class="delivery-tag">⏳ Teslimat: ${product.deliveryText}</span>
             <span class="stock-badge ${stock <= 1 && product.id === 'askolcer' ? (isOutOfStock ? 'out' : 'low') : ''}">${stockDisplay}</span>
           </div>
           
@@ -919,7 +932,6 @@ function finalizeOrder() {
 
   localStorage.setItem("saved_customer_name", customerName);
 
-  // Bulut ve yerel stokları düşür
   cart.forEach(item => {
     decrementProductStock(item.product.id, item.quantity);
   });
@@ -971,7 +983,6 @@ function finalizeOrder() {
     `).join("");
   }
 
-  // Telegram Bildirimi
   let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
   telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n\n`;
   telegramOrderMsg += `📅 *Tarih:* ${today}\n\n`;
@@ -999,7 +1010,7 @@ function finalizeOrder() {
 }
 
 // ==========================================================================
-// 11. FİŞİ RESİM OLARAK İNDİRME (html2canvas) 📥
+// 11. FİŞİ RESİM OLARAK İNDİRME
 // ==========================================================================
 async function downloadReceiptImage() {
   const receiptCard = document.getElementById("receipt-printable-card");
@@ -1226,7 +1237,7 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 14. HAFİF ANİMASYONLAR (GPU DOSTU)
+// 14. HAFİF ANİMASYONLAR
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -1521,11 +1532,9 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartUI();
   initScreenCat();
 
-  // ☁️ Canlı Bulut Stoklarını Çek
   fetchCloudStocks();
   setInterval(fetchCloudStocks, 4000);
 
-  // 🤖 Telegram Botu Komutlarını Dinle
   pollTelegramBotCommands();
   setInterval(pollTelegramBotCommands, 4000);
 });

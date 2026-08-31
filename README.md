@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, sürpriz sevgi kodları ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, yapay zeka destekli tatlı söz motoru, sürpriz sevgi kodları ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
 
 ---
 
@@ -17,7 +17,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 | :--- | :--- | :--- |
 | **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
 | **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
-| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle askolcer 1` veya `/ekle canim 500` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle cigkofte 100` veya `/ekle canim 500` |
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
@@ -25,6 +25,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 - `askolcer` / `ask` ➔ **Aşkölçer** (Sadece 1 Adet - Tek & Özel Üretim 🔥)
 - `canim` / `canim-cicim` ➔ **Canım Cicim**
 - `kahve` / `kahve-kacamagi` ➔ **Baş Başa Kahve Kaçamağı**
+- `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (Acılı & Limonlu 🌯)
 - `gece` / `sohbet` ➔ **Gece Sohbeti & Şarkı**
 - `sarilma` / `sarilma-kuponu` ➔ **Sınırsız Sarılma Kuponu** (Sınırsız ♾️)
 - `film` / `film-gecesi` ➔ **Film Seçme Hakkı**
@@ -54,9 +55,9 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 1. **☁️ Çift Yönlü Bulut Stok Senkronizasyonu:**
    - PC'den alışveriş yapıldığında mobil cihazlar da stok düşüşünü canlı olarak görür.
    - Telegram'dan komut verildiğinde sitedeki stoklar anında güncellenir.
-2. **🐈‍⬛ 4 Bacaklı Donanım Hızlandırmalı Siyah Kedi:**
-   - Mouse ve dokunmatik parmak hareketlerini takip eder, yönünü yumuşakça döner ve patilerini atarak yürür. Tıklayınca miyavlar ve tatlı sözler söyler.
-3. **📥 Fiş Resmi İndirme (html2canvas):**
+2. **🤖 Yapay Zeka Destekli Tatlı Söz Motoru:**
+   - *"Bebeğim"*, *"Tatlım"*, *"Hayatımın anlamı"*, *"Canım"*, *"Aşkım"* özneleriyle her tıklandığında sınırsız romantik aşk falları ve mesajları üretir.
+3. **🐈‍⬛ 4 Bacaklı Donanım Hızlandırmalı Siyah Kedi:**
+   - Mouse ve dokunmatik parmak hareketlerini takip eder, yönünü döner ve patilerini atarak yürür. Tıklayınca sevimli sözler söyler.
+4. **📥 Fiş Resmi İndirme (html2canvas):**
    - Sipariş tamamlandığında oluşan resmi makbuz PNG resmi olarak telefona/bilgisayara indirilebilir.
-4. **📱 60 FPS & Tek Ekrana Tam Sığan Giriş:**
-   - Ana menü ekranı sıfır kaydırma ile tüm cihazların ekranına tam oturur.
