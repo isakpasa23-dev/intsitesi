@@ -1321,9 +1321,6 @@ function setupAllEvents() {
   const tileQuote = document.getElementById("tile-quote");
   if (tileQuote) tileQuote.addEventListener("click", openDailyQuoteModal);
 
-  const tileCart = document.getElementById("tile-cart");
-  if (tileCart) tileCart.addEventListener("click", openCartDrawer);
-
   const btnBack = document.getElementById("btn-back-to-menu");
   if (btnBack) btnBack.addEventListener("click", () => switchView("menu"));
 
@@ -2893,7 +2890,7 @@ function initFunHub() {
     });
   }
 
-  // 3. KALP YAKALAMA OYUNU (Faremizi Takip Eden Sevimli Kedi ile Toplama)
+  // 3. KALP YAKALAMA OYUNU
   const gameCanvas = document.getElementById("heart-game-canvas");
   const gameOverlayStart = document.getElementById("game-overlay-start");
   const btnStartGame = document.getElementById("btn-start-heart-game");
@@ -2909,18 +2906,14 @@ function initFunHub() {
   let gameTimeLeft = 30;
   let gameTimerInterval = null;
   let gameAnimId = null;
-  let fallingObjects = [];
-  let floatingScores = [];
-  let playerX = 150;
-  let targetPlayerX = 150;
+  let fallingHearts = [];
 
   function startHeartGame() {
     if (!gameCanvas) return;
     gameScore = 0;
     gameTimeLeft = 30;
     gameActive = true;
-    fallingObjects = [];
-    floatingScores = [];
+    fallingHearts = [];
 
     if (scoreEl) scoreEl.textContent = "0";
     if (timerEl) timerEl.textContent = "30s";
@@ -2937,9 +2930,6 @@ function initFunHub() {
     const gw = rect.width;
     const gh = rect.height;
 
-    playerX = gw / 2;
-    targetPlayerX = gw / 2;
-
     if (gameTimerInterval) clearInterval(gameTimerInterval);
     gameTimerInterval = setInterval(() => {
       gameTimeLeft--;
@@ -2949,29 +2939,19 @@ function initFunHub() {
       }
     }, 1000);
 
-    function spawnObject() {
+    function spawnHeart() {
       if (!gameActive) return;
-      const rand = Math.random();
-      let type;
+      const symbols = ["💖", "💕", "⭐", "💎", "🌸", "✨"];
+      const sym = symbols[Math.floor(Math.random() * symbols.length)];
+      const points = sym === "💎" ? 25 : sym === "⭐" ? 15 : 10;
 
-      if (rand < 0.45) {
-        // %45 İhtimalle Kalp (+1)
-        type = { sym: "💖", pts: 1, color: "#2ed573", size: 28, speed: 2.1 + Math.random() * 1.5 };
-      } else if (rand < 0.70) {
-        // %25 İhtimalle Yıldız (+2)
-        type = { sym: "⭐", pts: 2, color: "#ffa502", size: 30, speed: 2.4 + Math.random() * 1.6 };
-      } else if (rand < 0.88) {
-        // %18 İhtimalle Kırık Kalp (-1)
-        type = { sym: "💔", pts: -1, color: "#ff4757", size: 28, speed: 2.2 + Math.random() * 1.4 };
-      } else {
-        // %12 İhtimalle Bomba (-2)
-        type = { sym: "💣", pts: -2, color: "#ff3838", size: 30, speed: 2.5 + Math.random() * 1.5 };
-      }
-
-      fallingObjects.push({
+      fallingHearts.push({
         x: 25 + Math.random() * (gw - 50),
         y: -30,
-        ...type
+        sym: sym,
+        points: points,
+        speed: 1.8 + Math.random() * 2.2,
+        size: 26 + Math.random() * 8
       });
     }
 
@@ -2981,142 +2961,23 @@ function initFunHub() {
       if (!gameActive) return;
       ctx.clearRect(0, 0, gw, gh);
 
-      // Kedinin pürüzsüz takibi
-      playerX += (targetPlayerX - playerX) * 0.28;
-      const catY = gh - 22;
-
-      // 1. Yeni Nesne Üret
-      if (Date.now() - lastSpawn > 380) {
-        spawnObject();
+      if (Date.now() - lastSpawn > 420) {
+        spawnHeart();
         lastSpawn = Date.now();
       }
 
-      // 2. Düşen Nesneleri Güncelle ve Çiz
-      for (let i = fallingObjects.length - 1; i >= 0; i--) {
-        const obj = fallingObjects[i];
-        obj.y += obj.speed;
+      for (let i = fallingHearts.length - 1; i >= 0; i--) {
+        const h = fallingHearts[i];
+        h.y += h.speed;
 
-        ctx.font = `${Math.floor(obj.size)}px sans-serif`;
+        ctx.font = `${Math.floor(h.size)}px sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(obj.sym, obj.x, obj.y);
+        ctx.fillText(h.sym, h.x, h.y);
 
-        // Kedi Sepeti ile Çarpışma Kontrolü (Catch Detection)
-        const distCatX = Math.abs(obj.x - playerX);
-        const distCatY = Math.abs(obj.y - (catY - 14));
-
-        if (distCatX < 32 && distCatY < 24) {
-          // Yakalandı!
-          gameScore = Math.max(0, gameScore + obj.pts);
-          if (scoreEl) scoreEl.textContent = gameScore;
-
-          // Skor Baloncuğu
-          floatingScores.push({
-            x: obj.x,
-            y: catY - 24,
-            text: obj.pts > 0 ? `+${obj.pts}` : `${obj.pts}`,
-            color: obj.color,
-            alpha: 1
-          });
-
-          if (obj.pts > 0) triggerHeartsShower();
-          fallingObjects.splice(i, 1);
-          continue;
+        if (h.y > gh + 40) {
+          fallingHearts.splice(i, 1);
         }
-
-        // Ekranın Altından Çıkarsa Sil
-        if (obj.y > gh + 40) {
-          fallingObjects.splice(i, 1);
-        }
-      }
-
-      // 3. Farenin Peşinden Koşan Kediciği Çiz
-      ctx.save();
-      // Kedi Gövdesi
-      ctx.fillStyle = "#1e272e";
-      ctx.beginPath();
-      ctx.ellipse(playerX, catY + 4, 22, 14, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Kedi Kafası
-      ctx.beginPath();
-      ctx.arc(playerX, catY - 10, 16, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Kulaklar
-      ctx.beginPath();
-      ctx.moveTo(playerX - 12, catY - 14); ctx.lineTo(playerX - 18, catY - 28); ctx.lineTo(playerX - 4, catY - 22);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(playerX + 12, catY - 14); ctx.lineTo(playerX + 18, catY - 28); ctx.lineTo(playerX + 4, catY - 22);
-      ctx.closePath();
-      ctx.fill();
-
-      // Pembe Kulak İçi
-      ctx.fillStyle = "#ff758c";
-      ctx.beginPath();
-      ctx.moveTo(playerX - 11, catY - 15); ctx.lineTo(playerX - 16, catY - 25); ctx.lineTo(playerX - 5, catY - 20);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(playerX + 11, catY - 15); ctx.lineTo(playerX + 16, catY - 25); ctx.lineTo(playerX + 5, catY - 20);
-      ctx.closePath();
-      ctx.fill();
-
-      // Parlak Turkuaz Gözler
-      ctx.fillStyle = "#00d2d3";
-      ctx.beginPath();
-      ctx.arc(playerX - 6, catY - 11, 4, 0, Math.PI * 2);
-      ctx.arc(playerX + 6, catY - 11, 4, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Göz Işıltıları
-      ctx.fillStyle = "#ffffff";
-      ctx.beginPath();
-      ctx.arc(playerX - 7, catY - 12.5, 1.4, 0, Math.PI * 2);
-      ctx.arc(playerX + 5, catY - 12.5, 1.4, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Sevimli Pembe Burun & Yanaklar
-      ctx.fillStyle = "#ff9ff3";
-      ctx.beginPath();
-      ctx.arc(playerX, catY - 5, 2.2, 0, Math.PI * 2);
-      ctx.arc(playerX - 10, catY - 6, 3, 0, Math.PI * 2);
-      ctx.arc(playerX + 10, catY - 6, 3, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Sevgi Toplama Sepeti / Kolları
-      ctx.strokeStyle = "#ff758c";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(playerX, catY - 10, 26, 0.15 * Math.PI, 0.85 * Math.PI);
-      ctx.stroke();
-
-      ctx.font = "14px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText("💖", playerX, catY + 6);
-      ctx.restore();
-
-      // 4. Uçuşan Skor Yazıları
-      for (let s = floatingScores.length - 1; s >= 0; s--) {
-        const sc = floatingScores[s];
-        sc.y -= 1.4;
-        sc.alpha -= 0.025;
-        if (sc.alpha <= 0) {
-          floatingScores.splice(s, 1);
-          continue;
-        }
-
-        ctx.save();
-        ctx.globalAlpha = sc.alpha;
-        ctx.fillStyle = sc.color;
-        ctx.font = "bold 18px sans-serif";
-        ctx.textAlign = "center";
-        ctx.fillText(sc.text, sc.x, sc.y);
-        ctx.restore();
       }
 
       gameAnimId = requestAnimationFrame(gameLoop);
@@ -3146,25 +3007,30 @@ function initFunHub() {
     }
   }
 
-  function updatePlayerTarget(clientX) {
-    if (!gameCanvas) return;
+  function handleGameTouch(clientX, clientY) {
+    if (!gameActive || !gameCanvas) return;
     const rect = gameCanvas.getBoundingClientRect();
     const touchX = clientX - rect.left;
-    targetPlayerX = Math.max(25, Math.min(rect.width - 25, touchX));
+    const touchY = clientY - rect.top;
+
+    for (let i = fallingHearts.length - 1; i >= 0; i--) {
+      const h = fallingHearts[i];
+      const dist = Math.hypot(touchX - h.x, touchY - h.y);
+      if (dist < h.size * 1.3) {
+        gameScore += h.points;
+        if (scoreEl) scoreEl.textContent = gameScore;
+        fallingHearts.splice(i, 1);
+        triggerHeartsShower();
+        break;
+      }
+    }
   }
 
   if (gameCanvas) {
-    gameCanvas.addEventListener("mousemove", (e) => {
-      if (gameActive) updatePlayerTarget(e.clientX);
-    });
-    gameCanvas.addEventListener("touchmove", (e) => {
-      if (gameActive && e.touches && e.touches[0]) {
-        updatePlayerTarget(e.touches[0].clientX);
-      }
-    }, { passive: true });
+    gameCanvas.addEventListener("mousedown", (e) => handleGameTouch(e.clientX, e.clientY));
     gameCanvas.addEventListener("touchstart", (e) => {
-      if (gameActive && e.touches && e.touches[0]) {
-        updatePlayerTarget(e.touches[0].clientX);
+      if (e.touches && e.touches[0]) {
+        handleGameTouch(e.touches[0].clientX, e.touches[0].clientY);
       }
     }, { passive: true });
   }
