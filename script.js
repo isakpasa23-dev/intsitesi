@@ -1044,13 +1044,17 @@ function initScreenCat() {
   let lastUserActivity = Date.now();
 
   const catPhrases = [
-    "Miyav! 🐾💕",
-    "Seni çok seviyorum bebeğim! 🥰",
-    "Mırrr... Tatlım benim! 💖",
-    "İyi ki varsın hayatımın anlamı! ✨",
-    "Beni sevmene bayılıyorum aşkım! 🐈‍⬛",
-    "Pati dostun her zaman yanında canım! 🐾",
-    "Bugün çok tatlısın birtanem! 🌸"
+    "Miyav! 🐾",
+    "Mırrr... Başımı okşar mısın? 🐱",
+    "Pati uzattım sana! 🐾✨",
+    "Mama saati geldi mi acaba? 🐟",
+    "Mırrr... Çok tatlısın! 🐾",
+    "Beni sevmene bayılıyorum! Mırrr 🐾",
+    "Uykum geldi sanki... 😴💤",
+    "Ekranda yürümek çok eğlenceli! 🐈‍⬛",
+    "Gözlerimin içine bak, miyav! 👀✨",
+    "Pisi pisi dersen hemen koşarım! 🐾",
+    "Kutuların içine girmeyi çok severim! 📦"
   ];
 
   function setTarget(x) {
@@ -1553,7 +1557,7 @@ function openMagicModal() {
   const bubble = document.getElementById("cat-speech-bubble");
   if (cat && bubble) {
     cat.classList.add("purring");
-    bubble.textContent = "✨ Büyülü bahçeye hoş geldin! 🌸";
+    bubble.textContent = "Miyav! Büyülü bahçeye hoş geldin! 🐾✨";
     bubble.classList.add("active");
     setTimeout(() => {
       cat.classList.remove("purring");
