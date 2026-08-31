@@ -437,7 +437,7 @@ const PRODUCTS = [
     deliveryText: "Anında ⚡",
     badge: "Sana Özel 🎙️",
     description: "Özlediğin her an dinlemen için kaydedilmiş en tatlı ses kaydı ve özel şarkı armağanı.",
-    image: "assets/gift-coffee.svg"
+    image: "assets/microphone.svg"
   }
 ];
 

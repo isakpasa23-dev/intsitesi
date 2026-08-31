@@ -4,12 +4,15 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v3.2.0] - 31.08.2026 (Keyif Menüsüne Baş Başa Çiğköfte Ziyafeti Eklendi) 🌯🍋✨
-- **Yeni Ürün:**
-  - Keyif & Lezzet kategorisine **"Baş Başa Çiğköfte Ziyafeti"** (`cigkofte-ziyafeti`) ürünü eklendi.
-  - Özel acılı & bol limonlu lavaş dürüm SVG görseli tasarlandı.
-  - Telegram botuna `/set cigkofte 100` ve `/ekle cigkofte 50` gibi hızlı yönetim takma adları tanımlandı.
+### [v3.3.0] - 31.08.2026 (Özel Aşk Ses Kaydı İçin Stüdyo Mikrofonu Görseli) 🎙️🎶✨
+- **Görsel Değişikliği:**
+  - *"Özel Aşk Ses Kaydı & Şarkı"* ürününün simgesi kahve fincanından özel olarak tasarlanmış müzik notalı romantik stüdyo mikrofonu SVG ikonuna (`assets/microphone.svg`) dönüştürüldü.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v3.2.0] - 31.08.2026 (Keyif Menüsüne Baş Başa Çiğköfte Ziyafeti Eklendi) 🌯🍋✨
+- Keyif & Lezzet kategorisine "Baş Başa Çiğköfte Ziyafeti" (`cigkofte-ziyafeti`) ürünü ve özel lavaş dürüm SVG grafiği eklendi.
 
 ---
 

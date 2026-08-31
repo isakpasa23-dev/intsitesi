@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="micBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758c"/>
+      <stop offset="100%" stop-color="#ff1361"/>
+    </linearGradient>
+    <linearGradient id="micHeadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1f2f6"/>
+      <stop offset="50%" stop-color="#dcdde1"/>
+      <stop offset="100%" stop-color="#718093"/>
+    </linearGradient>
+    <linearGradient id="standGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#747d8c"/>
+      <stop offset="100%" stop-color="#2f3542"/>
+    </linearGradient>
+    <filter id="micShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff4b72" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Romantik Daire -->
+  <circle cx="60" cy="60" r="54" fill="#fff5f8" stroke="#ffd6df" stroke-width="2" filter="url(#micShadow)"/>
+
+  <!-- Mikrofon Standı & Tabanı -->
+  <ellipse cx="60" cy="100" rx="22" ry="6" fill="url(#standGrad)"/>
+  <rect x="57" y="70" width="6" height="30" rx="3" fill="url(#standGrad)"/>
+  
+  <!-- Mikrofon U-Tutucu Kolu -->
+  <path d="M 40 45 C 40 72, 80 72, 80 45" fill="none" stroke="url(#standGrad)" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="39" cy="45" r="3.5" fill="#2f3542"/>
+  <circle cx="81" cy="45" r="3.5" fill="#2f3542"/>
+
+  <!-- Mikrofon Gövdesi -->
+  <rect x="47" y="24" width="26" height="40" rx="13" fill="url(#micHeadGrad)" stroke="#2f3542" stroke-width="2"/>
+  
+  <!-- Mikrofon Izgarası & Detayları -->
+  <line x1="47" y1="36" x2="73" y2="36" stroke="#57606f" stroke-width="2"/>
+  <line x1="47" y1="46" x2="73" y2="46" stroke="#57606f" stroke-width="2"/>
+  <line x1="60" y1="24" x2="60" y2="64" stroke="#57606f" stroke-width="1.5" stroke-dasharray="2,2"/>
+  
+  <!-- Mikrofon Gövde Bandı (Pembe Aşk Şeridi) -->
+  <rect x="47.5" y="49" width="25" height="13" rx="3" fill="url(#micBodyGrad)"/>
+  <circle cx="60" cy="55.5" r="2.5" fill="#ffffff"/>
+
+  <!-- Müzik Notaları & Kalpler 🎵💖 -->
+  <!-- Sol Ses Dalgası / Nota -->
+  <g transform="translate(18, 25)">
+    <text x="0" y="10" font-size="14" fill="#ff4757">🎵</text>
+    <path d="M 12 12 Q 18 10 16 2" stroke="#ff758c" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Sağ Ses Dalgası & Kalp -->
+  <g transform="translate(82, 20)">
+    <text x="0" y="10" font-size="14" fill="#ff4757">🎶</text>
+    <text x="8" y="26" font-size="12">💖</text>
+  </g>
+
+  <!-- Parıltı Yıldızları ✨ -->
+  <text x="24" y="80" font-size="11">✨</text>
+  <text x="82" y="78" font-size="13">🎙️</text>
+</svg>
