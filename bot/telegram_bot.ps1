@@ -57,6 +57,14 @@ function Set-CloudStocks($stocks) {
 
 Write-Host "🤖 Aşk Köşesi Telegram Botu Başlatıldı... Komutlar bekleniyor!" -ForegroundColor Magenta
 
+# İlk açılışta eski geçmiş mesajları atla
+try {
+    $initUpdates = Invoke-RestMethod -Uri "https://api.telegram.org/bot$BotToken/getUpdates?offset=-1" -Method Get
+    if ($initUpdates.result -and $initUpdates.result.Count -gt 0) {
+        $LastUpdateId = $initUpdates.result[-1].update_id
+    }
+} catch {}
+
 while ($true) {
     try {
         $url = "https://api.telegram.org/bot$BotToken/getUpdates?offset=$($LastUpdateId + 1)&timeout=10"

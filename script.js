@@ -163,16 +163,15 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme (Akıllı Birleştirme)
+// ☁️ Buluttan Canlı Stokları Çekme
 async function fetchCloudStocks() {
   try {
     const res = await fetch(`${CLOUD_STOCK_ENDPOINT}?_t=${Date.now()}`);
     if (res.ok) {
       const data = await res.json();
-      if (data && typeof data === "object") {
-        const merged = { ...INITIAL_STOCKS, ...data };
+      if (data && typeof data === "object" && typeof data.askolcer !== "undefined") {
         const prevDataStr = localStorage.getItem("site_cloud_stocks_cache");
-        const newDataStr = JSON.stringify(merged);
+        const newDataStr = JSON.stringify(data);
         if (prevDataStr !== newDataStr) {
           localStorage.setItem("site_cloud_stocks_cache", newDataStr);
           renderProducts();
@@ -205,8 +204,6 @@ async function decrementCartStocks(cartItems) {
   let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
   if (!currentStocks) {
     currentStocks = { ...INITIAL_STOCKS };
-  } else {
-    currentStocks = { ...INITIAL_STOCKS, ...currentStocks };
   }
 
   cartItems.forEach(item => {
@@ -222,109 +219,6 @@ async function decrementCartStocks(cartItems) {
 
 function decrementProductStock(productId, quantity) {
   decrementCartStocks([{ product: { id: productId }, quantity: quantity }]);
-}
-
-// ==========================================================================
-// 3. TELEGRAM BOTU İLE CANLI STOK YÖNETİMİ 🤖📦
-// ==========================================================================
-async function pollTelegramBotCommands() {
-  try {
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${telegramLastUpdateId + 1}&timeout=4`;
-    const res = await fetch(url);
-    if (!res.ok) return;
-
-    const data = await res.json();
-    if (!data.result || data.result.length === 0) return;
-
-    for (let update of data.result) {
-      telegramLastUpdateId = update.update_id;
-      const msg = update.message;
-      if (!msg || !msg.text) continue;
-
-      const text = msg.text.trim();
-      const chatId = msg.chat.id;
-
-      if (text === "/stok" || text === "/stoklar" || text === "/start" || text === "/yardim") {
-        await fetchCloudStocks();
-        let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || INITIAL_STOCKS;
-        
-        let stockMsg = `📦 *GÜNCEL CANLI STOK DURUMU* 📦\n\n`;
-        stockMsg += `• 🔥 *Aşkölçer* (\`askolcer\`): *${currentStocks['askolcer'] || 0} Adet*\n`;
-        stockMsg += `• 🎁 *Canım Cicim* (\`canim\`): *${(currentStocks['canim-cicim'] || 0).toLocaleString('tr-TR')} Adet*\n`;
-        stockMsg += `• ☕ *Kahve Kaçamağı* (\`kahve\`): *${(currentStocks['kahve-kacamagi'] || 0).toLocaleString('tr-TR')} Adet*\n`;
-        stockMsg += `• 🌯 *Çiğköfte Ziyafeti* (\`cigkofte\`): *${(currentStocks['cigkofte-ziyafeti'] || 6350).toLocaleString('tr-TR')} Adet*\n`;
-        stockMsg += `• 🌙 *Gece Sohbeti* (\`gece\`): *${(currentStocks['gece-sohbeti'] || 0).toLocaleString('tr-TR')} Adet*\n`;
-        stockMsg += `• 💖 *Sınırsız Sarılma* (\`sarilma\`): *Sınırsız ♾️*\n`;
-        stockMsg += `• 🍿 *Film Gecesi* (\`film\`): *${(currentStocks['film-gecesi'] || 0).toLocaleString('tr-TR')} Adet*\n`;
-        stockMsg += `• 📱 *Görüntülü Arama* (\`goruntulu\`): *${(currentStocks['goruntulu-arama'] || 0).toLocaleString('tr-TR')} Adet*\n`;
-        stockMsg += `• 🫂 *Özlem Sarılması* (\`ozlem\`): *Sınırsız ♾️*\n`;
-        stockMsg += `• 🎙️ *Ses Kaydı* (\`ses\`): *${(currentStocks['ozel-ses-kaydi'] || 0).toLocaleString('tr-TR')} Adet*\n\n`;
-        stockMsg += `✍️ *Stok Yönetim Komutları:*\n`;
-        stockMsg += `• \`/set askolcer 1\` ➔ Stoğu 1 yap\n`;
-        stockMsg += `• \`/ekle cigkofte 100\` ➔ Stoğa ekle\n`;
-        stockMsg += `• \`/cikar askolcer 1\` ➔ Stoktan düşür\n`;
-        stockMsg += `• \`/sifirla\` ➔ Tüm stokları sıfırla`;
-
-        await sendTelegramNotification(stockMsg, chatId);
-      }
-      else if (text.startsWith("/set ") || text.startsWith("/ayar ")) {
-        const parts = text.split(" ");
-        if (parts.length >= 3) {
-          const rawKey = parts[1].toLowerCase();
-          const targetQty = parseInt(parts[2], 10);
-          const productId = PRODUCT_ALIASES[rawKey] || rawKey;
-
-          if (!isNaN(targetQty) && targetQty >= 0) {
-            let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || { ...INITIAL_STOCKS };
-            currentStocks[productId] = targetQty;
-            await pushCloudStocks(currentStocks);
-
-            await sendTelegramNotification(`✅ *${productId}* stoğu başarıyla *${targetQty.toLocaleString('tr-TR')}* olarak ayarlandı ve web sitesine yansıtıldı! ✨`, chatId);
-          }
-        }
-      }
-      else if (text.startsWith("/ekle ")) {
-        const parts = text.split(" ");
-        if (parts.length >= 3) {
-          const rawKey = parts[1].toLowerCase();
-          const addQty = parseInt(parts[2], 10);
-          const productId = PRODUCT_ALIASES[rawKey] || rawKey;
-
-          if (!isNaN(addQty) && addQty > 0) {
-            let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || { ...INITIAL_STOCKS };
-            const oldStock = currentStocks[productId] || 0;
-            currentStocks[productId] = oldStock + addQty;
-            await pushCloudStocks(currentStocks);
-
-            await sendTelegramNotification(`✅ *${productId}* stoğuna +${addQty} eklendi! Yeni Stok: *${currentStocks[productId].toLocaleString('tr-TR')} Adet* 📦`, chatId);
-          }
-        }
-      }
-      else if (text.startsWith("/cikar ") || text.startsWith("/çıkar ")) {
-        const parts = text.split(" ");
-        if (parts.length >= 3) {
-          const rawKey = parts[1].toLowerCase();
-          const subQty = parseInt(parts[2], 10);
-          const productId = PRODUCT_ALIASES[rawKey] || rawKey;
-
-          if (!isNaN(subQty) && subQty > 0) {
-            let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null") || { ...INITIAL_STOCKS };
-            const oldStock = currentStocks[productId] || 0;
-            currentStocks[productId] = Math.max(0, oldStock - subQty);
-            await pushCloudStocks(currentStocks);
-
-            await sendTelegramNotification(`🔻 *${productId}* stoğundan -${subQty} düşüldü! Kalan Stok: *${currentStocks[productId].toLocaleString('tr-TR')} Adet* 📦`, chatId);
-          }
-        }
-      }
-      else if (text === "/sifirla" || text === "/sıfırla") {
-        await pushCloudStocks({ ...INITIAL_STOCKS });
-        await sendTelegramNotification(`🔄 *Tüm ürün stokları ilk günkü ayarlarına sıfırlandı ve web sitesi güncellendi!* (Aşkölçer: 1 Adet) 🔥`, chatId);
-      }
-    }
-  } catch (err) {
-    // Sessiz devam
-  }
 }
 
 const PRODUCTS = [
@@ -2134,7 +2028,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchCloudStocks();
   setInterval(fetchCloudStocks, 4000);
-
-  pollTelegramBotCommands();
-  setInterval(pollTelegramBotCommands, 4000);
 });
