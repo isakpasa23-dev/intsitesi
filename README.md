@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları, tam ekran sihirli havai fişek kutlama animasyonu ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları, interaktif Sihirli Sevgi & Animasyon Bahçesi (Gül, Kaktüs, Yıldız, Kelebekler, Kalp Şöleni) ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
 
 ---
 
@@ -51,14 +51,11 @@ Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabi
 
 ---
 
-## ⚙️ Teknik Özellikler & Altyapı
+## 🎨 Yeni: Sihirli Sevgi & Animasyon Bahçesi 🌸✨
 
-1. **🎆 Sihirli Sevgi Şöleni (Full Screen Canvas Particle Animation):**
-   - Ana menüdeki 5. sihirli butona basıldığında tam ekran renkli havai fişekler, uçuşan kalpler ve sevgi mesajları patlar.
-2. **☁️ Çift Yönlü Bulut Stok Senkronizasyonu:**
-   - PC'den alışveriş yapıldığında mobil cihazlar da stok düşüşünü canlı olarak görür.
-   - Telegram'dan komut verildiğinde sitedeki stoklar anında güncellenir.
-3. **✍️ Kusursuz Türkçe Kaligrafi Font Desteği:**
-   - *"Minik Yıldızım!"* başlığındaki "Y" ve "ı" harfi kırpılmaları tamamen düzeltildi.
-4. **🐈‍⬛ 4 Bacaklı Bağımsız Siyah Kedi:**
-   - Sayfadaki tüm modal ve pop-up'lardan bağımsız olarak mouse ve dokunmatik parmak hareketlerini kesintisiz takip eder.
+Ana menüdeki **"Sihirli Sevgi Şöleni"** butonuna basıldığında açılan interaktif animasyon stüdyosu:
+- 🌹 **Kırmızı Gül:** Topraktan filizlenip boy atan, yaprak veren ve kat kat açan kadife aşk gülü.
+- 🌵 **Kaktüs Çiçeği:** Saksıdan yükselen sevimli gülen kaktüs ve tepesinde açan pembe çiçek.
+- ⭐ **Kutup Yıldızı:** Işıltılı kuyruklu yıldızın çizdiği ve parıldayan altın yıldız.
+- 🎆 **Kalp Şöleni:** Ekranda patlayan renkli kalp havai fişekleri.
+- 🦋 **Kelebekler:** Sonsuzluk döngüsünde süzülen ışıltılı aşk kelebekleri.

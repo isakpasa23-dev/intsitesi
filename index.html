@@ -19,7 +19,7 @@
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=5.2.0">
+  <link rel="stylesheet" href="style.css?v=6.0.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -447,6 +447,57 @@
     </div>
   </div>
 
-  <script src="script.js?v=5.2.0"></script>
+  <!-- ================= POP-UP: SİHİRLİ SEVGİ & ANİMASYON BAHÇESİ ================= -->
+  <div class="modal-overlay" id="magic-modal-overlay">
+    <div class="modal-card magic-modal-card">
+      <button class="modal-close-btn" id="close-magic-modal-btn">✕</button>
+      
+      <div class="magic-modal-header">
+        <h3 class="magic-modal-title">✨ Sihirli Sevgi Bahçesi ✨</h3>
+        <p class="magic-modal-desc">Büyülü bir animasyon seç ve sahneyi izle birtanem!</p>
+      </div>
+
+      <!-- Animasyon Seçim Butonları -->
+      <div class="magic-tabs-grid" id="magic-tabs-grid">
+        <button class="magic-tab-btn active" data-anim="rose">
+          <span class="magic-tab-emoji">🌹</span>
+          <span class="magic-tab-name">Kırmızı Gül</span>
+        </button>
+        <button class="magic-tab-btn" data-anim="cactus">
+          <span class="magic-tab-emoji">🌵</span>
+          <span class="magic-tab-name">Kaktüs Çiçeği</span>
+        </button>
+        <button class="magic-tab-btn" data-anim="star">
+          <span class="magic-tab-emoji">⭐</span>
+          <span class="magic-tab-name">Kutup Yıldızı</span>
+        </button>
+        <button class="magic-tab-btn" data-anim="fireworks">
+          <span class="magic-tab-emoji">🎆</span>
+          <span class="magic-tab-name">Kalp Şöleni</span>
+        </button>
+        <button class="magic-tab-btn" data-anim="butterflies">
+          <span class="magic-tab-emoji">🦋</span>
+          <span class="magic-tab-name">Kelebekler</span>
+        </button>
+      </div>
+
+      <!-- Çizim ve Animasyon Sahnesi -->
+      <div class="magic-stage-container" id="magic-stage-container" title="Tekrar oynatmak için tıkla!">
+        <canvas id="magic-canvas" class="magic-canvas"></canvas>
+        <div class="magic-stage-hint"><span>✨ Sahneye dokunarak tekrar başlatabilirsin</span></div>
+      </div>
+
+      <div class="magic-footer-actions">
+        <button class="btn btn-secondary btn-magic-replay" id="btn-magic-replay">
+          🔄 Tekrar Oynat
+        </button>
+        <button class="btn btn-primary btn-magic-close" id="btn-magic-close">
+          Kapat 💕
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=6.0.0"></script>
 </body>
 </html>

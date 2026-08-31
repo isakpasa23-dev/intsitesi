@@ -4,22 +4,25 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v5.2.0] - 31.08.2026 (Bulut Stok Kalıcılığı & Atomik Sepet Düşüşü Düzeltildi) ☁️📦🔒✨
-- **Bulut Stok Senkronizasyon Onarımı:**
-  - Satın alım yapıldığında sepetteki tüm ürünlerin stokları tek seferde atomik olarak ExtendsClass bulutuna kalıcı olarak yazılacak şekilde güncellendi.
-  - Sayfa yenilendiğinde veya telefondan girildiğinde azalan güncel stoklar doğrudan buluttan çekilir; Telegram botundan arttırılmadığı sürece asla sıfırlanmaz.
-  - Bulut veri yapısı tüm yeni ürünlerle (`patron-sensin`, `cigkofte-ziyafeti`, `beraber-yuruyus`) tam olarak eşitlendi.
+### [v6.0.0] - 31.08.2026 (İnteraktif Sihirli Sevgi & Animasyon Bahçesi Eklendi) 🌹🌵⭐🎆🦋✨
+- **Yepyeni İnteraktif Animasyon Stüdyosu:**
+  - Sihirli Sevgi Şöleni düğmesine basıldığında ekranda anlamsız yazılar yerine büyülü bir **Animasyon Bahçesi Menüsü** açılır.
+  - **🌹 Kırmızı Gül:** Topraktan filizlenip boy atan, yaprakları çıkan ve katman katman açılan gerçekçi kadife kırmızı gül animasyonu.
+  - **🌵 Kaktüs Çiçeği:** Sevimli saksısından yükselen, yanakları kızarmış kaktüs ve tepesinde patlayan pembe kaktüs çiçeği.
+  - **⭐ Kutup Yıldızı:** Işıltılı sihirli kuyruklu yıldızın çizdiği 5 köşeli parıldayan altın yıldız.
+  - **🎆 Kalp Şöleni:** Havai fişek gibi fırlayıp patlayan kalp partikülleri.
+  - **🦋 Kelebekler:** Havada süzülerek peri tozu bırakan rengarenk aşk kelebekleri.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
 
 ---
 
-### [v5.1.0] - 31.08.2026 (Fiş İndirme Butonu Düzeltildi) 📥🧾✨
-- Fiş indirme butonu makbuz penceresine geri eklendi.
+### [v5.2.0] - 31.08.2026 (Bulut Stok Kalıcılığı & Atomik Sepet Düşüşü Düzeltildi) ☁️📦🔒✨
+- Stok düşüşleri atomik olarak buluta bağlandı.
 
 ---
 
-### [v5.0.0] - 31.08.2026 (Ana Menü Ferahlatması, Y Harfi Düzeltmesi & Sihirli Sevgi Şöleni Animasyonu) 🎆💖✨
-- Ana menü ferahlatıldı, Y harfi düzeltildi ve Sihirli Sevgi Şöleni butonu eklendi.
+### [v5.1.0] - 31.08.2026 (Fiş İndirme Butonu Düzeltildi) 📥🧾✨
+- Fiş indirme butonu geri eklendi.
 
 ---
 

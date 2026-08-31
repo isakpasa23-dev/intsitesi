@@ -1326,6 +1326,121 @@ html, body {
 .btn-full { width: 100%; }
 .btn-sm { padding: 0.28rem 0.7rem; font-size: 0.72rem; }
 
+/* ================= SİHİRLİ ANİMASYON BAHÇESİ MODALI ================= */
+.magic-modal-card {
+  max-width: 480px;
+  width: 92%;
+  padding: 1.1rem;
+  text-align: center;
+  background: #ffffff;
+}
+
+.magic-modal-header {
+  margin-bottom: 0.6rem;
+}
+
+.magic-modal-title {
+  font-family: var(--font-main);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.15rem;
+}
+
+.magic-modal-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.magic-tabs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+  margin-bottom: 0.75rem;
+}
+
+.magic-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: #f8f9fa;
+  border: 1.2px solid #e9ecef;
+  color: #495057;
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.magic-tab-btn:hover {
+  background: #fff0f3;
+  border-color: #ffd1dc;
+  color: var(--primary);
+}
+
+.magic-tab-btn.active {
+  background: linear-gradient(135deg, #ff758c 0%, #ff1361 100%);
+  color: #ffffff;
+  border-color: #ff1361;
+  box-shadow: 0 2px 8px rgba(255, 19, 97, 0.25);
+}
+
+.magic-tab-emoji {
+  font-size: 0.95rem;
+}
+
+.magic-stage-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background: radial-gradient(circle at center, #ffffff 0%, #fff5f8 70%, #ffeaf1 100%);
+  border: 1.5px solid #ffd1dc;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(255, 75, 114, 0.08);
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+}
+
+.magic-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.magic-stage-hint {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.65rem;
+  color: #ff758c;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.magic-footer-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-magic-replay {
+  flex: 1;
+  padding: 0.45rem;
+  font-size: 0.78rem;
+}
+
+.btn-magic-close {
+  flex: 1.2;
+  padding: 0.45rem;
+  font-size: 0.78rem;
+}
+
 /* ================= MOBİL UYUM ================= */
 @media (max-width: 600px) {
   .hero-title { font-size: 1.35rem; }
@@ -1341,4 +1456,6 @@ html, body {
   .tab-btn { padding: 0.22rem 0.55rem; font-size: 0.7rem; }
   .cart-drawer { max-width: 100%; }
   .screen-cat-companion { bottom: 1px; width: 42px; height: 32px; }
+  .magic-stage-container { height: 190px; }
+  .magic-tab-btn { padding: 0.25rem 0.5rem; font-size: 0.68rem; }
 }

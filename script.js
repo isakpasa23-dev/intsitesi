@@ -1560,9 +1560,36 @@ function setupAllEvents() {
   const tileCelebration = document.getElementById("tile-celebration");
   if (tileCelebration) {
     tileCelebration.addEventListener("click", () => {
-      launchCelebrationAnimation();
+      openMagicModal();
     });
   }
+
+  const closeMagicModalBtn = document.getElementById("close-magic-modal-btn");
+  const btnMagicClose = document.getElementById("btn-magic-close");
+  const btnMagicReplay = document.getElementById("btn-magic-replay");
+  const magicModalOverlay = document.getElementById("magic-modal-overlay");
+  const magicStageContainer = document.getElementById("magic-stage-container");
+
+  if (closeMagicModalBtn) closeMagicModalBtn.addEventListener("click", closeMagicModal);
+  if (btnMagicClose) btnMagicClose.addEventListener("click", closeMagicModal);
+  if (btnMagicReplay) btnMagicReplay.addEventListener("click", playCurrentMagicAnimation);
+  if (magicStageContainer) magicStageContainer.addEventListener("click", playCurrentMagicAnimation);
+
+  if (magicModalOverlay) {
+    magicModalOverlay.addEventListener("click", (e) => {
+      if (e.target === magicModalOverlay) closeMagicModal();
+    });
+  }
+
+  const magicTabBtns = document.querySelectorAll(".magic-tab-btn");
+  magicTabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      magicTabBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentMagicAnim = btn.dataset.anim || "rose";
+      playCurrentMagicAnimation();
+    });
+  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -1573,187 +1600,525 @@ function setupAllEvents() {
       closeDailyQuoteModal();
       closeCheckoutInfoModal();
       closeHintModal();
+      closeMagicModal();
     }
   });
 }
 
 // ==========================================================================
-// 15.1 🎆 SİHİRLİ SEVGİ ŞÖLENİ & HAVAİ FİŞEK KUTLAMA MOTORU (Canvas)
+// 15.1 🎨 SİHİRLİ SEVGİ & ANİMASYON BAHÇESİ (Gül, Kaktüs, Yıldız, Kelebek)
 // ==========================================================================
-let celebrationAnimId = null;
+let currentMagicAnim = "rose";
+let magicAnimFrameId = null;
 
-function launchCelebrationAnimation() {
-  const canvas = document.getElementById("celebration-canvas");
-  if (!canvas) return;
+function openMagicModal() {
+  const modal = document.getElementById("magic-modal-overlay");
+  if (modal) modal.classList.add("active");
 
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  // Kedi sevinç tepkisi
   const cat = document.getElementById("screen-cat-companion");
   const bubble = document.getElementById("cat-speech-bubble");
   if (cat && bubble) {
     cat.classList.add("purring");
-    bubble.textContent = "🎆 Harikasın birtanem! 💕";
+    bubble.textContent = "✨ Büyülü bahçeye hoş geldin! 🌸";
     bubble.classList.add("active");
     setTimeout(() => {
       cat.classList.remove("purring");
       bubble.classList.remove("active");
-    }, 4500);
+    }, 3500);
   }
 
-  // Kalp yağmuru da başlat
-  triggerHeartsShower();
+  setTimeout(() => {
+    playCurrentMagicAnimation();
+  }, 100);
+}
 
-  // Partikül sistemi
-  const particles = [];
-  const fireworks = [];
-  const colors = ["#ff1361", "#ff758c", "#ffd700", "#00cec9", "#a29bfe", "#fd79a8", "#ffffff", "#e056fd"];
-  const heartEmojis = ["💖", "💕", "✨", "🌸", "⭐", "👑", "🥰", "🔥"];
-
-  // Yüzen Aşk Mesajları
-  const messages = [
-    "🎆 SİHİRLİ SEVGİ ŞÖLENİ! 🎆",
-    "💖 Seni Dünyalar Kadar Çok Seviyorum Bebeğim! 💖",
-    "🌟 İyi ki Hayatımdasın Birtanem! 👑",
-    "✨ Sonsuz Aşk & Mutluluk! 💕"
-  ];
-
-  let currentMsgIndex = 0;
-  let bannerOpacity = 0;
-  let bannerScale = 0.8;
-
-  function createFirework() {
-    const x = Math.random() * (canvas.width - 100) + 50;
-    const targetY = Math.random() * (canvas.height * 0.45) + 60;
-    fireworks.push({
-      x: x,
-      y: canvas.height,
-      targetY: targetY,
-      speed: 12 + Math.random() * 6,
-      color: colors[Math.floor(Math.random() * colors.length)]
-    });
+function closeMagicModal() {
+  if (magicAnimFrameId) {
+    cancelAnimationFrame(magicAnimFrameId);
+    magicAnimFrameId = null;
   }
+  const modal = document.getElementById("magic-modal-overlay");
+  if (modal) modal.classList.remove("active");
+}
 
-  function explode(x, y, color) {
-    const count = 45;
+function playCurrentMagicAnimation() {
+  const canvas = document.getElementById("magic-canvas");
+  if (!canvas) return;
+
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = (rect.width || 420) * dpr;
+  canvas.height = (rect.height || 220) * dpr;
+
+  const ctx = canvas.getContext("2d");
+  ctx.scale(dpr, dpr);
+
+  const width = rect.width || 420;
+  const height = rect.height || 220;
+
+  if (magicAnimFrameId) cancelAnimationFrame(magicAnimFrameId);
+
+  const startTime = Date.now();
+
+  // Partikül Havuzu
+  const magicParticles = [];
+  function addSparkles(x, y, count = 3, colors = ["#ff1361", "#ffd700", "#ffffff"]) {
     for (let i = 0; i < count; i++) {
-      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5);
-      const speed = Math.random() * 7 + 2;
-      const isEmoji = Math.random() > 0.65;
-      particles.push({
-        x: x,
-        y: y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        color: color,
+      magicParticles.push({
+        x: x + (Math.random() - 0.5) * 20,
+        y: y + (Math.random() - 0.5) * 20,
+        vx: (Math.random() - 0.5) * 2.5,
+        vy: (Math.random() - 0.5) * 2.5 - 0.8,
+        size: Math.random() * 3 + 1.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
         alpha: 1,
-        decay: Math.random() * 0.018 + 0.012,
-        size: Math.random() * 4 + 2,
-        gravity: 0.12,
-        isEmoji: isEmoji,
-        emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)]
+        decay: Math.random() * 0.02 + 0.015
       });
     }
   }
 
-  // Havai fişek dalgaları oluştur
-  let startTime = Date.now();
-  let lastFireworkTime = 0;
-
-  for (let i = 0; i < 4; i++) {
-    createFirework();
-  }
-
-  if (celebrationAnimId) cancelAnimationFrame(celebrationAnimId);
-
-  function renderCelebration() {
-    const elapsed = Date.now() - startTime;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Yeni havai fişekler fırlat (İlk 4 saniye boyunca)
-    if (elapsed < 3800 && Date.now() - lastFireworkTime > 350) {
-      createFirework();
-      if (Math.random() > 0.5) createFirework();
-      lastFireworkTime = Date.now();
-    }
-
-    // Mesaj döngüsü
-    if (elapsed < 4200) {
-      const msgPhase = Math.floor(elapsed / 1000) % messages.length;
-      const activeMsg = messages[msgPhase];
-
-      ctx.save();
-      ctx.font = "800 clamp(16px, 3.5vw, 24px) 'Plus Jakarta Sans', sans-serif";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      // Glow efekti
-      ctx.shadowColor = "#ff1361";
-      ctx.shadowBlur = 16;
-      ctx.fillStyle = "#ffffff";
-      ctx.fillText(activeMsg, canvas.width / 2, canvas.height * 0.22);
-      ctx.restore();
-    }
-
-    // Fişek roketlerini güncelle
-    for (let i = fireworks.length - 1; i >= 0; i--) {
-      const f = fireworks[i];
-      f.y -= f.speed;
-
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = f.color;
-      ctx.fill();
-
-      if (f.y <= f.targetY) {
-        explode(f.x, f.y, f.color);
-        fireworks.splice(i, 1);
-      }
-    }
-
-    // Patlama partiküllerini güncelle
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const p = particles[i];
+  function updateParticles() {
+    for (let i = magicParticles.length - 1; i >= 0; i--) {
+      const p = magicParticles[i];
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += p.gravity;
-      p.vx *= 0.98;
       p.alpha -= p.decay;
-
       if (p.alpha <= 0) {
-        particles.splice(i, 1);
+        magicParticles.splice(i, 1);
         continue;
       }
-
       ctx.save();
-      ctx.globalAlpha = Math.max(0, p.alpha);
-
-      if (p.isEmoji) {
-        ctx.font = "16px sans-serif";
-        ctx.fillText(p.emoji, p.x, p.y);
-      } else {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 6;
-        ctx.fill();
-      }
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
-    }
-
-    // Animasyon devam kontrolü
-    if (elapsed < 5000 || particles.length > 0 || fireworks.length > 0) {
-      celebrationAnimId = requestAnimationFrame(renderCelebration);
-    } else {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      celebrationAnimId = null;
     }
   }
 
-  celebrationAnimId = requestAnimationFrame(renderCelebration);
+  // --- 1. 🌹 BÜYÜYEN AŞK GÜLÜ ANİMASYONU ---
+  function renderRose(t) {
+    const growDur = 2600;
+    const progress = Math.min(1, t / growDur);
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    const cx = width / 2;
+    const groundY = height - 25;
+    const topY = height * 0.32;
+    const stemHeight = (groundY - topY) * ease;
+    const currentStemY = groundY - stemHeight;
+
+    // Toprak zemini
+    ctx.save();
+    ctx.fillStyle = "#8d6e63";
+    ctx.beginPath();
+    ctx.ellipse(cx, groundY + 4, 38 * ease, 9 * ease, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Yeşil Gövde (Hafif kıvrımlı dal)
+    ctx.save();
+    ctx.strokeStyle = "#2e7d32";
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(cx, groundY);
+    const cpX = cx + Math.sin(progress * Math.PI) * 12;
+    const cpY = groundY - stemHeight * 0.5;
+    ctx.quadraticCurveTo(cpX, cpY, cx, currentStemY);
+    ctx.stroke();
+
+    // Yapraklar (Stem %40'ı geçince büyür)
+    if (progress > 0.35) {
+      const leafP = Math.min(1, (progress - 0.35) / 0.35);
+      // Sol Yaprak
+      ctx.fillStyle = "#43a047";
+      ctx.beginPath();
+      ctx.ellipse(cx - 18 * leafP, groundY - stemHeight * 0.45, 14 * leafP, 7 * leafP, -0.4, 0, Math.PI * 2);
+      ctx.fill();
+      // Sağ Yaprak
+      ctx.beginPath();
+      ctx.ellipse(cx + 18 * leafP, groundY - stemHeight * 0.65, 13 * leafP, 6 * leafP, 0.4, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // Gül Başı (Stem %70'i geçince açar)
+    if (progress > 0.65) {
+      const bloomP = Math.min(1, (progress - 0.65) / 0.35);
+      const bloomEase = 1 - Math.pow(1 - bloomP, 3);
+      const roseRadius = 26 * bloomEase;
+
+      ctx.save();
+      // Dış Çanak Yapraklar
+      ctx.fillStyle = "#2e7d32";
+      ctx.beginPath();
+      ctx.ellipse(cx, currentStemY + 3, 12 * bloomEase, 6 * bloomEase, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Dış Kırmızı Taç Yapraklar
+      ctx.fillStyle = "#c2185b";
+      ctx.beginPath();
+      ctx.arc(cx, currentStemY - 4, roseRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Orta Katman Pembe/Kırmızı Yapraklar
+      ctx.fillStyle = "#e91e63";
+      ctx.beginPath();
+      ctx.arc(cx - 3 * bloomEase, currentStemY - 6, roseRadius * 0.78, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = "#ff4081";
+      ctx.beginPath();
+      ctx.arc(cx + 3 * bloomEase, currentStemY - 5, roseRadius * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gülün İçi (Spiral Kıvrım)
+      ctx.strokeStyle = "#880e4f";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(cx, currentStemY - 5, roseRadius * 0.35, 0.2 * Math.PI, 1.8 * Math.PI);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx, currentStemY - 5, roseRadius * 0.18, 1.1 * Math.PI, 2.7 * Math.PI);
+      ctx.stroke();
+
+      if (Math.random() > 0.4) {
+        addSparkles(cx + (Math.random() - 0.5) * 40, currentStemY - 10 + (Math.random() - 0.5) * 30, 2, ["#ff4081", "#ffd700", "#ffffff"]);
+      }
+      ctx.restore();
+    }
+  }
+
+  // --- 2. 🌵 ÇİÇEK AÇAN SEVİMLİ KAKTÜS ---
+  function renderCactus(t) {
+    const growDur = 2400;
+    const progress = Math.min(1, t / growDur);
+    const ease = 1 - Math.pow(1 - progress, 3);
+
+    const cx = width / 2;
+    const groundY = height - 20;
+
+    // Saksı (Terracotta Pot)
+    ctx.save();
+    const potW = 54;
+    const potH = 46;
+    const potY = groundY - potH;
+    
+    // Saksı Gövdesi
+    ctx.fillStyle = "#e17055";
+    ctx.beginPath();
+    ctx.moveTo(cx - potW / 2 + 5, groundY);
+    ctx.lineTo(cx + potW / 2 - 5, groundY);
+    ctx.lineTo(cx + potW / 2, potY + 10);
+    ctx.lineTo(cx - potW / 2, potY + 10);
+    ctx.closePath();
+    ctx.fill();
+
+    // Saksı Kenarlığı
+    ctx.fillStyle = "#d63031";
+    ctx.beginPath();
+    ctx.roundRect(cx - potW / 2 - 4, potY, potW + 8, 11, 4);
+    ctx.fill();
+
+    // Saksı üzerindeki küçük kalp
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(cx, potY + 26, 4.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Kaktüs Gövdesi (Saksıdan Yükselen Yeşil Gövde)
+    const cactusH = 68 * ease;
+    const cactusW = 34 * ease;
+    const cactusY = potY - cactusH + 4;
+
+    ctx.save();
+    ctx.fillStyle = "#00b894";
+    ctx.strokeStyle = "#00a884";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(cx - cactusW / 2, cactusY, cactusW, cactusH + 6, cactusW / 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Kaktüs Çizgileri
+    ctx.strokeStyle = "#00a884";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - 7 * ease, cactusY + 8);
+    ctx.lineTo(cx - 7 * ease, potY);
+    ctx.moveTo(cx + 7 * ease, cactusY + 8);
+    ctx.lineTo(cx + 7 * ease, potY);
+    ctx.stroke();
+
+    // Sevimli Yüz (Gözler & Yanaklar)
+    if (progress > 0.45) {
+      const faceAlpha = Math.min(1, (progress - 0.45) / 0.3);
+      ctx.globalAlpha = faceAlpha;
+      
+      // Gözler
+      ctx.fillStyle = "#2d3436";
+      ctx.beginPath();
+      ctx.arc(cx - 6, cactusY + cactusH * 0.42, 2.5, 0, Math.PI * 2);
+      ctx.arc(cx + 6, cactusY + cactusH * 0.42, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gülümseme
+      ctx.strokeStyle = "#2d3436";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(cx, cactusY + cactusH * 0.46, 4, 0.2 * Math.PI, 0.8 * Math.PI);
+      ctx.stroke();
+
+      // Pembe Yanaklar
+      ctx.fillStyle = "#ff7675";
+      ctx.beginPath();
+      ctx.arc(cx - 9, cactusY + cactusH * 0.46, 3, 0, Math.PI * 2);
+      ctx.arc(cx + 9, cactusY + cactusH * 0.46, 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+
+    // Tepedeki Çiçek (Progress %65 olunca açar!)
+    if (progress > 0.65) {
+      const flowerP = Math.min(1, (progress - 0.65) / 0.35);
+      const flowerScale = 1 - Math.pow(1 - flowerP, 3);
+      const flowerY = cactusY;
+
+      ctx.save();
+      ctx.translate(cx, flowerY);
+      ctx.scale(flowerScale, flowerScale);
+
+      // Çiçek Taç Yaprakları (8 Yapraklı Pembe Kaktüs Çiçeği)
+      ctx.fillStyle = "#fd79a8";
+      for (let i = 0; i < 8; i++) {
+        ctx.save();
+        ctx.rotate((Math.PI * 2 * i) / 8);
+        ctx.beginPath();
+        ctx.ellipse(0, -12, 5, 9, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Çiçek Göbeği
+      ctx.fillStyle = "#ffeaa7";
+      ctx.beginPath();
+      ctx.arc(0, 0, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+
+      if (Math.random() > 0.4) {
+        addSparkles(cx + (Math.random() - 0.5) * 35, flowerY + (Math.random() - 0.5) * 25, 2, ["#fd79a8", "#ffeaa7", "#ffffff"]);
+      }
+    }
+    ctx.restore();
+  }
+
+  // --- 3. ⭐ SİHİRLİ KUTUP YILDIZI ÇİZİMİ ---
+  function renderStar(t) {
+    const drawDur = 2500;
+    const progress = Math.min(1, t / drawDur);
+    const cx = width / 2;
+    const cy = height / 2;
+    const r = 58;
+
+    // 5 Köşeli Yıldızın Sıralı Çizim Noktaları (0 -> 2 -> 4 -> 1 -> 3 -> 0)
+    const order = [0, 2, 4, 1, 3, 0];
+    const starPoints = [];
+    for (let i = 0; i < 5; i++) {
+      const a = -Math.PI / 2 + (i * 2 * Math.PI) / 5;
+      starPoints.push({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
+    }
+
+    const totalSegs = 5;
+    const currentSegProgress = progress * totalSegs;
+    const activeSegIdx = Math.floor(currentSegProgress);
+    const segSubP = currentSegProgress - activeSegIdx;
+
+    ctx.save();
+
+    // Yıldız Çizgi Yolu
+    ctx.strokeStyle = "#f39c12";
+    ctx.lineWidth = 4;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.shadowColor = "#f1c40f";
+    ctx.shadowBlur = 12;
+
+    ctx.beginPath();
+    ctx.moveTo(starPoints[order[0]].x, starPoints[order[0]].y);
+
+    for (let s = 0; s < Math.min(5, activeSegIdx); s++) {
+      const p2 = starPoints[order[s + 1]];
+      ctx.lineTo(p2.x, p2.y);
+    }
+
+    let headX = starPoints[order[0]].x;
+    let headY = starPoints[order[0]].y;
+
+    if (activeSegIdx < 5) {
+      const p1 = starPoints[order[activeSegIdx]];
+      const p2 = starPoints[order[activeSegIdx + 1]];
+      headX = p1.x + (p2.x - p1.x) * segSubP;
+      headY = p1.y + (p2.y - p1.y) * segSubP;
+      ctx.lineTo(headX, headY);
+    }
+    ctx.stroke();
+
+    // Çizim Yapan Sihirli Yıldız Ucu
+    if (progress < 1) {
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "#ff1361";
+      ctx.shadowBlur = 16;
+      ctx.beginPath();
+      ctx.arc(headX, headY, 6, 0, Math.PI * 2);
+      ctx.fill();
+      addSparkles(headX, headY, 3, ["#f1c40f", "#ff758c", "#ffffff"]);
+    } else {
+      // Yıldız Tamamlandı: İçini Işıkla Doldur & Parıltı Saç
+      const pulse = (Math.sin((t - drawDur) / 250) + 1) / 2;
+      ctx.fillStyle = `rgba(254, 202, 87, ${0.45 + pulse * 0.35})`;
+      ctx.beginPath();
+      ctx.moveTo(starPoints[order[0]].x, starPoints[order[0]].y);
+      for (let s = 1; s <= 5; s++) ctx.lineTo(starPoints[order[s]].x, starPoints[order[s]].y);
+      ctx.closePath();
+      ctx.fill();
+
+      // Merkezi Parıltı
+      ctx.fillStyle = "#ffffff";
+      ctx.shadowColor = "#ffd700";
+      ctx.shadowBlur = 24;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14 + pulse * 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (Math.random() > 0.4) {
+        addSparkles(cx + (Math.random() - 0.5) * 80, cy + (Math.random() - 0.5) * 80, 2, ["#f1c40f", "#ffffff", "#ff4b72"]);
+      }
+    }
+    ctx.restore();
+  }
+
+  // --- 4. 🎆 KALP HAVAİ FİŞEK ŞÖLENİ ---
+  const fireworksList = [];
+  function renderFireworks(t) {
+    if (Math.random() > 0.88 && fireworksList.length < 5) {
+      fireworksList.push({
+        x: Math.random() * (width - 60) + 30,
+        y: height,
+        targetY: Math.random() * (height * 0.45) + 30,
+        speed: 5 + Math.random() * 3,
+        color: ["#ff1361", "#ff758c", "#00cec9", "#ffd700", "#a29bfe"][Math.floor(Math.random() * 5)]
+      });
+    }
+
+    for (let i = fireworksList.length - 1; i >= 0; i--) {
+      const f = fireworksList[i];
+      f.y -= f.speed;
+      ctx.save();
+      ctx.fillStyle = f.color;
+      ctx.shadowColor = f.color;
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      if (f.y <= f.targetY) {
+        // Kalp Şeklinde Patlat
+        for (let a = 0; a < Math.PI * 2; a += 0.3) {
+          const hx = 16 * Math.pow(Math.sin(a), 3);
+          const hy = -(13 * Math.cos(a) - 5 * Math.cos(2*a) - 2 * Math.cos(3*a) - Math.cos(4*a));
+          magicParticles.push({
+            x: f.x,
+            y: f.y,
+            vx: hx * 0.15 + (Math.random() - 0.5),
+            vy: hy * 0.15 + (Math.random() - 0.5),
+            color: f.color,
+            size: Math.random() * 3.5 + 1.5,
+            alpha: 1,
+            decay: Math.random() * 0.02 + 0.015
+          });
+        }
+        fireworksList.splice(i, 1);
+      }
+    }
+  }
+
+  // --- 5. 🦋 UÇUŞAN SEVGİ KELEBEKLERİ ---
+  const butterflies = [
+    { x: width * 0.2, y: height * 0.5, color: "#ff758c", size: 14, speed: 0.002, offset: 0 },
+    { x: width * 0.5, y: height * 0.4, color: "#00cec9", size: 12, speed: 0.0025, offset: 2 },
+    { x: width * 0.8, y: height * 0.6, color: "#a29bfe", size: 13, speed: 0.0018, offset: 4 }
+  ];
+
+  function renderButterflies(t) {
+    butterflies.forEach(b => {
+      const bx = width / 2 + Math.sin(t * b.speed + b.offset) * (width * 0.35);
+      const by = height / 2 + Math.cos(t * b.speed * 1.5 + b.offset) * (height * 0.28);
+      const wingFlap = Math.sin(t * 0.025);
+
+      ctx.save();
+      ctx.translate(bx, by);
+
+      // Kanatlar
+      ctx.fillStyle = b.color;
+      ctx.shadowColor = b.color;
+      ctx.shadowBlur = 8;
+
+      // Sol Kanat
+      ctx.beginPath();
+      ctx.ellipse(-b.size * 0.6 * Math.abs(wingFlap), -2, b.size * 0.7 * Math.abs(wingFlap), b.size * 0.5, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Sağ Kanat
+      ctx.beginPath();
+      ctx.ellipse(b.size * 0.6 * Math.abs(wingFlap), -2, b.size * 0.7 * Math.abs(wingFlap), b.size * 0.5, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Gövde
+      ctx.fillStyle = "#2d3436";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 2, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+
+      if (Math.random() > 0.5) {
+        addSparkles(bx, by, 1, [b.color, "#ffffff"]);
+      }
+    });
+  }
+
+  // --- ANA ANİMASYON DÖNGÜSÜ ---
+  function loop() {
+    const elapsed = Date.now() - startTime;
+    ctx.clearRect(0, 0, width, height);
+
+    if (currentMagicAnim === "rose") {
+      renderRose(elapsed);
+    } else if (currentMagicAnim === "cactus") {
+      renderCactus(elapsed);
+    } else if (currentMagicAnim === "star") {
+      renderStar(elapsed);
+    } else if (currentMagicAnim === "fireworks") {
+      renderFireworks(elapsed);
+    } else if (currentMagicAnim === "butterflies") {
+      renderButterflies(elapsed);
+    }
+
+    updateParticles();
+
+    magicAnimFrameId = requestAnimationFrame(loop);
+  }
+
+  magicAnimFrameId = requestAnimationFrame(loop);
 }
 
 // ==========================================================================
