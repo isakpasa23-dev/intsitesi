@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Stok Koruma Kilidi, Kalıcı Sepet Hafızası & Zengin Söz Havuzu 🛡️💾✨
+   'Seni Özledim' Menüsü, Sonsuz Stoklar & 8 Haziran 2029 Canlı Sayacı 🥺💖✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -87,34 +87,37 @@ function getAskolcerDetailedRemaining() {
 }
 
 // ==========================================================================
-// 2. ÜRÜNLER & STOK KONTROLÜ
+// 2. ÜRÜNLER & STOK KONTROLÜ (4 Kategori)
 // ==========================================================================
 const INITIAL_STOCKS = {
-  "askolcer": 1,
-  "canim-cicim": 3,
-  "kahve-kacamagi": 5,
-  "gece-sohbeti": 7,
-  "sarilma-kuponu": 99,
-  "film-gecesi": 2,
-  "kahve-hediye": 10
+  "askolcer": 1,          // Aşkölçer sadece 1 adet
+  "canim-cicim": 500,     // Çok sayıda
+  "kahve-kacamagi": 500,  // Çok sayıda
+  "gece-sohbeti": 9999,   // Sonsuz
+  "sarilma-kuponu": 9999, // Sonsuz
+  "film-gecesi": 500,     // Çok sayıda
+  "goruntulu-arama": 9999,// Sonsuz
+  "ozlem-sarilmasi": 9999,// Sonsuz
+  "ozel-ses-kaydi": 9999, // Sonsuz
+  "kahve-hediye": 500
 };
 
 function getProductStock(productId) {
-  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks") || "null");
+  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v3") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
     return savedStocks[productId];
   }
-  return INITIAL_STOCKS[productId] || 5;
+  return INITIAL_STOCKS[productId] || 9999;
 }
 
 function decrementProductStock(productId, quantity) {
-  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks") || "null");
+  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v3") || "null");
   if (!savedStocks) {
     savedStocks = { ...INITIAL_STOCKS };
   }
   const current = savedStocks[productId] || 0;
   savedStocks[productId] = Math.max(0, current - quantity);
-  localStorage.setItem("site_product_stocks", JSON.stringify(savedStocks));
+  localStorage.setItem("site_product_stocks_v3", JSON.stringify(savedStocks));
 }
 
 const PRODUCTS = [
@@ -127,7 +130,7 @@ const PRODUCTS = [
     unit: "₺",
     isCountdown: true,
     deliveryText: "8 Haziran 2029 ⏳",
-    badge: "Çok Satan 🔥",
+    badge: "Tek & Özel Üretim 🔥",
     description: "Aşkınızın derecesini %100 hassasiyetle ölçen sihirli aşk cihazı.",
     image: "assets/askolcer.svg"
   },
@@ -165,7 +168,7 @@ const PRODUCTS = [
     unit: "₺",
     isCountdown: false,
     deliveryText: "Anında ⚡",
-    badge: "Huzur 🌙",
+    badge: "Sonsuz Huzur 🌙",
     description: "Uyumadan önce dinlenecek en güzel şarkılar ve sıcacık ses kaydı.",
     image: "assets/love-letter.svg"
   },
@@ -194,6 +197,44 @@ const PRODUCTS = [
     badge: "VIP Sinema 🍿",
     description: "Filmi tamamen senin seçeceğin, atıştırmalıkların hazır olduğu sinema gecesi.",
     image: "assets/askolcer.svg"
+  },
+
+  // 🥺 4. Kategori: Seni Özledim Menüsü (YENİ)
+  {
+    id: "goruntulu-arama",
+    category: "ozlem",
+    name: "Anında Görüntülü Arama",
+    price: 0,
+    unit: "₺",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
+    badge: "Özlem Giderici 📱",
+    description: "Yüzünü görmek ve tatlı sesini duymak istediğinde anında geçerli sınırsız görüntülü konuşma hakkı.",
+    image: "assets/love-letter.svg"
+  },
+  {
+    id: "ozlem-sarilmasi",
+    category: "ozlem",
+    name: "Kavuşma & Özlem Sarılması",
+    price: 0,
+    unit: "₺",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
+    badge: "Sıcacık 🫂",
+    description: "İlk buluşmada dakikalarca sürecek, kokunu içine çeke çeke sımsıkı sarılma garantisi.",
+    image: "assets/canim-cicim.svg"
+  },
+  {
+    id: "ozel-ses-kaydi",
+    category: "ozlem",
+    name: "Özel Aşk Ses Kaydı & Şarkı",
+    price: 0,
+    unit: "₺",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
+    badge: "Sana Özel 🎙️",
+    description: "Özlediğin her an dinlemen için kaydedilmiş en tatlı ses kaydı ve özel şarkı armağanı.",
+    image: "assets/gift-coffee.svg"
   }
 ];
 
@@ -335,8 +376,12 @@ function renderProducts() {
     let stockDisplay = "";
     let isOutOfStock = stock <= 0;
 
-    if (stock > 10) {
-      stockDisplay = "📦 Stok: Bolca Mevcut ♾️";
+    if (product.id === "askolcer") {
+      stockDisplay = stock > 0 ? "📦 Stok: Sadece 1 Adet (Tek & Özel) 🔥" : "💖 Tükendi (Sana Özel Hazırlanır)";
+    } else if (stock >= 1000) {
+      stockDisplay = "📦 Stok: Sonsuz & Sınırsız ♾️";
+    } else if (stock > 10) {
+      stockDisplay = `📦 Stok: Bolca Mevcut (${stock} Adet)`;
     } else if (stock > 0) {
       stockDisplay = `📦 Stok: Son ${stock} Adet 🔥`;
     } else {
@@ -357,7 +402,7 @@ function renderProducts() {
         <div class="product-footer">
           <div class="product-stock-info">
             <span class="delivery-tag">⏳ Teslimat: ${product.deliveryText}</span>
-            <span class="stock-badge ${stock <= 1 ? (isOutOfStock ? 'out' : 'low') : ''}">${stockDisplay}</span>
+            <span class="stock-badge ${stock <= 1 && product.id === 'askolcer' ? (isOutOfStock ? 'out' : 'low') : ''}">${stockDisplay}</span>
           </div>
           
           <button class="btn-add-cart" data-id="${product.id}">

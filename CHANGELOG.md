@@ -4,16 +4,24 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.9.0] - 31.08.2026 (Stok Koruma Kilidi, Kalıcı Sepet & Zengin Söz Havuzu) 🛡️💾💌
-- **Stok Koruma Kilidi:**
-  - Sepetteki bir ürünün stoğu tükendiğinde veya sepetteki miktar mevcut stoktan fazla olduğunda *"Siparişi Tamamla"* butonuna basılsa bile sipariş bilgi ekranına geçiş engellenir; sepet içinde net bir uyarı (*"❌ Bu ürün stokta tükendi / yeterli stok yok"*) gösterilir.
-  - Ürün eklerken ve adet artırırken de stok sınırını aşmak engellendi.
-- **Kalıcı Sepet Hafızası:**
-  - Sayfa veya sekme yenilendiğinde sepet artık asla sıfırlanmaz; `localStorage` üzerinden son haliyle korunur.
-- **Zengin Rastgele Söz Havuzu:**
-  - *"Günün Tatlı Sözü"* modülü 26+ romantik, samimi ve özel söze genişletildi.
-  - Her açılışta ve *"Yeni Bir Söz Çek"* butonuna her basılışta üst üste aynı söz gelmeyecek şekilde tam rastgele seçim algoritması bağlandı.
+### [v2.0.0] - 31.08.2026 (Seni Özledim Menüsü & Özel Stok Seviyeleri) 🥺💖✨
+- **Yeni Kategori: "🥺 Seni Özledim Menüsü":**
+  - Alışveriş bölümüne 4. kategori olarak eklendi.
+  - İçeriğindeki özel ürünler:
+    - 📱 *Anında Görüntülü Arama* (Sonsuz & Sınırsız ♾️)
+    - 🫂 *Kavuşma & Özlem Sarılması* (Sonsuz & Sınırsız ♾️)
+    - 🎙️ *Özel Aşk Ses Kaydı & Şarkı* (Sonsuz & Sınırsız ♾️)
+- **Kişiselleştirilmiş Stok Seviyeleri:**
+  - **Aşkölçer:** Sadece **1 Adet** (Tek & Özel Üretim 🔥).
+  - **Gece Sohbeti & Şarkı:** **Sonsuz & Sınırsız ♾️**
+  - **Sınırsız Sarılma Kuponu:** **Sonsuz & Sınırsız ♾️**
+  - **Diğer Ürünler:** Bolca Mevcut (500 Adet).
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.9.0] - 31.08.2026 (Stok Koruma Kilidi, Kalıcı Sepet & Zengin Söz Havuzu) 🛡️💾💌
+- Stok koruma kilidi, kalıcı sepet ve 26+ rastgele romantik söz havuzu eklendi.
 
 ---
 
