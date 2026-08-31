@@ -163,15 +163,16 @@ function getProductStock(productId) {
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-// ☁️ Buluttan Canlı Stokları Çekme
+// ☁️ Buluttan Canlı Stokları Çekme (Akıllı Birleştirme)
 async function fetchCloudStocks() {
   try {
     const res = await fetch(`${CLOUD_STOCK_ENDPOINT}?_t=${Date.now()}`);
     if (res.ok) {
       const data = await res.json();
-      if (data && typeof data.askolcer !== "undefined") {
+      if (data && typeof data === "object") {
+        const merged = { ...INITIAL_STOCKS, ...data };
         const prevDataStr = localStorage.getItem("site_cloud_stocks_cache");
-        const newDataStr = JSON.stringify(data);
+        const newDataStr = JSON.stringify(merged);
         if (prevDataStr !== newDataStr) {
           localStorage.setItem("site_cloud_stocks_cache", newDataStr);
           renderProducts();
@@ -183,7 +184,7 @@ async function fetchCloudStocks() {
   }
 }
 
-// ☁️ Buluta Güncel Stokları Kaydetme
+// ☁️ Buluta Güncel Stokları Kaydetme (Atomik & Anlık)
 async function pushCloudStocks(updatedStocks) {
   try {
     localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(updatedStocks));
@@ -199,15 +200,28 @@ async function pushCloudStocks(updatedStocks) {
   }
 }
 
-function decrementProductStock(productId, quantity) {
+// Sepetteki tüm ürünleri tek seferde atomik olarak buluttan düşürme
+async function decrementCartStocks(cartItems) {
   let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
   if (!currentStocks) {
     currentStocks = { ...INITIAL_STOCKS };
+  } else {
+    currentStocks = { ...INITIAL_STOCKS, ...currentStocks };
   }
-  const current = currentStocks[productId] || 0;
-  currentStocks[productId] = Math.max(0, current - quantity);
-  
-  pushCloudStocks(currentStocks);
+
+  cartItems.forEach(item => {
+    const pid = item.product.id;
+    if (pid !== "beraber-yuruyus" && pid !== "ozlem-sarilmasi" && pid !== "sarilma-kuponu" && !pid.includes("hediye")) {
+      const curVal = typeof currentStocks[pid] !== "undefined" ? currentStocks[pid] : (INITIAL_STOCKS[pid] || 100);
+      currentStocks[pid] = Math.max(0, curVal - item.quantity);
+    }
+  });
+
+  await pushCloudStocks(currentStocks);
+}
+
+function decrementProductStock(productId, quantity) {
+  decrementCartStocks([{ product: { id: productId }, quantity: quantity }]);
 }
 
 // ==========================================================================
@@ -946,9 +960,8 @@ function finalizeOrder() {
 
   localStorage.setItem("saved_customer_name", customerName);
 
-  cart.forEach(item => {
-    decrementProductStock(item.product.id, item.quantity);
-  });
+  // Sepetteki tüm ürünlerin stoklarını atomik olarak buluttan düşür
+  decrementCartStocks(cart);
 
   renderProducts();
   closeCheckoutInfoModal();
