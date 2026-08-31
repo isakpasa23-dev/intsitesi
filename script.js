@@ -1,10 +1,10 @@
 /* ==========================================================================
-   ROMANTİK SİPARİŞ SİTESİ - JAVASCRIPT MOTORU
-   Vanilla JS, Saf & Bağımsız Kod Yapısı
+   SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
+   Vanilla JS, Modüler & Genişletilebilir Yapı
    ========================================================================== */
 
 // ==========================================================================
-// 1. ÜRÜN TANIMLARI (Buradan kolayca yeni ürün ekleyip değiştirebilirsiniz)
+// 1. ÜRÜN TANIMLARI
 // ==========================================================================
 const PRODUCTS = [
   {
@@ -12,7 +12,7 @@ const PRODUCTS = [
     name: "Aşkölçer",
     price: 100,
     unit: "₺",
-    badge: "Çok Satan 🔥",
+    badge: "Özel Tasarım 🔥",
     description: "Aşkınızın derecesini %100 hassasiyetle ölçen, her baktığında seni hatırlatacak eğlenceli ve sihirli aşk cihazı.",
     image: "assets/askolcer.svg"
   },
@@ -21,32 +21,31 @@ const PRODUCTS = [
     name: "Canım Cicim",
     price: 150,
     unit: "₺",
-    badge: "Özel Paket 🎁",
-    description: "İçerisinde sıcacık sarılmalar, tatlı iltifatlar ve sonsuz huzur barındıran en tatlı sevgi ve mutluluk paketi.",
+    badge: "Sevgi Paketi 🎁",
+    description: "İçerisinde sıcacık sarılmalar, tatlı iltifatlar ve sonsuz huzur barındıran en tatlı aşk ve mutluluk paketi.",
     image: "assets/canim-cicim.svg"
   }
 ];
 
 // ==========================================================================
 // 2. İNDİRİM & SÜRPRİZ KODLARI
-// (Buradan kolayca yeni gizli kodlar, indirimler veya sürprizler tanımlayabilirsiniz)
 // ==========================================================================
 const discountCodes = {
   "SENICOKSEVIYORUM": {
     type: "percent",
-    value: 100, // %100 İndirim
+    value: 100,
     message: "🎉 Tebrikler! Sonsuz Aşk İndirimi: Sepetteki her şey %100 BEDAVA!",
     action: "heartsRain"
   },
   "CANIMBENIM": {
     type: "fixed",
-    value: 50, // 50 TL İndirim
+    value: 50,
     message: "💕 Tatlı bir sarılma indirimi: 50 ₺ sepete uygulandı!",
     action: "heartsRain"
   },
   "OPUCUK": {
     type: "percent",
-    value: 50, // %50 İndirim
+    value: 50,
     message: "💋 %50 Kocaman Öpücük İndirimi uygulandı!",
     action: "heartsRain"
   },
@@ -68,7 +67,7 @@ const discountCodes = {
     type: "special",
     message: "💌 Sana özel gizli bir mektup açıldı!",
     letterTitle: "Canımın İçi İçin Özel Mektup ✨",
-    letterText: "Hayatıma girdiğin günden beri her günüm seninle çok daha güzel ve anlamlı. Bu site sadece yüzünde küçük bir tebessüm oluşturmak içindi ama sevgim sonsuz ve çok gerçek! Seni her şeyden çok seviyorum. 🥰",
+    letterText: "Hayatıma girdiğin günden beri her günüm seninle çok daha renkli ve güzel. Bu site sadece yüzünde küçük bir tebessüm oluşturmak için tasarlandı ama sevgim sonsuz ve gerçek! Seni her şeyden çok seviyorum. 🥰",
     action: "openLetter"
   },
   "MEKTUP": {
@@ -80,7 +79,6 @@ const discountCodes = {
   }
 };
 
-// Eğlenceli Hatalı Kod Mesajları Listesi
 const invalidCodeMessages = [
   "Hmm, bu kod kalbimizde kayıtlı değil... Ama seni yine de çok seviyoruz! 🥰",
   "Geçersiz kod! İpucu: 'SENICOKSEVIYORUM' veya 'SURPRIZ' yazmayı dene 😉",
@@ -88,15 +86,29 @@ const invalidCodeMessages = [
   "Aşk sistemimiz bu kodu tanıyamadı, belki 'KAHVE' veya 'OPUCUK' denemek istersin? ✨"
 ];
 
+// Günün Romantik Sözleri Havuzu
+const romanticQuotes = [
+  "\"Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor.\"",
+  "\"Seninle geçen her saniye, hayatımın en güzel anısı olmaya aday.\"",
+  "\"Dünyada milyarlarca insan var ama benim kalbim sadece senin için atıyor. 💕\"",
+  "\"Günün en tatlı anı: Seni düşündüğüm ve gülümsediğim an! ✨\"",
+  "\"Sen sadece sevdiğim insan değilsin, aynı zamanda en huzurlu limanımsın. 🥰\"",
+  "\"Bugün ve her gün: Seni dünden daha çok, yarından daha az seviyorum! 💖\""
+];
+
 // ==========================================================================
 // 3. SEPET VE UYGULAMA DURUMU (State)
 // ==========================================================================
 let cart = [];
 let appliedCoupon = null;
+let currentRating = 5;
+let selectedLoveChip = "Sonsuz";
 
 // ==========================================================================
 // 4. DOM ELEMENTLERİ
 // ==========================================================================
+const navLogoBtn = document.getElementById("nav-logo-btn");
+const navHomeBtn = document.getElementById("nav-home-btn");
 const productsGrid = document.getElementById("products-grid");
 const openCartBtn = document.getElementById("open-cart-btn");
 const closeCartBtn = document.getElementById("close-cart-btn");
@@ -127,6 +139,11 @@ const letterConfirmBtn = document.getElementById("letter-confirm-btn");
 const letterTitle = document.getElementById("letter-title");
 const letterContent = document.getElementById("letter-content");
 
+const quoteModalOverlay = document.getElementById("quote-modal-overlay");
+const closeQuoteBtn = document.getElementById("close-quote-btn");
+const quoteModalText = document.getElementById("quote-modal-text");
+const newQuoteBtn = document.getElementById("new-quote-btn");
+
 const receiptModalOverlay = document.getElementById("receipt-modal-overlay");
 const closeReceiptBtn = document.getElementById("close-receipt-btn");
 const newOrderBtn = document.getElementById("new-order-btn");
@@ -139,17 +156,53 @@ const receiptDiscount = document.getElementById("receipt-discount");
 const receiptGrandTotal = document.getElementById("receipt-grand-total");
 const whatsappShareBtn = document.getElementById("whatsapp-share-btn");
 
+// Değerlendirme Elementleri
+const starRating = document.getElementById("star-rating");
+const ratingText = document.getElementById("rating-text");
+const loveChips = document.getElementById("love-chips");
+const reviewNote = document.getElementById("review-note");
+const submitReviewBtn = document.getElementById("submit-review-btn");
+
 // ==========================================================================
-// 5. BAŞLANGIÇ & ÜRÜNLERİ RENDER ETME
+// 5. SAYFA / GÖRÜNÜM GEÇİŞİ (Router)
+// ==========================================================================
+window.switchView = function(viewName) {
+  const views = {
+    'menu': document.getElementById('view-menu'),
+    'shop': document.getElementById('view-shop'),
+    'review': document.getElementById('view-review')
+  };
+
+  // Tüm görünümleri kapat
+  Object.values(views).forEach(v => {
+    if (v) v.classList.remove('active');
+  });
+
+  // İstenen görünümü aç
+  if (views[viewName]) {
+    views[viewName].classList.add('active');
+  }
+
+  // Üst bardaki "Ana Menü" butonunu sadece alt sayfalarda göster
+  if (navHomeBtn) {
+    navHomeBtn.style.display = (viewName === 'menu') ? 'none' : 'inline-flex';
+  }
+
+  // Sayfanın en üstüne kaydır
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// ==========================================================================
+// 6. BAŞLANGIÇ & ÜRÜNLERİ RENDER ETME
 // ==========================================================================
 function initApp() {
   renderProducts();
   setupEventListeners();
+  setupReviewSection();
   startBackgroundHearts();
   updateCartUI();
 }
 
-// Ürün Kartlarını Ekrana Bas
 function renderProducts() {
   if (!productsGrid) return;
   
@@ -180,13 +233,11 @@ function renderProducts() {
 }
 
 // ==========================================================================
-// 6. SEPET İŞLEMLERİ (Ekle, Sil, Miktar Güncelle, Hesapla)
+// 7. SEPET İŞLEMLERİ
 // ==========================================================================
 window.addToCart = function(productId) {
-  // Ürünü bul
   let product = PRODUCTS.find(p => p.id === productId);
   
-  // Eğer ürün ana listede yoksa, hediye ürünlerden biri olabilir
   if (!product && appliedCoupon && appliedCoupon.giftItem && appliedCoupon.giftItem.id === productId) {
     product = appliedCoupon.giftItem;
   }
@@ -200,11 +251,8 @@ window.addToCart = function(productId) {
     cart.push({ product: product, quantity: 1 });
   }
 
-  // Rozet animasyonu
   triggerBadgeBump();
   updateCartUI();
-  
-  // Küçük bildirim veya sepeti açma opsiyonu
   openCartDrawer();
 };
 
@@ -225,15 +273,12 @@ function updateQuantity(productId, delta) {
   }
 }
 
-// Sepet Arayüzünü Güncelle
 function updateCartUI() {
   const totalItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   
-  // Rozet ve sayaçlar
   cartBadge.textContent = totalItemCount;
   cartCountText.textContent = `${totalItemCount} ürün`;
 
-  // Boşluk durumu kontrolü
   if (cart.length === 0) {
     emptyCartState.style.display = "flex";
     cartItemsList.style.display = "none";
@@ -248,7 +293,6 @@ function updateCartUI() {
     checkoutBtn.style.cursor = "pointer";
   }
 
-  // Sepet Listesini Bas
   cartItemsList.innerHTML = cart.map(item => `
     <div class="cart-item">
       <div class="cart-item-img">
@@ -274,11 +318,9 @@ function updateCartUI() {
     </div>
   `).join("");
 
-  // Fiyat Hesaplamaları
   calculateAndRenderTotals();
 }
 
-// Toplam Fiyat & İndirim Hesaplama
 function calculateAndRenderTotals() {
   const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   let discountAmount = 0;
@@ -306,7 +348,6 @@ function calculateAndRenderTotals() {
   summaryTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺`;
 }
 
-// Rozet Animasyonu
 function triggerBadgeBump() {
   cartBadge.classList.add("bump");
   setTimeout(() => {
@@ -315,7 +356,7 @@ function triggerBadgeBump() {
 }
 
 // ==========================================================================
-// 7. İNDİRİM & SÜRPRİZ KODU MOTORU
+// 8. İNDİRİM & SÜRPRİZ KODU MOTORU
 // ==========================================================================
 function applyCouponCode() {
   const code = couponInput.value.trim().toUpperCase();
@@ -331,11 +372,9 @@ function applyCouponCode() {
     appliedCoupon = { code: code, ...coupon };
     showCouponAlert(coupon.message, "success");
 
-    // Özel Aksiyonları Tetikle
     if (coupon.action === "heartsRain") {
       triggerHeartsShower();
     } else if (coupon.action === "addGift" && coupon.giftItem) {
-      // Hediye ürünü sepete ekle
       const hasGift = cart.some(item => item.product.id === coupon.giftItem.id);
       if (!hasGift) {
         cart.push({ product: coupon.giftItem, quantity: 1 });
@@ -347,7 +386,6 @@ function applyCouponCode() {
 
     updateCartUI();
   } else {
-    // Rastgele eğlenceli hata mesajı
     const randomMsg = invalidCodeMessages[Math.floor(Math.random() * invalidCodeMessages.length)];
     showCouponAlert(randomMsg, "error");
   }
@@ -360,7 +398,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 8. SİPARİŞ TAMAMLAMA & FİŞ (RECEIPT) OLUŞTURMA
+// 9. SİPARİŞ TAMAMLAMA & FİŞ (RECEIPT)
 // ==========================================================================
 function processCheckout() {
   if (cart.length === 0) {
@@ -368,7 +406,6 @@ function processCheckout() {
     return;
   }
 
-  // Rastgele tatlı sipariş kodu oluştur
   const orderId = `ASK-2026-${Math.floor(1000 + Math.random() * 9000)}`;
   const today = new Date().toLocaleDateString("tr-TR", {
     day: "2-digit",
@@ -381,7 +418,6 @@ function processCheckout() {
   receiptOrderId.textContent = orderId;
   receiptDate.textContent = today;
 
-  // Fiş ürünlerini listele
   const subtotal = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
   let discountAmount = 0;
 
@@ -413,7 +449,6 @@ function processCheckout() {
 
   receiptGrandTotal.textContent = `${grandTotal.toLocaleString('tr-TR')} ₺ (Sonsuz Sevgi)`;
 
-  // WhatsApp Mesaj Linki Oluştur
   let orderSummaryText = `💖 *YENİ AŞK SİPARİŞİ!* 💖\n`;
   orderSummaryText += `📋 *Sipariş No:* ${orderId}\n`;
   orderSummaryText += `📅 *Tarih:* ${today}\n\n`;
@@ -433,14 +468,85 @@ function processCheckout() {
   const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(orderSummaryText)}`;
   whatsappShareBtn.href = waUrl;
 
-  // Çekmeceyi kapat ve fiş modalını aç
   closeCartDrawer();
   openReceiptModal();
   triggerHeartsShower();
 }
 
 // ==========================================================================
-// 9. MODAL & ÇEKMECE KONTROLLERİ
+// 10. DEĞERLENDİRME & ANKET İŞLEMLERİ
+// ==========================================================================
+function setupReviewSection() {
+  if (!starRating) return;
+
+  const ratingDescriptions = {
+    1: "Biraz İlgiye İhtiyacımız Var 🥺",
+    2: "Daha Çok Sarılmalı! 💕",
+    3: "Çok Tatlı & Sevgi Dolu 🥰",
+    4: "Harika Bir Aşk Hizmeti! 💖",
+    5: "Sonsuz Yıldız / Mükemmel Ötesi! 🌟"
+  };
+
+  // Yıldız Puanlama
+  const stars = starRating.querySelectorAll(".star");
+  stars.forEach((star, index) => {
+    star.addEventListener("click", () => {
+      currentRating = index + 1;
+      stars.forEach((s, i) => {
+        if (i <= index) {
+          s.classList.add("active");
+        } else {
+          s.classList.remove("active");
+        }
+      });
+      ratingText.textContent = ratingDescriptions[currentRating];
+      triggerHeartsShower();
+    });
+  });
+
+  // Seçenek Çipleri
+  if (loveChips) {
+    const chips = loveChips.querySelectorAll(".chip-btn");
+    chips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        chips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        selectedLoveChip = chip.dataset.value;
+      });
+    });
+  }
+
+  // Değerlendirmeyi Gönder
+  if (submitReviewBtn) {
+    submitReviewBtn.addEventListener("click", () => {
+      const note = reviewNote.value.trim() || "Çok güzelsin ve seni çok seviyorum!";
+      triggerHeartsShower();
+
+      // Sevimli onay mesajı
+      alert(`🎉 Harika! Değerlendirmen kalbimize ulaştı:\n\n⭐ Puanın: ${currentRating}/5\n💖 Sevgi Seviyen: ${selectedLoveChip}\n💌 Notun: "${note}"\n\nBu değerlendirme ömür boyu saklanacaktır! 🥰`);
+      
+      reviewNote.value = "";
+      switchView("menu");
+    });
+  }
+}
+
+// ==========================================================================
+// 11. GÜNÜN TATLI SÖZÜ MODALI
+// ==========================================================================
+window.openDailyQuoteModal = function() {
+  getRandomQuote();
+  quoteModalOverlay.classList.add("active");
+  triggerHeartsShower();
+};
+
+function getRandomQuote() {
+  const quote = romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)];
+  quoteModalText.textContent = quote;
+}
+
+// ==========================================================================
+// 12. MODAL & ÇEKMECE KONTROLLERİ
 // ==========================================================================
 function openCartDrawer() {
   cartOverlay.classList.add("active");
@@ -482,7 +588,7 @@ function resetOrder() {
 }
 
 // ==========================================================================
-// 10. ANİMASYONLAR: UÇUŞAN KALPLER & TIKLAMA EFEKTLERİ
+// 13. ANİMASYONLAR (Uçuşan Kalpler & Tıklama)
 // ==========================================================================
 function startBackgroundHearts() {
   const container = document.getElementById("heart-bg-container");
@@ -491,7 +597,7 @@ function startBackgroundHearts() {
   const heartSymbols = ["💖", "💕", "💗", "💓", "🌸", "✨"];
 
   setInterval(() => {
-    if (document.hidden) return; // Sekme aktif değilken yormasın
+    if (document.hidden) return;
 
     const heart = document.createElement("span");
     heart.className = "floating-heart-bg";
@@ -502,14 +608,12 @@ function startBackgroundHearts() {
 
     container.appendChild(heart);
 
-    // Animasyon bitince temizle
     setTimeout(() => {
       heart.remove();
     }, 14000);
   }, 1200);
 }
 
-// Kalp Yağmuru / Kutlama Efekti
 function triggerHeartsShower() {
   const container = document.getElementById("heart-bg-container");
   if (!container) return;
@@ -533,10 +637,8 @@ function triggerHeartsShower() {
   }
 }
 
-// Ekrana Tıklayınca Çıkan Kalp Efekti
 document.addEventListener("click", (e) => {
-  // Buton ve modal kontrolleri dışındaysa
-  if (e.target.closest("button") || e.target.closest("input") || e.target.closest("a")) return;
+  if (e.target.closest("button") || e.target.closest("input") || e.target.closest("a") || e.target.closest("textarea")) return;
 
   const heart = document.createElement("div");
   heart.className = "click-heart";
@@ -552,10 +654,12 @@ document.addEventListener("click", (e) => {
 });
 
 // ==========================================================================
-// 11. EVENT LISTENERS
+// 14. EVENT LISTENERS
 // ==========================================================================
 function setupEventListeners() {
-  // Sepet Çekmecesi Aç / Kapat
+  if (navLogoBtn) navLogoBtn.addEventListener("click", (e) => { e.preventDefault(); switchView('menu'); });
+  if (navHomeBtn) navHomeBtn.addEventListener("click", () => switchView('menu'));
+
   openCartBtn.addEventListener("click", openCartDrawer);
   closeCartBtn.addEventListener("click", closeCartDrawer);
   cartOverlay.addEventListener("click", closeCartDrawer);
@@ -563,12 +667,10 @@ function setupEventListeners() {
   if (emptyShopBtn) {
     emptyShopBtn.addEventListener("click", () => {
       closeCartDrawer();
-      const siparisSection = document.getElementById("siparis");
-      if (siparisSection) siparisSection.scrollIntoView({ behavior: "smooth" });
+      switchView('shop');
     });
   }
 
-  // İndirim Kodu Butonları & Enter Tuşu
   applyCouponBtn.addEventListener("click", applyCouponCode);
   couponInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -577,20 +679,25 @@ function setupEventListeners() {
     }
   });
 
-  // İpucu Butonu
   couponHintBtn.addEventListener("click", () => {
     alert("💡 Deneyebileceğin bazı sihirli kodlar:\n\n• SENICOKSEVIYORUM (%100 Bedava)\n• KAHVE (Sürpriz Kahve Hediyesi)\n• SURPRIZ (Gizli Aşk Mektubu)\n• OPUCUK (%50 Öpücük İndirimi)\n• CANIMBENIM (50 ₺ Sarılma İndirimi)");
   });
 
-  // Siparişi Tamamla
   checkoutBtn.addEventListener("click", processCheckout);
 
-  // Modalları Kapat
   closeLetterBtn.addEventListener("click", closeLetterModal);
   letterConfirmBtn.addEventListener("click", closeLetterModal);
   letterModalOverlay.addEventListener("click", (e) => {
     if (e.target === letterModalOverlay) closeLetterModal();
   });
+
+  if (closeQuoteBtn) closeQuoteBtn.addEventListener("click", () => quoteModalOverlay.classList.remove("active"));
+  if (newQuoteBtn) newQuoteBtn.addEventListener("click", getRandomQuote);
+  if (quoteModalOverlay) {
+    quoteModalOverlay.addEventListener("click", (e) => {
+      if (e.target === quoteModalOverlay) quoteModalOverlay.classList.remove("active");
+    });
+  }
 
   closeReceiptBtn.addEventListener("click", closeReceiptModal);
   newOrderBtn.addEventListener("click", resetOrder);
@@ -598,15 +705,14 @@ function setupEventListeners() {
     if (e.target === receiptModalOverlay) closeReceiptModal();
   });
 
-  // ESC tuşu ile açık modalları kapat
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeCartDrawer();
       closeLetterModal();
       closeReceiptModal();
+      if (quoteModalOverlay) quoteModalOverlay.classList.remove("active");
     }
   });
 }
 
-// Uygulamayı Başlat
 document.addEventListener("DOMContentLoaded", initApp);

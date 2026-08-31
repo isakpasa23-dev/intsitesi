@@ -1,6 +1,6 @@
 /* ==========================================================================
-   ROMANTİK SİPARİŞ SİTESİ - CSS STİLLERİ
-   Mobil Uyumlu, Modern, Akıcı ve Tatlı Tasarım
+   SANA ÖZEL SEVGİ KÖŞESİ - CSS STİLLERİ
+   Mobil Uyumlu, Sade, Modern ve Romantik Tasarım
    ========================================================================== */
 
 :root {
@@ -15,7 +15,7 @@
   --accent-green: #00b894;
   
   --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #ffe9ee 50%, #ffdbe4 100%);
-  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-bg: rgba(255, 255, 255, 0.9);
   --card-border: rgba(255, 204, 218, 0.7);
   
   --text-main: #2d3436;
@@ -26,9 +26,9 @@
   --shadow-md: 0 8px 24px rgba(255, 75, 114, 0.14);
   --shadow-lg: 0 16px 40px rgba(255, 75, 114, 0.2);
   
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 26px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
   --radius-full: 9999px;
   
   --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -129,16 +129,16 @@ body {
   z-index: 100;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.85);
   border-bottom: 1px solid var(--card-border);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
 
 .nav-container {
-  max-width: 1100px;
+  max-width: 1050px;
   margin: 0 auto;
-  padding: 0.9rem 1.4rem;
+  padding: 0.85rem 1.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -153,6 +153,7 @@ body {
   font-size: 1.35rem;
   color: var(--primary);
   user-select: none;
+  cursor: pointer;
 }
 
 .logo-icon {
@@ -162,10 +163,36 @@ body {
 
 .logo-text {
   font-family: var(--font-romantic);
-  font-size: 1.5rem;
+  font-size: 1.55rem;
   background: linear-gradient(45deg, #ff1361, #ff758c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-back-btn {
+  background: white;
+  color: var(--text-main);
+  border: 1px solid var(--card-border);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.nav-back-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: var(--primary);
 }
 
 /* Sepet Butonu */
@@ -180,11 +207,10 @@ body {
   border-radius: var(--radius-full);
   font-family: var(--font-main);
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
-  position: relative;
 }
 
 .cart-btn:hover {
@@ -219,16 +245,61 @@ body {
   100% { transform: scale(1); }
 }
 
-/* ================= KAHRAMAN / HERO ALANI ================= */
-.hero-section {
+/* ================= SAYFA / GÖRÜNÜM GEÇİŞLERİ ================= */
+.main-content {
   position: relative;
   z-index: 1;
-  padding: 3.5rem 1.4rem 2.5rem;
+  min-height: calc(100vh - 180px);
+}
+
+.view-section {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.view-section.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-top-bar {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 1.5rem 1.4rem 0.5rem;
+}
+
+.btn-back {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--card-border);
+  color: var(--primary);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.btn-back:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateX(-3px);
+}
+
+/* ================= 1. ANA MENÜ (HUB) ================= */
+#view-menu {
+  padding: 3.5rem 1.4rem 4rem;
   text-align: center;
 }
 
 .hero-container {
-  max-width: 760px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
@@ -238,24 +309,24 @@ body {
   color: var(--primary);
   font-weight: 700;
   font-size: 0.85rem;
-  padding: 0.4rem 1.1rem;
+  padding: 0.4rem 1.2rem;
   border-radius: var(--radius-full);
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.2rem;
   border: 1px solid rgba(255, 75, 114, 0.25);
   box-shadow: var(--shadow-sm);
 }
 
 .hero-title {
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   font-weight: 800;
   line-height: 1.25;
   color: var(--text-main);
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .gradient-text {
   font-family: var(--font-romantic);
-  font-size: 3rem;
+  font-size: 3.2rem;
   background: linear-gradient(45deg, #ff1361, #ff758c, #ff4b72);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -263,115 +334,85 @@ body {
 }
 
 .hero-description {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--text-muted);
-  max-width: 600px;
-  margin: 0 auto 2rem;
+  max-width: 580px;
+  margin: 0 auto 2.8rem;
   line-height: 1.7;
 }
 
-.hero-actions {
-  display: flex;
+/* Menü Kartları Izgarası */
+.menu-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2.5rem;
-}
-
-.hero-features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.2rem;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(8px);
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-main);
-  border: 1px solid var(--card-border);
-  box-shadow: var(--shadow-sm);
-}
-
-/* ================= BUTONLAR ================= */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1.8rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-main);
-  font-size: 1rem;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  outline: none;
-  transition: var(--transition);
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #ff758c 0%, #ff1361 100%);
-  color: var(--text-light);
-  box-shadow: 0 8px 20px var(--primary-glow);
-}
-
-.btn-primary:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 28px rgba(255, 19, 97, 0.4);
-}
-
-.btn-primary:active {
-  transform: translateY(-1px);
-}
-
-.pulse-btn {
-  animation: buttonHeartbeat 2.4s infinite;
-}
-
-@keyframes buttonHeartbeat {
-  0% { transform: scale(1); }
-  14% { transform: scale(1.05); }
-  28% { transform: scale(1); }
-  42% { transform: scale(1.05); }
-  70% { transform: scale(1); }
-}
-
-.btn-secondary {
-  background: white;
-  color: var(--primary);
-  border: 1.5px solid var(--primary);
-}
-
-.btn-secondary:hover {
-  background: var(--primary-light);
-  transform: translateY(-2px);
-}
-
-.btn-sm {
-  padding: 0.5rem 1.1rem;
-  font-size: 0.88rem;
-}
-
-/* ================= ÜRÜNLER BÖLÜMÜ ================= */
-.products-section {
-  position: relative;
-  z-index: 1;
-  max-width: 1050px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 3rem 1.4rem 5rem;
+}
+
+.menu-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--card-border);
+  box-shadow: var(--shadow-md);
+  padding: 2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.menu-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary);
+}
+
+.menu-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.menu-card:hover .menu-card-icon {
+  transform: scale(1.15) rotate(6deg);
+}
+
+.menu-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.menu-card-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.menu-card-btn {
+  width: 100%;
+  pointer-events: none;
+}
+
+/* ================= 2. SİPARİŞ BÖLÜMÜ ================= */
+#view-shop {
+  padding-bottom: 5rem;
 }
 
 .section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
 }
 
 .section-tag {
@@ -386,7 +427,7 @@ body {
   font-size: 2.2rem;
   font-weight: 800;
   color: var(--text-main);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .section-subtitle {
@@ -394,19 +435,18 @@ body {
   font-size: 1rem;
 }
 
-/* Ürün Izgarası */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
-  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.4rem;
 }
 
-/* Ürün Kartı */
 .product-card {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border-radius: var(--radius-lg);
   border: 1.5px solid var(--card-border);
   box-shadow: var(--shadow-md);
@@ -417,7 +457,6 @@ body {
   text-align: center;
   transition: var(--transition);
   position: relative;
-  overflow: hidden;
 }
 
 .product-card:hover {
@@ -440,9 +479,9 @@ body {
 }
 
 .product-image-wrap {
-  width: 140px;
-  height: 140px;
-  margin: 1rem 0 1.4rem;
+  width: 135px;
+  height: 135px;
+  margin: 1rem 0 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -463,7 +502,7 @@ body {
   font-size: 1.4rem;
   font-weight: 800;
   color: var(--text-main);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .product-desc {
@@ -524,8 +563,165 @@ body {
   box-shadow: 0 4px 14px var(--primary-glow);
 }
 
-.btn-add-cart:active {
-  transform: scale(0.96);
+/* ================= 3. DEĞERLENDİRME BÖLÜMÜ ================= */
+#view-review {
+  padding-bottom: 5rem;
+}
+
+.review-container {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 0 1.4rem;
+}
+
+.review-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid var(--card-border);
+  box-shadow: var(--shadow-md);
+  padding: 2.2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.rating-group {
+  text-align: center;
+}
+
+.rating-label {
+  display: block;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+  margin-bottom: 0.8rem;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.star {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+  opacity: 0.35;
+}
+
+.star.active {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.rating-text {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.form-label {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text-main);
+}
+
+.chips-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.chip-btn {
+  background: white;
+  border: 1.5px solid var(--card-border);
+  color: var(--text-main);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.chip-btn.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+textarea {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #e2e8f0;
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  outline: none;
+  resize: vertical;
+  transition: var(--transition);
+}
+
+textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+/* ================= BUTONLAR ================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff758c 0%, #ff1361 100%);
+  color: var(--text-light);
+  box-shadow: 0 8px 20px var(--primary-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(255, 19, 97, 0.4);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 0.5rem 1.1rem;
+  font-size: 0.88rem;
 }
 
 /* ================= SEPET ÇEKMECESİ ================= */
@@ -606,14 +802,12 @@ body {
   color: var(--primary);
 }
 
-/* Sepet Gövdesi */
 .cart-body {
   flex: 1;
   overflow-y: auto;
   padding: 1.2rem;
 }
 
-/* Sepet Boş Durumu */
 .empty-cart-state {
   display: flex;
   flex-direction: column;
@@ -643,7 +837,6 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Sepet Ürün Kartı */
 .cart-items-list {
   display: flex;
   flex-direction: column;
@@ -659,11 +852,6 @@ body {
   border-radius: var(--radius-md);
   border: 1px solid #f1f2f6;
   box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-  transition: var(--transition);
-}
-
-.cart-item:hover {
-  border-color: #ffd6df;
 }
 
 .cart-item-img {
@@ -700,7 +888,6 @@ body {
   font-weight: 700;
 }
 
-/* Miktar Kontrolleri */
 .cart-item-actions {
   display: flex;
   align-items: center;
@@ -734,7 +921,6 @@ body {
 .btn-qty:hover {
   background: white;
   color: var(--primary);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 .qty-num {
@@ -758,7 +944,7 @@ body {
   color: #eb4d4b;
 }
 
-/* ================= SEPET ALT ALANI & İNDİRİM ================= */
+/* Sepet Altı & İndirim */
 .cart-footer {
   border-top: 1px solid #f0f0f0;
   padding: 1.2rem;
@@ -829,7 +1015,6 @@ body {
   background: var(--primary);
 }
 
-/* İndirim Bildirimi */
 .coupon-alert {
   margin-top: 0.6rem;
   padding: 0.6rem 0.8rem;
@@ -863,7 +1048,6 @@ body {
   75% { transform: translateX(5px); }
 }
 
-/* Fiyat Özeti */
 .price-summary {
   background: #fbfbfb;
   border: 1px solid #f0f0f0;
@@ -883,12 +1067,6 @@ body {
 .summary-row.discount-row {
   color: #00b894;
   font-weight: 700;
-}
-
-.free-shipping {
-  color: #00b894;
-  font-weight: 700;
-  font-size: 0.82rem;
 }
 
 .summary-divider {
@@ -915,7 +1093,7 @@ body {
   font-size: 1.05rem;
 }
 
-/* ================= MODALLAR (MEKTUP & FİŞ) ================= */
+/* ================= MODALLAR ================= */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -979,11 +1157,15 @@ body {
   color: white;
 }
 
-/* Mektup Modalı Stili */
 .letter-card {
   text-align: center;
   background: linear-gradient(180deg, #fff9fa 0%, #ffffff 100%);
   border: 2px solid #ffd6df;
+}
+
+.quote-cookie-icon {
+  font-size: 3rem;
+  margin-bottom: 0.8rem;
 }
 
 .letter-stamp {
@@ -1020,7 +1202,7 @@ body {
   width: 100%;
 }
 
-/* ================= SİPARİŞ FİŞİ / MAKBUZ MODALI ================= */
+/* ================= SİPARİŞ FİŞİ MODALI ================= */
 .receipt-card {
   font-family: 'Courier New', Courier, monospace;
   background: #fff;
@@ -1144,7 +1326,6 @@ body {
 .btn-whatsapp:hover {
   background: #20ba5a;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
 }
 
 /* ================= FOOTER ================= */
@@ -1176,31 +1357,31 @@ body {
   50% { transform: translateY(-8px); }
 }
 
-/* ================= RESPONSIVE (MOBİL UYUM) ================= */
+/* ================= MOBİL UYUM ================= */
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2rem;
+    font-size: 2.1rem;
   }
   
   .gradient-text {
-    font-size: 2.3rem;
+    font-size: 2.4rem;
   }
   
-  .hero-description {
-    font-size: 0.98rem;
+  .menu-hub-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
   }
   
   .products-grid {
     grid-template-columns: 1fr;
-    max-width: 380px;
-    margin: 0 auto;
+    max-width: 360px;
   }
   
   .cart-drawer {
     max-width: 100%;
   }
   
-  .modal-card {
-    padding: 1.4rem;
+  .review-card {
+    padding: 1.5rem 1.2rem;
   }
 }

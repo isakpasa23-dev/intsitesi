@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sonsuz Sevgi Sipariş Köşesi 💕</title>
+  <title>Sana Özel Sevgi Köşesi 💕</title>
   
-  <!-- Google Fonts: Modern & Romantik Fontlar -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,83 +15,168 @@
 </head>
 <body>
 
-  <!-- Arka Plan Kalp Animasyon Canvas / Efekt Alanı -->
+  <!-- Arka Plan Kalp Animasyon Alanı -->
   <div id="heart-bg-container" class="heart-bg-container"></div>
 
   <!-- Üst Menü / Navbar -->
   <header class="navbar">
     <div class="nav-container">
-      <div class="logo">
+      <a href="#" class="logo" id="nav-logo-btn">
         <span class="logo-icon">💖</span>
-        <span class="logo-text">Aşk Butiği</span>
+        <span class="logo-text">Aşk Köşesi</span>
+      </a>
+
+      <div class="nav-right">
+        <!-- Ana Sayfa Dönüş Butonu (Alt sayfalarda görünür) -->
+        <button class="nav-back-btn" id="nav-home-btn" style="display: none;">
+          <span>🏠 Ana Menü</span>
+        </button>
+
+        <!-- Sepet Butonu -->
+        <button class="cart-btn" id="open-cart-btn" aria-label="Sepeti Aç">
+          <span class="cart-icon">🛍️</span>
+          <span class="cart-label">Sepet</span>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </button>
       </div>
-      
-      <button class="cart-btn" id="open-cart-btn" aria-label="Sepeti Aç">
-        <span class="cart-icon">🛍️</span>
-        <span class="cart-label">Sepetim</span>
-        <span class="cart-badge" id="cart-badge">0</span>
-      </button>
     </div>
   </header>
 
-  <!-- Ana Karşılama (Hero) Alanı -->
-  <main>
-    <section class="hero-section">
+  <main class="main-content">
+
+    <!-- ================= 1. GÖRÜNÜM: ANA MENÜ (HUB) ================= -->
+    <section class="view-section active" id="view-menu">
       <div class="hero-container">
         <div class="hero-badge">
-          <span>✨ Özel Sipariş Servisi ✨</span>
+          <span>✨ Sana Özel Küçük Bir Dünya ✨</span>
         </div>
         
         <h1 class="hero-title">
-          Günün En Tatlı <br>
-          <span class="gradient-text">Siparişi Sana Özel!</span>
+          Hoş Geldin <br>
+          <span class="gradient-text">Canımın İçi! 💕</span>
         </h1>
         
         <p class="hero-description">
-          Bu sitedeki her şey %100 saf sevgi, kocaman bir tebessüm ve sonsuz özenle hazırlandı. 
-          Bugün kalbin hangisini sipariş etmek ister? 🥰
+          Burası tamamen bizim keyfimize ve sevgimize özel hazırlandı. 
+          Bugün ne yapmak istersin?
         </p>
 
-        <div class="hero-actions">
-          <a href="#siparis" class="btn btn-primary pulse-btn">
-            <span>Siparişini Oluştur</span>
-            <span class="btn-icon">💌</span>
-          </a>
-        </div>
+        <!-- Ana Menü Seçenek Kartları -->
+        <div class="menu-hub-grid">
+          
+          <!-- Kart 1: Sipariş / Alışveriş -->
+          <div class="menu-card" onclick="switchView('shop')">
+            <div class="menu-card-icon">🛍️</div>
+            <h3 class="menu-card-title">Sipariş Oluştur</h3>
+            <p class="menu-card-desc">Aşkölçer veya Canım Cicim siparişi ver, sepete sürpriz kodlar ekle!</p>
+            <button class="btn btn-primary btn-sm menu-card-btn">
+              <span>Siparişe Başla</span>
+              <span>👉</span>
+            </button>
+          </div>
 
-        <div class="hero-features">
-          <div class="feature-item">
-            <span class="feature-icon">🚀</span>
-            <span>Işık Hızında Sevgi Kargo</span>
+          <!-- Kart 2: Siteyi Değerlendir -->
+          <div class="menu-card" onclick="switchView('review')">
+            <div class="menu-card-icon">⭐</div>
+            <h3 class="menu-card-title">Siteyi Değerlendir</h3>
+            <p class="menu-card-desc">Hizmetimizden memnun kaldın mı? Kalp puanını ver ve tatlı bir not bırak!</p>
+            <button class="btn btn-secondary btn-sm menu-card-btn">
+              <span>Puan Ver & Yorumla</span>
+              <span>✨</span>
+            </button>
           </div>
-          <div class="feature-item">
-            <span class="feature-icon">🛡️</span>
-            <span>%100 Mutluluk Garantisi</span>
+
+          <!-- Kart 3: Günün Aşk Falı & Sürpriz Sözü -->
+          <div class="menu-card" onclick="openDailyQuoteModal()">
+            <div class="menu-card-icon">💌</div>
+            <h3 class="menu-card-title">Günün Tatlı Sözü</h3>
+            <p class="menu-card-desc">Sana özel hazırlanmış bugünün romantik mesajını ve aşk falını aç!</p>
+            <button class="btn btn-secondary btn-sm menu-card-btn">
+              <span>Mesajı Aç</span>
+              <span>🔮</span>
+            </button>
           </div>
-          <div class="feature-item">
-            <span class="feature-icon">♾️</span>
-            <span>Sonsuz Geçerlilik</span>
-          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- Ürünler / Sipariş Bölümü -->
-    <section class="products-section" id="siparis">
+    <!-- ================= 2. GÖRÜNÜM: SİPARİŞ OLUŞTUR ================= -->
+    <section class="view-section" id="view-shop">
+      <div class="section-top-bar">
+        <button class="btn-back" onclick="switchView('menu')">
+          <span>← Ana Menüye Dön</span>
+        </button>
+      </div>
+
       <div class="section-header">
-        <span class="section-tag">Menü</span>
-        <h2 class="section-title">Sipariş Oluştur</h2>
-        <p class="section-subtitle">Aşağıdaki benzersiz lezzetlerden dilediğini seç ve sepete ekle!</p>
+        <span class="section-tag">Keyfi Sipariş Köşesi</span>
+        <h2 class="section-title">Siparişini Oluştur</h2>
+        <p class="section-subtitle">Aşağıdaki sana özel seçeneklerden dilediğini seçip sepete ekleyebilirsin!</p>
       </div>
 
       <!-- Ürün Kartları Listesi -->
       <div class="products-grid" id="products-grid">
-        <!-- JavaScript dinamik olarak veya başlangıç kartları olarak doldurur -->
+        <!-- JS ile dolacak -->
       </div>
     </section>
+
+    <!-- ================= 3. GÖRÜNÜM: SİTEYİ DEĞERLENDİR ================= -->
+    <section class="view-section" id="view-review">
+      <div class="section-top-bar">
+        <button class="btn-back" onclick="switchView('menu')">
+          <span>← Ana Menüye Dön</span>
+        </button>
+      </div>
+
+      <div class="review-container">
+        <div class="section-header">
+          <span class="section-tag">Aşk Anketi & Geri Bildirim</span>
+          <h2 class="section-title">Siteyi Değerlendir ⭐</h2>
+          <p class="section-subtitle">Bu özel site ve sunulan sevgi hizmeti hakkında ne düşünüyorsun?</p>
+        </div>
+
+        <div class="review-card">
+          <!-- Yıldız / Kalp Puanlama -->
+          <div class="rating-group">
+            <label class="rating-label">Genel Memnuniyet Puanın:</label>
+            <div class="star-rating" id="star-rating">
+              <span class="star" data-val="1">💖</span>
+              <span class="star" data-val="2">💖</span>
+              <span class="star" data-val="3">💖</span>
+              <span class="star" data-val="4">💖</span>
+              <span class="star active" data-val="5">💖</span>
+            </div>
+            <span class="rating-text" id="rating-text">Sonsuz Yıldız / Mükemmel Ötesi! 🥰</span>
+          </div>
+
+          <!-- Eğlenceli Çoktan Seçmeli Soru -->
+          <div class="form-group">
+            <label class="form-label">Siteyi yapan kişiyi ne kadar seviyorsun?</label>
+            <div class="chips-group" id="love-chips">
+              <button type="button" class="chip-btn active" data-value="Sonsuz">♾️ Sonsuz Kadar</button>
+              <button type="button" class="chip-btn" data-value="Dünyalar Kadar">🌍 Dünyalar Kadar</button>
+              <button type="button" class="chip-btn" data-value="Paha Biçilemez">💎 Paha Biçilemez</button>
+            </div>
+          </div>
+
+          <!-- Özel Not Alanı -->
+          <div class="form-group">
+            <label for="review-note" class="form-label">Sitenin Sahibine Özel Bir Not / Mesaj:</label>
+            <textarea id="review-note" rows="3" placeholder="Buraya tatlı bir not veya dilek yazabilirsin... 💕"></textarea>
+          </div>
+
+          <!-- Değerlendirmeyi Gönder Butonu -->
+          <button class="btn btn-primary" id="submit-review-btn">
+            <span>Değerlendirmeyi Gönder 💕</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Sepet Çekmecesi (Slide-over Cart Drawer) -->
+  <!-- ================= SEPET ÇEKMECESİ ================= -->
   <div class="cart-drawer-overlay" id="cart-overlay"></div>
   
   <aside class="cart-drawer" id="cart-drawer">
@@ -108,9 +193,9 @@
       <!-- Sepet Boş Durumu -->
       <div class="empty-cart-state" id="empty-cart-state">
         <div class="empty-icon">🥺</div>
-        <p class="empty-title">Sepetin henüz bomboş!</p>
-        <p class="empty-desc">Hemen yukarıdan "Aşkölçer" veya "Canım Cicim" ekle, kalbini dolduralım.</p>
-        <button class="btn btn-secondary btn-sm" id="empty-shop-btn">Ürünlere Göz At</button>
+        <p class="empty-title">Sepetin henüz boş!</p>
+        <p class="empty-desc">Hemen "Sipariş Oluştur" kısmından ürün ekleyebilirsin.</p>
+        <button class="btn btn-secondary btn-sm" id="empty-shop-btn">Siparişe Başla</button>
       </div>
 
       <!-- Eklenen Ürünler Listesi -->
@@ -119,7 +204,7 @@
       </div>
     </div>
 
-    <!-- Sepet Alt Alanı (İndirim Kodu & Toplam Fiyat & Sipariş Ver) -->
+    <!-- Sepet Alt Alanı -->
     <div class="cart-footer" id="cart-footer">
       <!-- İndirim Kodu Bölümü -->
       <div class="coupon-section">
@@ -139,7 +224,6 @@
           <button class="btn-coupon" id="apply-coupon-btn">Uygula</button>
         </div>
 
-        <!-- İndirim Geri Bildirim Mesaj Kutusu -->
         <div class="coupon-alert" id="coupon-alert" style="display: none;"></div>
       </div>
 
@@ -152,10 +236,6 @@
         <div class="summary-row discount-row" id="summary-discount-row" style="display: none;">
           <span id="summary-discount-title">İndirim:</span>
           <span id="summary-discount-amount">-0 ₺</span>
-        </div>
-        <div class="summary-row">
-          <span>Kargo Ücreti:</span>
-          <span class="free-shipping">ÜCRETSİZ (Kalp Kargo)</span>
         </div>
         <div class="summary-divider"></div>
         <div class="summary-row total-row">
@@ -171,7 +251,7 @@
     </div>
   </aside>
 
-  <!-- Gizli Mektup / Sürpriz Modalı (Özel Kodlar İçin) -->
+  <!-- ================= GİZLİ MEKTUP / SÜRPRİZ MODALI ================= -->
   <div class="modal-overlay" id="letter-modal-overlay">
     <div class="modal-card letter-card">
       <button class="modal-close-btn" id="close-letter-btn">✕</button>
@@ -179,29 +259,40 @@
         <img src="assets/love-letter.svg" alt="Aşk Mektubu" class="stamp-icon">
       </div>
       <h3 class="letter-title" id="letter-title">Sana Özel Bir Mektup Açıldı! 💌</h3>
-      <div class="letter-content" id="letter-content">
-        <!-- JS ile dolacak -->
-      </div>
+      <div class="letter-content" id="letter-content"></div>
       <button class="btn btn-primary btn-sm modal-action-btn" id="letter-confirm-btn">
         Seni Çok Seviyorum 💖
       </button>
     </div>
   </div>
 
-  <!-- Sipariş Fişi / Başarı Modalı (Siparişi Tamamla Tıklandığında) -->
+  <!-- ================= GÜNÜN TATLI SÖZÜ MODALI ================= -->
+  <div class="modal-overlay" id="quote-modal-overlay">
+    <div class="modal-card letter-card">
+      <button class="modal-close-btn" id="close-quote-btn">✕</button>
+      <div class="quote-cookie-icon">🥠 ✨</div>
+      <h3 class="letter-title">Günün Aşk Mesajı</h3>
+      <div class="letter-content" id="quote-modal-text">
+        "Gözlerinin içine baktığım her an dünya biraz daha güzelleşiyor."
+      </div>
+      <button class="btn btn-primary btn-sm modal-action-btn" id="new-quote-btn">
+        Yeni Bir Söz Çek 🔮
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= SİPARİŞ FİŞİ / MAKBUZ MODALI ================= -->
   <div class="modal-overlay" id="receipt-modal-overlay">
     <div class="modal-card receipt-card">
       <button class="modal-close-btn" id="close-receipt-btn">✕</button>
       
-      <!-- Fiş Üst Kısmı -->
       <div class="receipt-header">
         <div class="receipt-badge">🎉 SİPARİŞ ONAYLANDI! 🎉</div>
-        <h3 class="receipt-brand">AŞK & SEVGİ RESTORANI</h3>
-        <p class="receipt-tagline">Resmi Mutluluk ve Sevgi Makbuzu</p>
+        <h3 class="receipt-brand">AŞK & SEVGİ KÖŞESİ</h3>
+        <p class="receipt-tagline">Resmi Mutluluk Makbuzu</p>
         <div class="receipt-decor-line">----------------------------------------</div>
       </div>
 
-      <!-- Fiş Bilgileri -->
       <div class="receipt-meta">
         <div><strong>Sipariş Kodu:</strong> <span id="receipt-order-id">ASK-2026-999</span></div>
         <div><strong>Tarih:</strong> <span id="receipt-date">31.08.2026</span></div>
@@ -211,14 +302,10 @@
 
       <div class="receipt-decor-line">----------------------------------------</div>
 
-      <!-- Sipariş Edilen Ürünler Tablosu -->
-      <div class="receipt-items-list" id="receipt-items-list">
-        <!-- JS ile doldurulacak -->
-      </div>
+      <div class="receipt-items-list" id="receipt-items-list"></div>
 
       <div class="receipt-decor-line">----------------------------------------</div>
 
-      <!-- Fiş Toplamı -->
       <div class="receipt-totals">
         <div class="receipt-row">
           <span>Ara Toplam:</span>
@@ -230,7 +317,7 @@
         </div>
         <div class="receipt-row final-total">
           <span>ÖDENECEK TUTAR:</span>
-          <span id="receipt-grand-total">0 ₺ (Ömür Boyu Aşk)</span>
+          <span id="receipt-grand-total">0 ₺ (Sonsuz Sevgi)</span>
         </div>
       </div>
 
@@ -238,7 +325,6 @@
         <p>💌 <em>"Bu siparişin karşılığı sadece içten bir gülümseme ve sıcacık bir sarılmadır."</em></p>
       </div>
 
-      <!-- Aksiyon Butonları -->
       <div class="receipt-actions">
         <a href="#" id="whatsapp-share-btn" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">
           <span>💬 Siparişi WhatsApp'tan Gönder</span>
@@ -253,7 +339,7 @@
   <!-- Alt Bilgi (Footer) -->
   <footer class="footer">
     <p>Kalpten kalbe özel olarak tasarlandı 💖 • Sonsuz Sevgi Garantili</p>
-    <p class="footer-sub">Tüm hakları sevgilinizin kalbinde saklıdır © 2026</p>
+    <p class="footer-sub">Tamamen senin keyfine ve tebessümüne özeldir © 2026</p>
   </footer>
 
   <script src="script.js"></script>
