@@ -1,82 +1,62 @@
-# 💖 Sonsuz Sevgi & Romantik Sipariş Sitesi
+# 💖 Sana Özel Sevgi Köşesi ✨
 
-Sevgilinize veya değer verdiğiniz birine gönderebileceğiniz; tamamen ücretsiz yayınlanabilen, mobil uyumlu, tatlı ve eğlenceli bir "Sipariş Sitesi".
-
----
-
-## 🌟 Özellikler
-
-- **Saf Web Teknolojisi:** Harici sunucu veya veritabanı gerektirmez (`HTML`, `CSS`, `Vanilla JS`).
-- **Göz Alıcı Romantik Tasarım:** Pembe/kırmızı pastel tonlar, süzülen kalpler, cam efekti (glassmorphism) ve tıklama kalp patlaması.
-- **Sipariş Oluştur Bölümü:**
-  - `Aşkölçer`
-  - `Canım Cicim`
-- **Gelişmiş Sepet:** Ürün ekleme, adet artırma/azaltma, silme ve dinamik toplam hesaplama.
-- **Genişletilebilir İndirim ve Sürpriz Kodları:**
-  - Yüzdelik indirimler (`SENICOKSEVIYORUM`, `OPUCUK`)
-  - Sabit indirimler (`CANIMBENIM`)
-  - Hediye ürün tanımlama ve sepete hediye atma (`KAHVE`)
-  - Gizli aşk mektubu açma (`SURPRIZ`, `MEKTUP`)
-  - Hatalı kodlarda sevimli uyarı mesajları
-- **Aşk Makbuzu / Sipariş Fişi:** Sipariş tamamlandığında çıkan romantik fiş ve **WhatsApp ile Tek Tıkla Sevgiline Gönder** butonu.
+Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, sürpriz sevgi kodları ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
 
 ---
 
-## 🛠️ Nasıl Özelleştirilir?
-
-### 1. Yeni Ürün Eklemek veya Fiyatları Değiştirmek
-`script.js` dosyasının en başındaki `PRODUCTS` dizisini düzenleyebilirsiniz:
-
-```javascript
-const PRODUCTS = [
-  {
-    id: "askolcer",
-    name: "Aşkölçer",
-    price: 100,
-    unit: "₺",
-    badge: "Çok Satan 🔥",
-    description: "Aşkınızın derecesini %100 hassasiyetle ölçen sihirli cihaz.",
-    image: "assets/askolcer.svg"
-  },
-  // Yeni ürün eklemek için buraya ekleme yapabilirsiniz
-];
-```
-
-### 2. Yeni İndirim & Sürpriz Kodları Eklemek
-`script.js` dosyasındaki `discountCodes` nesnesine yeni kodlar ekleyebilirsiniz:
-
-```javascript
-const discountCodes = {
-  "BENIMSIN": {
-    type: "percent",
-    value: 100,
-    message: "🎉 %100 Aşk İndirimi uygulandı!",
-    action: "heartsRain"
-  }
-};
-```
+## 🌐 Canlı Site Adresi
+👉 **[https://isakpasa23-dev.github.io/intsitesi/](https://isakpasa23-dev.github.io/intsitesi/)**
 
 ---
 
-## 🚀 GitHub Pages ile Tamamen ÜCRETSİZ Nasıl Yayınlanır?
+## 🤖 Telegram Botu Stok Yönetim Komutları (Hızlı Rehber)
 
-Sitenizi tüm dünyaya açıp sevgilinize gönderebileceğiniz bir link elde etmek için:
+Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebilirsin:
 
-### Adım 1: GitHub Hesabı ve Repo Oluşturma
-1. [github.com](https://github.com) adresine gidin ve oturum açın (hesabınız yoksa ücretsiz kaydolun).
-2. Sağ üstteki **`+`** simgesine tıklayıp **"New repository"** seçin.
-3. Repository name kısmına örneğin `ask-butigi` veya `ask-sitesi` yazın.
-4. Reponun **"Public"** seçili olduğundan emin olun ve **"Create repository"** butonuna basın.
+| Komut | Açıklama | Örnek Kullanım |
+| :--- | :--- | :--- |
+| **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
+| **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle askolcer 1` veya `/ekle canim 500` |
+| **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
+| **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
-### Adım 2: Dosyaları Yükleme
-1. Açılan sayfada **"uploading an existing file"** linkine tıklayın.
-2. Bu klasördeki tüm dosyaları (`index.html`, `style.css`, `script.js` ve `assets` klasörünü) sürükleyip GitHub yükleme alanına bırakın.
-3. Sayfanın altındaki yeşil **"Commit changes"** butonuna tıklayın.
+### 🏷️ Ürün Kısayolları (Komutlarda Kullanılan İsimler):
+- `askolcer` / `ask` ➔ **Aşkölçer** (Sadece 1 Adet - Tek & Özel Üretim 🔥)
+- `canim` / `canim-cicim` ➔ **Canım Cicim**
+- `kahve` / `kahve-kacamagi` ➔ **Baş Başa Kahve Kaçamağı**
+- `gece` / `sohbet` ➔ **Gece Sohbeti & Şarkı**
+- `sarilma` / `sarilma-kuponu` ➔ **Sınırsız Sarılma Kuponu** (Sınırsız ♾️)
+- `film` / `film-gecesi` ➔ **Film Seçme Hakkı**
+- `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama**
+- `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Sınırsız ♾️)
+- `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı**
 
-### Adım 3: GitHub Pages'i Aktif Etme
-1. Reponuzun üst menüsündeki **"Settings"** (Ayarlar) sekmesine tıklayın.
-2. Sol menüden **"Pages"** başlığını seçin.
-3. **"Branch"** kısmında `None` yerine **`main`** seçin, klasör olarak `/ (root)` seçili kalsın ve **"Save"** butonuna basın.
-4. 1-2 dakika sonra sayfanın yukarısında **`https://kullaniciadiniz.github.io/ask-sitesi/`** şeklinde canlı site linkiniz belirecektir!
+---
 
-Bu linki doğrudan sevgilinize/arkadaşınıza gönderebilirsiniz! 💕
+## 🏷️ Sitede Geçerli Sürpriz & Sevgi Kodları
+
+Sepet ekranındaki **"🏷️ Sürpriz & Sevgi Kodları"** kutucuğuna yazılabilecek sihirli kodlar:
+
+| Kod | İşlev & Eklenen Hediye |
+| :--- | :--- |
+| **`SURPRIZ`** veya **`SUPRIZ`** | 🌠 *"Seni gökyüzündeki yıldızlar kadar çok seviyorum..."* yazan yıldızlı gizli aşk mektubunu açar. |
+| **`OPUCUK`** | 💋 Sepete **"💋 Kocaman & Sesli Öpücük"** ürününü hediye olarak ekler. |
+| **`CANIMBENIM`** | 🫂 Sepete **"🫂 Ekstra Sımsıkı Sarılma Paketi"** ürününü hediye olarak ekler. |
+| **`SENICOKSEVIYORUM`** | 🥰 Sepete **"💖 Sonsuz Sevgi & İlgi Paketi"** ürününü ekler ve kalp yağmuru başlatır. |
+| **`KAHVE`** | ☕ Sepete **"☕ Baş Başa Kahve Sözü"** ürününü ekler. |
+| **`MEKTUP`** | 💌 Özel romantik günün aşk notunu açar. |
+
+---
+
+## ⚙️ Teknik Özellikler & Altyapı
+
+1. **☁️ Çift Yönlü Bulut Stok Senkronizasyonu:**
+   - PC'den alışveriş yapıldığında mobil cihazlar da stok düşüşünü canlı olarak görür.
+   - Telegram'dan komut verildiğinde sitedeki stoklar anında güncellenir.
+2. **🐈‍⬛ 4 Bacaklı Donanım Hızlandırmalı Siyah Kedi:**
+   - Mouse ve dokunmatik parmak hareketlerini takip eder, yönünü yumuşakça döner ve patilerini atarak yürür. Tıklayınca miyavlar ve tatlı sözler söyler.
+3. **📥 Fiş Resmi İndirme (html2canvas):**
+   - Sipariş tamamlandığında oluşan resmi makbuz PNG resmi olarak telefona/bilgisayara indirilebilir.
+4. **📱 60 FPS & Tek Ekrana Tam Sığan Giriş:**
+   - Ana menü ekranı sıfır kaydırma ile tüm cihazların ekranına tam oturur.
