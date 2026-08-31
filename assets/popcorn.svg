@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="popcornKernel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#ffeaa7"/>
+      <stop offset="100%" stop-color="#fdcb6e"/>
+    </linearGradient>
+    <linearGradient id="butterGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffeaa7"/>
+      <stop offset="100%" stop-color="#f39c12"/>
+    </linearGradient>
+    <linearGradient id="boxRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4757"/>
+      <stop offset="100%" stop-color="#c0392b"/>
+    </linearGradient>
+    <filter id="popcornShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff4757" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Parlama Dairesi -->
+  <circle cx="60" cy="60" r="54" fill="#fff5f7" stroke="#ffd1dc" stroke-width="2" filter="url(#popcornShadow)"/>
+
+  <!-- Pofuduk Patlamış Mısırlar (Tepedeki Mısır Yığını) -->
+  <g transform="translate(0, 5)">
+    <!-- Arka Katman Mısırlar -->
+    <circle cx="42" cy="42" r="10" fill="url(#popcornKernel)" stroke="#e67e22" stroke-width="0.8"/>
+    <circle cx="56" cy="36" r="11" fill="url(#butterGold)" stroke="#e67e22" stroke-width="0.8"/>
+    <circle cx="72" cy="38" r="11" fill="url(#popcornKernel)" stroke="#e67e22" stroke-width="0.8"/>
+    <circle cx="82" cy="46" r="9" fill="url(#popcornKernel)" stroke="#e67e22" stroke-width="0.8"/>
+
+    <!-- Ön Katman Pofuduk Mısırlar -->
+    <circle cx="36" cy="50" r="9" fill="url(#butterGold)" stroke="#e67e22" stroke-width="0.8"/>
+    <circle cx="48" cy="46" r="11" fill="url(#popcornKernel)" stroke="#e67e22" stroke-width="0.8"/>
+    <circle cx="62" cy="44" r="12" fill="url(#popcornKernel)" stroke="#e67e22" stroke-width="0.8"/>
+    <circle cx="76" cy="48" r="10" fill="url(#butterGold)" stroke="#e67e22" stroke-width="0.8"/>
+    
+    <!-- Mısır Kıvrım Detayları -->
+    <path d="M 45 44 Q 48 48 51 44" stroke="#d35400" stroke-width="1.2" fill="none"/>
+    <path d="M 59 42 Q 62 47 65 42" stroke="#d35400" stroke-width="1.2" fill="none"/>
+    <path d="M 73 46 Q 76 50 79 46" stroke="#d35400" stroke-width="1.2" fill="none"/>
+  </g>
+
+  <!-- Mısır Kutusu (Kırmızı - Beyaz Çizgili Kova) -->
+  <g>
+    <!-- Kutu Gövdesi -->
+    <polygon points="34,54 86,54 78,98 42,98" fill="#ffffff" stroke="#c0392b" stroke-width="1.8"/>
+
+    <!-- Kırmızı Çizgiler -->
+    <!-- Sol Çizgi 1 -->
+    <polygon points="34,54 44,54 50,98 42,98" fill="url(#boxRed)"/>
+    <!-- Orta Çizgi 2 -->
+    <polygon points="54,54 66,54 64,98 56,98" fill="url(#boxRed)"/>
+    <!-- Sağ Çizgi 3 -->
+    <polygon points="76,54 86,54 78,98 70,98" fill="url(#boxRed)"/>
+
+    <!-- Üst Kutu Kenar Şeridi -->
+    <path d="M 32 54 L 88 54" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Kutu Üzerindeki Sevimli Kalp Rozeti -->
+    <circle cx="60" cy="76" r="11" fill="#ffffff" stroke="#ff4757" stroke-width="1.5"/>
+    <g transform="translate(60, 76) scale(0.45)">
+      <path d="M 0 -8 C -6 -18, -18 -8, 0 8 C 18 -8, 6 -18, 0 -8 Z" fill="#ff1361"/>
+    </g>
+  </g>
+
+  <!-- Sinema Biletleri & Işıltılar 🎟️✨🍿 -->
+  <text x="14" y="38" font-size="13">🍿</text>
+  <text x="86" y="38" font-size="13">🎟️</text>
+  <text x="86" y="96" font-size="14">✨</text>
+  <text x="14" y="96" font-size="12">🎬</text>
+</svg>

@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
    Yapay Zeka Destekli Tatlı Söz Motoru, Çiğköfte Ziyafeti & Bulut Stoklar 🌯🤖💌✨
    ========================================================================== */
@@ -392,14 +392,14 @@ const PRODUCTS = [
   {
     id: "film-gecesi",
     category: "simartma",
-    name: "Film Seçme Hakkı",
+    name: "Baş Başa Film",
     price: 0,
     unit: "💖",
     isCountdown: false,
     deliveryText: "Anında ⚡",
     badge: "VIP Sinema 🍿",
-    description: "Filmi tamamen senin seçeceğin, atıştırmalıkların hazır olduğu sinema gecesi.",
-    image: "assets/askolcer.svg"
+    description: "Filmi senin seçeceğin, sıcacık patlamış mısır eşliğinde baş başa sinema keyfi!",
+    image: "assets/popcorn.svg"
   },
 
   // 🥺 4. Kategori: Seni Özledim Menüsü

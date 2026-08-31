@@ -17,7 +17,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 | :--- | :--- | :--- |
 | **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
 | **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
-| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle cay 50` veya `/ekle kralice 100` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle film 50` veya `/ekle kralice 100` |
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
@@ -28,7 +28,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 - `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (Acılı & Limonlu 🌯)
 - `gece` / `sohbet` ➔ **Gece Sohbeti & Şarkı**
 - `kralice` / `kraliçe` / `patron` ➔ **Kraliçe** (VIP Kraliçe 👑)
-- `film` / `film-gecesi` ➔ **Film Seçme Hakkı**
+- `film` / `film-gecesi` / `sinema` ➔ **Baş Başa Film** (Patlamış Mısır 🍿)
 - `goruntulu` / `goruntulu-arama` ➔ **Anında Görüntülü Arama** (Akıllı Telefon 📱)
 - `ozlem` / `ozlem-sarilmasi` ➔ **Kavuşma & Özlem Sarılması** (Gerçek Sarılma Emojisi 🤗)
 - `ses` / `ozel-ses-kaydi` ➔ **Özel Aşk Ses Kaydı & Şarkı** (Stüdyo Mikrofonu 🎙️)

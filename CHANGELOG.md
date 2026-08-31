@@ -4,21 +4,21 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v4.0.0] - 31.08.2026 (Yapay Zeka / Aşk Falı İfadeleri Kaldırıldı & Tamamen Doğal Sevgi Dili) 💌✨
-- **Metin Temizliği:**
-  - *"🤖 Kalpten Üretilen Yapay Zeka Aşk Falı"* etiketi tamamen kaldırıldı.
-  - Ana menüdeki *"Yapay zeka aşk falını ve tatlı sözünü aç"* açıklaması *"Sana özel günün en tatlı sözünü aç"* olarak tamamen doğal ve samimi bir dile dönüştürüldü.
+### [v4.1.0] - 31.08.2026 (Baş Başa Film & Kırmızı-Beyaz Patlamış Mısır Simgesi) 🍿🎬✨
+- **İsim ve Görsel Değişiklikleri:**
+  - *"Film Seçme Hakkı"* ➔ **"Baş Başa Film"** olarak güncellendi.
+  - Simgesi lezzetli, pofuduk tereyağlı patlamış mısırlar ve kırmızı-beyaz sinema kovası içeren özel SVG ikonuna (`assets/popcorn.svg`) dönüştürüldü.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v4.0.0] - 31.08.2026 (Yapay Zeka / Aşk Falı İfadeleri Kaldırıldı & Tamamen Doğal Sevgi Dili) 💌✨
+- *"🤖 Kalpten Üretilen Yapay Zeka Aşk Falı"* etiketi tamamen kaldırıldı ve doğal sevgi diline dönüştürüldü.
 
 ---
 
 ### [v3.9.0] - 31.08.2026 (Sevgi Dolu Öpücük, Sımsıkı Sarılma & Bağımsız Kedi Takibi) 💋🤗🐾✨
 - `OPUCUK` ve `CANIMBENIM` hediye adları ve simgeleri güncellendi. Kedi takibi bağımsızlaştırıldı.
-
----
-
-### [v3.8.0] - 31.08.2026 (Baş Başa Çay Kaçağı & Kraliçe Güncellemesi) 🫖👑✨
-- *"Baş Başa Kahve Kaçamağı"* ➔ "Baş Başa Çay Kaçağı" (İnce Belli Çay) ve *"Bugün Patron Sensin Kartı"* ➔ "Kraliçe" yapıldı.
 
 ---
 
