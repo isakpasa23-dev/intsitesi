@@ -1,10 +1,13 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Romantik Sürpriz Kodları & 4 Bacaklı Yürüyen Siyah Kedi 🐈‍⬛🐾✨
+   Bulut Senkronizasyonlu Stoklar, Romantik Sürpriz Kodları & Siyah Kedi 🐈‍⬛☁️✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
 const TELEGRAM_CHAT_ID = "6497058542";
+
+// ☁️ Canlı Bulut Stok API Uç Noktası (Cihazlar Arası Ortak Canlı Stok)
+const CLOUD_STOCK_ENDPOINT = "https://api.restful-api.dev/objects/ff808181a058d43f01a059350dc504dd";
 
 // 🎯 Aşkölçer Hedef Tarihi: 8 Haziran 2029 Saat 09:00:00
 const TARGET_DATE_ASKOLCER = new Date(2029, 5, 8, 9, 0, 0);
@@ -87,7 +90,7 @@ function getAskolcerDetailedRemaining() {
 }
 
 // ==========================================================================
-// 2. ÜRÜNLER & KÜSÜRATLI / SINIRSIZ STOKLAR (4 Kategori)
+// 2. ÜRÜNLER & BULUT SENKRONİZASYONLU CANLI STOKLAR
 // ==========================================================================
 const INITIAL_STOCKS = {
   "askolcer": 1,          // Aşkölçer sadece 1 adet
@@ -102,22 +105,67 @@ const INITIAL_STOCKS = {
   "kahve-hediye": 2450
 };
 
+// Yerel önbellekten stok getirme
 function getProductStock(productId) {
-  const savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v5") || "null");
+  const savedStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
   if (savedStocks && typeof savedStocks[productId] !== "undefined") {
     return savedStocks[productId];
   }
   return INITIAL_STOCKS[productId] || 9999;
 }
 
-function decrementProductStock(productId, quantity) {
-  let savedStocks = JSON.parse(localStorage.getItem("site_product_stocks_v5") || "null");
-  if (!savedStocks) {
-    savedStocks = { ...INITIAL_STOCKS };
+// ☁️ Buluttan Canlı Stokları Çekme (Tüm Cihazlar Eşzamanlı Görür)
+async function fetchCloudStocks() {
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+    const res = await fetch(CLOUD_STOCK_ENDPOINT, {
+      method: "GET",
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data && data.data) {
+        localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(data.data));
+        renderProducts();
+      }
+    }
+  } catch (err) {
+    console.log("Bulut stok kontrolü (çevrimdışı/önbellek kullanılıyor):", err.message);
   }
-  const current = savedStocks[productId] || 0;
-  savedStocks[productId] = Math.max(0, current - quantity);
-  localStorage.setItem("site_product_stocks_v5", JSON.stringify(savedStocks));
+}
+
+// ☁️ Buluta Güncel Stokları Yazma
+async function pushCloudStocks(updatedStocks) {
+  try {
+    localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(updatedStocks));
+    
+    await fetch(CLOUD_STOCK_ENDPOINT, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: "AskKosesiStocks",
+        data: updatedStocks
+      })
+    });
+  } catch (err) {
+    console.warn("Bulut stok güncellenemedi:", err);
+  }
+}
+
+function decrementProductStock(productId, quantity) {
+  let currentStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
+  if (!currentStocks) {
+    currentStocks = { ...INITIAL_STOCKS };
+  }
+  const current = currentStocks[productId] || 0;
+  currentStocks[productId] = Math.max(0, current - quantity);
+  
+  // Hem yerel önbelleğe hem de buluta yaz
+  pushCloudStocks(currentStocks);
 }
 
 const PRODUCTS = [
@@ -239,7 +287,7 @@ const PRODUCTS = [
 ];
 
 // ==========================================================================
-// 3. TAMAMEN ROMANTİK SÜRPRİZ & SEVGİ KODLARI (TL/Fiyat İçermez)
+// 3. TAMAMEN ROMANTİK SÜRPRİZ & SEVGİ KODLARI
 // ==========================================================================
 const discountCodes = {
   "SURPRIZ": {
@@ -349,7 +397,7 @@ function switchView(viewName) {
 }
 
 // ==========================================================================
-// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME (SINIRSIZ & KÜSÜRATLI STOKLAR)
+// 6. KATEGORİ VE ÜRÜNLERİ RENDER ETME (CANLI BULUT STOKLARI)
 // ==========================================================================
 function filterCategory(catName) {
   currentCategory = catName;
@@ -624,7 +672,7 @@ function showCouponAlert(message, type) {
 }
 
 // ==========================================================================
-// 9. SİPARİŞ TAMAMLAMA AKIŞI (STOK KONTROLLÜ)
+// 9. SİPARİŞ TAMAMLAMA AKIŞI (BULUT STOK GÜNCELLEMELİ)
 // ==========================================================================
 
 function openCheckoutInfoModal() {
@@ -689,6 +737,7 @@ function finalizeOrder() {
 
   localStorage.setItem("saved_customer_name", customerName);
 
+  // Bulut ve yerel stokları anında düşür
   cart.forEach(item => {
     decrementProductStock(item.product.id, item.quantity);
   });
@@ -812,7 +861,7 @@ async function downloadReceiptImage() {
 }
 
 // ==========================================================================
-// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU (MOBİL VE SAFARI UYUMLU)
+// 11. 🐈‍⬛ 4 BACAKLI YÜRÜYEN SİYAH KEDİ MOTORU
 // ==========================================================================
 function initScreenCat() {
   const cat = document.getElementById("screen-cat-companion");
@@ -1287,4 +1336,8 @@ document.addEventListener("DOMContentLoaded", () => {
   startBackgroundHearts();
   updateCartUI();
   initScreenCat();
+
+  // ☁️ Sayfa açıldığında ve her 10 saniyede bir bulut canlı stokları senkronize et
+  fetchCloudStocks();
+  setInterval(fetchCloudStocks, 10000);
 });

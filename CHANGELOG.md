@@ -4,16 +4,17 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v2.5.0] - 31.08.2026 (Tamamen Romantik Sürpriz Kodları & Özel Yıldız Mektubu) 💌🌠✨
-- **Özel Sürpriz Kodu (`SURPRIZ` & `SUPRIZ`):**
-  - Mektup içeriği güncellendi: *"Seni gökyüzündeki yıldızlar kadar çok seviyorum ve her yıldız kaydığında seni diliyorum. 🌠💖"*
-- **Tüm Kodlar Romantiklestirildi (TL / İndirim Kaldırıldı):**
-  - `SENICOKSEVIYORUM`: Sonsuz Sevgi & Aşk Onayı Yağmuru 🥰
-  - `CANIMBENIM`: Ekstra Sımsıkı Sarılma & Tebessüm Paketi 🫂
-  - `OPUCUK`: Kocaman, Sesli & Sevgi Dolu Öpücük Paketi 💋
-  - `KAHVE`: Baş Başa Kahve Sözü Hediyesi ☕
-  - `MEKTUP`: Özel Aşk Notu 💌
+### [v2.6.0] - 31.08.2026 (Cihazlar Arası Canlı Bulut Stok Senkronizasyonu) ☁️📦✨
+- **Gerçek Zamanlı Bulut Stok Altyapısı:**
+  - Stoklar artık cihazların yerel tarayıcı önbelleğine hapsolmak yerine ortak bir **Bulut Veritabanı API'si** (`restful-api.dev`) üzerinden anlık olarak senkronize edilir.
+  - PC'den sipariş verilip Aşkölçer (veya başka bir ürün) tükendiğinde, telefondan giren kişi de stokların anında bittiğini görür.
+  - Sayfa açılışında ve arka planda her 10 saniyede bir canlı bulut stok senkronizasyonu çalışır.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v2.5.0] - 31.08.2026 (Tamamen Romantik Sürpriz Kodları & Özel Yıldız Mektubu) 💌🌠✨
+- `SURPRIZ` mektup metni yıldızlı aşk dileği olarak güncellendi, tüm kodlar romantik jestlere uyarlandı.
 
 ---
 
