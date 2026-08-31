@@ -1,6 +1,6 @@
 # 💖 Sana Özel Sevgi Köşesi ✨
 
-Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, yapay zeka destekli tatlı söz motoru, sürpriz sevgi kodları ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
+Minik yıldızıma özel olarak tasarlanmış; canlı bulut stok senkronizasyonu, Telegram botu üzerinden stok yönetimi, zengin romantik söz motoru, sürpriz sevgi kodları ve sevimli pati dostumuz (4 bacaklı yürüyen siyah kedi) barındıran romantik web uygulaması.
 
 ---
 
@@ -17,7 +17,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 | :--- | :--- | :--- |
 | **`/stok`** veya **`/stoklar`** | Tüm ürünlerin canlı stok sayılarını listeler | `/stok` |
 | **`/set <ürün> <adet>`** | Belirtilen ürünün stoğunu doğrudan o sayıya ayarlar | `/set askolcer 1` |
-| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle kulaklik 50` veya `/ekle kralice 100` |
+| **`/ekle <ürün> <adet>`** | Mevcut stoğa ekleme yapar | `/ekle cigkofte 50` veya `/ekle kralice 100` |
 | **`/cikar <ürün> <adet>`** | Mevcut stoktan düşürür | `/cikar askolcer 1` |
 | **`/sifirla`** | Tüm ürün stoklarını ilk günkü zengin sayılarına döndürür | `/sifirla` |
 
@@ -26,6 +26,7 @@ Telegram botuna mesaj atarak sitedeki tüm ürün stoklarını anında yönetebi
 - `canim` / `canim-cicim` ➔ **Canım Cicim**
 - `cay` / `çay` / `cay-kacagi` ➔ **Baş Başa Çay Kaçağı** (İnce Belli Çay 🫖)
 - `cigkofte` / `çiğköfte` ➔ **Baş Başa Çiğköfte Ziyafeti** (Acılı & Limonlu 🌯)
+- `yuruyus` / `yürüyüş` / `beraber-yuruyus` ➔ **Beraber Yürüyüş** (El Ele 👫 - Sınırsız ♾️)
 - `kralice` / `kraliçe` / `patron` ➔ **Kraliçe** (VIP Kraliçe 👑)
 - `film` / `film-gecesi` / `sinema` ➔ **Baş Başa Film** (Patlamış Mısır 🍿)
 - `kulaklik` / `kulaklık` / `tek-kulaklik` ➔ **Tek Kulaklık** (Müzik Notası 🎵)

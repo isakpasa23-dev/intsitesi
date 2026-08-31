@@ -128,6 +128,7 @@ const INITIAL_STOCKS = {
   "canim-cicim": 9847,    // Küsüratlı yüksek adet
   "kahve-kacamagi": 4320, // Küsüratlı yüksek adet
   "cigkofte-ziyafeti": 6350, // Çiğköfte ziyafeti
+  "beraber-yuruyus": 9999999, // Sınırsız
   "gece-sohbeti": 12580,  // Küsüratlı yüksek adet
   "patron-sensin": 1450,  // Bugün patron sensin kartı
   "film-gecesi": 3745,    // Küsüratlı yüksek adet
@@ -145,6 +146,7 @@ const PRODUCT_ALIASES = {
   "canim-cicim": "canim-cicim", "canim": "canim-cicim", "canım": "canim-cicim",
   "kahve-kacamagi": "kahve-kacamagi", "kahve": "kahve-kacamagi", "cay": "kahve-kacamagi", "çay": "kahve-kacamagi", "cay-kacagi": "kahve-kacamagi",
   "cigkofte-ziyafeti": "cigkofte-ziyafeti", "cigkofte": "cigkofte-ziyafeti", "çiğköfte": "cigkofte-ziyafeti",
+  "beraber-yuruyus": "beraber-yuruyus", "yuruyus": "beraber-yuruyus", "yürüyüş": "beraber-yuruyus", "yuru": "beraber-yuruyus",
   "gece-sohbeti": "gece-sohbeti", "gece": "gece-sohbeti", "sohbet": "gece-sohbeti", "kulaklik": "gece-sohbeti", "kulaklık": "gece-sohbeti", "tek-kulaklik": "gece-sohbeti",
   "patron-sensin": "patron-sensin", "patron": "patron-sensin", "kralice": "patron-sensin", "kraliçe": "patron-sensin", "kralicem": "patron-sensin",
   "film-gecesi": "film-gecesi", "film": "film-gecesi",
@@ -362,6 +364,18 @@ const PRODUCTS = [
     badge: "Acılı & Limonlu 🌯",
     description: "Bol limonlu, bol yeşillikli ve yanında buz gibi ayranla beraber çiğköfte yeme keyfi!",
     image: "assets/cigkofte.svg"
+  },
+  {
+    id: "beraber-yuruyus",
+    category: "keyif",
+    name: "Beraber Yürüyüş",
+    price: 0,
+    unit: "💖",
+    isCountdown: false,
+    deliveryText: "Anında ⚡",
+    badge: "El Ele 👫",
+    description: "Günün yorgunluğunu atmak için el ele tutuşup saatlerce huzurla yürüme garantisi.",
+    image: "assets/walking.svg"
   },
 
   // 🎁 3. Kategori: Şımartma Paketi
@@ -620,7 +634,7 @@ function renderProducts() {
 
     if (product.id === "askolcer") {
       stockDisplay = stock > 0 ? "📦 Stok: 1 Adet (Tek & Özel) 🔥" : "💖 Tükendi (Sana Özel)";
-    } else if (product.id === "sarilma-kuponu" || product.id === "ozlem-sarilmasi") {
+    } else if (product.id === "beraber-yuruyus" || product.id === "ozlem-sarilmasi") {
       stockDisplay = "📦 Stok: Sınırsız ♾️";
     } else if (stock > 0) {
       stockDisplay = `📦 Stok: ${stock.toLocaleString('tr-TR')} Adet ✨`;

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="walkSkyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff0f5"/>
+      <stop offset="60%" stop-color="#ffd6e8"/>
+      <stop offset="100%" stop-color="#ffb8d2"/>
+    </linearGradient>
+    <linearGradient id="shoesPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758c"/>
+      <stop offset="100%" stop-color="#ff1361"/>
+    </linearGradient>
+    <linearGradient id="shoesBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#74b9ff"/>
+      <stop offset="100%" stop-color="#0984e3"/>
+    </linearGradient>
+    <filter id="walkShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#ff758c" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Romantik Daire -->
+  <circle cx="60" cy="60" r="54" fill="url(#walkSkyGrad)" stroke="#ffd1dc" stroke-width="2" filter="url(#walkShadow)"/>
+
+  <!-- Yürüyüş Yolu / Park Patikası -->
+  <path d="M 12 95 Q 60 84 108 95" stroke="#ffffff" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.8"/>
+  <path d="M 18 100 Q 60 90 102 100" stroke="#f8a5c2" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+
+  <!-- El Ele Tutuşan Çift Figürleri (Sevimli Minimalist Silüet) -->
+  <!-- 1. SOL KARAKTER (Mavi / Beyefendi) -->
+  <g transform="translate(32, 28)">
+    <!-- Kafa -->
+    <circle cx="12" cy="10" r="8" fill="#2d3436"/>
+    <!-- Gövde -->
+    <rect x="7" y="20" width="10" height="20" rx="4" fill="url(#shoesBlue)"/>
+    <!-- Sol Bacak (Yürüyen) -->
+    <line x1="9" y1="40" x2="4" y2="60" stroke="#2d3436" stroke-width="4.5" stroke-linecap="round"/>
+    <ellipse cx="2" cy="60" rx="4" ry="2.5" fill="#2d3436"/>
+    <!-- Sağ Bacak -->
+    <line x1="15" y1="40" x2="18" y2="58" stroke="#2d3436" stroke-width="4.5" stroke-linecap="round"/>
+    <ellipse cx="20" cy="58" rx="4" ry="2.5" fill="#2d3436"/>
+    <!-- Sol Kol (Geriye Salınan) -->
+    <line x1="8" y1="23" x2="2" y2="35" stroke="#2d3436" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Sağ Kol (El Ele Tutuşan Kol) -->
+    <line x1="16" y1="24" x2="24" y2="34" stroke="#2d3436" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- 2. SAĞ KARAKTER (Pembe / Hanımefendi) -->
+  <g transform="translate(56, 30)">
+    <!-- Saçlar / Kafa -->
+    <circle cx="12" cy="9" r="8" fill="#e17055"/>
+    <path d="M 6 10 Q 3 22 8 20" stroke="#e17055" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <!-- Elbise / Gövde -->
+    <polygon points="12,18 4,38 20,38" fill="url(#shoesPink)"/>
+    <!-- Sol Bacak -->
+    <line x1="9" y1="38" x2="7" y2="56" stroke="#2d3436" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="6" cy="56" rx="3.5" ry="2" fill="url(#shoesPink)"/>
+    <!-- Sağ Bacak (Adım Atan) -->
+    <line x1="15" y1="38" x2="20" y2="54" stroke="#2d3436" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="22" cy="54" rx="3.5" ry="2" fill="url(#shoesPink)"/>
+    <!-- Sol Kol (El Ele Tutuşan Kol) -->
+    <line x1="8" y1="22" x2="0" y2="32" stroke="#2d3436" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- Sağ Kol (Çanta Tutan / Salınan) -->
+    <line x1="16" y1="22" x2="22" y2="32" stroke="#2d3436" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- EL ELE TUTUŞMA PARLAMASI (Orta Kesişim) 🤝💖 -->
+  <circle cx="56" cy="62" r="3.5" fill="#ffeaa7"/>
+  <g transform="translate(56, 52) scale(0.45)">
+    <path d="M 0 0 C -6 -10, -18 0, 0 16 C 18 0, 6 -10, 0 0 Z" fill="#ff1361"/>
+  </g>
+
+  <!-- Uçuşan Kalpler ve Işıltılar 🌸✨ -->
+  <text x="14" y="34" font-size="13">🌸</text>
+  <text x="86" y="30" font-size="14">💖</text>
+  <text x="86" y="90" font-size="13">✨</text>
+  <text x="16" y="92" font-size="13">👫</text>
+</svg>

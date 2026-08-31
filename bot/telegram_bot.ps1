@@ -12,6 +12,7 @@ $ProductAliases = @{
     "canim-cicim" = "canim-cicim"; "canim" = "canim-cicim"; "canım" = "canim-cicim"
     "kahve-kacamagi" = "kahve-kacamagi"; "kahve" = "kahve-kacamagi"; "cay" = "kahve-kacamagi"; "çay" = "kahve-kacamagi"; "cay-kacagi" = "kahve-kacamagi"
     "cigkofte-ziyafeti" = "cigkofte-ziyafeti"; "cigkofte" = "cigkofte-ziyafeti"; "çiğköfte" = "cigkofte-ziyafeti"
+    "beraber-yuruyus" = "beraber-yuruyus"; "yuruyus" = "beraber-yuruyus"; "yürüyüş" = "beraber-yuruyus"; "yuru" = "beraber-yuruyus"
     "gece-sohbeti" = "gece-sohbeti"; "gece" = "gece-sohbeti"; "sohbet" = "gece-sohbeti"; "kulaklik" = "gece-sohbeti"; "kulaklık" = "gece-sohbeti"; "tek-kulaklik" = "gece-sohbeti"
     "patron-sensin" = "patron-sensin"; "patron" = "patron-sensin"; "kralice" = "patron-sensin"; "kraliçe" = "patron-sensin"; "kralicem" = "patron-sensin"
     "film-gecesi" = "film-gecesi"; "film" = "film-gecesi"; "sinema" = "film-gecesi"
@@ -21,8 +22,8 @@ $ProductAliases = @{
 }
 
 $InitialStocks = @{
-    "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "cigkofte-ziyafeti" = 6350; "gece-sohbeti" = 12580
-    "patron-sensin" = 1450; "film-gecesi" = 3745; "goruntulu-arama" = 8650
+    "askolcer" = 1; "canim-cicim" = 9847; "kahve-kacamagi" = 4320; "cigkofte-ziyafeti" = 6350; "beraber-yuruyus" = 9999999
+    "gece-sohbeti" = 12580; "patron-sensin" = 1450; "film-gecesi" = 3745; "goruntulu-arama" = 8650
     "ozlem-sarilmasi" = 9999999; "ozel-ses-kaydi" = 7890; "kahve-hediye" = 2450
 }
 
@@ -78,6 +79,7 @@ while ($true) {
                     $m += "• 🎁 *Canım Cicim* (`canim`): *$($stocks.'canim-cicim') Adet*`n"
                     $m += "• 🫖 *Baş Başa Çay Kaçağı* (`cay`): *$($stocks.'kahve-kacamagi') Adet*`n"
                     $m += "• 🌯 *Çiğköfte Ziyafeti* (`cigkofte`): *$($stocks.'cigkofte-ziyafeti') Adet*`n"
+                    $m += "• 👫 *Beraber Yürüyüş* (`yuruyus`): *Sınırsız ♾️*`n"
                     $m += "• 👑 *Kraliçe* (`kralice`): *$($stocks.'patron-sensin') Adet*`n"
                     $m += "• 🍿 *Baş Başa Film* (`film`): *$($stocks.'film-gecesi') Adet*`n"
                     $m += "• 🎵 *Tek Kulaklık* (`kulaklik`): *$($stocks.'gece-sohbeti') Adet*`n"
@@ -86,7 +88,7 @@ while ($true) {
                     $m += "• 🎙️ *Ses Kaydı* (`ses`): *$($stocks.'ozel-ses-kaydi') Adet*`n`n"
                     $m += "✍ *Komutlar:*`n"
                     $m += "• `/set askolcer 1` ➔ Stoğu 1 yap`n"
-                    $m += "• `/ekle kulaklik 50` ➔ Kulaklık stoğuna ekle`n"
+                    $m += "• `/ekle cigkofte 50` ➔ Çiğköfte stoğuna ekle`n"
                     $m += "• `/sifirla` ➔ Tüm stokları sıfırla"
                     Send-TgMessage $chatId $m
                 }

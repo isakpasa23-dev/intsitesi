@@ -4,12 +4,18 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v4.2.0] - 31.08.2026 (Tek Kulaklık Ürünü Şımartma Menüsüne Taşındı & Müzik Notası Simgesi) 🎵🎧✨
-- **Kategori ve Görsel Değişikliği:**
-  - *"Gece Sohbeti & Şarkı"* ürünü **"Tek Kulaklık"** adıyla **Şımartma Paketi** kategorisine taşındı.
-  - Açıklaması: *"Kulaklığın tekini sana verip aynı şarkıda kaybolma ve huzur garantili anlar!"* olarak uyarlandı.
-  - Simgesi parlak çift müzik notası, kulaklık ve aşk ışıltıları içeren özel SVG ikonuna (`assets/music-note.svg`) dönüştürüldü.
+### [v4.3.0] - 31.08.2026 (Keyif & Lezzet Menüsüne 'Beraber Yürüyüş' Eklendi) 👫🚶‍♀️🚶‍♂️✨
+- **Yeni Ürün:**
+  - Keyif & Lezzet kategorisine **"Beraber Yürüyüş"** ürünü eklendi.
+  - Sağ üst rozeti: `El Ele 👫`
+  - Stoğu: `Sınırsız ♾️`
+  - Simgesi: El ele tutuşup yürüyen aşıklar ve park patikası temalı özel SVG ikonu (`assets/walking.svg`).
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v4.2.0] - 31.08.2026 (Tek Kulaklık Ürünü Şımartma Menüsüne Taşındı & Müzik Notası Simgesi) 🎵🎧✨
+- *"Gece Sohbeti & Şarkı"* ➔ "Tek Kulaklık" yapılarak Şımartma kategorisine taşındı.
 
 ---
 
