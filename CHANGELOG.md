@@ -4,13 +4,16 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v1.6.0] - 31.08.2026 (Sipariş Fişi Sadeleştirme & Romantik Not Odaklı Tasarım) 💌✨
-- **Fiş Sadeleştirmesi:**
-  - *"Ödenecek Tutar / Ara Toplam"* alanı kaldırıldı; sipariş fişi tamamen manevi ve tatlı bir sevgi belgesine dönüştürüldü.
-  - Teslimat kutusunun altındaki `*(En uzun süren ürüne göre hesaplanmıştır)*` teknik açıklaması kaldırıldı.
-- **Romantik Vurgu:**
-  - Fişin merkezinde doğrudan: `💌 "Bu siparişin karşılığı sadece içten bir gülümseme ve sıcacık bir sarılmadır."` sevgi kutusu yer alıyor.
+### [v1.6.1] - 31.08.2026 (Telegram Mesaj Formatı Sadeleştirmesi) 📱✨
+- **Okunaklı ve Sade Telegram Bildirimi:**
+  - Telegram'a gelen bildirimden *"Toplam Teslimat Süresi"*, *"Ödenecek Tutar"* ve *"Sipariş Başarıyla Tamamlandı"* yazıları kaldırıldı.
+  - `Sipariş No`, `Tarih`, `Müşteri Adı`, `Sipariş Notu` ve `Ürünler` arasına 1 satır boşluk eklenerek çok daha temiz, ferah ve okunaklı bir format sağlandı.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v1.6.0] - 31.08.2026 (Sipariş Fişi Sadeleştirme & Romantik Not Odaklı Tasarım) 💌✨
+- Fişteki ödenecek tutar kaldırıldı, doğrudan sevgi notu yerleştirildi.
 
 ---
 

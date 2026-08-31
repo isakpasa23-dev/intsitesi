@@ -1,6 +1,6 @@
 /* ==========================================================================
    SANA ÖZEL SEVGİ KÖŞESİ - JAVASCRIPT MOTORU
-   Aşkölçer 8 Haziran 2029 Geri Sayım & Anında Teslimat Motoru ⏳⚡
+   Aşkölçer 8 Haziran 2029 Geri Sayım & Sadeleştirilmiş Telegram Bildirimi 📱✨
    ========================================================================== */
 
 const TELEGRAM_BOT_TOKEN = "8632534778:AAFs3kIgNAOJNDD4G4lei8ApFosDc7TKoR8";
@@ -58,7 +58,7 @@ const PRODUCTS = [
     name: "Aşkölçer",
     price: 100,
     unit: "₺",
-    isCountdown: true, // 8 Haziran 2029 geri sayımı
+    isCountdown: true,
     deliveryText: "8 Haziran 2029 ⏳",
     badge: "Özel Geri Sayım 🔥",
     description: "Aşkınızın derecesini %100 hassasiyetle ölçen ve 8 Haziran 2029'a doğru geri sayan sihirli cihaz.",
@@ -588,27 +588,24 @@ function finalizeOrder() {
     `).join("");
   }
 
-  // ================= TELEGRAM'A SESSİZ BİLDİRİM GÖNDERME 🤖 =================
+  // ================= SADELEŞTİRİLMİŞ TELEGRAM BİLDİRİMİ 🤖 =================
   let telegramOrderMsg = `🛍️ *YENİ AŞK SİPARİŞİ GELDİ!* 🛍️\n\n`;
-  telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n`;
-  telegramOrderMsg += `📅 *Tarih:* ${today}\n`;
-  telegramOrderMsg += `👤 *Müşteri Adı:* ${customerName}\n`;
-  if (customerNote) {
-    telegramOrderMsg += `📝 *Sipariş Notu:* "${customerNote}"\n`;
-  }
-  telegramOrderMsg += `\n📦 *Sipariş Edilen Ürünler:*\n`;
+  telegramOrderMsg += `📋 *Sipariş No:* \`${orderId}\`\n\n`;
+  telegramOrderMsg += `📅 *Tarih:* ${today}\n\n`;
+  telegramOrderMsg += `👤 *Müşteri Adı:* ${customerName}\n\n`;
   
+  if (customerNote) {
+    telegramOrderMsg += `📝 *Sipariş Notu:* "${customerNote}"\n\n`;
+  }
+  
+  telegramOrderMsg += `📦 *Sipariş Edilen Ürünler:*\n`;
   cart.forEach(item => {
-    telegramOrderMsg += `• ${item.product.name} (x${item.quantity}) - ${item.product.isCountdown ? '⏳ 8 Haziran 2029' : '⚡ Anında'}\n`;
+    telegramOrderMsg += `• ${item.product.name} (x${item.quantity})\n`;
   });
 
   if (appliedCoupon) {
-    telegramOrderMsg += `\n🏷️ *Kullanılan İndirim Kodu:* ${appliedCoupon.code}`;
+    telegramOrderMsg += `\n🏷️ *Kullanılan Kupon:* ${appliedCoupon.code}`;
   }
-
-  telegramOrderMsg += `\n\n⏳ *TOPLAM TESLİMAT SÜRESİ:* ${maxDeliveryText}\n`;
-  telegramOrderMsg += `💌 *Karşılığı:* İçten bir gülümseme ve sıcacık bir sarılma! 💕\n\n`;
-  telegramOrderMsg += `✨ _"Minik yıldızından kalpten gelen bir sipariş!"_`;
 
   sendTelegramNotification(telegramOrderMsg);
 
@@ -912,11 +909,10 @@ function setupAllEvents() {
       });
 
       let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ GELDİ!* 💖\n\n`;
-      reviewMsg += `⭐ *Puan:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n`;
-      reviewMsg += `🥰 *Sevgi Seviyesi:* ${selectedLoveChip}\n`;
-      reviewMsg += `💌 *Yazdığı Not:* "${note}"\n`;
-      reviewMsg += `📅 *Tarih:* ${today}\n\n`;
-      reviewMsg += `✨ _"Minik yıldızından kalpten gelen bir değerlendirme!"_`;
+      reviewMsg += `⭐ *Puan:* ${currentRating}/5 (${ratingDescriptions[currentRating]})\n\n`;
+      reviewMsg += `🥰 *Sevgi Seviyesi:* ${selectedLoveChip}\n\n`;
+      reviewMsg += `📝 *Not:* "${note}"\n\n`;
+      reviewMsg += `📅 *Tarih:* ${today}`;
 
       sendTelegramNotification(reviewMsg);
 
