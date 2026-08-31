@@ -449,7 +449,7 @@ const PRODUCTS = [
     unit: "💖",
     isCountdown: false,
     deliveryText: "Anında ⚡",
-    badge: "Sana Özel 🎙️",
+    badge: "İsmail YK 🎙️",
     description: "Özlediğin her an dinlemen için kaydedilmiş en tatlı ses kaydı ve özel şarkı armağanı.",
     image: "assets/microphone.svg"
   }

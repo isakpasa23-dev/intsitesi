@@ -4,13 +4,15 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v4.3.0] - 31.08.2026 (Keyif & Lezzet Menüsüne 'Beraber Yürüyüş' Eklendi) 👫🚶‍♀️🚶‍♂️✨
-- **Yeni Ürün:**
-  - Keyif & Lezzet kategorisine **"Beraber Yürüyüş"** ürünü eklendi.
-  - Sağ üst rozeti: `El Ele 👫`
-  - Stoğu: `Sınırsız ♾️`
-  - Simgesi: El ele tutuşup yürüyen aşıklar ve park patikası temalı özel SVG ikonu (`assets/walking.svg`).
+### [v4.4.0] - 31.08.2026 (Özel Ses Kaydı Rozeti 'İsmail YK' Olarak Güncellendi) 🎙️✨
+- **Rozet Güncellemesi:**
+  - *"Özel Aşk Ses Kaydı & Şarkı"* ürününün sağ üst köşesindeki etiket **"İsmail YK 🎙️"** olarak güncellendi.
 - **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+
+---
+
+### [v4.3.0] - 31.08.2026 (Keyif & Lezzet Menüsüne 'Beraber Yürüyüş' Eklendi) 👫🚶‍♀️🚶‍♂️✨
+- Keyif kategorisine "Beraber Yürüyüş" (El Ele 👫) sınırsız stokla eklendi.
 
 ---
 
