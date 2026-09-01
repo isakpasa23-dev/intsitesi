@@ -3102,15 +3102,16 @@ function initFunHub() {
   let screenShakeTimer = 0;
 
   const ITEM_TYPES = [
-    { type: "heart", sym: "💖", points: 1, popupColor: "#ff758c", weight: 45, size: 28 },
-    { type: "star", sym: "⭐", points: 2, popupColor: "#2ed573", weight: 25, size: 28 },
-    { type: "broken", sym: "💔", points: -1, popupColor: "#ff4757", weight: 18, size: 26 },
-    { type: "bomb", sym: "💣", points: -2, popupColor: "#ff3838", weight: 12, size: 28 }
+    { type: "heart",  sym: "💖", points:  5, popupColor: "#ff758c", weight: 45, size: 26 },
+    { type: "star",   sym: "⭐", points:  8, popupColor: "#2ed573", weight: 25, size: 26 },
+    { type: "broken", sym: "💔", points: -3, popupColor: "#ff4757", weight: 18, size: 24 },
+    { type: "bomb",   sym: "💣", points: -5, popupColor: "#ff3838", weight: 12, size: 26 }
   ];
 
+  const TOTAL_WEIGHT = ITEM_TYPES.reduce((a, it) => a + it.weight, 0);
+
   function getRandomItemType() {
-    const totalWeight = ITEM_TYPES.reduce((acc, it) => acc + it.weight, 0);
-    let rand = Math.random() * totalWeight;
+    let rand = Math.random() * TOTAL_WEIGHT;
     for (const it of ITEM_TYPES) {
       if (rand < it.weight) return it;
       rand -= it.weight;
@@ -3133,391 +3134,305 @@ function initFunHub() {
     if (timerEl) timerEl.textContent = "30s";
     if (gameOverlayStart) gameOverlayStart.classList.add("hidden");
 
-    const ctx = gameCanvas.getContext("2d");
+    const ctx = gameCanvas.getContext("2d", { alpha: false });
     const rect = gameCanvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    gameCanvas.width = Math.floor(rect.width * dpr);
-    gameCanvas.height = Math.floor(rect.height * dpr);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.scale(dpr, dpr);
+    // DPR=1 ile render et — en büyük performans kazancı
+    const dpr = 1;
+    gameCanvas.width = Math.floor(rect.width);
+    gameCanvas.height = Math.floor(rect.height);
 
     const gw = rect.width;
     const gh = rect.height;
     catX = gw / 2;
     targetCatX = gw / 2;
+    const catY = gh - 36;
+
+    // Sepet gradient'ı bir kez oluştur
+    const bw = catWidth;
+    const bh = catBasketHeight;
+    const bxBase = -bw / 2;
+    const byBase = -2;
+
+    // Parçacık renk tablosu (string yaratımını azaltmak için)
+    const PARTICLE_COLORS = {
+      star:   ["#ffd700", "#ffe566", "#ffec8b"],
+      heart:  ["#ff4757", "#ff6b81", "#ff758c"],
+      broken: ["#e84118", "#ff6348", "#c0392b"],
+      bomb:   ["#636e72", "#2d3436", "#b2bec3"]
+    };
 
     if (gameTimerInterval) clearInterval(gameTimerInterval);
     gameTimerInterval = setInterval(() => {
       gameTimeLeft--;
       if (timerEl) timerEl.textContent = `${gameTimeLeft}s`;
-      if (gameTimeLeft <= 0) {
-        endHeartGame();
-      }
+      if (gameTimeLeft <= 0) endHeartGame();
     }, 1000);
 
     function spawnItem() {
-      if (!gameActive) return;
+      if (!gameActive || fallingItems.length >= 10) return; // Max 10 nesne
       const it = getRandomItemType();
-      const speedMult = 1 + (30 - gameTimeLeft) * 0.022;
-
+      const speedMult = 1 + (30 - gameTimeLeft) * 0.018;
       fallingItems.push({
         x: 35 + Math.random() * (gw - 70),
-        y: -30,
+        y: -28,
         sym: it.sym,
         points: it.points,
         popupColor: it.popupColor,
         type: it.type,
-        speed: (2.2 + Math.random() * 1.8) * speedMult,
+        speed: (2.0 + Math.random() * 1.6) * speedMult,
         size: it.size,
         wobble: Math.random() * Math.PI * 2,
-        wobbleSpeed: 0.04 + Math.random() * 0.04
+        wobbleSpeed: 0.03 + Math.random() * 0.03
       });
     }
 
     let lastSpawn = Date.now();
     let lastFrameTime = performance.now();
 
-    function drawCatCatcher(catDrawX, catDrawY, time) {
+    // ─── Kedi Çizici ─────────────────────────────────────────
+    function drawCatCatcher(cx, cy, time) {
       ctx.save();
-      ctx.translate(catDrawX, catDrawY);
+      ctx.translate(cx, cy);
 
-      // Kuyruk arkada tatlı tatlı sallanır
+      // Kuyruk (sallanır)
+      const tailAngle = Math.sin(time * 0.005) * 0.32;
       ctx.save();
-      const tailAngle = Math.sin(time * 0.006) * 0.35;
       ctx.translate(20, 8);
       ctx.rotate(tailAngle);
       ctx.beginPath();
       ctx.moveTo(0, 0);
-      ctx.quadraticCurveTo(14, -10, 16, -24);
-      ctx.lineWidth = 4.5;
+      ctx.quadraticCurveTo(12, -8, 14, -22);
+      ctx.lineWidth = 4;
       ctx.strokeStyle = "#1c1c20";
       ctx.lineCap = "round";
       ctx.stroke();
       ctx.restore();
 
-      // Kedi Kafası
+      // Kafa
       ctx.fillStyle = "#1c1c20";
       ctx.beginPath();
-      ctx.arc(0, -9, 16, 0, Math.PI * 2);
+      ctx.arc(0, -9, 15, 0, Math.PI * 2);
       ctx.fill();
 
-      // Sol Kulak
-      ctx.beginPath();
-      ctx.moveTo(-14, -13);
-      ctx.lineTo(-18, -28);
-      ctx.lineTo(-4, -21);
-      ctx.closePath();
+      // Sol & Sağ Kulak (tek seferde çiz)
       ctx.fillStyle = "#1c1c20";
-      ctx.fill();
       ctx.beginPath();
-      ctx.moveTo(-13, -14);
-      ctx.lineTo(-16, -24);
-      ctx.lineTo(-6, -20);
-      ctx.closePath();
+      ctx.moveTo(-13,-13); ctx.lineTo(-17,-27); ctx.lineTo(-4,-20); ctx.closePath();
+      ctx.moveTo(4,-20); ctx.lineTo(17,-27); ctx.lineTo(13,-13); ctx.closePath();
+      ctx.fill();
+
       ctx.fillStyle = "#ff758c";
+      ctx.beginPath();
+      ctx.moveTo(-12,-14); ctx.lineTo(-15,-23); ctx.lineTo(-5,-19); ctx.closePath();
+      ctx.moveTo(5,-19); ctx.lineTo(15,-23); ctx.lineTo(12,-14); ctx.closePath();
       ctx.fill();
 
-      // Sağ Kulak
-      ctx.beginPath();
-      ctx.moveTo(4, -21);
-      ctx.lineTo(18, -28);
-      ctx.lineTo(14, -13);
-      ctx.closePath();
-      ctx.fillStyle = "#1c1c20";
-      ctx.fill();
-      ctx.beginPath();
-      ctx.moveTo(6, -20);
-      ctx.lineTo(16, -24);
-      ctx.lineTo(13, -14);
-      ctx.closePath();
-      ctx.fillStyle = "#ff758c";
-      ctx.fill();
-
-      // Gözler (Tepkiye Göre Şekil Değiştirir)
+      // Gözler
       if (hitReaction === "bomb") {
-        // Bomba yiyince şaşırma (> <)
-        ctx.strokeStyle = "#ff4757";
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "#ff4757"; ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.moveTo(-9, -14); ctx.lineTo(-4, -10); ctx.lineTo(-9, -6);
-        ctx.moveTo(9, -14); ctx.lineTo(4, -10); ctx.lineTo(9, -6);
+        ctx.moveTo(-8,-13); ctx.lineTo(-4,-9); ctx.lineTo(-8,-5);
+        ctx.moveTo(8,-13); ctx.lineTo(4,-9); ctx.lineTo(8,-5);
         ctx.stroke();
       } else if (hitReaction === "sad") {
-        // Kırık kalp yiyince üzgün gözler
         ctx.fillStyle = "#2ed573";
         ctx.beginPath();
-        ctx.arc(-7, -10, 3.5, 0, Math.PI);
-        ctx.arc(7, -10, 3.5, 0, Math.PI);
+        ctx.arc(-6,-10,3,0,Math.PI);
+        ctx.arc(6,-10,3,0,Math.PI);
         ctx.fill();
       } else if (hitReaction === "happy") {
-        // Yıldız veya kalp yakalayınca mutlu gözler (^_^)
-        ctx.strokeStyle = "#2ed573";
-        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "#2ed573"; ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.arc(-7, -8, 4.5, Math.PI, 0);
-        ctx.arc(7, -8, 4.5, Math.PI, 0);
+        ctx.arc(-6,-8,4,Math.PI,0);
+        ctx.arc(6,-8,4,Math.PI,0);
         ctx.stroke();
       } else {
-        // Normal parlak yeşil gözler (yukarı bakar)
         ctx.fillStyle = "#2ed573";
         ctx.beginPath();
-        ctx.ellipse(-7, -10, 3.5, 4.5, 0, 0, Math.PI * 2);
-        ctx.ellipse(7, -10, 3.5, 4.5, 0, 0, Math.PI * 2);
+        ctx.ellipse(-6,-10,3,4,0,0,Math.PI*2);
+        ctx.ellipse(6,-10,3,4,0,0,Math.PI*2);
         ctx.fill();
         ctx.fillStyle = "#111";
         ctx.beginPath();
-        ctx.ellipse(-7, -11, 1.8, 3.2, 0, 0, Math.PI * 2);
-        ctx.ellipse(7, -11, 1.8, 3.2, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = "#fff";
-        ctx.beginPath();
-        ctx.arc(-8, -12, 1.2, 0, Math.PI * 2);
-        ctx.arc(6, -12, 1.2, 0, Math.PI * 2);
+        ctx.ellipse(-6,-11,1.5,2.8,0,0,Math.PI*2);
+        ctx.ellipse(6,-11,1.5,2.8,0,0,Math.PI*2);
         ctx.fill();
       }
 
-      // Sevimli Pembe Burun & Bıyıklar
+      // Burun
       ctx.fillStyle = "#ff758c";
       ctx.beginPath();
-      ctx.moveTo(-2, -5);
-      ctx.lineTo(2, -5);
-      ctx.lineTo(0, -3);
+      ctx.moveTo(-2,-5); ctx.lineTo(2,-5); ctx.lineTo(0,-3);
       ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = "#666";
-      ctx.lineWidth = 1.1;
+      // Bıyıklar (tek path)
+      ctx.strokeStyle = "#777"; ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(-11, -6); ctx.lineTo(-22, -8);
-      ctx.moveTo(-11, -3); ctx.lineTo(-22, -2);
-      ctx.moveTo(11, -6); ctx.lineTo(22, -8);
-      ctx.moveTo(11, -3); ctx.lineTo(22, -2);
+      ctx.moveTo(-10,-6); ctx.lineTo(-20,-8);
+      ctx.moveTo(-10,-3); ctx.lineTo(-20,-2);
+      ctx.moveTo(10,-6); ctx.lineTo(20,-8);
+      ctx.moveTo(10,-3); ctx.lineTo(20,-2);
       ctx.stroke();
 
-      // HASIR SEPET (Toplama Sepeti)
-      const bw = catWidth;
-      const bh = catBasketHeight;
-      const bx = -bw / 2;
-      const by = -2;
-
-      const basketGrad = ctx.createLinearGradient(bx, by, bx, by + bh);
-      basketGrad.addColorStop(0, "#ffeaa7");
-      basketGrad.addColorStop(0.5, "#fdcb6e");
-      basketGrad.addColorStop(1, "#e17055");
-
-      ctx.fillStyle = basketGrad;
+      // Sepet (düz renk + ince stroke, gradient kaldırıldı)
+      ctx.fillStyle = "#fdcb6e";
       ctx.beginPath();
-      ctx.roundRect(bx, by, bw, bh, [4, 4, 14, 14]);
+      ctx.roundRect(bxBase, byBase, bw, bh, [3,3,12,12]);
       ctx.fill();
-      ctx.strokeStyle = "#d63031";
-      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = "#c0392b"; ctx.lineWidth = 1.4;
       ctx.stroke();
 
-      // Hasır Deseni
-      ctx.strokeStyle = "rgba(214, 48, 49, 0.28)";
-      ctx.lineWidth = 1;
-      for (let i = bx + 9; i < bx + bw; i += 11) {
-        ctx.beginPath();
-        ctx.moveTo(i, by + 2);
-        ctx.lineTo(i - 4, by + bh - 2);
-        ctx.stroke();
-      }
-
-      // Sepet Üstü Kalp İkonu
-      ctx.font = "12px sans-serif";
+      // Kalp ikonu
+      ctx.font = "11px sans-serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText("💖", 0, by + bh / 2 + 1);
+      ctx.fillText("💖", 0, byBase + bh / 2 + 1);
 
       // Patiler
-      ctx.fillStyle = "#ffffff";
-      ctx.strokeStyle = "#1c1c20";
-      ctx.lineWidth = 1.5;
+      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = "#1c1c20"; ctx.lineWidth = 1.2;
       ctx.beginPath();
-      ctx.ellipse(-23, by + 1, 5.5, 4, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
+      ctx.ellipse(-22, byBase+1, 5, 3.5, 0, 0, Math.PI*2);
+      ctx.fill(); ctx.stroke();
       ctx.beginPath();
-      ctx.ellipse(23, by + 1, 5.5, 4, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
+      ctx.ellipse(22, byBase+1, 5, 3.5, 0, 0, Math.PI*2);
+      ctx.fill(); ctx.stroke();
 
       ctx.restore();
     }
 
-    function addParticles(px, py, color, count = 6) {
+    // ─── Parçacık Ekleyici ────────────────────────────────────
+    function addParticles(px, py, type, count) {
+      if (gameParticles.length > 18) return; // Max 18 parçacık
+      const colors = PARTICLE_COLORS[type] || ["#fff"];
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const spd = 1.4 + Math.random() * 3.2;
+        const spd = 1.2 + Math.random() * 2.6;
         gameParticles.push({
-          x: px,
-          y: py,
+          x: px, y: py,
           vx: Math.cos(angle) * spd,
-          vy: Math.sin(angle) * spd - 1.2,
-          color: color,
-          size: 3 + Math.random() * 3.5,
+          vy: Math.sin(angle) * spd - 1.0,
+          color: colors[i % colors.length],
+          size: 2.5 + Math.random() * 2.5,
           alpha: 1.0,
-          decay: 0.032 + Math.random() * 0.02
+          decay: 0.042 + Math.random() * 0.02
         });
       }
     }
 
+    // ─── Ana Oyun Döngüsü ────────────────────────────────────
     function gameLoop(timestamp) {
       if (!gameActive) return;
 
+      // 30 FPS kilidi — CPU'yu çok daha az yorar
       const delta = timestamp - lastFrameTime;
-      if (delta < 15.2) { // 60 FPS Kilidi
+      if (delta < 30) {
         gameAnimId = requestAnimationFrame(gameLoop);
         return;
       }
       lastFrameTime = timestamp;
 
-      // Ekran Sarsıntısı (Bomba patlayınca)
-      let offsetX = 0;
-      let offsetY = 0;
+      // Ekran sarsıntısı
+      let ox = 0, oy = 0;
       if (screenShakeTimer > 0) {
         screenShakeTimer--;
-        offsetX = (Math.random() - 0.5) * 8;
-        offsetY = (Math.random() - 0.5) * 6;
+        ox = (Math.random() - 0.5) * 7;
+        oy = (Math.random() - 0.5) * 5;
       }
 
       ctx.save();
-      ctx.translate(offsetX, offsetY);
-      ctx.clearRect(-10, -10, gw + 20, gh + 20);
+      if (ox || oy) ctx.translate(ox, oy);
 
-      // Yumuşak Kedi Takibi
-      catX += (targetCatX - catX) * 0.38;
-      catX = Math.max(catWidth / 2 + 6, Math.min(gw - (catWidth / 2 + 6), catX));
-      const catY = gh - 36;
+      // Arka planı doldur (alpha:false olduğu için clearRect yerine fillRect daha hızlı)
+      ctx.fillStyle = "#16213e";
+      ctx.fillRect(-10, -10, gw + 20, gh + 20);
 
-      // Düşen Nesne Üretimi
-      if (Date.now() - lastSpawn > 370) {
+      // Kedi takibi
+      catX += (targetCatX - catX) * 0.36;
+      catX = Math.max(catWidth / 2 + 6, Math.min(gw - catWidth / 2 - 6, catX));
+
+      // Nesne üretimi
+      const now = Date.now();
+      if (now - lastSpawn > 480) {
         spawnItem();
-        lastSpawn = Date.now();
+        lastSpawn = now;
       }
 
-      // Kedi Tepki Sıfırlayıcı
-      if (hitReaction !== "normal" && Date.now() - hitReactionTimer > 320) {
+      // Tepki sıfırlama
+      if (hitReaction !== "normal" && now - hitReactionTimer > 380) {
         hitReaction = "normal";
       }
 
-      // Düşen Nesneleri Güncelle & Çiz
+      // Sepet hitbox
+      const basketLeft   = catX - catWidth / 2 - 4;
+      const basketRight  = catX + catWidth / 2 + 4;
+      const basketTop    = catY - 12;
+      const basketBottom = catY + catBasketHeight + 2;
+
+      // Düşen nesneler
+      ctx.textAlign    = "center";
+      ctx.textBaseline = "middle";
       for (let i = fallingItems.length - 1; i >= 0; i--) {
         const it = fallingItems[i];
         it.y += it.speed;
         it.wobble += it.wobbleSpeed;
-        const wobbleX = Math.sin(it.wobble) * 2;
+        const wx = it.x + Math.sin(it.wobble) * 2;
 
-        ctx.font = `${Math.floor(it.size)}px sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(it.sym, it.x + wobbleX, it.y);
+        ctx.font = `${it.size}px sans-serif`;
+        ctx.fillText(it.sym, wx, it.y);
 
-        // Yakalama Alanı (Kedi Sepet Hitbox'ı)
-        const basketLeft = catX - catWidth / 2 - 4;
-        const basketRight = catX + catWidth / 2 + 4;
-        const basketTop = catY - 14;
-        const basketBottom = catY + catBasketHeight + 2;
-
-        if (
-          it.x >= basketLeft &&
-          it.x <= basketRight &&
-          it.y >= basketTop &&
-          it.y <= basketBottom
-        ) {
-          // Yakalandı!
+        // Yakalama kontrolü
+        if (wx >= basketLeft && wx <= basketRight && it.y >= basketTop && it.y <= basketBottom) {
           gameScore = Math.max(0, gameScore + it.points);
           if (scoreEl) scoreEl.textContent = gameScore;
 
-          // Uçuşan Puan Yazısı
           const popText = it.points > 0 ? `+${it.points}` : `${it.points}`;
-          floatingPopups.push({
-            x: it.x,
-            y: catY - 22,
-            text: popText,
-            color: it.popupColor,
-            alpha: 1.0,
-            vy: -1.6
-          });
-
-          // Efektler
-          if (it.type === "star") {
-            addParticles(it.x, catY - 4, "#ffd700", 8);
-            hitReaction = "happy";
-            hitReactionTimer = Date.now();
-          } else if (it.type === "heart") {
-            addParticles(it.x, catY - 4, "#ff4757", 6);
-            hitReaction = "happy";
-            hitReactionTimer = Date.now();
-          } else if (it.type === "broken") {
-            addParticles(it.x, catY - 4, "#e84118", 6);
-            hitReaction = "sad";
-            hitReactionTimer = Date.now();
-          } else if (it.type === "bomb") {
-            addParticles(it.x, catY - 4, "#f39c12", 10);
-            addParticles(it.x, catY - 4, "#2d3436", 6);
-            screenShakeTimer = 8;
-            hitReaction = "bomb";
-            hitReactionTimer = Date.now();
+          if (floatingPopups.length < 6) {
+            floatingPopups.push({ x: wx, y: catY - 20, text: popText, color: it.popupColor, alpha: 1.0, vy: -1.5 });
           }
 
+          if (it.type === "star")        { addParticles(wx, catY, "star",   5); hitReaction = "happy"; hitReactionTimer = now; }
+          else if (it.type === "heart")  { addParticles(wx, catY, "heart",  4); hitReaction = "happy"; hitReactionTimer = now; }
+          else if (it.type === "broken") { addParticles(wx, catY, "broken", 4); hitReaction = "sad";   hitReactionTimer = now; }
+          else if (it.type === "bomb")   { addParticles(wx, catY, "bomb",   6); screenShakeTimer = 6; hitReaction = "bomb"; hitReactionTimer = now; }
+
           fallingItems.splice(i, 1);
           continue;
         }
 
-        // Ekran Dışına Çıkanlar
-        if (it.y > gh + 35) {
-          fallingItems.splice(i, 1);
-        }
+        if (it.y > gh + 30) fallingItems.splice(i, 1);
       }
 
-      // Kediyi Çiz
+      // Kediyi çiz
       drawCatCatcher(catX, catY, timestamp);
 
-      // Parçacıkları Çiz
+      // Parçacıklar (globalAlpha değişimini minimize et)
       for (let i = gameParticles.length - 1; i >= 0; i--) {
         const p = gameParticles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.08;
-        p.alpha -= p.decay;
-
-        if (p.alpha <= 0) {
-          gameParticles.splice(i, 1);
-          continue;
-        }
-
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.alpha);
+        p.x += p.vx; p.y += p.vy; p.vy += 0.09; p.alpha -= p.decay;
+        if (p.alpha <= 0) { gameParticles.splice(i, 1); continue; }
+        ctx.globalAlpha = p.alpha;
         ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.arc(p.x | 0, p.y | 0, p.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
       }
+      ctx.globalAlpha = 1;
 
-      // Uçuşan Puanları Çiz
+      // Uçuşan puan yazıları (shadowBlur YOK)
+      ctx.font = "bold 18px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
       for (let i = floatingPopups.length - 1; i >= 0; i--) {
         const pop = floatingPopups[i];
-        pop.y += pop.vy;
-        pop.alpha -= 0.028;
-
-        if (pop.alpha <= 0) {
-          floatingPopups.splice(i, 1);
-          continue;
-        }
-
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, pop.alpha);
-        ctx.font = "bold 20px 'Quicksand', sans-serif";
+        pop.y += pop.vy; pop.alpha -= 0.035;
+        if (pop.alpha <= 0) { floatingPopups.splice(i, 1); continue; }
+        ctx.globalAlpha = pop.alpha;
         ctx.fillStyle = pop.color;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.shadowColor = "rgba(0,0,0,0.5)";
-        ctx.shadowBlur = 4;
         ctx.fillText(pop.text, pop.x, pop.y);
-        ctx.restore();
       }
+      ctx.globalAlpha = 1;
 
       ctx.restore();
       gameAnimId = requestAnimationFrame(gameLoop);
