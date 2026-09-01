@@ -3439,7 +3439,7 @@ function initFunHub() {
 
   const ITEM_TYPES = [
     { type: "heart",  sym: "💖", points:  5, popupColor: "#ff758c", weight: 45, size: 26 },
-    { type: "star",   sym: "⭐", points:  8, popupColor: "#2ed573", weight: 25, size: 26 },
+    { type: "star",   sym: "✨", points:  8, popupColor: "#2ed573", weight: 25, size: 26 },
     { type: "broken", sym: "💔", points: -3, popupColor: "#ff4757", weight: 18, size: 24 },
     { type: "bomb",   sym: "💣", points: -5, popupColor: "#ff3838", weight: 12, size: 26 }
   ];
