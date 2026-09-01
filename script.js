@@ -1457,7 +1457,7 @@ function setupAllEvents() {
 
   if (submitReviewBtn) {
     submitReviewBtn.addEventListener("click", () => {
-      const note = (reviewNote && reviewNote.value.trim()) || "Çok tatlısın ve seni çok seviyorum!";
+      const note = reviewNote && reviewNote.value.trim();
       triggerHeartsShower();
       closeReviewModal();
 
@@ -1472,7 +1472,7 @@ function setupAllEvents() {
       let reviewMsg = `💖 *YENİ AŞK DEĞERLENDİRMESİ GELDİ!* 💖\n\n`;
       reviewMsg += `⭐ *Puan:* ${currentRating}/10 (${ratingDescriptions[currentRating]})\n\n`;
       reviewMsg += `🥰 *Sevgi Seviyesi:* ${selectedLoveChip}\n\n`;
-      reviewMsg += `📝 *Not:* "${note}"\n\n`;
+      if (note) reviewMsg += `📝 *Not:* "${note}"\n\n`;
       reviewMsg += `📅 *Tarih:* ${today}`;
 
       sendTelegramNotification(reviewMsg);
