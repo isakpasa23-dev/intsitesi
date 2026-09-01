@@ -1414,7 +1414,7 @@ function setupAllEvents() {
   }
 
   const ratingDescriptions = {
-    1: "1/10 - Benimle Azcık İlgilensen Olsun 🥺",
+    1: "1/10 - Benimle Azcık İlgilensen 🥺",
     2: "2/10 - Daha Fazla Sarılmalı! 💕",
     3: "3/10 - Tatlı Bir Başlangıç 🥰",
     4: "4/10 - Kalbim Isınmaya Başladı 💖",
@@ -3134,12 +3134,13 @@ function initFunHub() {
     if (timerEl) timerEl.textContent = "30s";
     if (gameOverlayStart) gameOverlayStart.classList.add("hidden");
 
-    const ctx = gameCanvas.getContext("2d", { alpha: false });
+    const ctx = gameCanvas.getContext("2d");
     const rect = gameCanvas.getBoundingClientRect();
-    // DPR=1 ile render et — en büyük performans kazancı
-    const dpr = 1;
-    gameCanvas.width = Math.floor(rect.width);
-    gameCanvas.height = Math.floor(rect.height);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    gameCanvas.width = Math.floor(rect.width * dpr);
+    gameCanvas.height = Math.floor(rect.height * dpr);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
 
     const gw = rect.width;
     const gh = rect.height;
@@ -3344,9 +3345,8 @@ function initFunHub() {
       ctx.save();
       if (ox || oy) ctx.translate(ox, oy);
 
-      // Arka planı doldur (alpha:false olduğu için clearRect yerine fillRect daha hızlı)
-      ctx.fillStyle = "#16213e";
-      ctx.fillRect(-10, -10, gw + 20, gh + 20);
+      // Ekranı temizle (emoji alpha compositing için clearRect şart)
+      ctx.clearRect(0, 0, gw, gh);
 
       // Kedi takibi
       catX += (targetCatX - catX) * 0.36;
