@@ -194,7 +194,8 @@ const PRODUCT_ALIASES = {
   "ozel-ses-kaydi": "ozel-ses-kaydi", "ses": "ozel-ses-kaydi"
 };
 
-const TELEGRAM_STORAGE_MSG_ID = 85;
+const TELEGRAM_STORAGE_MSG_ID   = 85;   // Stok verisi
+const TELEGRAM_USERDATA_MSG_ID  = 161;  // HighScore + Polaroid metadata
 
 function getProductStock(productId) {
   const savedStocks = JSON.parse(localStorage.getItem("site_cloud_stocks_cache") || "null");
@@ -230,7 +231,136 @@ async function fetchCloudStocks() {
   }
 }
 
-// ☁️ Buluta Güncel Stokları Kaydetme (Telegram Cloud Storage - %100 Kalıcı & Anlık)
+// ☁️ Kullanıcı Verisini Buluttan Çek (HighScore + Polaroid Metadata)
+async function fetchCloudUserData() {
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getMessage?chat_id=${TELEGRAM_CHAT_ID}&message_id=${TELEGRAM_USERDATA_MSG_ID}`;
+    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/forwardMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, from_chat_id: TELEGRAM_CHAT_ID, message_id: TELEGRAM_USERDATA_MSG_ID })
+    });
+    // forwardMessage yerine getUpdates'i kullanamayız, doğrudan mesaj metnini alacağız
+    // sendMessage & editMessage pattern: mesaj içeriğini bot aracılığıyla çek
+    const url2 = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?allowed_updates=[]`;
+    // En temiz yol: botun son gönderdiği mesajı bulmak için copyMessage kullan
+    // Telegram botu kendi mesajlarını doğrudan okuyamaz, getChat pinned kullandığımız gibi
+    // Bunun yerine: ayrı bir bot mesajını okumak için "getFile" değil editMessageText ile echo yöntemi kullanacağız
+    // Gerçek çözüm: copyMessage ile kopyala, sonucu oku — ama bu da çalışmaz
+    // ✅ Doğru yöntem: mesajı bir channel/grup yerine bot API ile direct text fetch
+    // Telegram Bot API'de kendi mesajlarını okumak için updates stream gerekir
+    // Biz şu an getChat.pinned_message ile sadece pinned'ı okuyabiliyoruz
+    // Çözüm: userdata'yı da pinned mesaja ekle — stocks JSON'ına highScore ve polaroidMeta alanları ekle
+  } catch(_) {}
+}
+
+// ☁️ Buluta Kullanıcı Verisi Kaydet (HighScore + Polaroid Metadata)
+async function pushCloudUserData(highScore, polaroidMeta) {
+  try {
+    const payload = JSON.stringify({ highScore, polaroidMeta });
+    localStorage.setItem("cloud_user_data_cache", payload);
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/editMessageText`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        message_id: TELEGRAM_USERDATA_MSG_ID,
+        text: payload
+      })
+    });
+  } catch(err) {
+    console.warn("Kullanıcı verisi buluta kaydedilemedi:", err);
+  }
+}
+
+// ☁️ Mesaj ID'den metin oku (bot'un editleyebileceği mesajlar için)
+async function readTelegramMessage(msgId) {
+  try {
+    // Telegram kanaldan copy ile echo trick: editMessageText ile içeriği değiştirmeden oku
+    // Tek güvenilir yol: messages stores'ı localStorage cache üzerinden kullan + push sırasında güncelle
+    const cached = localStorage.getItem("cloud_user_data_cache");
+    if (cached) return JSON.parse(cached);
+  } catch(_) {}
+  return null;
+}
+
+// ☁️ Kullanıcı Verisi Başlatıcı — sayfa yüklendiğinde cloud'dan çek
+async function initCloudUserData() {
+  try {
+    // Telegram Bot API: kendi mesajlarını okumak için getChat yöntemini kullanamıyoruz
+    // (sadece pinned mesajı okuyabiliyoruz). Bu yüzden pinned mesajı STOCKS + USERDATA olarak birleştireceğiz.
+    // Gerçek plan: mevcut pinned message (ID 85) JSON'una "ud" (user data) alanı ekle
+    // Böylece tek bir okuma ile hem stokları hem user verisini alabiliriz.
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getChat?chat_id=${TELEGRAM_CHAT_ID}`;
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+    const rawText = data?.result?.pinned_message?.text;
+    if (!rawText || !rawText.startsWith("{")) return;
+    const parsed = JSON.parse(rawText);
+    // Eğer pinned mesajda user data varsa uygula
+    if (typeof parsed.highScore !== "undefined") {
+      const cloudScore = parseInt(parsed.highScore, 10) || 0;
+      const localScore = parseInt(localStorage.getItem("heart_game_high_score") || "0", 10);
+      if (cloudScore > localScore) {
+        localStorage.setItem("heart_game_high_score", cloudScore);
+        // Ekranda güncelle
+        const hsEl = document.getElementById("game-high-score");
+        if (hsEl) hsEl.textContent = cloudScore;
+      }
+    }
+    if (Array.isArray(parsed.polaroidMeta) && parsed.polaroidMeta.length > 0) {
+      const localRaw = localStorage.getItem("user_polaroid_memories");
+      const localMems = localRaw ? JSON.parse(localRaw) : null;
+      // Cloud'dakiler local'den fazlaysa birleştir
+      if (!localMems || parsed.polaroidMeta.length > localMems.filter(m => !m.id.startsWith("mem-")).length) {
+        // Cloud meta'yı local'e yaz (img alanı yoksa placeholder koy)
+        const merged = parsed.polaroidMeta.map(cm => {
+          const localMatch = (localMems || []).find(lm => lm.id === cm.id);
+          return localMatch || { ...cm, img: cm.img || "" };
+        });
+        localStorage.setItem("user_polaroid_memories", JSON.stringify(merged));
+        if (window.renderPolaroidGallery) window.renderPolaroidGallery();
+      }
+    }
+  } catch(err) {
+    console.warn("Cloud user data çekilemedi:", err);
+  }
+}
+
+// ☁️ Pinned mesajı stok + user data birlikte güncelle
+async function pushCloudStocksAndUserData(updatedStocks, highScore, polaroidMeta) {
+  try {
+    const payload = { ...updatedStocks };
+    if (typeof highScore !== "undefined") payload.highScore = highScore;
+    if (polaroidMeta) payload.polaroidMeta = polaroidMeta;
+    localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(payload));
+    renderProducts();
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/editMessageText`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        message_id: TELEGRAM_STORAGE_MSG_ID,
+        text: JSON.stringify(payload)
+      })
+    });
+  } catch(err) {
+    console.warn("Bulut güncellenemedi:", err);
+  }
+}
+
+// ☁️ Sadece user verisini (skor + polaroid meta) pinned mesaja ekleyerek güncelle
+async function pushUserDataToCloud(highScore, polaroidMeta) {
+  try {
+    const stocksRaw = localStorage.getItem("site_cloud_stocks_cache");
+    const stocks = stocksRaw ? JSON.parse(stocksRaw) : { ...INITIAL_STOCKS };
+    await pushCloudStocksAndUserData(stocks, highScore, polaroidMeta);
+  } catch(err) {
+    console.warn("User data push hatası:", err);
+  }
+}
+
 async function pushCloudStocks(updatedStocks) {
   try {
     localStorage.setItem("site_cloud_stocks_cache", JSON.stringify(updatedStocks));
@@ -3787,6 +3917,9 @@ function initFunHub() {
       gameHighScore = gameScore;
       localStorage.setItem("heart_game_high_score", gameHighScore);
       if (highScoreEl) highScoreEl.textContent = gameHighScore;
+      // ☁️ Cloud'a senkronize et
+      const polaroidMeta = window.getPolaroidMetaForCloud ? window.getPolaroidMetaForCloud() : [];
+      pushUserDataToCloud(gameHighScore, polaroidMeta);
     }
 
     if (gameOverlayStart) {
@@ -3856,9 +3989,23 @@ function initPolaroidAlbum() {
     return DEFAULT_MEMORIES;
   }
 
+  // Polaroid meta'yı cloud için hazırla (img hariç — boyut sınırı)
+  function getPolaroidMetaForCloud() {
+    try {
+      const mems = getMemories();
+      // Resim hariç sadece id/title/caption kaydet (Telegram 4096 karakter limiti)
+      return mems.slice(0, 20).map(m => ({ id: m.id, title: m.title, caption: m.caption }));
+    } catch(_) { return []; }
+  }
+  // Global olarak erişilebilsin (highscore push'unda kullanılır)
+  window.getPolaroidMetaForCloud = getPolaroidMetaForCloud;
+
   function saveMemories(mems) {
     localStorage.setItem("user_polaroid_memories", JSON.stringify(mems));
     renderPolaroidGallery();
+    // ☁️ Cloud'a senkronize et
+    const hs = parseInt(localStorage.getItem("heart_game_high_score") || "0", 10);
+    pushUserDataToCloud(hs, getPolaroidMetaForCloud());
   }
 
   window.renderPolaroidGallery = function() {
@@ -4013,4 +4160,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchCloudStocks();
   setInterval(fetchCloudStocks, 4000);
+  initCloudUserData();
 });
