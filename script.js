@@ -1414,7 +1414,7 @@ function setupAllEvents() {
   }
 
   const ratingDescriptions = {
-    1: "1/10 - Birazcık İlgi & Şımartılma İstiyorum 🥺",
+    1: "1/10 - Benimle Azcık İlgilensen Olsun 🥺",
     2: "2/10 - Daha Fazla Sarılmalı! 💕",
     3: "3/10 - Tatlı Bir Başlangıç 🥰",
     4: "4/10 - Kalbim Isınmaya Başladı 💖",
