@@ -3348,8 +3348,8 @@ function initFunHub() {
       // Ekranı temizle (emoji alpha compositing için clearRect şart)
       ctx.clearRect(0, 0, gw, gh);
 
-      // Kedi takibi
-      catX += (targetCatX - catX) * 0.36;
+      // Kedi takibi — düşük lerp = yumuşak, yavaş kayma
+      catX += (targetCatX - catX) * 0.10;
       catX = Math.max(catWidth / 2 + 6, Math.min(gw - catWidth / 2 - 6, catX));
 
       // Nesne üretimi
