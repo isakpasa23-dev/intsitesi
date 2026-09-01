@@ -19,7 +19,7 @@
   <!-- html2canvas (Fişi Resim Olarak İndirme Kütüphanesi) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-  <link rel="stylesheet" href="style.css?v=12.2.0">
+  <link rel="stylesheet" href="style.css?v=12.3.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
 </head>
 <body>
@@ -343,12 +343,20 @@
                 </div>
               </div>
 
+              <!-- Puan Rehberi Rozetleri -->
+              <div class="game-rules-legend">
+                <span class="legend-badge legend-star">⭐ +2</span>
+                <span class="legend-badge legend-heart">💖 +1</span>
+                <span class="legend-badge legend-broken">💔 -1</span>
+                <span class="legend-badge legend-bomb">💣 -2</span>
+              </div>
+
               <div class="game-canvas-wrap">
                 <canvas id="heart-game-canvas" class="heart-game-canvas"></canvas>
                 <div class="game-overlay-start" id="game-overlay-start">
-                  <span class="game-start-icon">🐾 💖 🎮</span>
-                  <h3 class="game-start-title">Kalp Yakalama Macerası</h3>
-                  <p class="game-start-desc">Gökyüzünden süzülen kalplere dokunarak yakala! 🐱</p>
+                  <span class="game-start-icon">🐱 🧺 💖</span>
+                  <h3 class="game-start-title">Pati ile Kalp & Yıldız Yakalama</h3>
+                  <p class="game-start-desc">Fareni veya parmağını hareket ettirerek kediyi yönlendir! Sepete yıldız ve kalpleri topla, kırık kalp ve bombalardan kaç! 🐾</p>
                   <button class="btn btn-primary" id="btn-start-heart-game">
                     <span>🎮 Oyunu Başlat! 🚀</span>
                   </button>
@@ -690,6 +698,6 @@
     </div>
   </div>
 
-  <script src="script.js?v=12.2.0"></script>
+  <script src="script.js?v=12.3.0"></script>
 </body>
 </html>

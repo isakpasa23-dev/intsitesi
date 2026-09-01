@@ -4,21 +4,31 @@ Bu dosyada siteye yapılan tüm güncellemeler, yeni özellikler ve yama notlar�
 
 ---
 
-### [v12.1.0] - 01.09.2026 (Kedicikle Kalp Toplama Oyunu: Fare Takibi & Yıldız/Kalp/Kırık Kalp/Bomba Mekaniği) 🐱💖⭐💔💣🎮
-- **Mini Oyun Baştan Geliştirildi:**
-  - Aşağıda farenizi ve dokunmatik parmağınızı pürüzsüzce takip eden sevimli siyah kedi karakteri eklendi.
-  - Puanlama ve nesne sistemi tam olarak istendiği gibi uyarlandı:
-    - ⭐ **Yıldızlar:** `+2 Puan`
-    - 💖 **Kalpler:** `+1 Puan`
-    - 💔 **Kırık Kalpler:** `-1 Puan`
-    - 💣 **Bombalar:** `-2 Puan`
-  - Çarpışma algılaması, uçuşan yeşil/kırmızı skor balonları ve oyun sonu kedi kutlaması entegre edildi.
-- **Yedekleme & Dağıtım:** Değişiklikler GitHub'a aktarıldı.
+### [v12.3.0] - 01.09.2026 (Pati ile Kalp & Yıldız Yakalama Oyunu Baştan Yaratıldı: Kedi Sepeti, Puanlama & 60 FPS Sıfır Kasma) 🐱🧺⭐💖💔💣✨
+- **🐾 Fare / Parmak Takip Eden Kedi Sepeti:**
+  - Kalp oyunu ekranına sevimli siyah kedi ve hasır kalp sepeti eklendi.
+  - Kedi, fare veya parmak hareketini yumuşak ve tepkisel bir fizikle takip eder.
+- **🎯 Yeni Puanlama & Düşen Nesne Sistemi:**
+  - ⭐ **Yıldız:** `+2 Puan` (Altın ışıltı patlaması & mutlu gözler)
+  - 💖 **Kalp:** `+1 Puan` (Pembe kalp parçacıkları & neşeli miyav)
+  - 💔 **Kırık Kalp:** `-1 Puan` (Kırılma efekti & üzgün kedi bakışı)
+  - 💣 **Bomba:** `-2 Puan` (Ekran sarsıntısı, duman efekti ve şaşkın kedi bakışı)
+- **⚡ Süper Optimizasyon & Kasma Giderimi:**
+  - DOM'a yüzlerce animasyon elementi ekleyen eski sistem tamamen kaldırıldı.
+  - Uçuşan puan göstergeleri (`+2`, `+1`, `-1`, `-2`) ve parçacıklar doğrudan Canvas üzerinde sıfır DOM yüküyle 60 FPS akıcı render edilir.
+  - Sekme değiştirildiğinde veya menüden çıkıldığında oyun döngüsü anında temizlenir, bilgisayar ve telefon kesinlikle ısınmaz ve kasmaz.
+- **📐 Genişletilmiş Oyun Alanı:** Oyun canvas yüksekliği 420px'e çıkarıldı, ferah ve rahat bir kontrol alanı sağlandı.
 
 ---
 
-### [v12.0.0] - 01.09.2026 (Canlı Aşk Sayacı & Aşk & Hatıra Köşesi Eklendi: Çarkıfelek, Kalp Oyunu, Polaroid Fotoğraf Albümü) ⏳🎡🎮📸💕
-- Aşk sayacı ve hatıra köşesi eklendi.
+### [v12.2.0] - 01.09.2026 (Aşk & Hatıra Köşesi Menüsü 4 İkon Izgarasına Güncellendi & Kristal Aşk Küresi Eklendi) 🔮🎡📱
+- Menü mobil uyumlu 4 ikon grid haline getirildi.
+- Kristal Aşk Küresi eklendi.
+
+---
+
+### [v12.1.0] - 01.09.2026 (Menü 2x2 Formatına Getirildi, Sayaç Küçültüldü) ⏳✨
+- Sayaç ince yatay şeride dönüştürüldü.
 
 ---
 
