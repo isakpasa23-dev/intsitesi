@@ -3516,7 +3516,7 @@ function initFunHub() {
         points: it.points,
         popupColor: it.popupColor,
         type: it.type,
-        speed: (2.0 + Math.random() * 1.6) * speedMult,
+        speed: (2.5 + Math.random() * 1.8) * speedMult,
         size: it.size,
         wobble: Math.random() * Math.PI * 2,
         wobbleSpeed: 0.03 + Math.random() * 0.03
